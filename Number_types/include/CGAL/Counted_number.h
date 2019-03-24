@@ -1,9 +1,9 @@
-// Copyright (c) 2001,2007  
+// Copyright (c) 2001,2007
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -287,7 +287,7 @@ unsigned long Counted_number<NT>::s_div_mod_count = 0;
 
 template< class NT >
 unsigned long Counted_number<NT>::s_mod_count = 0;
-#else 
+#else
 template <class NT>
 CGAL::cpp11::atomic<unsigned long> Counted_number<NT>::s_neg_count;
 
@@ -808,8 +808,8 @@ public:
 
 template <class NT>
 class Real_embeddable_traits<Counted_number<NT> >
-  : public INTERN_RET::Real_embeddable_traits_base <Counted_number<NT> , 
-   typename Real_embeddable_traits<NT>::Is_real_embeddable > 
+  : public INTERN_RET::Real_embeddable_traits_base <Counted_number<NT> ,
+   typename Real_embeddable_traits<NT>::Is_real_embeddable >
 {
     typedef Real_embeddable_traits<NT> RET_NT;
 
@@ -839,13 +839,13 @@ public:
     };
 };
 
-template<typename NT> inline 
+template<typename NT> inline
 Counted_number<NT> min BOOST_PREVENT_MACRO_SUBSTITUTION(
 const Counted_number<NT> & x,
 const Counted_number<NT> & y){
   return CGAL::Min<Counted_number<NT> > ()(x,y);
 }
-template<typename NT> inline 
+template<typename NT> inline
 Counted_number<NT> max BOOST_PREVENT_MACRO_SUBSTITUTION(
 const Counted_number<NT> & x,
 const Counted_number<NT> & y){

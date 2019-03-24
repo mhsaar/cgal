@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Panagiotis Cheilaris, Sandeep Kumar Dey, Evanthia Papadopoulou
 //philaris@gmail.com, sandeep.kr.dey@gmail.com, evanthia.papadopoulou@usi.ch
@@ -111,7 +111,7 @@ struct Segment_Delaunay_graph_Linf_traits_2<Filtered_kernel<R>,Field_with_sqrt_t
 
 // this traits class does NOT support intersecting segments
 template<class R,
-	 class MTag = 
+	 class MTag =
 	 typename Algebraic_structure_traits<typename R::FT>::Algebraic_category
 	 /*Integral_domain_without_division_tag*/>
 struct Segment_Delaunay_graph_Linf_traits_without_intersections_2

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: LGPL-3.0+
  ***************************************************************************/
 
-/* Auxiliary functions for C++-style input of GMP types. 
+/* Auxiliary functions for C++-style input of GMP types.
 
 Copyright 2001 Free Software Foundation, Inc.
 
@@ -48,7 +48,7 @@ MA 02110-1301, USA. */
 
 using namespace std;
 
-namespace CORE { 
+namespace CORE {
 
 CGAL_INLINE_FUNCTION
 int
@@ -256,19 +256,19 @@ CGAL_INLINE_FUNCTION
 ostream&
 //operator<< (ostream &o, mpz_srcptr z)
 io_write (ostream &o, mpz_srcptr z)
-{ 
+{
   char *str = new char [mpz_sizeinbase(z,10) + 2];
   str = mpz_get_str(str, 10, z);
   o << str ;
   delete[] str;
-  return o; 
+  return o;
 }
 
 CGAL_INLINE_FUNCTION
 ostream&
 //operator<< (ostream &o, mpq_srcptr q)
 io_write (ostream &o, mpq_srcptr q)
-{ 
+{
   // size according to GMP documentation
   char *str = new char [mpz_sizeinbase(mpq_numref(q), 10) +
                         mpz_sizeinbase (mpq_denref(q), 10) + 3];

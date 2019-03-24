@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -46,7 +46,7 @@ template<class STraits> class Construct_storage_site_2;
 
 
 template <class STraits>
-class Segment_Delaunay_graph_simple_storage_site_2 
+class Segment_Delaunay_graph_simple_storage_site_2
 {
   friend class
   CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Construct_storage_site_2<STraits>;

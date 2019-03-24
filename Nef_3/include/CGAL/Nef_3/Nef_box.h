@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 // Author(s)     : Peter Hachenberger    <hachenberger@mpi-sb.mpg.de>
 #ifndef CGAL_NEF_BOX_H
 #define CGAL_NEF_BOX_H
@@ -30,7 +30,7 @@ namespace CGAL {
 
 template<class SNC_decorator>
 class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
-  
+
   typedef typename SNC_decorator::SNC_structure          SNC_structure;
   typedef typename CGAL::SNC_intersection<SNC_structure> SNC_intersection;
 
@@ -48,17 +48,17 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
                                      SHalfedge_around_facet_circulator;
 
   typedef CGAL::SNC_const_decorator<SNC_structure>  Const_decorator;
- 
+
 
   typedef std::pair<double, double> double_pair;
   typedef Box_intersection_d::box_limits<double> box_limits;
-  
+
   Halffacet_handle f;
   Halfedge_handle  e;
   Vertex_handle v;
   enum Type { FACET, EDGE, VERTEX };
   Type type;
-  
+
   void extend( const Point_3& p, const Tag_false& ) {
     std::pair<double, double> q[3];
     q[0] = CGAL::to_interval( p.x() );
@@ -66,7 +66,7 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
     q[2] = CGAL::to_interval( p.z() );
     Box_intersection_d::Box_d< double, 3 >::extend(q);
   }
-  
+
   void extend( const Point_3& p, const Tag_true& ) {
     double_pair q[3];
     if(Infi_box::degree(p.hx()) == 0)
@@ -86,14 +86,14 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
 	: double_pair(box_limits::inf(),box_limits::inf());
     Box_intersection_d::Box_d< double, 3 >::extend(q);
   }
-  
+
  public:
   Nef_box( Halffacet_handle f ) : f(f), type(FACET) {
     if( !Const_decorator::is_standard( f ) ) {
       init( true );
     } else {
       init( false );
-#ifdef CGAL_NEF3_FACET_WITH_BOX 
+#ifdef CGAL_NEF3_FACET_WITH_BOX
       std::pair<double, double> q[3];
       q[0] = CGAL::to_interval( f->b.min_coord(0) );
       q[1] = CGAL::to_interval( f->b.min_coord(1) );
@@ -118,7 +118,7 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
 #endif
     }
   }
-  
+
   Nef_box( Halfedge_handle e ) :  e(e), type(EDGE) {
 
     if(!Const_decorator::is_standard(e->source() ) ||
@@ -126,20 +126,20 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
       init( true );
     } else {
       init( false );
-      extend( e->source()->point(), 
+      extend( e->source()->point(),
 	      typename Is_extended_kernel<Kernel>::value_type());
-      extend( e->twin()->source()->point(), 
+      extend( e->twin()->source()->point(),
 	      typename Is_extended_kernel<Kernel>::value_type());
     }
   }
 
   Nef_box(Vertex_handle vin) : v(vin), type(VERTEX) {
-  
+
     if(!Const_decorator::is_standard(v))
       init(true);
     else {
       init(false);
-      extend(v->point(), 
+      extend(v->point(),
 	     typename Is_extended_kernel<Kernel>::value_type());
     }
   }
@@ -148,7 +148,7 @@ class Nef_box : public Box_intersection_d::Box_d< double, 3 > {
     CGAL_assertion( type == FACET );
     return f;
   }
-  
+
   Halfedge_handle get_halfedge() {
     CGAL_assertion( type == EDGE );
     return e;

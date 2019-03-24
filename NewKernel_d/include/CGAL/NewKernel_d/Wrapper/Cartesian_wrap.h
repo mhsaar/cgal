@@ -28,7 +28,7 @@
 #  pragma warning(push)
 #  pragma warning(disable:4003) // not enough actual parameters for macro 'BOOST_PP_EXPAND_I'
                                 // https://lists.boost.org/boost-users/2014/11/83291.php
-#endif 
+#endif
 #include <CGAL/NewKernel_d/Wrapper/Point_d.h>
 #include <CGAL/NewKernel_d/Wrapper/Vector_d.h>
 #include <CGAL/NewKernel_d/Wrapper/Segment_d.h>

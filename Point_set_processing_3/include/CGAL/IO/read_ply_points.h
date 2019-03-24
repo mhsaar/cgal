@@ -75,7 +75,7 @@ namespace CGAL {
 
   /**
      \ingroup PkgPointSetProcessing3IOPly
-     
+
      Class used to identify a %PLY property as a type and a name.
 
      \sa `read_ply_points_with_properties()`
@@ -94,7 +94,7 @@ namespace CGAL {
   template <typename FT> struct Convert_FT        { typedef double type; };
   // ...except if kernel uses type float
   template <>            struct Convert_FT<float> { typedef float type;  };
-    
+
   template <typename PointOrVectorMap>
   struct GetFTFromMap
   {
@@ -104,10 +104,10 @@ namespace CGAL {
       <PointOrVectorMap>::value_type>::Kernel::FT>::type type;
   };
   /// \endcond
-  
+
   /**
      \ingroup PkgPointSetProcessing3IOPly
-     
+
      Generates a %PLY property handler to read 3D points. Points are
      constructed from the input using 3 %PLY properties of type `FT`
      and named `x`, `y` and `z`. `FT` is `float` if the points use
@@ -139,7 +139,7 @@ namespace CGAL {
 
   /**
      \ingroup PkgPointSetProcessing3IOPly
-     
+
      Generates a %PLY property handler to read 3D normal
      vectors. Vectors are constructed from the input using 3 PLY
      properties of type `FT` and named `nx`, `ny` and `nz`. `FT`
@@ -175,13 +175,13 @@ namespace CGAL {
 namespace internal {
 
   namespace PLY {
-  
+
   class PLY_read_number
   {
   protected:
     std::string m_name;
     std::size_t m_format;
-    
+
   public:
     PLY_read_number (std::string name, std::size_t format)
       : m_name (name), m_format (format) { }
@@ -212,7 +212,7 @@ namespace internal {
       stream >> s;
       c = static_cast<unsigned char>(s);
     }
-    
+
     void read_ascii (std::istream& stream, float& t) const
     {
       stream >> iformat(t);
@@ -222,15 +222,15 @@ namespace internal {
     {
       stream >> iformat(t);
     }
-    
+
     // Default template when Type is not a char type
     template <typename Type>
     void read_ascii (std::istream& stream, Type& t) const
     {
       stream >> t;
     }
-    
-    
+
+
     template <typename Type>
     Type read (std::istream& stream) const
     {
@@ -247,11 +247,11 @@ namespace internal {
             char uChar[sizeof (Type)];
             Type type;
           } buffer;
-          
+
           std::size_t size = sizeof (Type);
 
           stream.read(buffer.uChar, size);
-      
+
           if (m_format == 2) // Big endian
             {
               for (std::size_t i = 0; i < size / 2; ++ i)
@@ -327,7 +327,7 @@ namespace internal {
   {
     std::string m_name;
     std::size_t m_number;
-    
+
     std::vector<PLY_read_number*> m_properties;
   public:
 
@@ -349,7 +349,7 @@ namespace internal {
       const_cast<PLY_element&>(other).m_properties.clear();
       return *this;
     }
-    
+
     ~PLY_element()
     {
       for (std::size_t i = 0; i < m_properties.size(); ++ i)
@@ -361,7 +361,7 @@ namespace internal {
     std::size_t number_of_properties() const { return m_properties.size(); }
 
     PLY_read_number* property (std::size_t idx) { return m_properties[idx]; }
-    
+
     void add_property (PLY_read_number* read_number)
     {
       m_properties.push_back (read_number);
@@ -380,7 +380,7 @@ namespace internal {
           return (dynamic_cast<PLY_read_typed_list<Type>*>(m_properties[i]) != NULL);
       return false;
     }
-    
+
     template <typename Type>
     bool has_property (const char* tag, Type)
     {
@@ -443,11 +443,11 @@ namespace internal {
           }
           else
             t = property_double->buffer();
-          
+
           return;
         }
     }
-  
+
   };
 
   class PLY_reader
@@ -472,7 +472,7 @@ namespace internal {
       std::size_t lineNumber = 0; // current line number
       enum Format { ASCII = 0, BINARY_LITTLE_ENDIAN = 1, BINARY_BIG_ENDIAN = 2};
       Format format = ASCII;
-    
+
       std::string line;
       std::istringstream iss;
 
@@ -532,7 +532,7 @@ namespace internal {
                       return false;
                     }
 
-                  
+
                   if (type == "list") // Special case
                   {
                     std::string size_type = name;
@@ -543,7 +543,7 @@ namespace internal {
                       std::cerr << "Error line " << lineNumber << " of file" << std::endl;
                       return false;
                     }
-                    
+
                     TRY_TO_GENERATE_LIST_PROPERTY ("char", "int8", boost::int8_t);
                     else TRY_TO_GENERATE_LIST_PROPERTY ("uchar", "uint8", boost::uint8_t);
                     else TRY_TO_GENERATE_LIST_PROPERTY ("short", "int16", boost::int16_t);
@@ -564,7 +564,7 @@ namespace internal {
                     else TRY_TO_GENERATE_PROPERTY ("float", "float32", float);
                     else TRY_TO_GENERATE_PROPERTY ("double", "float64", double);
                   }
-                  
+
                   continue;
                 }
               else if (keyword == "comment")
@@ -585,7 +585,7 @@ namespace internal {
                       std::cerr << "Error line " << lineNumber << " of file" << std::endl;
                       return false;
                     }
-                
+
                   m_elements.push_back (PLY_element(type, number));
                 }
               // When end_header is reached, stop loop and begin reading points
@@ -599,7 +599,7 @@ namespace internal {
     ~PLY_reader ()
     {
     }
-  
+
   };
 
   template <class Reader, class T>
@@ -608,7 +608,7 @@ namespace internal {
     return r.assign(v, wrapper.name);
   }
 
-  
+
   template <std::size_t N>
   struct Filler
   {
@@ -651,7 +651,7 @@ namespace internal {
       get_value(r, std::get<0>(values), std::get<2>(wrappers));
     }
   };
-  
+
   template <typename OutputValueType,
             typename PropertyMap,
             typename Constructor,
@@ -665,7 +665,7 @@ namespace internal {
     PmapValueType new_value = call_functor<PmapValueType>(std::get<1>(current), values);
     put (std::get<0>(current), new_element, new_value);
   }
-  
+
   template <typename OutputValueType,
             typename PropertyMap,
             typename Constructor,
@@ -682,7 +682,7 @@ namespace internal {
     Filler<sizeof...(T)-1>::fill(element, values, current);
     PmapValueType new_value = call_functor<PmapValueType>(std::get<1>(current), values);
     put (std::get<0>(current), new_element, new_value);
-  
+
     process_properties (element, new_element, std::forward<NextPropertyBinder>(next),
                         std::forward<PropertyMapBinders>(properties)...);
   }
@@ -712,12 +712,12 @@ namespace internal {
   }
 
   } // namespace PLY
-  
+
 } // namespace internal
 
-  
+
   /// \endcond
-  
+
 
 /*
   \ingroup PkgPointSetProcessing3IOPly
@@ -761,7 +761,7 @@ bool read_ply_points_with_properties (std::istream& stream,
                                       PropertyHandler&& ... properties)
 {
   typedef typename value_type_traits<OutputIterator>::type OutputValueType;
-    
+
   if(!stream)
     {
       std::cerr << "Error: cannot open file" << std::endl;
@@ -769,13 +769,13 @@ bool read_ply_points_with_properties (std::istream& stream,
     }
 
   internal::PLY::PLY_reader reader;
-  
+
   if (!(reader.init (stream)))
   {
     stream.setstate(std::ios::failbit);
     return false;
   }
-  
+
   for (std::size_t i = 0; i < reader.number_of_elements(); ++ i)
   {
     internal::PLY::PLY_element& element = reader.element(i);
@@ -811,12 +811,12 @@ bool read_ply_points_with_properties (std::istream& stream,
                                       PropertyHandler&& ... properties)
 {
   typedef typename value_type_traits<OutputIterator>::type OutputValueType;
- 
+
   return read_ply_points_with_properties<OutputValueType>
     (stream, output, std::forward<PropertyHandler>(properties)...);
 }
 /// \endcond
-  
+
 /**
    \ingroup PkgPointSetProcessing3IOPly
    Reads points (positions + normals, if available) from a .ply
@@ -863,7 +863,7 @@ bool read_ply_points(std::istream& stream,
   using boost::choose_param;
 
   typedef Point_set_processing_3::Fake_point_range<OutputIteratorValueType> PointRange;
-  
+
   // basic geometric types
   typedef typename Point_set_processing_3::GetPointMap<PointRange, CGAL_BGL_NP_CLASS>::type PointMap;
   typedef typename Point_set_processing_3::GetNormalMap<PointRange, CGAL_BGL_NP_CLASS>::type NormalMap;
@@ -884,7 +884,7 @@ bool read_ply_points(std::istream& stream,
 }
 
 
-/// \cond SKIP_IN_MANUAL  
+/// \cond SKIP_IN_MANUAL
 // variant with default NP
 template <typename OutputIteratorValueType,
           typename OutputIterator>
@@ -982,7 +982,7 @@ bool read_ply_points_and_normals(std::istream& stream, ///< input stream.
      CGAL::parameters::normal_map (normal_map));
 }
 
-// deprecated API  
+// deprecated API
 template <typename OutputIteratorValueType,
           typename OutputIterator,
           typename PointMap

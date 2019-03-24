@@ -19,8 +19,8 @@
  * File: MemoryPool.h
  * Synopsis:
  *      a memory pool template class.
- * 
- * Written by 
+ *
+ * Written by
  *       Zilin Du <zilin@cs.nyu.edu>
  *       Chee Yap <yap@cs.nyu.edu>
  *       Sylvain Pion <pion@cs.nyu.edu>
@@ -50,7 +50,7 @@
 #include <CGAL/assertions.h>
 #include <vector>
 
-namespace CORE { 
+namespace CORE {
 
 #define CORE_EXPANSION_SIZE 1024
 template< class T, int nObjects = CORE_EXPANSION_SIZE >
@@ -97,7 +97,7 @@ public:
 #endif
     return memPool;
   }
- 
+
 private:
    Thunk* head; // next available block in the pool
   std::vector<void*> blocks;
@@ -150,7 +150,7 @@ void* MemoryPool< T, nObjects >::allocate(std::size_t) {
 
 template< class T, int nObjects >
 void MemoryPool< T, nObjects >::free(void* t) {
-   CGAL_assertion(t != 0);     
+   CGAL_assertion(t != 0);
    if (t == 0) return; // for safety
    if(blocks.empty()){
      std::cerr << typeid(T).name() << std::endl;

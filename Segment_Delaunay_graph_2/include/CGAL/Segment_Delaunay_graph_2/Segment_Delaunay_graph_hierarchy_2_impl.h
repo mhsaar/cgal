@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -41,7 +41,7 @@ void
 Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx>::
 init_hierarchy(const Geom_traits& gt)
 {
-  hierarchy[0] = this; 
+  hierarchy[0] = this;
   for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
     hierarchy[i] = new Base(gt);
   }
@@ -51,7 +51,7 @@ template<class Gt, class ST, class STag, class D_S, class LTag, class SDGLx>
 Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx>::
 Segment_Delaunay_graph_hierarchy_2(const Gt& gt)
   : Base(gt)
-{ 
+{
   init_hierarchy(gt);
 }
 
@@ -62,11 +62,11 @@ Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx>::
 Segment_Delaunay_graph_hierarchy_2
 (const Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx> &sdg)
     : Base(sdg.geom_traits())
-{ 
+{
   // create an empty triangulation to be able to delete it !
   init_hierarchy(sdg.geom_traits());
   copy(sdg);
-} 
+}
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
@@ -78,7 +78,7 @@ Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx>::
 ~Segment_Delaunay_graph_hierarchy_2()
 {
   clear();
-  for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i){ 
+  for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i){
     delete hierarchy[i];
   }
 }
@@ -469,7 +469,7 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
   // segments must have a conflict with at least one vertex
   CGAL_assertion( s == NEGATIVE );
 
-  // we are in conflict with a Voronoi vertex; start from that and 
+  // we are in conflict with a Voronoi vertex; start from that and
   // find the entire conflict region and then repair the diagram
   List l;
   Face_map fm;
@@ -561,7 +561,7 @@ Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx>::
 insert_segment_on_point(const Storage_site_2& ss,
 			const Vertex_handle& v,
 			int level, int which)
-{  
+{
   // inserts the segment represented by ss in the case where this
   // segment goes through a point which has already been inserted and
   // corresponds to the vertex handle v
@@ -766,7 +766,7 @@ remove(const Vertex_handle& v)
   if ( is_point ) {
     h1 = ss.point();
   } else {
-    CGAL_assertion( ss.is_segment() );   
+    CGAL_assertion( ss.is_segment() );
     h1 = ss.source_of_supporting_site();
     h2 = ss.target_of_supporting_site();
   }
@@ -833,7 +833,7 @@ nearest_neighbor(const Site_2& t,
   int level  = sdg_hierarchy_2__maxlevel;
 
   // find the highest level with enough vertices
-  while ( hierarchy[--level]->number_of_vertices() 
+  while ( hierarchy[--level]->number_of_vertices()
 	  < sdg_hierarchy_2__minsize ) {
     if ( !level ) break;  // do not go below 0
   }
@@ -843,7 +843,7 @@ nearest_neighbor(const Site_2& t,
 
   while ( level > 0 ) {
     vnear[level] = nearest =
-      hierarchy[level]->nearest_neighbor(t, nearest);  
+      hierarchy[level]->nearest_neighbor(t, nearest);
 
     CGAL_assertion( !hierarchy[level]->is_infinite(vnear[level]) );
     CGAL_assertion( vnear[level] != Vertex_handle() );
@@ -899,7 +899,7 @@ copy(const Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx> &sdg)
   // compute a map at lower level
   std::map< Vertex_handle, Vertex_handle > V;
   {
-    for(Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+    for(Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
 	it != hierarchy[0]->finite_vertices_end(); ++it) {
       if ( it->up() != Vertex_handle() ) {
 	V[ it->up()->down() ] = it;
@@ -908,7 +908,7 @@ copy(const Segment_Delaunay_graph_hierarchy_2<Gt,ST,STag,D_S,LTag,SDGLx> &sdg)
   }
   {
     for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
-      for(Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+      for(Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	  it != hierarchy[i]->finite_vertices_end(); ++it) {
 	// down pointer goes in original instead in copied triangulation
 	it->set_down(V[it->down()]);
@@ -975,14 +975,14 @@ is_valid(bool verbose, int level) const
     }
   }
   //verify that lower level has no down pointers
-  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
        it != hierarchy[0]->finite_vertices_end(); ++it) {
     result = result && ( it->down() == Vertex_handle() );
   }
 
   //verify that other levels has down pointer and reciprocal link is fine
   for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
-    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	 it != hierarchy[i]->finite_vertices_end(); ++it) {
       Vertex_handle vit(it);
       result = result && ( it->down()->up() == vit );

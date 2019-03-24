@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel        <seel@mpi-sb.mpg.de>
 //                 Miguel Granados     <granados@mpi-sb.mpg.de>
@@ -80,8 +80,8 @@ class Volume_base  {
     const Mark& mark() const { return mark_; }
 
     Object_list& shell_entry_objects() { return shell_entry_objects_; }
-    const Object_list& shell_entry_objects() const { 
-      return shell_entry_objects_; 
+    const Object_list& shell_entry_objects() const {
+      return shell_entry_objects_;
     }
 
     Shell_entry_iterator shells_begin()
@@ -94,7 +94,7 @@ class Volume_base  {
     { return shell_entry_objects_.end(); }
 
     bool is_valid( bool verb = false, int level = 0) const {
-      
+
       Verbose_ostream verr(verb);
       verr << "begin CGAL::SNC_items<...>::Volume_base::is_valid( verb=true, "
 	"level = " << level << "):" << std::endl;

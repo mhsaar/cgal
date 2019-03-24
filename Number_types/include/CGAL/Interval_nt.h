@@ -1,9 +1,9 @@
-// Copyright (c) 1998-2005,2007  
+// Copyright (c) 1998-2005,2007
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -37,7 +37,7 @@
 // towards -infinity, it's enough to take the opposite of some of the operand,
 // and the opposite of the result (see operator+, operator*,...).
 
-// TODO : 
+// TODO :
 // - test whether stopping constant propagation only in functions taking
 //   double as arguments, improves performance.
 
@@ -711,13 +711,13 @@ struct Max <Interval_nt<Protected> >
     }
 };
 
-template<bool Protected> inline 
+template<bool Protected> inline
 Interval_nt<Protected> min BOOST_PREVENT_MACRO_SUBSTITUTION(
 const Interval_nt<Protected> & x,
 const Interval_nt<Protected> & y){
   return CGAL::Min<Interval_nt<Protected> > ()(x,y);
 }
-template<bool Protected> inline 
+template<bool Protected> inline
 Interval_nt<Protected> max BOOST_PREVENT_MACRO_SUBSTITUTION(
 const Interval_nt<Protected> & x,
 const Interval_nt<Protected> & y){
@@ -940,7 +940,7 @@ template< bool B > class Real_embeddable_traits< Interval_nt<B> >
     typedef Interval_nt<B>  Type;
   typedef Uncertain<CGAL::Sign> Sign;
   typedef Uncertain<bool> Boolean;
-  typedef Uncertain<CGAL::Comparison_result> Comparison_result; 
+  typedef Uncertain<CGAL::Comparison_result> Comparison_result;
 
     class Abs
       : public CGAL::cpp98::unary_function< Type, Type > {
@@ -1019,7 +1019,7 @@ class Algebraic_structure_traits< Interval_nt<B> >
     typedef Interval_nt<B>      Type;
     typedef Tag_false           Is_exact;
     typedef Tag_true            Is_numerical_sensitive;
-    typedef Uncertain<bool>     Boolean; 
+    typedef Uncertain<bool>     Boolean;
 
     class Is_zero
       : public CGAL::cpp98::unary_function< Type, Boolean > {
@@ -1081,7 +1081,7 @@ class Algebraic_structure_traits< Interval_nt<B> >
   public:
     Boolean operator()( const Type& x, const Type&) const {
       return ! Is_zero()(x);
-    } 
+    }
     // second operator computing q
     Boolean operator()( const Type& x, const Type& y, Type& q) const {
       if (! Is_zero()(x) )
@@ -1089,7 +1089,7 @@ class Algebraic_structure_traits< Interval_nt<B> >
       return Boolean(true);
     }
   };
-  
+
 };
 
 
@@ -1131,16 +1131,16 @@ struct Coercion_traits_interval_nt<A, Interval_nt<P>, Tag_true>{
 template< bool B >
 class Interval_traits< Interval_nt<B> >
   : public internal::Interval_traits_base< Interval_nt<B> >  {
-public: 
-  typedef Interval_traits<Interval_nt<B> > Self; 
-  typedef Interval_nt<B> Interval; 
-  typedef double Bound; 
-  typedef CGAL::Tag_false With_empty_interval; 
-  typedef CGAL::Tag_true  Is_interval; 
+public:
+  typedef Interval_traits<Interval_nt<B> > Self;
+  typedef Interval_nt<B> Interval;
+  typedef double Bound;
+  typedef CGAL::Tag_false With_empty_interval;
+  typedef CGAL::Tag_true  Is_interval;
 
  struct Construct :public CGAL::cpp98::binary_function<Bound,Bound,Interval>{
     Interval operator()( const Bound& l,const Bound& r) const {
-      CGAL_precondition( l < r ); 
+      CGAL_precondition( l < r );
       return Interval(l,r);
     }
   };
@@ -1159,7 +1159,7 @@ public:
 
   struct Width :public CGAL::cpp98::unary_function<Interval,Bound>{
     Bound operator()( const Interval& a ) const {
-      return width(a); 
+      return width(a);
     }
   };
 
@@ -1168,7 +1168,7 @@ public:
       return (Lower()(a)+Upper()(a))/2.0;
     }
   };
-    
+
   struct Norm :public CGAL::cpp98::unary_function<Interval,Bound>{
     Bound operator()( const Interval& a ) const {
       return magnitude(a);
@@ -1198,39 +1198,39 @@ public:
       return a.is_same(b);
     }
   };
-    
+
   struct Overlap :public CGAL::cpp98::binary_function<Interval,Interval,bool>{
     bool operator()( const Interval& a, const Interval& b ) const {
       return a.do_overlap(b);
     }
   };
-    
+
   struct Subset :public CGAL::cpp98::binary_function<Interval,Interval,bool>{
     bool operator()( const Interval& a, const Interval& b ) const {
-      return Lower()(b) <= Lower()(a) && Upper()(a) <= Upper()(b) ;  
+      return Lower()(b) <= Lower()(a) && Upper()(a) <= Upper()(b) ;
     }
   };
-    
+
   struct Proper_subset :public CGAL::cpp98::binary_function<Interval,Interval,bool>{
     bool operator()( const Interval& a, const Interval& b ) const {
-      return Subset()(a,b) && ! Equal()(a,b); 
+      return Subset()(a,b) && ! Equal()(a,b);
     }
   };
-    
+
   struct Hull :public CGAL::cpp98::binary_function<Interval,Interval,Interval>{
     Interval operator()( const Interval& a, const Interval& b ) const {
       BOOST_USING_STD_MAX();
       BOOST_USING_STD_MIN();
-      return Interval( 
+      return Interval(
           std::make_pair(
-              min BOOST_PREVENT_MACRO_SUBSTITUTION (Lower()(a),b.inf()), 
+              min BOOST_PREVENT_MACRO_SUBSTITUTION (Lower()(a),b.inf()),
               max BOOST_PREVENT_MACRO_SUBSTITUTION (Upper()(a),b.sup())));
     }
   };
-    
-  
-//  struct Empty is Null_functor 
-  
+
+
+//  struct Empty is Null_functor
+
   struct Intersection :public CGAL::cpp98::binary_function<Interval,Interval,Interval>{
     Interval operator()( const Interval& a, const Interval& b ) const {
       BOOST_USING_STD_MAX();

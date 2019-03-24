@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -52,7 +52,7 @@ public:
   inline
   double bound() const { return B; }
 
-  inline 
+  inline
   void set_bound(const double bound) { B = bound; }
 
   class Is_bad
@@ -62,10 +62,10 @@ public:
     const Geom_traits& traits;
   public:
     typedef typename Tr::Point Point_2;
-      
+
     Is_bad(const double bound, const Geom_traits& traits)
       : B(bound), traits(traits) {}
-      
+
     Mesh_2::Face_badness operator()(const Quality q) const
     {
       if( q < B )
@@ -84,9 +84,9 @@ public:
       typedef typename Geom_traits::Compute_squared_distance_2
 	Compute_squared_distance_2;
 
-      Compute_area_2 area_2 = 
+      Compute_area_2 area_2 =
         traits.compute_area_2_object();
-      Compute_squared_distance_2 squared_distance = 
+      Compute_squared_distance_2 squared_distance =
 	traits.compute_squared_distance_2_object();
 
       const Point_2& pa = fh->vertex(0)->point();

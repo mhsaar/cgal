@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Andreas Fabri <Andreas.Fabri@geometryfactory.com>
 //                 Laurent Rineau <Laurent.Rineau@geometryfactory.com>
@@ -49,7 +49,7 @@ namespace Qt {
 // forward declaration
 class GraphicsViewNavigation;
 
-class CGAL_QT_EXPORT DemosMainWindow : public QMainWindow 
+class CGAL_QT_EXPORT DemosMainWindow : public QMainWindow
 {
   Q_OBJECT
 
@@ -66,7 +66,7 @@ public:
 
   virtual void open(QString)
   {
-    std::cerr << "You should implement open(QString);" << std::endl; 
+    std::cerr << "You should implement open(QString);" << std::endl;
   }
 
 public:

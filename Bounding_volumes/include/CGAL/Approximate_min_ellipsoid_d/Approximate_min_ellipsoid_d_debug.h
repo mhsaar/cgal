@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Kaspar Fischer <fischerk@inf.ethz.ch>
 
@@ -82,14 +82,14 @@ namespace CGAL {
       Streams channels;           // a collection of pairs (k,v) where
                                   // k is the file-name and v is the
                                   // (open) stream associated with k
-  
+
     private: // (Construction and destruction are private to prevent
   	   // more than one instantiation.)
-  
+
       Logger() {}
       Logger(const Logger&);
       Logger& operator=(const Logger&);
-  
+
       ~Logger()
       {
         // we walk through the list of all opened files and close them:
@@ -99,9 +99,9 @@ namespace CGAL {
   	delete (*it).second;
         }
       }
-      
+
     public: // access and routines:
-  
+
       static Logger& instance()
       // Returns a reference to the only existing instance of this class:
       {
@@ -112,7 +112,7 @@ namespace CGAL {
         static Logger instance;
         return instance;
       }
-  
+
       void log(const char *channel,const std::string& msg)
       // If this is the first call to log with string channel as the
       // first parameter, then the file with name channel.log is
@@ -122,7 +122,7 @@ namespace CGAL {
       {
         const std::string name(channel);
         Streams::iterator it = channels.find(name);
-        
+
         // have we already opened this file?
         if (it != channels.end()) {
   	// If so, then just append the message:
@@ -181,7 +181,7 @@ namespace CGAL {
       }
       return t1;
     }
-    
+
     class Timer
       // A singleton class which maintains a collection of named timers.
       // (A class is called a "singleton" if at most one instance of it
@@ -198,13 +198,13 @@ namespace CGAL {
     {
     private: // (Construction and destruction are private to prevent
   	   // more than one instantiation.)
-  
+
       Timer() {}
       Timer(const Timer&);
       Timer& operator=(const Timer&);
-  
+
     public: // access and routines:
-  
+
       static Timer& instance()
       // Returns a reference to the only existing instance of this class:
       {
@@ -215,33 +215,33 @@ namespace CGAL {
         static Timer instance;
         return instance;
       }
-  
+
       void start(const char *timer_name)
       {
         // fetch current usage:
         rusage now;
         int status = getrusage(RUSAGE_SELF,&now);
         CGAL_assertion(status == 0);
-        
+
         // save it:
         timers[std::string(timer_name)] = now.ru_utime;
       }
-  
+
       float lapse(const char *name)
       {
         // assert that start(name) has been called before:
         CGAL_assertion(timers.find(std::string(name)) != timers.end());
-        
+
         // get current usage:
         rusage now;
         int status = getrusage(RUSAGE_SELF,&now);
         CGAL_assertion(status == 0);
-        
+
         // compute elapsed usage:
         now.ru_utime -= (*timers.find(std::string(name))).second;
         return now.ru_utime.tv_sec + now.ru_utime.tv_usec * 1e-6;
       }
-      
+
     private: // private members:
       typedef std::map<std::string,timeval> Timers;
       Timers timers;              // a collection of pairs (k,v) where
@@ -261,14 +261,14 @@ namespace CGAL {
       strm << t;
       return strm.str();
     }
-    
+
     class Eps_export_2 {
     // An instance of the following class accepts circles and ellipses
     // and procudes an Enhanced-PostScript figure.
     public:
       enum Stroke_mode { Solid=0, Solid_filled=1, Dashed=2 };
       enum Label_mode { None, Angle, Random_angle };
-      
+
     private:
       std::vector<double> bb;            // bounding box
       Stroke_mode bm;                    // current stroke mode
@@ -280,18 +280,18 @@ namespace CGAL {
       bool adjust_bb;
       double zoom;
       std::string filename;
-      boost::rand48 rng;  
+      boost::rand48 rng;
 
     public: // construction and destruction:
-      
+
       // Begins exporting to file filename.  Sets the current stroke mode
       // to Solid and the current label-mode to Random_angle.
-      Eps_export_2(std::string filename, double zoom, int /* seed */ = 0) 
-	: bb(4,0.0), bm(Solid), lm(Random_angle), count(1), 
+      Eps_export_2(std::string filename, double zoom, int /* seed */ = 0)
+	: bb(4,0.0), bm(Solid), lm(Random_angle), count(1),
 	  next_label(default_label(1)), adjust_bb(true),
 	  zoom(zoom), filename(filename)
       {}
-      
+
       // Ends exporting and closes the file.
       ~Eps_export_2()
       {
@@ -481,7 +481,7 @@ namespace CGAL {
 	  << "%" << endl
 	  << "%%EndProlog" << endl
 	  << "%%Page: 1 1" << endl;
-	  
+	
 	// write content:
 	f << "gsave" << endl
 	  << body.str()
@@ -492,27 +492,27 @@ namespace CGAL {
 	// write footer:
 	f.close();
       }
-      
+
     public: // modifiers:
       // Sets the stroke mode for the next objects.
       void set_stroke_mode(Stroke_mode m)
       {
 	bm = m;
       }
-      
+
       // Sets the labelmode for the next objects.
       void set_label_mode(Label_mode m)
       {
 	lm = m;
       }
-      
+
       // Sets the label for the next object.  (This only makes sense if
       // the label mode for the next object will be different from None.)
       void set_label(const std::string& l)
       {
 	next_label = l;
       }
-      
+
       // Sets the angle for the next object drawn in mode Angle or
       // Random_angle.  (So you can temporarily overwrite the random
       // angle.)
@@ -520,13 +520,13 @@ namespace CGAL {
       {
 	next_angle = angle;
       }
-      
+
       // Enable or disable automatic adjusting of the bounding box.
       void enlarge_bounding_box(bool active)
       {
 	adjust_bb = active;
       }
-      
+
       // Renders the line from (x,y) to (u,v) in the current stroke
       // and label mode.
       //
@@ -550,7 +550,7 @@ namespace CGAL {
 	if (colored)
 	  body << "grestore" << std::endl;
       }
-      
+
       // Renders the circle with center (x,y) and radius r in
       // the current stroke and label mode.  All coordinates must be of
       // type double.
@@ -588,7 +588,7 @@ namespace CGAL {
 	// update counter and label:
 	next_label = default_label(++count);
       }
-      
+
       // Renders the centrally symmetric ellipse x^T M x <= 1 with M =
       // [[a,h],[h,b]] in the current stroke and label mode.
       void write_cs_ellipse(double a,double b,double h)
@@ -611,7 +611,7 @@ namespace CGAL {
 	adjust_bounding_box(r,r);
 
 	// draw the ellipse:
-	body << "gsave" << endl 
+	body << "gsave" << endl
 	     << "  " << a << ' ' << b << ' ' << h << " cellipse" << endl;
 	if (bm == Solid_filled)
 	  body << "  gsave 0.6 setgray eofill grestore" << endl;
@@ -636,7 +636,7 @@ namespace CGAL {
       }
 
       // Renders the ellipse
-      // 
+      //
       //    E = { x | x^T M x + x^T m + mu <= 0 }
       //
       // where
@@ -665,7 +665,7 @@ namespace CGAL {
 	// draw bounding box:
 	body << "newpath " << (std::min)(hw+hoff,-hw+hoff) << " "
 	     << (std::min)(vw+voff,-vw+voff) << " moveto "
-	     << (std::max)(hw+hoff,-hw+hoff) << " " 
+	     << (std::max)(hw+hoff,-hw+hoff) << " "
 	     << (std::min)(vw+voff,-vw+voff) << " lineto "
 	     << (std::max)(hw+hoff,-hw+hoff) << " "
 	     << (std::max)(vw+voff,-vw+voff) << " lineto "
@@ -710,7 +710,7 @@ namespace CGAL {
 	  bb[3] = (std::max)(y,bb[3]);
 	}
       }
-      
+
     private: // utilities:
 
       std::pair<double,double> find_roots(double a,double b,double c)
@@ -721,15 +721,15 @@ namespace CGAL {
 	  sd = -sd;
 	return std::pair<double,double>( (sd-b)/(2*a), 2*c/(sd-b) );
       }
-      
+
       static std::string default_label(int count)
       {
 	return tostr(count);
       }
     };
-    
+
   } // namespace Approximate_min_ellipsoid_d_impl
-  
+
 } // namespace CGAL
 
 #endif // CGAL_APPROX_MIN_ELL_D_DEBUG_H

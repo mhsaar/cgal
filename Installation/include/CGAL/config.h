@@ -386,7 +386,8 @@
    || defined(_M_ALPHA) || defined(_WIN64)
 #  define CGAL_LITTLE_ENDIAN
 #else
-#  error Unknown endianness
+// Default to little endian for all other archtechtures.
+#  define CGAL_LITTLE_ENDIAN
 #endif
 
 
@@ -550,7 +551,7 @@ using std::max;
 #  define CGAL_NORETURN  __attribute__ ((__noreturn__))
 #elif defined (_MSC_VER)
 #  define CGAL_NORETURN __declspec(noreturn)
-#else  
+#else
 #  define CGAL_NORETURN
 #endif
 

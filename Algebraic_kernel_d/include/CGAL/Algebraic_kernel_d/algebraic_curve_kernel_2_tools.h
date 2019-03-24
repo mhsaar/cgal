@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Kerber <mkerber@mpi-inf.mpg.de>
 //
@@ -43,7 +43,7 @@ namespace CGAL {
 
 namespace internal {
 
-/* 
+/*
  * \brief Function for merging two sets
  *
  * This function is similar to the \c std::union_set operation.
@@ -64,7 +64,7 @@ set_union_with_source(InputIterator1 first_begin,
                       OutputIterator1 merged_values,
                       OutputIterator2 merged_values_info,
                       BinaryFunction compare) {
-      
+
     InputIterator1 first_it=first_begin;
     InputIterator2 second_it=second_begin;
 
@@ -133,8 +133,8 @@ Poly_2 poly_non_vanish_leading_term(Algebraic_kernel_d_1* kernel,
 /*!
  * \brief finds a Rational value left of an Algebraic real alpha
  */
-template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound 
-  bound_left_of(const AlgebraicKernel_1* kernel, 
+template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound
+  bound_left_of(const AlgebraicKernel_1* kernel,
 		typename AlgebraicKernel_1::Algebraic_real_1 ar) {
 
     typedef AlgebraicKernel_1 Algebraic_kernel_d_1;
@@ -152,10 +152,10 @@ template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound
         break;
     }
     case(CGAL::NEGATIVE): {
-        Algebraic_real_1 small_value 
+        Algebraic_real_1 small_value
 	  = kernel->construct_algebraic_real_1_object()
 	  (Bound(2)*kernel->approximate_absolute_1_object()(ar,1).first);
-    
+
         return kernel->bound_between_1_object()(small_value,ar);
         // = small_value.rational_between(ar);
         //= ar.low()-1;
@@ -168,29 +168,29 @@ template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound
 /*!
  * \brief finds a Rational value rightt of an Algebraic real alpha
  */
-template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound 
-  bound_right_of(const AlgebraicKernel_1* kernel, 
+template<typename AlgebraicKernel_1> typename AlgebraicKernel_1::Bound
+  bound_right_of(const AlgebraicKernel_1* kernel,
 		 typename AlgebraicKernel_1::Algebraic_real_1 ar) {
-    
+
     return -bound_left_of(kernel,-ar);
 
 }
 
 
 /*!
- * \brief Produces intermediate rational values for a list of 
+ * \brief Produces intermediate rational values for a list of
  * algebraic reals.
  *
- * For a list of Algebraic real values with \c n elements, a list with 
- * <tt>n+1</tt> elements of rational values is given such that the 
+ * For a list of Algebraic real values with \c n elements, a list with
+ * <tt>n+1</tt> elements of rational values is given such that the
  * <tt>i</tt>th element is
  * between the <tt>i</tt>th and the <tt>(i+1)</tt>th element of the input list
  *
  * The input list must be in increasing order
  */
 template<typename AlgebraicKernel_1,
-         typename InputIterator, 
-         typename OutputIterator> 
+         typename InputIterator,
+         typename OutputIterator>
   OutputIterator find_intermediate_values(const AlgebraicKernel_1* kernel,
 					  InputIterator start,
 					  InputIterator end,
@@ -199,7 +199,7 @@ template<typename AlgebraicKernel_1,
       ((::boost::is_same
 	<typename AlgebraicKernel_1::Algebraic_real_1,
 	typename std::iterator_traits<InputIterator>::value_type >::value));
-    
+
     typedef typename AlgebraicKernel_1::Bound Bound;
     if(start==end) {
 	// Empty vector, create one element
@@ -207,12 +207,12 @@ template<typename AlgebraicKernel_1,
 	return output;
     }
     *output++=bound_left_of(kernel,*start);
-      
+
     InputIterator it_1(start),it_2(start);
     ++it_2;
     while(it_2 != end) {
 	CGAL_assertion(it_1->compare(*it_2)==CGAL::SMALLER);
-	Bound beta 
+	Bound beta
 	  = kernel->bound_between_1_object()(*it_1,*it_2);
 	*output++=beta;
 	++it_1;
@@ -222,14 +222,14 @@ template<typename AlgebraicKernel_1,
 
     return output;
 }
-  
+
 
 
 // Used internally for zero_test_bivariate
 
 namespace for_zero_test_bivariate {
 
-template<typename Poly_coer_1,typename Polynomial_1> 
+template<typename Poly_coer_1,typename Polynomial_1>
   void cast_back_utcf(const Poly_coer_1& p,Polynomial_1& q) {
   // We can assume that both template arguments are polynomial types
   typedef CGAL::Fraction_traits<Poly_coer_1> FT;
@@ -253,11 +253,11 @@ template<typename A> void cast_back_utcf(const A& p, A& q) {
 
 } // of namespace for_zero_test_bivariate
 
-/* 
+/*
  * \brief  Symbolic zero test.
  *
- * Checks whether <tt>h(x,y(x))=0</tt>, where <tt>y(x)</tt> is a rational 
- * expression in terms of \c x, i.e. <tt>y=p/q</tt> with <tt>p,q</tt> 
+ * Checks whether <tt>h(x,y(x))=0</tt>, where <tt>y(x)</tt> is a rational
+ * expression in terms of \c x, i.e. <tt>y=p/q</tt> with <tt>p,q</tt>
  * univariate polynomials
  */
 template<typename AlgebraicCurveKernel_2>
@@ -271,12 +271,12 @@ template<typename AlgebraicCurveKernel_2>
     bool result;
     typedef typename AlgebraicCurveKernel_2::Polynomial_1 Polynomial_1;
 #if !CGAL_ACK_USE_NO_REDUCTION_MODULO_RESULTANT
-    
+
     //typedef typename AlgebraicCurveKernel_2::Algebraic_real_1 Algebraic_real_1;
     typedef typename AlgebraicCurveKernel_2::Bound Bound;
     typedef typename AlgebraicCurveKernel_2::Coefficient Coefficient;
     typedef typename AlgebraicCurveKernel_2::Polynomial_2 Polynomial_2;
-    
+
     typedef CGAL::Coercion_traits<Bound,Coefficient> Coercion;
     typedef typename Coercion::Type Coercion_type;
     typedef typename CGAL::Polynomial_traits_d<Polynomial_2>
@@ -298,9 +298,9 @@ template<typename AlgebraicCurveKernel_2>
        (q.begin(),cast),
        boost::make_transform_iterator
        (q.end(),cast));
-    
+
     if(general) {
-    
+
 
         Poly_coer_1 modulus = typename CGAL::Polynomial_traits_d<Poly_coer_1>
 	::Construct_polynomial()
@@ -308,15 +308,15 @@ template<typename AlgebraicCurveKernel_2>
              (alpha.polynomial().begin(),cast),
              boost::make_transform_iterator
              (alpha.polynomial().end(),cast));
-        
+
 /*
   #if CGAL_ACK_DEBUG_FLAG
   CGAL_ACK_DEBUG_PRINT << "Mod: " << modulus << std::endl;
-  #endif 
+  #endif
 */
         p_rat=CGAL::mod(p_rat,modulus);
         q_rat=CGAL::mod(q_rat,modulus);
-        
+
         int n = CGAL::degree(h,1);
         // Create the powers of p and q mod modulus
 /*
@@ -412,14 +412,14 @@ template<typename AlgebraicCurveKernel_2>
 #warning Uses no reduction modulo resultant!
     Polynomial_1 h_0=CGAL::evaluate_homogeneous(h,p,q);
     result= kernel->is_zero_at_1_object() (h_0,alpha);
-#endif      
-    
+#endif
+
     return result;
-    
+
 }
 
 
-	  
+	
 } // namespace internal
 
 

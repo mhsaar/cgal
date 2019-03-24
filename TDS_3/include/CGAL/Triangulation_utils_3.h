@@ -36,7 +36,7 @@ struct Triangulation_utils_base_3
 {
   static const char tab_next_around_edge[4][4];
   static const int tab_vertex_triple_index[4][3];
-  
+
   // copied from Triangulation_utils_2.h to avoid package dependency
   static const int ccw_map[3];
   static const int cw_map[3];
@@ -70,7 +70,7 @@ const int Triangulation_utils_base_3<T>::cw_map[3] = {2, 0, 1};
 struct Triangulation_utils_3
   : public Triangulation_utils_base_3<>
 {
-  static int ccw(const int i) 
+  static int ccw(const int i)
     {
       CGAL_triangulation_precondition( i >= 0 && i < 3);
       return ccw_map[i];

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Kaspar Fischer <fischerk@inf.ethz.ch>
 
@@ -35,7 +35,7 @@
 namespace CGAL {
 
   namespace Appel_impl {
-    
+
     // Computes the inverse of the positive definite (dxd)-matrix A
     // into Ai, by using the Cholesky decomposition of A. All three
     // iterator template parameters must be random access iterators of
@@ -105,7 +105,7 @@ namespace CGAL {
 	  A[j+i*d] = sum/A[j+j*d];
 	}
       }
-    
+
       // Finally, we calculate A^{-1} = (L^{-1})^T L^{-1} into Ai:
       for (int i=0; i<d; ++i)
 	for (int j=0; j<=i; ++j) {
@@ -136,7 +136,7 @@ namespace CGAL {
   template<bool Embed,class Traits>
   void Khachiyan_approximation<Embed,Traits>::compute_M_of_x()
   // Computes into t the matrix
-  // 
+  //
   //    M(x) = sum(x_i p_i p_i^T,i=0..(n-1)).
   //
   // Complexity: O(n d^2)
@@ -301,12 +301,12 @@ namespace CGAL {
     // Finally, we compute the excess of P[k] (w.r.t. x) into ex[k]
     // for all k:
     ex_max = 0;
-    for (int k=0; k<n; ++k) 
+    for (int k=0; k<n; ++k)
       if ((ex[k] = excess<FT>(tco.cartesian_begin(*P[k]))) > ex[ex_max])
 	ex_max = k;
     CGAL_APPEL_LOG("appel","  Largest excess after initialization is " <<
 	      to_double(ex[ex_max]) << "." << "\n");
-    
+
     // Accoding to Khachiyam (Lemma 3, eq. (2.20) in "Rounding of
     // polytopes in the real number model of computation"), the
     // following eps makes (*) hold:
@@ -355,7 +355,7 @@ namespace CGAL {
     CGAL_APPEL_LOG("appel","  The represenation error in m is: " <<
 	      to_double(max_error) << (max_error == FT(0)?
               " (zero)" : "") << "." << "\n");
-    
+
     return max_error;
   }
   #endif // CGAL_APPEL_ASSERTION_MODE
@@ -366,7 +366,7 @@ namespace CGAL {
   {
     // check preconditions:
     CGAL_APPEL_ASSERT(!check_tag(Exact_flag()) || tau == eps/((1+eps)*d-1));
-    CGAL_APPEL_ASSERT(!check_tag(Exact_flag()) || 
+    CGAL_APPEL_ASSERT(!check_tag(Exact_flag()) ||
 		      excess<ET>(tco.cartesian_begin(*P[k])) == (1+eps)*d);
     CGAL_USE(tau);
     const FT mu = eps / ((d-1)*(1+eps));
@@ -395,7 +395,7 @@ namespace CGAL {
     // it beta (p_k^T tmp)^2:
     ex_max = 0;
     for (int k=0; k<n; ++k) {
-      
+
       // compute gamma = (p_k^T tmp)^2:
       FT gamma(0);
       C_it pk = tco.cartesian_begin(*P[k]);
@@ -404,7 +404,7 @@ namespace CGAL {
       if (Embed)
 	gamma += tmp[d_P];
       gamma *= gamma;
-      
+
       // update ex[k]:
       ex[k] *= alpha;
       ex[k] -= beta*gamma;
@@ -427,9 +427,9 @@ namespace CGAL {
     // (1+eps) d holds for all m in {1,...,n}:
     eps = ex[ex_max]/d - 1;
     is_exact_eps_uptodate = false;
-    
+
     CGAL_APPEL_LOG("appel","  The current eps is: " << to_double(eps) << "\n");
-    
+
     // check if we have already reached an acceptable eps:
     if (eps <= desired_eps) // numerics say we're ready to stop...
       if (exact_epsilon() <= desired_eps) // ... and if it's o.k, we stop
@@ -487,7 +487,7 @@ namespace CGAL {
     CGAL_APPEL_LOG("appel",
 		   "Exact epsilon is " << eps_e << " (rounded: " <<
 		   eps_exact << ")." << "\n");
-    
+
     // check whether eps is negative (which under exact arithmetic is
     // not possible, and which we will take as a sign that the input
     // points are degenerate):
@@ -506,7 +506,7 @@ namespace CGAL {
     // debugging output:
     if (verbose) {
       CGAL_APPEL_IF_STATS(
-        std::cout << "The overall error in the matrix inverse is:   " 
+        std::cout << "The overall error in the matrix inverse is:   "
 	          << max_error_m_all << "." << "\n");
     }
 
@@ -542,7 +542,7 @@ namespace CGAL {
     return Appel_impl::pd_matrix_inverse<FT>(d-1, inverse,
 					     inverse, tmp.begin());
   }
-  
+
   template<bool Embed,class Traits>
   void Khachiyan_approximation<Embed,Traits>::print(std::ostream& o)
   {
@@ -601,7 +601,7 @@ namespace CGAL {
     }
     o << "]);" << "\n";
   }
-  
+
   template<bool Embed,class Traits>
   int Khachiyan_approximation<Embed,Traits>::write_eps() const
   {
@@ -629,10 +629,10 @@ namespace CGAL {
 			  to_double(mi[1+0*d]));
 
     // Output the approximation of the minellipse: Since the relaxed
-    // optimality conditions (*) hold, 
+    // optimality conditions (*) hold,
     //
     //      p_i^T M(x)^{-1} p_i <= (1+eps) d,
-    // 
+    //
     // we can divide by a:=(1+eps)d to get
     //
     //     p_i^T M(x)^{-1}/a p_i <= 1,
@@ -661,7 +661,7 @@ namespace CGAL {
     epsf.write_cs_ellipse(to_double(mi[0+0*d]/a),
 			  to_double(mi[1+1*d]/a),
 			  to_double(mi[1+0*d]/a));
-    
+
     return id++;
   }
 

@@ -51,7 +51,7 @@ public:
 
   typedef Cartesian_converter<typename K::Kernel, EK>  To_exact;
   typedef Cartesian_converter<EK, typename K::Kernel>  Back_from_exact;
-  
+
 
   Bare_point operator() ( const Weighted_point_3 & p,
 			  const Weighted_point_3 & q,

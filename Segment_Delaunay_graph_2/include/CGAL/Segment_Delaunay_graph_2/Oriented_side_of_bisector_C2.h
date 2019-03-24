@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -80,7 +80,7 @@ private:
 
   bool is_degenerate(const Site_2& s) const
   {
-    CGAL_precondition( s.is_segment() );    
+    CGAL_precondition( s.is_segment() );
     return same_points( s.source_site(), s.target_site() );
   }
 
@@ -95,7 +95,7 @@ private:
 
     if ( same_points(q, p1) ) { return SMALLER; }
     if ( same_points(q, p2) ) { return LARGER; }
-    
+
     return
       compare_distance_to_point(q.point(), p1.point(), p2.point());
   }
@@ -189,7 +189,7 @@ private:
 
 
     Point_2 qq = q.point();
-    
+
     Point_2 ssrc1 = s1.source(), strg1 = s1.target();
 
     Line_2 ls1 = compute_supporting_line(s1.supporting_site());
@@ -203,7 +203,7 @@ private:
     Line_2 ltrg2 = compute_perpendicular(ls2, strg2);
 
     // idx1 and idx2 indicate if q is to the left (source endpoint
-    // side), the right side (target endpoint side) or inside 
+    // side), the right side (target endpoint side) or inside
     // the band of s1 and s2 respectively; if q is on the boundary of
     // the band we assign it to the adjacent halfplane; for left
     // halfplane the value is -1; for the band the value is 0; for the

@@ -453,13 +453,13 @@ public:
   using Base::faces_begin;
   using Base::info;
   using Base::flip_diagonal;
-  using Base::twin; 
-  using Base::next; 
-  using Base::previous; 
-  using Base::source; 
-  using Base::target; 
-  using Base::point; 
-  using Base::segment; 
+  using Base::twin;
+  using Base::next;
+  using Base::previous;
+  using Base::source;
+  using Base::target;
+  using Base::point;
+  using Base::segment;
   using Base::face;
 
   /*{\Mtypes 2}*/
@@ -481,18 +481,18 @@ public:
       geninfo<VF_pair>::create(info(vn));
       geninfo<VF_pair>::access(info(vn)) = VF_pair(vo,f);
       #else
-      info(vn) = VF_pair(vo,f);      
+      info(vn) = VF_pair(vo,f);
       #endif
       CGAL_NEF_TRACEN("linking to org "<<PV(vn));
     }
 
     void operator()(Halfedge_handle hn, Halfedge_const_handle ho) const
-    { 
+    {
       #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
       geninfo<EF_pair>::create(info(hn));
       geninfo<EF_pair>::access(info(hn)) = EF_pair(ho,Po.face(ho));
       #else
-      info(hn) = EF_pair(ho,Po.face(ho));      
+      info(hn) = EF_pair(ho,Po.face(ho));
       #endif
       CGAL_NEF_TRACEN("linking to org "<<PE(hn));
     }
@@ -502,29 +502,29 @@ protected:
   Vertex_const_handle input_vertex(Vertex_const_handle v) const
   {
     #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
-    return geninfo<VF_pair>::const_access(CT.info(v)).first; 
+    return geninfo<VF_pair>::const_access(CT.info(v)).first;
     #else
-    return 
-      boost::any_cast<VF_pair>(CT.info(v)).first; 
+    return
+      boost::any_cast<VF_pair>(CT.info(v)).first;
     #endif
   }
 
   Halfedge_const_handle input_halfedge(Halfedge_const_handle e) const
   {
     #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
-    return geninfo<EF_pair>::const_access(CT.info(e)).first; 
+    return geninfo<EF_pair>::const_access(CT.info(e)).first;
     #else
-    return 
-      boost::any_cast<EF_pair>(CT.info(e)).first; 
+    return
+      boost::any_cast<EF_pair>(CT.info(e)).first;
     #endif
   }
 
   Face_const_handle input_face(Halfedge_const_handle e) const
-  { 
+  {
     #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
     return geninfo<EF_pair>::const_access(CT.info(e)).second;
     #else
-    return 
+    return
       boost::any_cast<EF_pair>(CT.info(e)).second;
     #endif
   }
@@ -589,13 +589,13 @@ protected:
         #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
         f = geninfo<VF_pair>::access(info(source(e))).second;
       else
-        f = geninfo<EF_pair>::access(info(e_from)).second;      
+        f = geninfo<EF_pair>::access(info(e_from)).second;
         #else
-        f = 
+        f =
           boost::any_cast<VF_pair>(info(source(e))).second;
       else
-        f = 
-          boost::any_cast<EF_pair>(info(e_from)).second;              
+        f =
+          boost::any_cast<EF_pair>(info(e_from)).second;
         #endif
       mark(e) = _DP.mark(f);
       #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO

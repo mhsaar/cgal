@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -128,7 +128,7 @@ public:
 		  const Site_2& q) const
   {
     return Base::operator()(p1, p2, q);
-  }  
+  }
 
 };
 

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
@@ -76,7 +76,7 @@ transition( )
 		    boost::bind(
 		      NT_converter<RT,ET>(),
 		      boost::bind(std::negate<RT>(), _1)));
-    
+
     // compute initial solution of phase II
     compute_solution(Is_nonnegative());
 
@@ -103,7 +103,7 @@ solution_numerator( ) const
     if (check_tag(Is_nonnegative()) || is_phaseI) {
       // standard form or phase I; it suffices to go
       // through the basic variables; all D- and c-entries
-      // are obtained through the appropriate iterators 
+      // are obtained through the appropriate iterators
       Index_const_iterator  i_it;
       Value_const_iterator  x_i_it, c_it;
 
@@ -134,20 +134,20 @@ solution_numerator( ) const
         z += s * *x_i_it; // endowed with a factor of d*d now
       }
     } else {
-      // nonstandard form and phase II, 
+      // nonstandard form and phase II,
       // take all original variables into account; all D- and c-entries
       // are obtained from the input data directly
       // order in i_it and j_it matches original variable order
       if (is_QP) {
 	// quadratic part
 	i=0;
-	for (Variable_numerator_iterator 
-	       i_it = this->original_variables_numerator_begin(); 
+	for (Variable_numerator_iterator
+	       i_it = this->original_variables_numerator_begin();
 	     i_it < this->original_variables_numerator_end(); ++i_it, ++i) {
 	  // do something only if *i_it != 0
 	  if (*i_it == et0) continue;
 	  s = et0; // contribution of i-th row
-	  Variable_numerator_iterator j_it = 
+	  Variable_numerator_iterator j_it =
 	    this->original_variables_numerator_begin();
 	  // half the off-diagonal contribution
 	  j=0;
@@ -163,7 +163,7 @@ solution_numerator( ) const
       }
       // linear part
       j=0; s = et0;
-      for (Variable_numerator_iterator 
+      for (Variable_numerator_iterator
 	     j_it = this->original_variables_numerator_begin();
 	   j_it < this->original_variables_numerator_end(); ++j_it, ++j)
 	s +=  et2 * ET(*(qp_c+j)) * *j_it;
@@ -183,8 +183,8 @@ pivot_step( )
 {
     ++m_pivots;
 
-    
-  
+
+
     // diagnostic output
     CGAL_qpe_debug {
         vout2 << std::endl
@@ -192,31 +192,31 @@ pivot_step( )
               << "Pivot Step" << std::endl
               << "==========" << std::endl;
     }
-  
-  
+
+
     vout  << "[ phase " << ( is_phaseI ? "I" : "II")
 	  << ", iteration " << m_pivots << " ]" << std::endl;
-    
-	    
+
+	
     // pricing
     // -------
     pricing();
 
-	    
+	
     // check for optimality
     if ( j < 0) {
 
         if ( is_phaseI) {                               // phase I
 	    // since we no longer assume full row rank and subsys assumption
 	    // we have to strengthen the precondition for infeasibility
-            if (this->solution_numerator() > et0) {    
+            if (this->solution_numerator() > et0) {
 	      // problem is infeasible
 	        m_phase  = 3;
 	        m_status = QP_INFEASIBLE;
-	        
+	
 		vout << "  ";
 		vout << "problem is INFEASIBLE" << std::endl;
-	       
+	
 	    } else {  // Drive/remove artificials out of basis
 	        expel_artificial_variables_from_basis();
 	        transition();
@@ -226,20 +226,20 @@ pivot_step( )
 	    // optimal solution found
 	    m_phase  = 3;
             m_status = QP_OPTIMAL;
-  
+
 	    vout << "  ";
 	    vout  << "solution is OPTIMAL" << std::endl;
-            
+
         }
         return;
     }
 
-	    
+	
     // ratio test & update (step 1)
     // ----------------------------
     // initialize ratio test
     ratio_test_init();
-    
+
 
     // diagnostic output
     CGAL_qpe_debug {
@@ -261,10 +261,10 @@ pivot_step( )
         if ( q_i == et0) {
             m_phase  = 3;
             m_status = QP_UNBOUNDED;
-            
+
 	    vout << "  ";
 	    vout << "problem is UNBOUNDED" << std::endl;
-	    
+	
 	    CGAL_qpe_debug {
 		//nu should be zero in this case
 		// note: (-1)/hat{\nu} is stored instead of \hat{\nu}
@@ -290,7 +290,7 @@ pivot_step( )
 
     // ratio test & update (step 2)
     // ----------------------------
-/*    
+/*
     if ( i >= 0) {
 
 	// diagnostic output
@@ -319,7 +319,7 @@ pivot_step( )
     // diagnostic output
     if (is_RTS_transition) {
         is_RTS_transition = false;
-     
+
         CGAL_qpe_debug {
             vout2 << std::endl
 		  << "----------------------------" << std::endl
@@ -331,15 +331,15 @@ pivot_step( )
         j += static_cast<int>(in_B.size());
 
         ratio_test_2( Is_linear());
-    
+
         while ((i >= 0) && basis_matrix_stays_regular()) {
-        
+
 	    update_2(Is_linear());
 	
 	    ratio_test_2(Is_linear());
 	
         }
-    } 
+    }
 
 
 
@@ -348,7 +348,7 @@ pivot_step( )
     CGAL_qpe_assertion_msg( i < 0, "Step 3 should never be reached!");
 
     // diagnostic output
-    
+
     if ( vout.verbose()) print_basis();
     if ( vout.verbose()) print_solution();
 
@@ -514,7 +514,7 @@ ratio_test_1( )
 	    }
 	}
     }
-    
+
     // compute `q_lambda' and `q_x'
     ratio_test_1__q_x_O( Is_linear());
     ratio_test_1__q_x_S( no_ineq);
@@ -555,7 +555,7 @@ ratio_test_1( )
             vout2.out() << "t_min_j: " << x_i << '/' << q_i << std::endl;
             vout2.out() << std::endl;
         }
-    }    
+    }
 
     // what happens, if all original variables are nonbasic?
 /*
@@ -563,8 +563,8 @@ ratio_test_1( )
 		       x_B_O.begin(), q_x_O.begin(), Tag_false());
     ratio_test_1__t_i(   B_S.begin(),   B_S.end(),
 		       x_B_S.begin(), q_x_S.begin(), no_ineq);
-*/		       
-    ratio_test_1__t_min_B(no_ineq);    
+*/		
+    ratio_test_1__t_min_B(no_ineq);
 
     // check `t_j'
     ratio_test_1__t_j( Is_linear());
@@ -574,7 +574,7 @@ ratio_test_1( )
         if ( vout2.verbose()) {
             for ( unsigned int k = 0; k < static_cast<unsigned int>(B_O.size()); ++k) {
                 print_ratio_1_original(k, x_B_O[k], q_x_O[k]);
-            }     
+            }
             if ( has_ineq) {
                 for ( unsigned int k = 0; k < static_cast<unsigned int>(B_S.size()); ++k) {
                     /*
@@ -616,7 +616,7 @@ ratio_test_1( )
 	
       }
     }
-    
+
 }
 
 
@@ -628,7 +628,7 @@ ratio_test_1__t_min_j(Tag_true /*is_nonnegative*/)
 
 // By the pricing step we have the following precondition
 // direction == +1 => x_O_v_i[j] == (LOWER v ZERO)
-// direction == -1 => x_O_v_i[j] == (UPPER v ZERO) 
+// direction == -1 => x_O_v_i[j] == (UPPER v ZERO)
 template < typename Q, typename ET, typename Tags >                         // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 ratio_test_1__t_min_j(Tag_false /*is_nonnegative*/)
@@ -653,7 +653,7 @@ ratio_test_1__t_min_j(Tag_false /*is_nonnegative*/)
                     ratio_test_bound_index = UPPER;
                 } else {                            // has infinite upper bound
                     x_i = et1;
-                    q_i = et0;                    
+                    q_i = et0;
                 }
             }
         } else {                                    // direction == -1
@@ -701,7 +701,7 @@ ratio_test_1__t_min_B(Tag_false /*has_equalities_only_and_full_rank*/)
                         q_x_O.begin(), Is_nonnegative());
     ratio_test_1_B_S__t_i(B_S.begin(), B_S.end(), x_B_S.begin(),
                         q_x_S.begin(), Is_nonnegative());
-}    
+}
 
 // ratio test for the basic original variables
 template < typename Q, typename ET, typename Tags >                         // Standard form
@@ -709,13 +709,13 @@ void  QP_solver<Q, ET, Tags>::
 ratio_test_1_B_O__t_i(Index_iterator i_it, Index_iterator end_it,
                     Value_iterator x_it, Value_iterator q_it,
                     Tag_true  /*is_nonnegative*/)
-{    
+{
     for ( ; i_it != end_it; ++i_it, ++x_it, ++q_it ) {
         test_implicit_bounds_dir_pos(*i_it, *x_it, *q_it, i, x_i, q_i);
     }
 }
 
-// ratio test for the basic original variables                    
+// ratio test for the basic original variables
 template < typename Q, typename ET, typename Tags >                         // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 ratio_test_1_B_O__t_i(Index_iterator i_it, Index_iterator end_it,
@@ -771,7 +771,7 @@ ratio_test_1_B_S__t_i(Index_iterator i_it, Index_iterator end_it,
     } else {
         for ( ; i_it != end_it; ++i_it, ++x_it, ++q_it ) {
             test_implicit_bounds_dir_neg(*i_it, *x_it, *q_it, i, x_i, q_i);
-        }    
+        }
     }
 }
 
@@ -779,9 +779,9 @@ ratio_test_1_B_S__t_i(Index_iterator i_it, Index_iterator end_it,
 // note that this function writes the member variables i, x_i, q_i
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_implicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k, 
+test_implicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
-{   
+{
     if (q_k > et0) {
       // BLAND rule: In case the ratios are the same, only update if the new index
       // is smaller. The special artificial variable is always made to leave first.
@@ -797,7 +797,7 @@ test_implicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
 // note that this function writes the member variables i, x_i, q_i
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_implicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k, 
+test_implicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
 {
     if (q_k < et0) {
@@ -817,7 +817,7 @@ test_implicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
 // are in the context of upper bounding misnomers
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_explicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k, 
+test_explicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
 {
     if (q_k > et0) {                                // check for lower bound
@@ -842,7 +842,7 @@ test_explicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
                 d_min = diff;
                 q_min = -q_k;
                 ratio_test_bound_index = UPPER;
-            }    
+            }
         }
     }
 }
@@ -853,7 +853,7 @@ test_explicit_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
 // are in the context of upper bounding misnomers
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_explicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k, 
+test_explicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
 {
     if (q_k < et0) {                                // check for lower bound
@@ -878,7 +878,7 @@ test_explicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
                 d_min = diff;
                 q_min = q_k;
                 ratio_test_bound_index = UPPER;
-            }    
+            }
         }
     }
 }
@@ -889,7 +889,7 @@ test_explicit_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
 // are in the context of upper bounding misnomers
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_mixed_bounds_dir_pos(int k, const ET& x_k, const ET& q_k, 
+test_mixed_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
 {
     if (q_k > et0) {                                // check for lower bound
@@ -904,7 +904,7 @@ test_mixed_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
                   q_min = q_k;
                   ratio_test_bound_index = LOWER;
               } // phase  I II switch
-              
+
             }
         } else {                                    // artificial variable
             // BLAND rule: In case the ratios are the same, only update if the new index
@@ -936,7 +936,7 @@ test_mixed_bounds_dir_pos(int k, const ET& x_k, const ET& q_k,
 // are in the context of upper bounding misnomers
 template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
-test_mixed_bounds_dir_neg(int k, const ET& x_k, const ET& q_k, 
+test_mixed_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
                                 int& i_min, ET& d_min, ET& q_min)
 {
     if (q_k < et0) {                                // check for lower bound
@@ -974,7 +974,7 @@ test_mixed_bounds_dir_neg(int k, const ET& x_k, const ET& q_k,
             }
         }
     }
-}    
+}
 
 
 template < typename Q, typename ET, typename Tags >                                         // QP case
@@ -993,7 +993,7 @@ ratio_test_2( Tag_false)
 
     // compute `p_lambda' and `p_x' (Note: `p_...' is stored in `q_...')
     ratio_test_2__p( no_ineq);
- 
+
     // diagnostic output
     CGAL_qpe_debug {
 	if ( vout3.verbose()) {
@@ -1014,7 +1014,7 @@ ratio_test_2( Tag_false)
 	    vout3.out() << std::endl;
 	}
     }
-    
+
     // Idea here: At this point, the goal is to increase \mu_j until either we
     // become optimal (\mu_j=0), or one of the variables in x^*_\hat{B} drops
     // down to zero.
@@ -1054,7 +1054,7 @@ ratio_test_2( Tag_false)
     // the one whose delta_k equals
     //
     //    delta_min:= min {delta_k | k in \hat{B} and (q_it)_k < 0 }
-    //    
+    //
     // So in order to handle the standard-form case, we would compute this
     // minimum.  Once we have delta_min, we need to check whether we get
     // optimal BEFORE a variable drops to zero.  As delta = mu_j - mu_j(t_1),
@@ -1064,7 +1064,7 @@ ratio_test_2( Tag_false)
     // notation is misleading.)
     //
     // Now to the nonstandard-form case.
-    
+
     // fw: By definition delta_min >= 0, such that initializing
     // delta_min with -mu_j(t_1) has the desired effect that a basic variable
     // is leaving only if 0 <= delta_min < -mu_j(t_1).
@@ -1074,9 +1074,9 @@ ratio_test_2( Tag_false)
     //
     // Since mu_j(t_1) has been computed in ratio test step 1 we can
     // reuse it.
-      
+
     x_i = mu;                                     // initialize minimum
-    q_i = -et1;                                        // with -mu_j(t_1) 
+    q_i = -et1;                                        // with -mu_j(t_1)
 
     Value_iterator  x_it = x_B_O.begin();
     Value_iterator  q_it = q_x_O.begin();
@@ -1139,7 +1139,7 @@ ratio_test_2( Tag_false)
 	}
       }
     }
-    
+
 }
 
 // update (step 1)
@@ -1165,11 +1165,11 @@ update_1( )
     // update basis & basis inverse
     update_1( Is_linear());
     CGAL_qpe_assertion(check_basis_inverse());
-    
+
     // check the updated vectors r_C and r_S_B
     CGAL_expensive_assertion(check_r_C(Is_nonnegative()));
     CGAL_expensive_assertion(check_r_S_B(Is_nonnegative()));
-    
+
     // check the vectors r_B_O and w in phaseII for QPs
     CGAL_qpe_debug {
         if (is_phaseII && is_QP) {
@@ -1180,8 +1180,8 @@ update_1( )
 
     // compute current solution
     compute_solution(Is_nonnegative());
-    
-    // check feasibility 
+
+    // check feasibility
     CGAL_qpe_debug {
       if (j < 0 && !is_RTS_transition) // todo kf: is this too conservative?
                  // Note: the above condition is necessary because of the
@@ -1204,7 +1204,7 @@ update_1( )
       CGAL_expensive_assertion(check_tag(Is_nonnegative()) ||
 			       r_C.size() == C.size());
     }
-	 
+	
 }
 
 // update (step 2)
@@ -1224,7 +1224,7 @@ update_2( Tag_false)
     CGAL_qpe_debug {
         check_basis_inverse();
     }
-    
+
     // check the updated vectors r_C, r_S_B, r_B_O and w
     CGAL_expensive_assertion(check_r_C(Is_nonnegative()));
     CGAL_expensive_assertion(check_r_S_B(Is_nonnegative()));
@@ -1234,7 +1234,7 @@ update_2( Tag_false)
     // compute current solution
     compute_solution(Is_nonnegative());
 }
- 
+
 template < typename Q, typename ET, typename Tags >
 void
 QP_solver<Q, ET, Tags>::
@@ -1242,56 +1242,56 @@ expel_artificial_variables_from_basis( )
 {
     int row_ind;
     ET r_A_Cj;
-    
+
     CGAL_qpe_debug {
         vout2 << std::endl
 	      << "---------------------------------------------" << std::endl
 	      << "Expelling artificial variables from the basis" << std::endl
 	      << "---------------------------------------------" << std::endl;
     }
-  
 
-  
+
+
     for (unsigned int i_ = 0; i_ < static_cast<unsigned int>(qp_n + slack_A.size()); ++i_) {
-      if (!is_basic(i_)) { 
+      if (!is_basic(i_)) {
       ratio_test_init__A_Cj( A_Cj.begin(), i_, no_ineq);
       }
     }
 
-    
+
     // try to pivot the artificials out of the basis
     // Note that we do not notify the pricing strategy about variables
     // leaving the basis, furthermore the pricing strategy does not
     // know about variables entering the basis.
     // The partial pricing strategies that keep the set of nonbasic vars
-    // explicitly are synchronized during transition from phaseI to phaseII 
+    // explicitly are synchronized during transition from phaseI to phaseII
     for (unsigned int i_ = static_cast<unsigned int>(qp_n + slack_A.size()); i_ < static_cast<unsigned int>(in_B.size()); ++i_) {
       if (is_basic(i_)) { 					// is basic
-        row_ind = in_B[i_];  
-        
+        row_ind = in_B[i_];
+
         //CGAL_qpe_assertion(row_ind >= 0);
-        
-	    
+
+	
         // determine first possible entering variable,
         // if there is any
         for (unsigned int j_ = 0; j_ < static_cast<unsigned int>(qp_n + slack_A.size()); ++j_) {
 	        if (!is_basic(j_)) {  				// is nonbasic
             ratio_test_init__A_Cj( A_Cj.begin(), j_, no_ineq);
-                        
+
             r_A_Cj = inv_M_B.inv_M_B_row_dot_col(row_ind, A_Cj.begin());
-                       
+
             if (r_A_Cj != et0) {
               ratio_test_1__q_x_O(Is_linear());
               i = i_;
               j = j_;
               update_1(Is_linear());
               break;
-            } 
+            }
           }
         }
       }
     }
-  
+
     if ((art_basic != 0) && no_ineq) {
       // the vector in_C was not used in phase I, but now we remove redundant
       // constraints and switch to has_ineq treatment, hence we need it to
@@ -1304,7 +1304,7 @@ expel_artificial_variables_from_basis( )
       // now reset the no_ineq and has_ineq flags to match the situation
       no_ineq = no_ineq && !diagnostics.redundant_equations;
       has_ineq = !no_ineq;
-    
+
       // remove the remaining ones with their corresponding equality constraints
       // Note: the special artificial variable can always be driven out of the
       // basis
@@ -1348,7 +1348,7 @@ replace_variable_original_original( )
 {
     // updates for the upper bounded case
     replace_variable_original_original_upd_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // replace original variable [ in: j | out: i ]
@@ -1356,8 +1356,8 @@ replace_variable_original_original( )
     in_B  [ j] = k;
        B_O[ k] = j;
 
-    minus_c_B[ k] = 
-      ( is_phaseI ? 
+    minus_c_B[ k] =
+      ( is_phaseI ?
 	( j < qp_n ? et0 : ET(-aux_c[j-qp_n-slack_A.size()])) : -ET( *(qp_c+ j)));
 
     if ( is_phaseI) {
@@ -1369,27 +1369,27 @@ replace_variable_original_original( )
     CGAL_qpe_debug {
 	if ( vout2.verbose()) print_basis();
     }
-	    
+	
     // update basis inverse
     inv_M_B.enter_original_leave_original( q_x_O.begin(), k);
 }
 
-// update of the vector r for U_5 with upper bounding, note that we 
+// update of the vector r for U_5 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 replace_variable_original_original_upd_r(Tag_true )
 {
 }
 
-// update of the vector r for U_5 with upper bounding, note that we 
+// update of the vector r for U_5 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 replace_variable_original_original_upd_r(Tag_false )
 {
     ET      x_j, x_i;
-    
+
     if (is_artificial(j)) {
         if (!is_artificial(i)) {
             x_i = (ratio_test_bound_index == LOWER) ? *(qp_l+i) : *(qp_u+i);
@@ -1417,10 +1417,10 @@ template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_slack( )
 {
-    
+
     // updates for the upper bounded case
-    replace_variable_slack_slack_upd_r(Is_nonnegative()); 
-    
+    replace_variable_slack_slack_upd_r(Is_nonnegative());
+
     int  k = in_B[ i];
 
     // replace slack variable [ in: j | out: i ]
@@ -1459,24 +1459,24 @@ replace_variable_slack_slack( )
     inv_M_B.enter_slack_leave_slack( tmp_x.begin(), k);
 }
 
-// update of the vector r for U_6 with upper bounding, note that we 
+// update of the vector r for U_6 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_slack_upd_r(Tag_true )
 {
 }
 
-// update of the vector r for U_6 with upper bounding, note that we 
+// update of the vector r for U_6 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_slack_upd_r(Tag_false )
 {
     int     sigma_j = slack_A[ j-qp_n].first;
-    
+
     // swap r_gamma_C(sigma_j) in r_C with r_gamma_S_B(sigma_i) in r_S_B
-    std::swap(r_C[in_C[sigma_j]], r_S_B[in_B[i]]); 
+    std::swap(r_C[in_C[sigma_j]], r_S_B[in_B[i]]);
 }
 
 
@@ -1485,8 +1485,8 @@ void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_original( )
 {
     // updates for the upper bounded case
-    replace_variable_slack_original_upd_r(Is_nonnegative()); 
-     
+    replace_variable_slack_original_upd_r(Is_nonnegative());
+
     int  k = in_B[ i];
 
     // leave original variable [ out: i ]
@@ -1523,17 +1523,17 @@ replace_variable_slack_original( )
     inv_M_B.enter_slack_leave_original();
 }
 
-// update of the vector r for U_8 with upper bounding, note that we 
+// update of the vector r for U_8 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_original_upd_r(Tag_true )
 {
 }
 
-// update of the vector r for U_8 with upper bounding, note that we 
+// update of the vector r for U_8 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 replace_variable_slack_original_upd_r(Tag_false )
 {
@@ -1541,16 +1541,16 @@ replace_variable_slack_original_upd_r(Tag_false )
         ET  x_i = (ratio_test_bound_index == LOWER) ? *(qp_l+i) : *(qp_u+i);
         update_r_C_r_S_B__i(x_i);
     }
-    
+
     int     sigma_j = slack_A[ j-qp_n].first;
-    
+
     // append r_gamma_C(sigma_j) from r_C to r_S_B:
     r_S_B.push_back(r_C[in_C[sigma_j]]);
-    
+
     // remove r_gamma_C(sigma_j) from r_C:
     r_C[in_C[sigma_j]] = r_C.back();
     r_C.pop_back();
-    
+
     // update x_O_v_i
     if (!is_artificial(i)) // original and not artificial?
       x_O_v_i[i] = ratio_test_bound_index;
@@ -1563,16 +1563,16 @@ replace_variable_original_slack( )
 {
     // updates for the upper bounded case
     replace_variable_original_slack_upd_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // enter original variable [ in: j ]
 
     minus_c_B[ B_O.size()]
-      = ( is_phaseI ? 
+      = ( is_phaseI ?
 	  ( j < qp_n ? et0 : ET(-aux_c[j-qp_n-slack_A.size()]))
 	  : -ET( *(qp_c+ j)));
-    
+
 
     in_B  [ j] = static_cast<int>(B_O.size());
        B_O.push_back( j);
@@ -1583,7 +1583,7 @@ replace_variable_original_slack( )
        B_S[ k         ] = B_S.back();
        S_B[ k         ] = S_B.back();
     in_B  [ B_S.back()] = k;
-    in_B  [ i         ] = -1; 
+    in_B  [ i         ] = -1;
        B_S.pop_back();
        S_B.pop_back();
 
@@ -1610,20 +1610,20 @@ replace_variable_original_slack( )
 	tmp_x[ in_B[ art_s_i]] = ET( art_s[ new_row]);
     }
     inv_M_B.enter_original_leave_slack( q_x_O.begin(), tmp_x.begin());
-    
+
 }
 
-// update of the vector r for U_7 with upper bounding, note that we 
+// update of the vector r for U_7 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 replace_variable_original_slack_upd_r(Tag_true )
 {
 }
 
-// update of the vector r for U_7 with upper bounding, note that we 
+// update of the vector r for U_7 with upper bounding, note that we
 // need the headings C, and S_{B} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 replace_variable_original_slack_upd_r(Tag_false )
 {
@@ -1631,14 +1631,14 @@ replace_variable_original_slack_upd_r(Tag_false )
         ET x_j = nonbasic_original_variable_value(j);
         update_r_C_r_S_B__j(x_j);
     }
-    
+
     // append r_gamma_S_B(sigma_i) from r_S_B to r_C
     r_C.push_back(r_S_B[in_B[i]]);
-    
+
     // remove r_gamma_S_B(sigma_i) from r_S_B
     r_S_B[in_B[i]] = r_S_B.back();
     r_S_B.pop_back();
-    
+
     // update x_O_v_i
     if (!is_artificial(j)) {
         x_O_v_i[j] = BASIC;
@@ -1652,7 +1652,7 @@ remove_artificial_variable_and_constraint( )
 {
     // updates for the upper bounded case
     remove_artificial_variable_and_constraint_upd_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // leave artificial (original) variable [ out: i ]
@@ -1667,7 +1667,7 @@ remove_artificial_variable_and_constraint( )
 
     int old_row = art_A[i - qp_n - slack_A.size()].first;
 
-    // leave its equality constraint 
+    // leave its equality constraint
     int  l = in_C[ old_row];
      b_C[ l       ] = b_C[ C.size()-1];
        C[ l       ] = C.back();
@@ -1686,7 +1686,7 @@ remove_artificial_variable_and_constraint( )
 }
 
 // update of the vector r with upper bounding for the removal of an
-// artificial variable with its equality constraint, note that we 
+// artificial variable with its equality constraint, note that we
 // need the headings C before it is updated
 template < typename Q, typename ET, typename Tags >                                 // Standard form
 void  QP_solver<Q, ET, Tags>::
@@ -1695,51 +1695,51 @@ remove_artificial_variable_and_constraint_upd_r(Tag_true )
 }
 
 // update of the vector r with upper bounding for the removal of an
-// artificial variable with its equality constraint, note that we 
+// artificial variable with its equality constraint, note that we
 // need the headings C before it is updated
 template < typename Q, typename ET, typename Tags >                                 // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 remove_artificial_variable_and_constraint_upd_r(Tag_false )
 {
     int sigma_i = art_A[i - qp_n - slack_A.size()].first;
-    
+
     // remove r_gamma_C(sigma_i) from r_C
     r_C[in_C[sigma_i]] = r_C.back();
     r_C.pop_back();
 }
 
 // update that occurs only with upper bounding in ratio test step 1
-template < typename Q, typename ET, typename Tags >            
+template < typename Q, typename ET, typename Tags >
 void  QP_solver<Q, ET, Tags>::
 enter_and_leave_variable( )
 {
-    
+
     CGAL_qpe_assertion((i == j) && (i >= 0));
-    
+
     CGAL_qpe_debug {
 	vout2 <<   "<--> nonbasic (" << variable_type( j) << ") variable " << j
 	      << " enters and leaves basis" << std::endl << std::endl;
     }
 
-    
+
     ET diff;
     ET x_j = nonbasic_original_variable_value(j);
-    
+
     if (ratio_test_bound_index == LOWER) {
         diff = x_j - ET(*(qp_l+j));
     } else {
         diff = x_j - ET(*(qp_u+j));
     }
-    
+
     if (is_phaseI) {
         update_r_C_r_S_B__j(diff);
     } else {
         update_w_r_B_O__j(diff);
         update_r_C_r_S_B__j(diff);
     }
-    
+
     x_O_v_i[j] = ratio_test_bound_index;
-    
+
     // notify pricing strategy (it has called enter_basis on i before)
     strategyP->leaving_basis (i);
 
@@ -1763,7 +1763,7 @@ enter_variable( )
 
     // update basis & basis inverse:
     if (no_ineq || (j < qp_n)) {              // original variable
-    
+
         // updates for the upper bounded case:
         enter_variable_original_upd_w_r(Is_nonnegative());
 
@@ -1795,7 +1795,7 @@ enter_variable( )
 	    if (vout2.verbose())
 	      print_basis();
 	}
-	    
+	
 	// update basis inverse
 	// note: (-1)\hat{\nu} is stored instead of \hat{\nu}
 	inv_M_B.enter_original(q_lambda.begin(), q_x_O.begin(), -nu);
@@ -1837,17 +1837,17 @@ enter_variable( )
     j -= static_cast<int>(in_B.size());
 }
 
-// update of the vectors w and r for U_1 with upper bounding, note that we 
+// update of the vectors w and r for U_1 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 enter_variable_original_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_1 with upper bounding, note that we 
+// update of the vectors w and r for U_1 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded     
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 enter_variable_original_upd_w_r(Tag_false )
 {
@@ -1857,36 +1857,36 @@ enter_variable_original_upd_w_r(Tag_false )
     // Note: w needs to be updated before r_C, r_S_B
     update_w_r_B_O__j(x_j);
     update_r_C_r_S_B__j(x_j);
-    
+
     // append w_j to r_B_O
     if (!check_tag(Is_linear())) // (kf.)
       r_B_O.push_back(w[j]);
-    
+
     // update x_O_v_i
     x_O_v_i[j] = BASIC;
 }
 
-// update of the vectors w and r for U_3 with upper bounding, note that we 
+// update of the vectors w and r for U_3 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 enter_variable_slack_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_3 with upper bounding, note that we 
+// update of the vectors w and r for U_3 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded     
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 enter_variable_slack_upd_w_r(Tag_false )
 {
-    
-    int     sigma_j = slack_A[ j-qp_n].first;       
-    
+
+    int     sigma_j = slack_A[ j-qp_n].first;
+
     // append r_gamma_C(sigma_j) to r_S_B
     r_S_B.push_back(r_C[in_C[sigma_j]]);
-    
-    // remove r_gamma_C(sigma_j) from r_C   
+
+    // remove r_gamma_C(sigma_j) from r_C
     r_C[in_C[sigma_j]] = r_C.back();
     r_C.pop_back();
 }
@@ -1905,19 +1905,19 @@ leave_variable( )
     // update basis & basis inverse
     int  k = in_B[ i];
     if ( no_ineq || ( i < qp_n)) {                      // original variable
-        
+
         // updates for the upper bounded case
         leave_variable_original_upd_w_r(Is_nonnegative());
 
 	// leave original variable [ out: i ]
 	in_B  [ B_O.back()] = k;
-	in_B  [ i         ] = -1; 
+	in_B  [ i         ] = -1;
 	//in_B  [ B_O.back()] = k;
 	   B_O[ k] = B_O.back(); B_O.pop_back();
 
 	minus_c_B [ k] = minus_c_B [ B_O.size()];
 	  two_D_Bj[ k] =   two_D_Bj[ B_O.size()];
-	  
+	
 
 	// diagnostic output
 	CGAL_qpe_debug {
@@ -1929,7 +1929,7 @@ leave_variable( )
 	inv_M_B.leave_original();
 
     } else {                                            // slack variable
-        
+
         // updates for the upper bounded case
         leave_variable_slack_upd_w_r(Is_nonnegative());
 
@@ -1969,55 +1969,55 @@ leave_variable( )
     i = -1;
 }
 
-// update of the vectors w and r for U_2 with upper bounding, note that we 
+// update of the vectors w and r for U_2 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 leave_variable_original_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_2 with upper bounding, note that we 
+// update of the vectors w and r for U_2 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 leave_variable_original_upd_w_r(Tag_false )
 {
 
     ET      x_i = (ratio_test_bound_index == LOWER) ? *(qp_l+i) : *(qp_u+i);
-    
+
     // Note: w needs to be updated before r_C, r_S_B
     update_w_r_B_O__i(x_i);
-    update_r_C_r_S_B__i(x_i);    
-    
+    update_r_C_r_S_B__i(x_i);
+
     // remove r_beta_O(i) from r_B_O
     if (!check_tag(Is_linear())) { // (kf.)
       r_B_O[in_B[i]] = r_B_O.back();
       r_B_O.pop_back();
     }
-    
+
     // update x_O_v_i
     x_O_v_i[i] = ratio_test_bound_index;
 }
 
-// update of the vectors w and r for U_4 with upper bounding, note that we 
+// update of the vectors w and r for U_4 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 leave_variable_slack_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_4 with upper bounding, note that we 
+// update of the vectors w and r for U_4 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Upper bounded      
+template < typename Q, typename ET, typename Tags >                            // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 leave_variable_slack_upd_w_r(Tag_false )
 {
-    
+
     // append r_gamma_S_B(sigma_i) to r_C
     r_C.push_back(r_S_B[in_B[i]]);
-    
+
     // remove r_gamma_S_B(sigma_i) from r_S_B
     r_S_B[in_B[i]] = r_S_B.back();
     r_S_B.pop_back();
@@ -2065,9 +2065,9 @@ z_replace_variable( Tag_false)
 
     // update basis and basis inverse
     if ( leave_original) {
-        if ( enter_original) {               
+        if ( enter_original) {
 	    z_replace_variable_original_by_original();
-	} else {                             
+	} else {
 	    z_replace_variable_original_by_slack();
 	}
     } else {
@@ -2088,7 +2088,7 @@ z_replace_variable_original_by_original( )
 {
     // updates for the upper bounded case
     z_replace_variable_original_by_original_upd_w_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // replace original variable [ in: j | out: i ]
@@ -2105,44 +2105,44 @@ z_replace_variable_original_by_original( )
 	
     // compute s_delta
     D_pairwise_accessor  d_accessor( qp_D, j);
-    ET                   s_delta =d_accessor(j)-d_accessor(i); 
-    	    
+    ET                   s_delta =d_accessor(j)-d_accessor(i);
+    	
     // update basis inverse
     // note: (-1)\hat{\nu} is stored instead of \hat{\nu}
-    inv_M_B.z_replace_original_by_original( q_lambda.begin(), q_x_O.begin(), 
+    inv_M_B.z_replace_original_by_original( q_lambda.begin(), q_x_O.begin(),
         s_delta, -nu, k);
 
 }
 
-// update of the vectors w and r for U_Z_1 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_1 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                            // Standard form      
+template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
 z_replace_variable_original_by_original_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_Z_1 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_1 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
-template < typename Q, typename ET, typename Tags >                           
-// Upper bounded      
+template < typename Q, typename ET, typename Tags >
+// Upper bounded
 void  QP_solver<Q, ET, Tags>::
 z_replace_variable_original_by_original_upd_w_r(Tag_false )
 {
 
     ET      x_j = nonbasic_original_variable_value(j);
     ET      x_i = (ratio_test_bound_index == LOWER) ? *(qp_l+i) : *(qp_u+i);
-    
+
     // Note: w needs to be updated before r_C, r_S_B
     update_w_r_B_O__j_i(x_j, x_i);
     update_r_C_r_S_B__j_i(x_j, x_i);
-    
-    // replace r_beta_O(i) with w_j    
+
+    // replace r_beta_O(i) with w_j
     r_B_O[in_B[i]] = w[j];
-    
+
     // update x_O_v_i
     x_O_v_i[j] = BASIC;
-    x_O_v_i[i] = ratio_test_bound_index;    
+    x_O_v_i[i] = ratio_test_bound_index;
 }
 
 
@@ -2153,7 +2153,7 @@ z_replace_variable_original_by_slack( )
 {
     // updates for the upper bounded case
     z_replace_variable_original_by_slack_upd_w_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // leave original variable [ out: i ]
@@ -2177,7 +2177,7 @@ z_replace_variable_original_by_slack( )
     in_C[ C.back()] = l;
     in_C[ old_row ] = -1;
        C.pop_back();
-    
+
     // diagnostic output
     CGAL_qpe_debug {
 	if ( vout2.verbose()) print_basis();
@@ -2190,7 +2190,7 @@ z_replace_variable_original_by_slack( )
 
 }
 
-// update of the vectors w and r for U_Z_2 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_2 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                         // Standard form
 void  QP_solver<Q, ET, Tags>::
@@ -2199,7 +2199,7 @@ z_replace_variable_original_by_slack_upd_w_r(Tag_true )
 }
 
 
-// update of the vectors w and r for U_Z_2 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_2 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                         // Upper bounded
 void  QP_solver<Q, ET, Tags>::
@@ -2207,26 +2207,26 @@ z_replace_variable_original_by_slack_upd_w_r(Tag_false )
 {
 
     ET      x_i = (ratio_test_bound_index == LOWER) ? *(qp_l+i) : *(qp_u+i);
-    
+
     // Note: w needs to be updated before r_C, r_S_B
     update_w_r_B_O__i(x_i);
     update_r_C_r_S_B__i(x_i);
-    
+
     int     sigma_j = slack_A[ j-qp_n].first;
-    
+
     // append r_gamma_C(sigma_j) to r_S_B
     r_S_B.push_back(r_C[in_C[sigma_j]]);
-    
+
     // remove r_gamma_C(sigma_j) from r_C
     r_C[in_C[sigma_j]] = r_C.back();
     r_C.pop_back();
-    
-    // remove r_beta_O(i) from r_B_O    
+
+    // remove r_beta_O(i) from r_B_O
     if (!check_tag(Is_linear())) { // (kf.)
       r_B_O[in_B[i]] = r_B_O.back();
       r_B_O.pop_back();
     }
-    
+
     // update x_O_v_i
     x_O_v_i[i] = ratio_test_bound_index;
 }
@@ -2239,7 +2239,7 @@ z_replace_variable_slack_by_original( )
 {
     // updates for the upper bounded case
     z_replace_variable_slack_by_original_upd_w_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
     if (minus_c_B.size() <= B_O.size()) {  // Note: minus_c_B and the
 					   // containers resized in this
@@ -2261,7 +2261,7 @@ z_replace_variable_slack_by_original( )
     // enter original variable [ in: j ]
 
     minus_c_B[ B_O.size()] = -ET( *(qp_c+ j));
-    
+
 
     in_B  [ j] = static_cast<int>(B_O.size());
        B_O.push_back( j);
@@ -2271,7 +2271,7 @@ z_replace_variable_slack_by_original( )
        B_S[ k         ] = B_S.back();
        S_B[ k         ] = S_B.back();
     in_B  [ B_S.back()] = k;
-    in_B  [ i         ] = -1; 
+    in_B  [ i         ] = -1;
        B_S.pop_back();
        S_B.pop_back();
 
@@ -2281,7 +2281,7 @@ z_replace_variable_slack_by_original( )
      b_C[ C.size()] = ET( *(qp_b+ new_row));
     in_C[ new_row ] = static_cast<int>(C.size());
        C.push_back( new_row);
-    
+
     // diagnostic output
     CGAL_qpe_debug {
 	if ( vout2.verbose()) print_basis();
@@ -2296,18 +2296,18 @@ z_replace_variable_slack_by_original( )
     std::copy( A_row_by_index_iterator( B_O.begin(), a_accessor),
 	       A_row_by_index_iterator( B_O.end  (), a_accessor),
 	       tmp_x.begin());
-    
-    
+
+
     // prepare kappa
-    ET  kappa = d * ET(*((*(qp_A + j))+new_row)) 
+    ET  kappa = d * ET(*((*(qp_A + j))+new_row))
                 - inv_M_B.inner_product_x( tmp_x.begin(), q_x_O.begin());
 		
-	// note: (-1)/hat{\nu} is stored instead of \hat{\nu}	 
+	// note: (-1)/hat{\nu} is stored instead of \hat{\nu}	
     inv_M_B.z_replace_slack_by_original( q_lambda.begin(), q_x_O.begin(),
-                                          tmp_x.begin(), kappa, -nu);    
+                                          tmp_x.begin(), kappa, -nu);
 }
 
-// update of the vectors w and r for U_Z_3 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_3 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                            // Standard form
 void  QP_solver<Q, ET, Tags>::
@@ -2315,7 +2315,7 @@ z_replace_variable_slack_by_original_upd_w_r(Tag_true )
 {
 }
 
-// update of the vectors w and r for U_Z_3 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_3 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                             // Upper bounded
 void  QP_solver<Q, ET, Tags>::
@@ -2324,21 +2324,21 @@ z_replace_variable_slack_by_original_upd_w_r(Tag_false )
 
     ET      x_j = nonbasic_original_variable_value(j);
 
-    // Note: w needs to be updated before r_C, r_S_B    
+    // Note: w needs to be updated before r_C, r_S_B
     update_w_r_B_O__j(x_j);
     update_r_C_r_S_B__j(x_j);
-        
+
     // append r_gamma_S_B(sigma_i) to r_C
     r_C.push_back(r_S_B[in_B[i]]);
-    
+
     // remove r_gamma_S_B(sigma_i) from r_S_B
     r_S_B[in_B[i]] = r_S_B.back();
     r_S_B.pop_back();
-    
-    // append w_j to r_B_O    
+
+    // append w_j to r_B_O
     if (!check_tag(Is_linear())) // (kf.)
       r_B_O.push_back(w[j]);
-    
+
     // update x_O_v_i
     x_O_v_i[j] = BASIC;
 }
@@ -2351,7 +2351,7 @@ z_replace_variable_slack_by_slack( )
 {
     // updates for the upper bounded case
     z_replace_variable_slack_by_slack_upd_w_r(Is_nonnegative());
-    
+
     int  k = in_B[ i];
 
     // replace slack variable [ in: j | out: i ]
@@ -2388,7 +2388,7 @@ z_replace_variable_slack_by_slack( )
     inv_M_B.z_replace_slack_by_slack( tmp_x.begin(), k);
 }
 
-// update of the vectors w and r for U_Z_4 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_4 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                             // Standard form
 void  QP_solver<Q, ET, Tags>::
@@ -2397,17 +2397,17 @@ z_replace_variable_slack_by_slack_upd_w_r(Tag_true )
 }
 
 
-// update of the vectors w and r for U_Z_4 with upper bounding, note that we 
+// update of the vectors w and r for U_Z_4 with upper bounding, note that we
 // need the headings C, S_{B}, B_{O} before they are updated
 template < typename Q, typename ET, typename Tags >                             // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 z_replace_variable_slack_by_slack_upd_w_r(Tag_false )
 {
-    
+
     int     sigma_j = slack_A[ j-qp_n].first;
-    
+
     // swap r_sigma_j in r_C with r_sigma_i in r_S_B
-    std::swap(r_C[in_C[sigma_j]], r_S_B[in_B[i]]);           
+    std::swap(r_C[in_C[sigma_j]], r_S_B[in_B[i]]);
 }
 
 // update of the vectors r_C and r_S_B with "x_j" column
@@ -2417,21 +2417,21 @@ update_r_C_r_S_B__j(ET& x_j)
 {
     // update of vector r_{C}
     A_by_index_accessor     a_accessor_j(*(qp_A + j));
-    
+
     A_by_index_iterator     A_C_j_it(C.begin(), a_accessor_j);
-    
+
     for (Value_iterator r_C_it = r_C.begin(); r_C_it != r_C.end();
                                                     ++r_C_it, ++A_C_j_it) {
-        *r_C_it -= x_j * ET(*A_C_j_it); 
+        *r_C_it -= x_j * ET(*A_C_j_it);
     }
-    
+
     // update of r_{S_{B}}
     A_by_index_iterator     A_S_B_j_it(S_B.begin(), a_accessor_j);
-        
+
     for (Value_iterator r_S_B_it = r_S_B.begin(); r_S_B_it != r_S_B.end();
                                                 ++r_S_B_it, ++A_S_B_j_it) {
         *r_S_B_it -= x_j * ET(*A_S_B_j_it);
-    }   
+    }
 }
 
 // update of the vectors r_C and r_S_B with "x_j" and "x_i" column
@@ -2442,22 +2442,22 @@ update_r_C_r_S_B__j_i(ET& x_j, ET& x_i)
     // update of vector r_{C}
     A_by_index_accessor     a_accessor_j(*(qp_A+j));
     A_by_index_accessor     a_accessor_i(*(qp_A+i));
-    
+
     A_by_index_iterator     A_C_j_it(C.begin(), a_accessor_j);
     A_by_index_iterator     A_C_i_it(C.begin(), a_accessor_i);
-    
+
     for (Value_iterator r_C_it = r_C.begin(); r_C_it != r_C.end();
                                         ++r_C_it, ++A_C_j_it, ++A_C_i_it) {
-        *r_C_it += (x_i * ET(*A_C_i_it)) - (x_j * ET(*A_C_j_it)); 
+        *r_C_it += (x_i * ET(*A_C_i_it)) - (x_j * ET(*A_C_j_it));
     }
-    
+
     // update of vector r_{S_{B}}
     A_by_index_iterator     A_S_B_j_it(S_B.begin(), a_accessor_j);
     A_by_index_iterator     A_S_B_i_it(S_B.begin(), a_accessor_i);
 
     for (Value_iterator r_S_B_it = r_S_B.begin(); r_S_B_it != r_S_B.end();
                                     ++r_S_B_it, ++A_S_B_j_it, ++A_S_B_i_it) {
-        *r_S_B_it += (x_i * ET(*A_S_B_i_it)) - (x_j * ET(*A_S_B_j_it)); 
+        *r_S_B_it += (x_i * ET(*A_S_B_i_it)) - (x_j * ET(*A_S_B_j_it));
     }
 }
 
@@ -2469,19 +2469,19 @@ update_r_C_r_S_B__i(ET& x_i)
     // update of vector r_{C}
     A_by_index_accessor     a_accessor_i(*(qp_A+i));
     A_by_index_iterator     A_C_i_it(C.begin(), a_accessor_i);
-    
-    for (Value_iterator r_C_it = r_C.begin(); r_C_it != r_C.end(); 
+
+    for (Value_iterator r_C_it = r_C.begin(); r_C_it != r_C.end();
                                                     ++r_C_it, ++A_C_i_it) {
-        *r_C_it += x_i * ET(*A_C_i_it); 
+        *r_C_it += x_i * ET(*A_C_i_it);
     }
-    
+
     // update of r_{S_{B}}
     A_by_index_iterator     A_S_B_i_it(S_B.begin(), a_accessor_i);
-    
+
     for (Value_iterator r_S_B_it = r_S_B.begin(); r_S_B_it != r_S_B.end();
                                                 ++r_S_B_it, ++A_S_B_i_it) {
         *r_S_B_it += x_i * ET(*A_S_B_i_it);
-    }   
+    }
 }
 
 
@@ -2499,11 +2499,11 @@ update_w_r_B_O__j(ET& x_j)
   // Note: we only do anything it we are dealing with a QP.
   if (!check_tag(Is_linear())) {
     D_pairwise_accessor     d_accessor_j(qp_D, j);
-    
+
     // update of vector w:
     for (int it = 0; it < qp_n; ++it)
       w[it] -= d_accessor_j(it) * x_j;
-    
+
     // update of r_B_O:
     D_pairwise_iterator D_B_O_j_it(B_O.begin(), d_accessor_j);
     for (Value_iterator r_B_O_it = r_B_O.begin();
@@ -2525,11 +2525,11 @@ update_w_r_B_O__j_i(ET& x_j, ET& x_i)
   if (!check_tag(Is_linear())) {
     D_pairwise_accessor     d_accessor_i(qp_D, i);
     D_pairwise_accessor     d_accessor_j(qp_D, j);
-    
+
     // update of vector w
     for (int it = 0; it < qp_n; ++it)
         w[it] += (d_accessor_i(it) * x_i) - (d_accessor_j(it) * x_j);
-    
+
     // update of r_B_O
     D_pairwise_iterator D_B_O_j_it(B_O.begin(), d_accessor_j);
     D_pairwise_iterator D_B_O_i_it(B_O.begin(), d_accessor_i);
@@ -2552,10 +2552,10 @@ update_w_r_B_O__i(ET& x_i)
 
     // update of vector w:
     D_pairwise_accessor     d_accessor_i(qp_D, i);
-    
+
     for (int it = 0; it < qp_n; ++it)
         w[it] += d_accessor_i(it) * x_i;
-    
+
     // update of r_B_O:
     D_pairwise_iterator D_B_O_i_it(B_O.begin(), d_accessor_i);
     for (Value_iterator r_B_O_it = r_B_O.begin();
@@ -2574,7 +2574,7 @@ compute_solution(Tag_true)
   // compute current solution, original variables and lambdas
   inv_M_B.multiply( b_C.begin(), minus_c_B.begin(),
 		    lambda.begin(), x_B_O.begin());
-  
+
   // compute current solution, slack variables
   compute__x_B_S(no_ineq, Is_nonnegative());
 }
@@ -2584,29 +2584,29 @@ compute_solution(Tag_true)
 template < typename Q, typename ET, typename Tags >                                      // Upper bounded
 void  QP_solver<Q, ET, Tags>::
 compute_solution(Tag_false)
-{ 
+{
   // compute the difference b_C - r_C
   std::transform(b_C.begin(), b_C.begin()+C.size(), // Note: r_C.size() ==
 						    // C.size() always holds,
 						    // whereas b_C.size() >=
 						    // C.size() in general.
 		 r_C.begin(),  tmp_l.begin(), std::minus<ET>());
-        
+
   // compute the difference minus_c_B - r_B_O:
   if (is_phaseII && is_QP) {
-    std::transform(minus_c_B.begin(), minus_c_B.begin() + B_O.size(), 
+    std::transform(minus_c_B.begin(), minus_c_B.begin() + B_O.size(),
 		   r_B_O.begin(), tmp_x.begin(), std::minus<ET>());
-    
+
     // compute current solution, original variables and lambdas:
     inv_M_B.multiply( tmp_l.begin(), tmp_x.begin(),
 		      lambda.begin(), x_B_O.begin());
   } else {                                          // r_B_O == 0
-    
-    // compute current solution, original variables and lambdas        
+
+    // compute current solution, original variables and lambdas
     inv_M_B.multiply( tmp_l.begin(), minus_c_B.begin(),
 		      lambda.begin(), x_B_O.begin());
   }
-  
+
   // compute current solution, slack variables
   compute__x_B_S( no_ineq, Is_nonnegative());
 }
@@ -2617,7 +2617,7 @@ multiply__A_S_BxB_O(Value_iterator in, Value_iterator out) const
 {
   // initialize with zero vector
   std::fill_n( out, B_S.size(), et0);
-  
+
   // foreach original column of A in B_O (artificial columns are zero in S_B
   A_column              a_col;                             // except special)
   Index_const_iterator  row_it, col_it;
@@ -2626,10 +2626,10 @@ multiply__A_S_BxB_O(Value_iterator in, Value_iterator out) const
   for ( col_it = B_O.begin(); col_it != B_O.end(); ++col_it, ++in) {
     const ET in_value = *in;
     out_it   = out;
-    
+
     if ( *col_it < qp_n) {	                        // original variable
       a_col = *(qp_A+ *col_it);
-      
+
       // foreach row of A in S_B
       for ( row_it = S_B.begin(); row_it != S_B.end(); ++row_it,
 	      ++out_it) {
@@ -2666,7 +2666,7 @@ check_r_C(Tag_false) const
     // compute t_r_C from scratch
     t_r_C.resize(C.size(), et0);
     multiply__A_CxN_O(t_r_C.begin());
-    
+
     // compare r_C and the from scratch computed t_r_C
     bool failed = false;
     int count = 0;
@@ -2697,7 +2697,7 @@ check_r_S_B(Tag_false) const
     // compute t_r_S_B from scratch
     t_r_S_B.resize(S_B.size(), et0);
     multiply__A_S_BxN_O(t_r_S_B.begin());
-    
+
     // compare r_S_B and the from scratch computed t_r_S_B
     bool failed = false;
     int count = 0;
@@ -2724,7 +2724,7 @@ multiply__2D_B_OxN_O(Value_iterator out) const
 
     Value_iterator          out_it;
     ET                      value;
-    
+
     // foreach entry in r_B_O
     out_it = out;
     for (Index_const_iterator row_it = B_O.begin(); row_it != B_O.end();
@@ -2735,7 +2735,7 @@ multiply__2D_B_OxN_O(Value_iterator out) const
                 value = nonbasic_original_variable_value(i);
                 *out_it += d_accessor_i(i) * value;
             }
-        }    
+        }
     }
 }
 
@@ -2756,7 +2756,7 @@ check_r_B_O(Tag_false) const
     // compute t_r_B_O from scratch
     t_r_B_O.resize(B_O.size(), et0);
     multiply__2D_B_OxN_O(t_r_B_O.begin());
-    
+
     // compare r_B_O and the from scratch computed t_r_B_O
     bool failed = false;
     int count = 0;
@@ -2767,7 +2767,7 @@ check_r_B_O(Tag_false) const
             failed = true;
         }
     }
-    return (!failed);   
+    return (!failed);
 }
 
 // compares the updated vector w with t_w=2D_{O,N_O}*x_N_O
@@ -2787,7 +2787,7 @@ check_w(Tag_false) const
     // compute t_w from scratch
     t_w.resize( qp_n, et0);
     multiply__2D_OxN_O(t_w.begin());
-    
+
     // compare w and the from scratch computed t_w
     bool  failed = false;
     Value_const_iterator    t_w_it = t_w.begin();
@@ -2842,7 +2842,7 @@ check_basis_inverse( Tag_true)
     Index_iterator  i_it = B_O.begin();
     Value_iterator  q_it;
 
-    
+
     // BG: is this a real check?? How does the special artifical
     // variable come in, e.g.? OK: it comes in through
     // ratio_test_init__A_Cj
@@ -2904,11 +2904,11 @@ check_basis_inverse( Tag_false)
 		      ( art_A[ *i_it - qp_n].second ? -et1 : et1));
 	}
 // 	if ( art_s_i >= 0) {              // special artificial variable?
-// 	  CGAL_qpe_assertion (static_cast<int>(in_B.size()) == art_s_i+1);  
+// 	  CGAL_qpe_assertion (static_cast<int>(in_B.size()) == art_s_i+1);
 // 	  // the special artificial variable has never been
 // 	  // removed from the basis, consider it
 // 	  tmp_x[ in_B[ art_s_i]] = art_s[ row];
-// 	} 
+// 	}
 // BG: currently, this check only runs in phase II, where we have no
 // articficials
 	CGAL_qpe_assertion (art_s_i < 0);
@@ -2963,7 +2963,7 @@ check_basis_inverse( Tag_false)
     if ( is_phaseI) std::fill_n( tmp_x.begin(), B_O.size(), et0);
     i_it = B_O.begin();
     for ( col = 0; col < cols; ++col, ++i_it) {
-	ratio_test_init__A_Cj  ( tmp_l.begin(), *i_it, 
+	ratio_test_init__A_Cj  ( tmp_l.begin(), *i_it,
 				 no_ineq);
 	ratio_test_init__2_D_Bj( tmp_x.begin(), *i_it, Tag_false());
 	inv_M_B.multiply( tmp_l.begin(), tmp_x.begin(),
@@ -3015,7 +3015,7 @@ check_basis_inverse( Tag_false)
 
 // filtered strategies are only allowed if the input type as
 // indicated by C_entry is double; this may still fail if the
-// types of some other program entries are not double, but 
+// types of some other program entries are not double, but
 // since the filtered stuff is internal anyway, we can probably
 // live with this simple check
 template < typename Q, typename ET, typename Tags >
@@ -3028,23 +3028,23 @@ set_pricing_strategy
 
     if (strategy == QP_DANTZIG)
       strategyP = new QP_full_exact_pricing<Q, ET, Tags>;
-    else if (strategy == QP_FILTERED_DANTZIG)    
+    else if (strategy == QP_FILTERED_DANTZIG)
       // choose between FF (double) and FE (anything else)
-      strategyP = 
+      strategyP =
 	new typename QP_solver_impl::Filtered_pricing_strategy_selector
 	<Q, ET, Tags, C_entry>::FF;
     else if (strategy == QP_PARTIAL_DANTZIG)
       strategyP = new QP_partial_exact_pricing<Q, ET, Tags>;
     else if (strategy == QP_PARTIAL_FILTERED_DANTZIG
-	     || strategy == QP_CHOOSE_DEFAULT)   
+	     || strategy == QP_CHOOSE_DEFAULT)
       // choose between PF (double) and PE (anything else)
-      strategyP = 
+      strategyP =
 	new typename QP_solver_impl::Filtered_pricing_strategy_selector
 	<Q, ET, Tags, C_entry>::PF;
-    else if (strategy == QP_BLAND) 
+    else if (strategy == QP_BLAND)
       strategyP = new QP_exact_bland_pricing<Q, ET, Tags>;
     CGAL_qpe_assertion(strategyP != static_cast<Pricing_strategy*>(0));
-   
+
     if ( phase() != -1) strategyP->set( *this, vout2);
 }
 
@@ -3085,7 +3085,7 @@ print_program( ) const
     for ( row = 0; row < qp_m; ++row) {
 
 	// original variables
-	for (i = 0; i < qp_n; ++i) 
+	for (i = 0; i < qp_n; ++i)
 	  vout4.out() << *((*(qp_A+ i))+row) << ' ';
 
 	// slack variables
@@ -3120,10 +3120,10 @@ print_program( ) const
 		    vout4.out() << std::endl;
     }
     vout4.out() << std::endl;
-    
+
     // explicit bounds
     if (!is_nonnegative) {
-        vout4.out() << "explicit bounds:" << std::endl; 
+        vout4.out() << "explicit bounds:" << std::endl;
         for (int i = 0; i < qp_n; ++i) {
             if (*(qp_fl+i)) {                   // finite lower bound
                 vout4.out() << *(qp_l+i);
@@ -3165,7 +3165,7 @@ print_basis( ) const
 	if ( has_ineq) {
 	  vout2.out() << std::endl
 		      << "basic constraints:  ";
-	  for (Index_const_iterator i_it = 
+	  for (Index_const_iterator i_it =
 		 C.begin(); i_it != C.end(); ++i_it) {
 	    label = (*(qp_r+ *i_it) == CGAL::EQUAL) ? 'e' : 'i';
 	    vout2.out() << *i_it << ":" << label << " ";
@@ -3242,9 +3242,9 @@ print_solution( ) const
             vout2.out() << "   x_N_O: ";
             for (int i = 0; i < qp_n; ++i) {
                 if (!is_basic(i)) {
-                    vout2.out() << d * 
+                    vout2.out() << d *
 		      nonbasic_original_variable_value(i);
-                    vout2.out() << " ";    
+                    vout2.out() << " ";
                 }
             }
             vout2.out() << std::endl;
@@ -3261,10 +3261,10 @@ print_solution( ) const
     }
   }
   vout << "  ";
-  vout.out() 
-    << "solution: " 
-    << solution_numerator() << " / " << solution_denominator() 
-    << "  ~= " 
+  vout.out()
+    << "solution: "
+    << solution_numerator() << " / " << solution_denominator()
+    << "  ~= "
     << to_double
     (CGAL::Quotient<ET>(solution_numerator(), solution_denominator()))
     << std::endl;
@@ -3306,7 +3306,7 @@ print_ratio_1_original(int k, const ET& x_k, const ET& q_k)
                     vout2.out() << "t_O_" << k << ": "
                     << "-inf" << '/' << q_k
                     << ( ( q_i != et0) && ( i == B_O[ k]) ? " *" : "")
-                    << std::endl;                
+                    << std::endl;
                 }
             } else {                                // artificial variable
                 vout2.out() << "t_O_" << k << ": "
@@ -3320,7 +3320,7 @@ print_ratio_1_original(int k, const ET& x_k, const ET& q_k)
                     vout2.out() << "t_O_" << k << ": "
                     << (d * ET(*(qp_l+B_O[k]))) - x_k << '/' << q_k
                     << ( ( q_i != et0) && ( i == B_O[ k]) ? " *" : "")
-                    << std::endl;                    
+                    << std::endl;
                 } else {                            // upper bound infinity
                     vout2.out() << "t_O_" << k << ": "
                     << "inf" << '/' << q_k
@@ -3356,14 +3356,14 @@ print_ratio_1_slack(int k, const ET& x_k, const ET& q_k)
             vout2.out() << "t_S_" << k << ": "
             << "inf" << '/' << q_k
             << ( ( q_i != et0) && ( i == B_S[ k]) ? " *" : "")
-            << std::endl;        
+            << std::endl;
         }
     } else {                                        // upper bounded
         if (q_k * ET(direction) > et0) {            // check for lower bound
             vout2.out() << "t_S_" << k << ": "
             << x_k << '/' << q_k
             << ( ( q_i != et0) && ( i == B_S[ k]) ? " *" : "")
-            << std::endl;            
+            << std::endl;
         } else if (q_k * ET(direction) < et0) {     // check for upper bound
             vout2.out() << "t_S_" << k << ": "
             << "inf" << '/' << q_k
@@ -3388,14 +3388,14 @@ variable_type( int k) const
 	                                       "artificial"));
 }
 
-template < typename Q, typename ET, typename Tags > 
+template < typename Q, typename ET, typename Tags >
 bool QP_solver<Q, ET, Tags>::
 is_artificial(int k) const
 {
-    return (k >= static_cast<int>(qp_n+slack_A.size())); 
+    return (k >= static_cast<int>(qp_n+slack_A.size()));
 }
 
-template < typename Q, typename ET, typename Tags > 
+template < typename Q, typename ET, typename Tags >
 int QP_solver<Q, ET, Tags>::
 get_l() const
 {

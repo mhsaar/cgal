@@ -54,7 +54,7 @@ template <class R_> struct Construct_weighted_point : Store_kernel<R_> {
 #if defined(BOOST_MSVC) && (BOOST_MSVC == 1900)
 #  pragma warning(push)
 #  pragma warning(disable: 4309)
-#endif    
+#endif
     return result_type(cp(),0);
 #if defined(BOOST_MSVC) && (BOOST_MSVC == 1900)
 #  pragma warning(pop)

@@ -3,7 +3,7 @@
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Lutz Kettner  <kettner@inf.ethz.ch>
 //                 Pedro Machado Manhaes de Castro  <pmmc@cin.ufpe.br>
@@ -41,7 +41,7 @@
 
 namespace CGAL {
 
-template < class P, class Creator = 
+template < class P, class Creator =
                   Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_disc_2 : public Random_generator_base<P>{
     void generate_point();
@@ -71,12 +71,12 @@ generate_point() {
     double alpha = this->_rnd.get_double() * 2.0 * CGAL_PI;
     double r = this->d_range * std::sqrt( this->_rnd.get_double());
     Creator creator;
-    this->d_item = creator( T(r * std::cos(alpha)), 
+    this->d_item = creator( T(r * std::cos(alpha)),
                             T(r * std::sin(alpha)));
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                   Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT, P> >
 class Random_points_on_circle_2 : public Random_generator_base<P> {
     void generate_point();
@@ -105,12 +105,12 @@ generate_point() {
     typedef typename Creator::argument_type T;
     double a = this->_rnd.get_double() * 2.0 * CGAL_PI;
     Creator creator;
-    this->d_item = creator( T(this->d_range * std::cos(a)), 
+    this->d_item = creator( T(this->d_range * std::cos(a)),
                             T(this->d_range * std::sin(a)));
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_square_2 : public Random_generator_base<P> {
     void generate_point();
@@ -146,7 +146,7 @@ generate_point() {
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_on_square_2 : public Random_generator_base<P> {
     void generate_point();
@@ -200,7 +200,7 @@ generate_point() {
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_iso_rectangle_2 : public Random_generator_base<P> {
   double left, right, top, bottom;
@@ -214,7 +214,7 @@ public:
     right = (std::max)(to_double(p.x()), to_double(q.x()));
     top = (std::min)(to_double(p.y()), to_double(q.y()));
     bottom = (std::max)(to_double(p.y()), to_double(q.y()));
-    generate_point(); 
+    generate_point();
   }
 
     This& operator++()    {
@@ -241,7 +241,7 @@ generate_point() {
 
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_on_segment_2 : public Random_generator_base<P> {
     P _p;
@@ -302,7 +302,7 @@ public:
                          std::size_t mx, std::size_t i = 0)
       : Generator_base<P>( (std::max)( (std::max)( to_double(p.x()), to_double(q.x())),
                                        (std::max)( to_double(p.y()), to_double(q.y())))),
-        _p(p), _q(q), d_i(i), d_mx(mx) 
+        _p(p), _q(q), d_i(i), d_mx(mx)
     {
         generate_point();
     }
@@ -363,7 +363,7 @@ points_on_square_grid_2( double a, std::size_t n, OutputIterator o)
 {
     typedef std::iterator_traits<OutputIterator> ITraits;
     typedef typename ITraits::value_type         P;
-    return points_on_square_grid_2(a, n, o, 
+    return points_on_square_grid_2(a, n, o,
                 Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P>());
 }
 
@@ -505,7 +505,7 @@ OutputIterator random_collinear_points_2(
                                        CGAL::get_default_random());
 }
 
-template < class P, class Creator = 
+template < class P, class Creator =
 Creator_uniform_2<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_triangle_2 : public Random_generator_base<P> {
 	P _p,_q,_r;

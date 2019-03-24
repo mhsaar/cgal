@@ -1,9 +1,9 @@
-// Copyright (c) 1997  
+// Copyright (c) 1997
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Wieger Wesselink <wieger@cs.ruu.nl>
 
@@ -254,7 +254,7 @@ bool is_convex_2(ForwardIterator first,
   if (next == last) return true;
 
   typename Traits::Equal_2 equal = traits.equal_2_object();
-  
+
   while(equal(*previous, *current)) {
     current = next;
     ++next;
@@ -407,7 +407,7 @@ Bounded_side bounded_side_2(ForwardIterator first,
                                       const Point& point,
                                       const PolygonTraits& traits)
 {
-  
+
   ForwardIterator current = first;
   if (current == last) return ON_UNBOUNDED_SIDE;
 
@@ -498,7 +498,7 @@ Bounded_side bounded_side_2(ForwardIterator first,
     current = next;
     cur_y_comp_res = next_y_comp_res;
     ++next;
-    if (next == last) next = first;   
+    if (next == last) next = first;
   }
   while (current != first);
 

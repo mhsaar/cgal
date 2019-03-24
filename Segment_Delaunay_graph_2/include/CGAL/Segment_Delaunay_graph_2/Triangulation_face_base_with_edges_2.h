@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -60,7 +60,7 @@ public:
   struct Rebind_TDS {
     typedef typename Fb::template Rebind_TDS<TDS2>::Other  Vb2;
     typedef Triangulation_face_base_with_edges_2<Gt,Vb2>   Other;
-  }; 
+  };
 
 
 public:
@@ -149,6 +149,6 @@ protected:
 
 
 
-} //namespace CGAL 
+} //namespace CGAL
 
 #endif // CGAL_TRIANGULATION_FACE_BASE_WITH_EDGES_2_H

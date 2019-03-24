@@ -43,7 +43,7 @@
 namespace CGAL {
 
 // complete set of parameters
-template < typename InputIterator, 
+template < typename InputIterator,
            typename Object,
            typename Kernel,
            typename Tag,
@@ -51,9 +51,9 @@ template < typename InputIterator,
 inline
 typename Kernel::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                Object& object, // plane or line
-                               typename Kernel::Point_3& centroid, 
+                               typename Kernel::Point_3& centroid,
                                const Tag& tag, // dimension tag, ranges from 0 to 3
 			       const Kernel& kernel,
 			       const DiagonalizeTraits& diagonalize_traits)
@@ -66,14 +66,14 @@ linear_least_squares_fitting_3(InputIterator first,
 
 // deduces kernel from value type of input iterator
 // use default DiagonalizeTraits
-template < typename InputIterator, 
+template < typename InputIterator,
            typename Object,
 	   typename Point,
            typename Tag >
 inline
 typename Kernel_traits<Object>::Kernel::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                Object& object,  // plane or line
                                Point& centroid,
 			       const Tag& tag) // dimension tag, ranges from 0 to 3
@@ -87,13 +87,13 @@ linear_least_squares_fitting_3(InputIterator first,
 
 // deduces kernel and does not write centroid
 // use default DiagonalizeTraits
-template < typename InputIterator, 
+template < typename InputIterator,
            typename Object,
            typename Tag>
 inline
 typename Kernel_traits<Object>::Kernel::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                Object& object, // plane or line
 			       const Tag& tag) // dimension tag, ranges from 0 to 3
 {

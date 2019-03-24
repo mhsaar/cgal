@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -45,7 +45,7 @@ class Orientation_C2
 {
 private:
   typedef Basic_predicates_C2<K>              Base;
-  
+
 public:
   typedef typename Base::Orientation          Orientation;
 

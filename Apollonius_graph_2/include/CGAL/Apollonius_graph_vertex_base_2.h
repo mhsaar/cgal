@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -48,7 +48,7 @@ struct Apollonius_graph_vertex_base_nested_iterator_traits
   {
     return it->hidden_sites_end();
   }
-  
+
 };
 
 
@@ -116,7 +116,7 @@ public:
     return hidden_site_list.size();
   }
 
-  Hidden_sites_iterator hidden_sites_begin() { 
+  Hidden_sites_iterator hidden_sites_begin() {
     return hidden_site_list.begin();
   }
 
@@ -154,6 +154,6 @@ private:
   Site_2 _p;
 };
 
-} //namespace CGAL 
+} //namespace CGAL
 
 #endif // CGAL_APOLLONIUS_GRAPH_VERTEX_BASE_2_H

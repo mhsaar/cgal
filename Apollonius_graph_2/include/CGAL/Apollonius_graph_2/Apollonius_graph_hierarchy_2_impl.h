@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -36,7 +36,7 @@ void
 Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 init_hierarchy(const Geom_traits& gt)
 {
-  hierarchy[0] = this; 
+  hierarchy[0] = this;
   for(unsigned int i = 1; i < ag_hierarchy_2__maxlevel; ++i) {
     hierarchy[i] = new Apollonius_graph_base(gt);
   }
@@ -46,7 +46,7 @@ template<class Gt, class Agds, class LTag>
 Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 Apollonius_graph_hierarchy_2(const Geom_traits& gt)
   : Apollonius_graph_base(gt)
-{ 
+{
   init_hierarchy(gt);
 }
 
@@ -57,11 +57,11 @@ Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 Apollonius_graph_hierarchy_2
 (const Apollonius_graph_hierarchy_2<Gt,Agds,LTag>& agh)
     : Apollonius_graph_base(agh.geom_traits())
-{ 
+{
   init_hierarchy(agh.geom_traits());
   copy(agh);
-} 
- 
+}
+
 
 //Assignement
 template<class Gt, class Agds, class LTag>
@@ -87,13 +87,13 @@ copy
 
   //up and down have been copied in straightforward way
   // compute a map at lower level
-  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
        it != hierarchy[0]->finite_vertices_end(); ++it) {
     if ( it->up() != Vertex_handle() ) V[ it->up()->down() ] = it;
   }
 
   for(unsigned int i = 1; i < ag_hierarchy_2__maxlevel; ++i) {
-    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	 it != hierarchy[i]->finite_vertices_end(); ++it) {
       // down pointer goes in original instead in copied triangulation
       it->set_down(V[it->down()]);
@@ -106,7 +106,7 @@ copy
 }
 
 template<class Gt, class Agds, class LTag>
-Apollonius_graph_hierarchy_2<Gt,Agds,LTag>:: 
+Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 ~Apollonius_graph_hierarchy_2()
 {
   clear();
@@ -117,7 +117,7 @@ Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 
 template<class Gt, class Agds, class LTag>
 void
-Apollonius_graph_hierarchy_2<Gt,Agds,LTag>:: 
+Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 clear()
 {
   for(unsigned int i = 0; i < ag_hierarchy_2__maxlevel; ++i) {
@@ -127,7 +127,7 @@ clear()
 
 template<class Gt, class Agds, class LTag>
 bool
-Apollonius_graph_hierarchy_2<Gt,Agds,LTag>:: 
+Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 is_valid(bool verbose, int level) const
 {
   bool result(true);
@@ -143,14 +143,14 @@ is_valid(bool verbose, int level) const
     }
   }
   //verify that lower level has no down pointers
-  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
        it != hierarchy[0]->finite_vertices_end(); ++it) {
     result = result && ( it->down() == 0 );
   }
 
   //verify that other levels has down pointer and reciprocal link is fine
   for(unsigned int i = 1; i < ag_hierarchy_2__maxlevel; ++i) {
-    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	 it != hierarchy[i]->finite_vertices_end(); ++it) {
       result = result && ( &*it == &*(it->down()->up()) );
     }
@@ -235,7 +235,7 @@ insert(const Site_2 &p)
   } while ( fc != fc_start );
 
   if ( s != NEGATIVE ) {
-    typename Apollonius_graph_base::Edge_circulator ec_start = 
+    typename Apollonius_graph_base::Edge_circulator ec_start =
       hierarchy[0]->incident_edges(vnear[0]);
     typename Apollonius_graph_base::Edge_circulator ec = ec_start;
 
@@ -244,7 +244,7 @@ insert(const Site_2 &p)
     do {
       e = *ec;
       interior_in_conflict = edge_interior(e, p, false);
-      
+
       if ( interior_in_conflict ) { break; }
       ++ec;
     } while ( ec != ec_start );
@@ -300,7 +300,7 @@ insert(const Site_2 &p)
 	  unsigned int l = 1;
 	  while ( true ) {
 	    hierarchy[l++]->remove(v);
-	    if ( u == Vertex_handle() ) break; 
+	    if ( u == Vertex_handle() ) break;
 	    if(l >= ag_hierarchy_2__maxlevel) { break; }
 	    v = u;
 	    u = v->up();
@@ -324,7 +324,7 @@ insert(const Site_2 &p)
   if ( n_hidden != 0 ) {
     nearest_neighbor(p.point(), vnear);
   }
-      
+
   int level = 1;
   while (level <= vertex_level ){
     vertex = hierarchy[level]->insert(p, vnear[level]);
@@ -337,7 +337,7 @@ insert(const Site_2 &p)
 }
 
 template<class Gt, class Agds, class LTag>
-void 
+void
 Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 remove(Vertex_handle v)
 {
@@ -359,7 +359,7 @@ remove(Vertex_handle v)
   unsigned int l = 0;
   while ( true ) {
     hierarchy[l++]->remove(v);
-    if ( u == Vertex_handle() ) break; 
+    if ( u == Vertex_handle() ) break;
     if(l >= ag_hierarchy_2__maxlevel) break;
     v = u;
     u = v->up();
@@ -370,7 +370,7 @@ remove(Vertex_handle v)
 
 
 template<class Gt, class Agds, class LTag>
-typename Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::Vertex_handle 
+typename Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::Vertex_handle
 Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 nearest_neighbor(const Point_2& p) const
 {
@@ -408,7 +408,7 @@ nearest_neighbor(const Point_2& p,
   unsigned int level  = ag_hierarchy_2__maxlevel;
 
   // find the highest level with enough vertices
-  while ( hierarchy[--level]->number_of_vertices() 
+  while ( hierarchy[--level]->number_of_vertices()
 	  < ag_hierarchy_2__minsize ) {
     if ( !level ) break;  // do not go below 0
   }
@@ -418,7 +418,7 @@ nearest_neighbor(const Point_2& p,
 
   while ( level > 0 ) {
     vnear[level] = nearest =
-      hierarchy[level]->nearest_neighbor(p, nearest);  
+      hierarchy[level]->nearest_neighbor(p, nearest);
 
     CGAL_assertion( !hierarchy[level]->is_infinite(vnear[level]) );
     // go at the same vertex on level below
@@ -433,7 +433,7 @@ template<class Gt, class Agds, class LTag>
 int
 Apollonius_graph_hierarchy_2<Gt,Agds,LTag>::
 random_level()
-{  
+{
   boost::geometric_distribution<> proba(1.0/ag_hierarchy_2__ratio);
   boost::variate_generator<boost::rand48&, boost::geometric_distribution<> > die(random, proba);
 

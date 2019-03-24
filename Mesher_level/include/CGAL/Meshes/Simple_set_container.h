@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -29,7 +29,7 @@ namespace CGAL {
   namespace Meshes {
 
     template <typename Element>
-    class Simple_set_container 
+    class Simple_set_container
     {
     public:
       typedef std::set<Element> Set;
@@ -48,7 +48,7 @@ namespace CGAL {
       Element get_next_element_impl()
       {
         CGAL_assertion(!s.empty());
-        
+
         return *(s.begin());
 
       }
@@ -73,7 +73,7 @@ namespace CGAL {
 	return s.size();
       }
     }; // end Simple_set_container
-    
+
   } // end namespace Meshes
 } // end namespace CGAL
 

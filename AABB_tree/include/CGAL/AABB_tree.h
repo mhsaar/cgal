@@ -72,7 +72,7 @@ namespace CGAL {
 
 	public:
     typedef AABBTraits AABB_traits;
-    
+
     /// \name Types
     ///@{
 
@@ -88,12 +88,12 @@ namespace CGAL {
 		/// Identifier for a primitive in the tree.
 		typedef typename Primitive::Id Primitive_id;
 		/// Unsigned integral size type.
-		typedef typename Primitives::size_type size_type; 
+		typedef typename Primitives::size_type size_type;
     /// Type of bounding box.
 		typedef typename AABBTraits::Bounding_box Bounding_box;
     /// 3D Point and Primitive Id type
 		typedef typename AABBTraits::Point_and_primitive_id Point_and_primitive_id;
-    /// \deprecated 
+    /// \deprecated
 		typedef typename AABBTraits::Object_and_primitive_id Object_and_primitive_id;
 
     /*!
@@ -109,7 +109,7 @@ namespace CGAL {
     };
     #endif
 
-    
+
     ///@}
 
 	public:
@@ -129,7 +129,7 @@ namespace CGAL {
      * The tree stays empty if the memory allocation is not successful.
      */
 		template<typename InputIterator,typename ... T>
-		AABB_tree(InputIterator first, InputIterator beyond,T&& ...);  
+		AABB_tree(InputIterator first, InputIterator beyond,T&& ...);
 
     /// After one or more calls to `insert()` the internal data
     /// structure of the tree must be reconstructed. This procedure
@@ -175,9 +175,9 @@ namespace CGAL {
 		}
     /// Returns a const reference to the internally stored traits class.
     const AABBTraits& traits() const{
-      return m_traits; 
+      return m_traits;
     }
-    
+
 		/// Clears the tree.
 		void clear()
 		{
@@ -190,18 +190,18 @@ namespace CGAL {
 
 		/// Returns the axis-aligned bounding box of the whole tree.
 		/// \pre `!empty()`
-		const Bounding_box bbox() const { 
+		const Bounding_box bbox() const {
 			CGAL_precondition(!empty());
 			if(size() > 1)
-				return root_node()->bbox(); 
+				return root_node()->bbox();
 			else
-				return AABB_traits().compute_bbox_object()(m_primitives.begin(), 
+				return AABB_traits().compute_bbox_object()(m_primitives.begin(),
 																									 m_primitives.end());
 		}
-    
+
     /// Returns the number of primitives in the tree.
 		size_type size() const { return m_primitives.size(); }
-    
+
     /// Returns \c true, iff the tree contains no primitive.
 		bool empty() const { return m_primitives.empty(); }
 		///@}
@@ -250,7 +250,7 @@ public:
 		OutputIterator all_intersected_primitives(const Query& query, OutputIterator out) const;
 
 
-    /// Returns the intersected primitive id that is encountered first 
+    /// Returns the intersected primitive id that is encountered first
 		/// in the tree traversal, iff
     /// the query intersects at least one of the input primitives. No
     /// particular order is guaranteed over the tree traversal, such
@@ -276,7 +276,7 @@ public:
 		OutputIterator all_intersections(const Query& query, OutputIterator out) const;
 
 
-    /// Returns the intersection that is encountered first 
+    /// Returns the intersection that is encountered first
 		/// in the tree traversal. No particular
     /// order is guaranteed over the tree traversal, e.g, the
     /// primitive returned is not necessarily the closest from the
@@ -367,7 +367,7 @@ public:
 		/// \pre `!empty()`
 		Point closest_point(const Point& query) const;
 
-    
+
     /// Returns a `Point_and_primitive_id` which realizes the
     /// smallest distance between the query point and all input
     /// primitives. Method `accelerate_distance_queries()` should be
@@ -381,7 +381,7 @@ public:
     ///@}
 
     /// \name Accelerating the Distance Queries
-    /// 
+    ///
     /// In the following paragraphs, we discuss details of the
     /// implementation of the distance queries. We explain the
     /// internal use of hints, how the user can pass his own hints to
@@ -396,7 +396,7 @@ public:
     /// exact specification of these internal algorithms is that they
     /// minimize the distance to the object composed of the union of
     /// the primitives and the hint.
-    /// It follows that 
+    /// It follows that
     /// - in order to return the exact distance to the set of
     /// primitives, the algorithms need the hint to be exactly on the
     /// primitives;
@@ -456,7 +456,7 @@ public:
 			m_default_search_tree_constructed = false; // not a default kd-tree
 			return build_kd_tree(first,beyond);
 		}
-    
+
     /// Returns the minimum squared distance between the query point
     /// and all input primitives. The internal KD-tree is not used.
 		/// \pre `!empty()`
@@ -468,7 +468,7 @@ public:
     /// internal KD-tree is not used.
 		/// \pre `!empty()`
 		Point closest_point(const Point& query, const Point& hint) const;
-    
+
     /// Returns a `Point_and_primitive_id` which realizes the
     /// smallest distance between the query point and all input
     /// primitives. The internal KD-tree is not used.
@@ -545,11 +545,11 @@ public:
 				return this->any_reference_point_and_id();
 		}
 		
-		//! Returns the datum (geometric object) represented `p`. 
+		//! Returns the datum (geometric object) represented `p`.
 #ifndef DOXYGEN_RUNNING
-		typename internal::Primitive_helper<AABBTraits>::Datum_type 
+		typename internal::Primitive_helper<AABBTraits>::Datum_type
 #else
-		typename AABBTraits::Primitive::Datum_reference 
+		typename AABBTraits::Primitive::Datum_reference
 #endif
 		datum(Primitive& p)const
 		{
@@ -568,7 +568,7 @@ public:
     mutable CGAL_MUTEX internal_tree_mutex;//mutex used to protect const calls inducing build()
     mutable CGAL_MUTEX kd_tree_mutex;//mutex used to protect calls to accelerate_distance_queries
     #endif
-  
+
     const Node* root_node() const {
 			CGAL_assertion(size() > 1);
       if(m_need_build){
@@ -577,7 +577,7 @@ public:
         CGAL_SCOPED_LOCK(internal_tree_mutex);
         if(m_need_build)
         #endif
-          const_cast< AABB_tree<AABBTraits>* >(this)->build(); 
+          const_cast< AABB_tree<AABBTraits>* >(this)->build();
       }
       return m_p_root_node;
     }
@@ -630,7 +630,7 @@ public:
 		// Insert each primitive into tree
     insert(first, beyond,std::forward<T>(t)...);
  	}
-  
+
 	template<typename Tr>
 	template<typename ConstPrimitiveIterator, typename ... T>
 	void AABB_tree<Tr>::insert(ConstPrimitiveIterator first,
@@ -645,7 +645,7 @@ public:
 		}
     m_need_build = true;
   }
-  
+
   // Clears tree and insert a set of primitives
 	template<typename Tr>
 	template<typename ConstPrimitiveIterator, typename ... T>
@@ -660,8 +660,8 @@ public:
     insert(first, beyond,std::forward<T>(t)...);
 
     build();
-	}  
-        
+	}
+
         template<typename Tr>
         template<typename ... T>
         void AABB_tree<Tr>::build(T&& ... t)
@@ -805,7 +805,7 @@ public:
     size_type counter = 0;
     Counting_iterator out(&counter);
 
-		Listing_primitive_traits<AABBTraits, 
+		Listing_primitive_traits<AABBTraits,
       Query, Counting_iterator> traversal_traits(out,m_traits);
 		this->traversal(query, traversal_traits);
 		return counter;
@@ -819,7 +819,7 @@ public:
 	{
     using namespace CGAL::internal::AABB_tree;
     typedef typename AABB_tree<Tr>::AABB_traits AABBTraits;
-		Listing_primitive_traits<AABBTraits, 
+		Listing_primitive_traits<AABBTraits,
       Query, OutputIterator> traversal_traits(out,m_traits);
 		this->traversal(query, traversal_traits);
 		return out;
@@ -833,7 +833,7 @@ public:
 	{
     using namespace CGAL::internal::AABB_tree;
     typedef typename AABB_tree<Tr>::AABB_traits AABBTraits;
-		Listing_intersection_traits<AABBTraits, 
+		Listing_intersection_traits<AABBTraits,
       Query, OutputIterator> traversal_traits(out,m_traits);
 		this->traversal(query, traversal_traits);
 		return out;

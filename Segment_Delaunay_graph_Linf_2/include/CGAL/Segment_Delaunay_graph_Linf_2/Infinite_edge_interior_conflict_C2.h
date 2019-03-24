@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Panagiotis Cheilaris, Sandeep Kumar Dey, Evanthia Papadopoulou
 //philaris@gmail.com, sandeep.kr.dey@gmail.com, evanthia.papadopoulou@usi.ch
@@ -317,7 +317,7 @@ public:
             << ' ' << sgn << " returns "
             << ( sgn == NEGATIVE ) << std::endl;);
         return ( sgn == NEGATIVE );
-      } 
+      }
       else
       {
         if (sgn == NEGATIVE) {

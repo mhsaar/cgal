@@ -1,9 +1,9 @@
-// Copyright (c) 2001  
+// Copyright (c) 2001
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman <geert@cs.uu.nl>
 
@@ -211,7 +211,12 @@ template <class VertexData>
 bool Less_segments<VertexData>::
 operator()(Vertex_index i, Vertex_index j) const
 {
-    if (m_vertex_data->edges[j.as_int()].is_in_tree) {
+   if (i.as_int() == j.as_int()) {
+        // Some STL implementations may call comparator(x, x)
+        // to verify irreflexivity.  Don't violate less_than_in_tree's
+        // preconditions in such an environment.
+        return false;
+    } else if (m_vertex_data->edges[j.as_int()].is_in_tree) {
         return less_than_in_tree(i,j);
     } else {
         return !less_than_in_tree(j,i);
@@ -312,7 +317,7 @@ insertion_event(Tree *tree, Vertex_index prev_vt,
       case LEFT_TURN: left_turn = true; break;
       case RIGHT_TURN: left_turn = false; break;
       default: return false;
-      
+
     }
     Edge_data<Less_segs>
         &td_prev = edges[prev_vt.as_int()],
@@ -486,14 +491,14 @@ bool is_simple_polygon(Iterator points_begin, Iterator points_end,
     std::vector<typename PolygonTraits::Point_2> points(points_begin,points_end);
     std::sort(points.begin(), points.end(), polygon_traits.less_xy_2_object());
 
-    typename std::vector<typename PolygonTraits::Point_2>::iterator 
+    typename std::vector<typename PolygonTraits::Point_2>::iterator
                                   succ(points.begin()) , it(succ++);
     for(;succ != points.end(); ++it,++succ){
       if(*it == *succ){
 	return false;
       }
     }
-    // end of fix    
+    // end of fix
     Vertex_data   vertex_data(points_begin, points_end, polygon_traits);
     Tree tree(&vertex_data);
     vertex_data.init(&tree);

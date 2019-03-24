@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel        <seel@mpi-sb.mpg.de>
 //                 Miguel Granados     <granados@mpi-sb.mpg.de>
@@ -44,7 +44,7 @@
 namespace CGAL {
 
 template <typename Refs>
-class SHalfedge_base  { 
+class SHalfedge_base  {
   #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
   typedef void* GenPtr;
   #else
@@ -73,7 +73,7 @@ class SHalfedge_base  {
   SHalfedge_handle   sprev_, snext_;
   SFace_handle       incident_sface_;
   SHalfedge_handle   twin_;
-  // Topology within global Nef structure:  
+  // Topology within global Nef structure:
   SHalfedge_handle   prev_, next_;
   Halffacet_handle   facet_;
   GenPtr             info_;
@@ -84,8 +84,8 @@ class SHalfedge_base  {
  public:
 
   SHalfedge_base() : source_(), sprev_(), snext_(),
-    incident_sface_(), twin_(), 
-    prev_(), next_(), facet_(), 
+    incident_sface_(), twin_(),
+    prev_(), next_(), facet_(),
     info_(), mark_(), circle_() {}
 
     ~SHalfedge_base() {
@@ -159,7 +159,7 @@ class SHalfedge_base  {
 
     Sphere_circle& circle() { return circle_; }
     const Sphere_circle& circle() const { return circle_; }
-    
+
     SFace_handle& incident_sface() { return incident_sface_; }
     SFace_const_handle incident_sface() const { return incident_sface_; }
 
@@ -183,7 +183,7 @@ class SHalfedge_base  {
 	return true;
       return false;
     }
-    
+
     bool in_inner_facet_cycle() const {
       return !in_outer_facet_cycle();
     }
@@ -202,14 +202,14 @@ class SHalfedge_base  {
 	return true;
       return false;
     }
-    
+
    bool in_inner_sface_cycle() const {
       return !in_outer_sface_cycle();
     }
 
     std::string debug() const
-      { std::stringstream os; 
-	set_pretty_mode(os); 
+      { std::stringstream os;
+	set_pretty_mode(os);
 	os <<"e[ "<<source_->debug()<<", "
 	   <<twin_->source_->debug()
     #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
@@ -222,7 +222,7 @@ class SHalfedge_base  {
     bool is_twin() const { return (&*twin_ < this); }
 
     bool is_valid( bool verb = false, int level = 0) const {
-      
+
       Verbose_ostream verr(verb);
       verr << "begin CGAL::SNC_items<...>::SHalfedge_base::is_valid( verb=true, "
 	"level = " << level << "):" << std::endl;
@@ -235,14 +235,14 @@ class SHalfedge_base  {
       valid = valid && (snext_ != SHalfedge_handle() && snext_ != NULL);
       valid = valid && (prev_  != SHalfedge_handle() && prev_  != NULL);
       valid = valid && (next_  != SHalfedge_handle() && next_  != NULL);
-      
-      valid = valid && (incident_sface_ != SFace_handle() && 
+
+      valid = valid && (incident_sface_ != SFace_handle() &&
 			incident_sface_ != NULL);
       valid = valid && (facet_ != Halffacet_handle() &&
 			facet_ != NULL);
       valid = valid && (circle_.d() == 0);
       valid = valid && (circle_.a() != 0 || circle_.b() != 0 || circle_.c() !=0);
-      
+
       verr << "end of CGAL::SNC_items<...>::SHalfedge_base::is_valid(): structure is "
 	   << ( valid ? "valid." : "NOT VALID.") << std::endl;
 

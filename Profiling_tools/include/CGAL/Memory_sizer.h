@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 // Author(s)     : Sylvain Pion, Andreas Fabri
 
 #ifndef CGAL_MEMORY_SIZER_H
@@ -51,7 +51,7 @@ struct Memory_sizer
 #  define CGAL_AUTO_LINK_NOMANGLE
 #  include <CGAL/auto_link/auto_link.h>
 
-#elif defined __linux__ 
+#elif defined __linux__
 #  include <fstream>
 #  include <cstddef>
 #  include <unistd.h>
@@ -76,8 +76,8 @@ struct Memory_sizer
 
 private:
 
-  size_type get (bool virtual_size)  const 
-  { 
+  size_type get (bool virtual_size)  const
+  {
 #ifdef _MSC_VER
     DWORD pid = GetCurrentProcessId();
     size_type result=0;
@@ -90,7 +90,7 @@ private:
     {
       // PagefileUsage seems not very precise, thus check it against WorkingSetSize:
       size_t approximate_virtual_size = (std::max)(pmc.PagefileUsage, pmc.WorkingSetSize);
-      
+
       result = (virtual_size)? approximate_virtual_size : pmc.WorkingSetSize;
     }
 
@@ -151,10 +151,10 @@ private:
 		// task_for_pid(current_task(), getpid(), &task)
 		// we should have (task == current_task())
 		// ==> TODO: Check if this is indeed the case
-      
+
     struct task_basic_info t_info;
     mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
-      
+
     task_info(task, TASK_BASIC_INFO, (task_info_t)&t_info, &t_info_count);
 		// TODO: test if the following line works...
     //task_info(current_task(), TASK_BASIC_INFO, (task_info_t)&t_info, &t_info_count);

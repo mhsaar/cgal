@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Miguel Granados <granados@mpi-sb.mpg.de>
 
@@ -34,7 +34,7 @@ quotient_coordinates_to_homogeneous_point(
 				  typename Homogeneous::FT y,
 				  typename Homogeneous::FT z) {
   typedef typename Homogeneous::Point_3 Point_3;
-  if( (x.denominator() == y.denominator()) && 
+  if( (x.denominator() == y.denominator()) &&
       (x.denominator() == z.denominator())) {
     Point_3 p( x.numerator(),
 	       y.numerator(),

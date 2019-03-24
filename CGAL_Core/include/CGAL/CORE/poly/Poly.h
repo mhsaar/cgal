@@ -17,34 +17,34 @@
  *
  *
  * File: Poly.h
- *  
+ *
  * Description: simple polynomial class
- * 
+ *
  *	REPRESENTATION:
  *	--Each polynomial has a nominal "degree" (this
  *		is an upper bound on the true degree, which
  *		is determined by the first non-zero coefficient).
  *	--coefficients are parametrized by some number type "NT".
  *	--coefficients are stored in the "coeff" array of
- *		length "degree + 1".  
+ *		length "degree + 1".
  *		CONVENTION: coeff[i] is the coefficient of X^i.  So, a
  *			    coefficient list begins with the constant term.
  *	--IMPORTANT CONVENTION:
  *		the zero polynomial has degree -1
  *		while nonzero constant polynomials have degree 0.
- * 
+ *
  *	FUNCTIONALITY:
  *	--Polynomial Ring Operations (+,-,*)
  *	--Power
  *	--Evaluation
  *	--Differentiation
- *	--Remainder, Quotient 
+ *	--Remainder, Quotient
  *      --GCD
  *	--Resultant, Discriminant (planned)
  *	--Polynomial Composition (planned)
  *	--file I/O (planned)
  *	
- * Author: Chee Yap 
+ * Author: Chee Yap
  * Date:   May 28, 2002
  *
  * WWW URL: http://cs.nyu.edu/exact/
@@ -64,7 +64,7 @@
 #include <CGAL/assertions.h>
 #include <CGAL/tss.h>
 
-namespace CORE { 
+namespace CORE {
 using namespace std;
 class Expr;
 // ==================================================
@@ -200,11 +200,11 @@ public:
   // Evaluation Functions:
   /// Polynomial evaluation where the coefficients are approximated first
   /// Returns a BigFloat with error that contains the value
-  BigFloat evalApprox(const BigFloat& f, 
-    const extLong& r=get_static_defRelPrec(), 
+  BigFloat evalApprox(const BigFloat& f,
+    const extLong& r=get_static_defRelPrec(),
     const extLong& a=get_static_defAbsPrec()) const;
   /// Polynomial evaluation at a BigFloat value.
-  /// The returned BigFloat (with error) has the exact sign.  
+  /// The returned BigFloat (with error) has the exact sign.
   /// In particular, if the value is 0, we return 0.
   /// @param oldMSB is any estimate of the negative log of the evaluation
   BigFloat evalExactSign(const BigFloat& val, const extLong& oldMSB=54) const;

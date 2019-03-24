@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -34,7 +34,7 @@
 namespace CGAL {
 
 template <class CDT>
-class Delaunay_mesh_size_criteria_2 : 
+class Delaunay_mesh_size_criteria_2 :
     public virtual Delaunay_mesh_criteria_2<CDT>
 {
 protected:
@@ -44,7 +44,7 @@ protected:
 public:
   typedef Delaunay_mesh_criteria_2<CDT> Base;
 
-  Delaunay_mesh_size_criteria_2(const double aspect_bound = 0.125, 
+  Delaunay_mesh_size_criteria_2(const double aspect_bound = 0.125,
                                 const double size_bound = 0,
                                 const Geom_traits& traits = Geom_traits())
     : Base(aspect_bound, traits), sizebound(size_bound) {}
@@ -122,7 +122,7 @@ public:
 
       Geom_traits traits; /** @warning traits with data!! */
 
-      Compute_squared_distance_2 squared_distance = 
+      Compute_squared_distance_2 squared_distance =
 	traits.compute_squared_distance_2_object();
 
       const Point_2& pa = fh->vertex(0)->point();
@@ -133,10 +133,10 @@ public:
 	a = CGAL::to_double(squared_distance(pb, pc)),
 	b = CGAL::to_double(squared_distance(pc, pa)),
 	c = CGAL::to_double(squared_distance(pa, pb));
-      
+
       double max_sq_length; // squared max edge length
       double second_max_sq_length;
-      
+
       if(a<b)
 	{
 	  if(b<c) {
@@ -179,7 +179,7 @@ public:
       double area = 2*CGAL::to_double(area_2(pa, pb, pc));
 
       q.first = (area * area) / (max_sq_length * second_max_sq_length); // (sine)
-      
+
       if( q.sine() < this->B )
 	return Mesh_2::BAD;
       else
@@ -188,7 +188,7 @@ public:
   };
 
   Is_bad is_bad_object() const
-  { return Is_bad(this->bound(), size_bound(), 
+  { return Is_bad(this->bound(), size_bound(),
                   this->traits /* from the bad class */); }
 };
 

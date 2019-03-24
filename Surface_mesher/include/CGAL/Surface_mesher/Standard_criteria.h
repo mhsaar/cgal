@@ -168,7 +168,7 @@ namespace CGAL {
     }
 
   private:
-    static 
+    static
     Quality min_3 (const Quality a, const Quality b, const Quality c) {
       if (a<=b && a<=c)
 	return(a);

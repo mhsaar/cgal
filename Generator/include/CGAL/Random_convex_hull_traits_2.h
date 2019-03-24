@@ -28,7 +28,7 @@
 
 namespace CGAL{
 	template<class R_>
-class Random_convex_hull_traits_2 
+class Random_convex_hull_traits_2
 {
   public:
     typedef R_                            R;
@@ -43,7 +43,7 @@ class Random_convex_hull_traits_2
     Compare_x_2
     compare_x_2_object() const
     {
-    	return Compare_x_2(); 
+    	return Compare_x_2();
     }
 
     Compare_y_2
@@ -53,7 +53,7 @@ class Random_convex_hull_traits_2
     }
 
     Orientation_2
-    orientation_2_object() const 
+    orientation_2_object() const
     {
     	return Orientation_2();
     }

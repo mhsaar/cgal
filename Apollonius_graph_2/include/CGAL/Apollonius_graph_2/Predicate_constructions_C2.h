@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -173,7 +173,7 @@ protected:
   inline void
   store(FT dx, FT dy, FT dw)
     {
-      _dw = dw; 
+      _dw = dw;
       _a1 = dx * dw;
       _a2 = dy;
       _b1 = dy * dw;

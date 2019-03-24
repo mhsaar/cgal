@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 //                 Christophe Delage <Christophe.Delage@sophia.inria.fr>
@@ -38,8 +38,8 @@ namespace CGAL {
 //                        Vertex conflict
 //-----------------------------------------------------------------------
 
-template < class K, class Method_tag > 
-class Uncertain_vertex_conflict_new_2 
+template < class K, class Method_tag >
+class Uncertain_vertex_conflict_new_2
 {
 public:
     typedef typename K::Site_2                Site_2;
@@ -47,7 +47,7 @@ public:
     typedef Uncertain<Sign>                   result_type;
 
 private:
-    
+
     inline
     Uncertain<bool> is_less (const Site_2 &p0, const Site_2 &p1) const
     {
@@ -119,7 +119,7 @@ private:
       Uncertain<Sign> s = CGAL::sign(aq);
       if ( is_indeterminate(s) ) { return s; }
       if (s != POSITIVE){
-	// I BELIEVE MENELAOS RETURNS -1 in this case even when degernate 
+	// I BELIEVE MENELAOS RETURNS -1 in this case even when degernate
 	//if (sign (aq) == ZERO && ! perturb) return ZERO;
 	//	return NEGATIVE;
 	return POSITIVE;
@@ -139,7 +139,7 @@ private:
 
       CGAL_assertion (a3 > 0);
 
-      RT ax3q = a3 * xq - x3 * aq; 
+      RT ax3q = a3 * xq - x3 * aq;
       RT ax2q = a2 * xq - x2 * aq;
       RT ax23 = a2 * x3 - x2 * a3;
 
@@ -198,7 +198,7 @@ private:
 	  o2q = CGAL::sign (ax2q);
 	  o3q = CGAL::sign (ax3q);
 	}
-	if ( is_indeterminate(o23) || 
+	if ( is_indeterminate(o23) ||
 	     is_indeterminate(o2q) ||
 	     is_indeterminate(o3q) ) {
 	  return Uncertain<Sign>::indeterminate();
@@ -210,14 +210,14 @@ private:
 
 	return i == 0 ? NEGATIVE : POSITIVE;
       } // if (orient == ZERO )
- 
-      // radical side 
+
+      // radical side
       RT rs23q = ax23 * axw23q + ay23 * ayw23q;
       Uncertain<Sign> radSide = CGAL::sign (rs23q);
       if ( is_indeterminate(radSide) ) { return radSide; }
 
       if (radSide == ZERO || radSide != orient) { return orient; }
-       
+
       // radical intersection
       Uncertain<Sign> radInt =
 	CGAL::sign(axw23q * axw23q + ayw23q * ayw23q - axy23q * axy23q);
@@ -261,22 +261,22 @@ private:
 	  radInt = -Sign( Sign(radSideQ) + Sign(radSide1) + Sign(radSide2) );
 	}
       }
-        
+
       CGAL_assertion (!perturb || radInt != ZERO);
 
       if (radInt == NEGATIVE) { return orient; }
-        
+
       return -radSide;
     }
-    
+
 
     inline
     Uncertain<Sign>
-    predicate(const Site_2 &p1, const Site_2 &p2, 
+    predicate(const Site_2 &p1, const Site_2 &p2,
 	      const Site_2 &q, bool perturb) const
     {
       // NOTE:***************************************
-      // * the perturb boolean variable is not used 
+      // * the perturb boolean variable is not used
       // * for consistancy with Menelaos
       // NOTE:***************************************
       RT x2 = p2.x() - p1.x();
@@ -289,7 +289,7 @@ private:
       RT xw2q = x2 * wq - xq * w2;
       RT yw2q = y2 * wq - yq * w2;
       RT xy2q = x2 * yq - xq * y2;
-        
+
       // orientation
       Uncertain<Sign> orient = CGAL::sign(xy2q);
       if ( is_indeterminate(orient) ) { return orient; }
@@ -306,7 +306,7 @@ private:
 	  Uncertain<Sign> s_xw2q = CGAL::sign(xw2q);
 	  if ( is_indeterminate(s_xw2q) ) { return s_xw2q; }
 	  power_test = o12 * s_xw2q;
-                 
+
 	  // this results is consistant with Menelaos
 	  if (power_test != ZERO) { return -power_test; }
 
@@ -342,7 +342,7 @@ private:
 	return NEGATIVE;
       }
 
-      // radical side 
+      // radical side
       RT rs12q = x2 * xw2q + y2 * yw2q;
       Uncertain<Sign> radSide = CGAL::sign(rs12q);
       if ( is_indeterminate(radSide) ) { return radSide; }
@@ -360,7 +360,7 @@ private:
       // radical intersection degerate
       if (radInt == ZERO) {
 	CGAL_assertion (radSide != ZERO);
-            
+
 	// this result is consistant with the perturb on off idea
 	//if (! perturb) return (radSide == orient) ? ZERO : orient;
 
@@ -368,12 +368,12 @@ private:
 	Uncertain<Sign> radSide1 = CGAL::sign(rs2q1);
 	if ( is_indeterminate(radSide1) ) { return radSide1; }
 	if (radSide1 == ZERO) { return NEGATIVE; }
-            
+
 	RT rsq12 = xq * xw2q + yq * yw2q;
 	Uncertain<Sign> radSide2 = CGAL::sign(rsq12);
 	if ( is_indeterminate(radSide2) ) { return radSide2; }
 	if (radSide2 == ZERO) { return NEGATIVE; }
- 
+
 	return -(radSide1 * radSide2);
       }
 

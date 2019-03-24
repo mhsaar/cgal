@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -46,8 +46,8 @@ namespace Surface_mesher {
 
 //   template <class Tr>
 //   typename Tr::Edge
-//   canonical_edge(const Tr& tr, 
-// 		 const typename Tr::Edge e) 
+//   canonical_edge(const Tr& tr,
+// 		 const typename Tr::Edge e)
 //   {
 //     typedef typename Tr::Cell_handle Cell_handle;
 //     typedef typename Tr::Vertex_handle Vertex_handle;
@@ -83,9 +83,9 @@ namespace Surface_mesher {
 // 	  *it++=canonical_edge(tr, Edge(*cit, i, j));
 //   }
 
-  template <typename Tr, 
+  template <typename Tr,
 	    typename Surface_mesh_traits>
-  Object 
+  Object
   compute_edge_intersection_curve(const Tr& tr,
 				  const typename Surface_mesh_traits::
 				    Surface_3& surf,
@@ -93,7 +93,7 @@ namespace Surface_mesher {
 				  const typename Tr::Edge& e)
   {
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INTERSECTION
-    std::cerr << 
+    std::cerr <<
       boost::format("compute_edge_intersection_curve(Edge(%1%, %2%, %3%)="
 		    "(%4%, %5%))\n")
       % &*e.first % e.second % e.third
@@ -109,23 +109,23 @@ namespace Surface_mesher {
     typedef typename GT::FT FT;
     typedef typename Surface_mesh_traits::Intersection_point Intersection_point;
 
-    typename GT::Construct_midpoint_3 midpoint = 
+    typename GT::Construct_midpoint_3 midpoint =
       tr.geom_traits().construct_midpoint_3_object();
-    typename GT::Construct_ray_3 create_ray = 
+    typename GT::Construct_ray_3 create_ray =
       tr.geom_traits().construct_ray_3_object();
-    typename GT::Construct_vector_3 create_vector = 
+    typename GT::Construct_vector_3 create_vector =
       tr.geom_traits().construct_vector_3_object();
-    typename GT::Construct_cross_product_vector_3 cross_product = 
+    typename GT::Construct_cross_product_vector_3 cross_product =
       tr.geom_traits().construct_cross_product_vector_3_object();
-    typename GT::Construct_point_on_3 point_on = 
+    typename GT::Construct_point_on_3 point_on =
       tr.geom_traits().construct_point_on_3_object();
-    typename GT::Construct_translated_point_3 translate = 
+    typename GT::Construct_translated_point_3 translate =
       tr.geom_traits().construct_translated_point_3_object();
-    typename GT::Construct_divided_vector_3 divide = 
+    typename GT::Construct_divided_vector_3 divide =
       tr.geom_traits().construct_divided_vector_3_object();
-    typename GT::Construct_scaled_vector_3 scale = 
+    typename GT::Construct_scaled_vector_3 scale =
       tr.geom_traits().construct_scaled_vector_3_object();
-    typename GT::Construct_sum_of_vectors_3 sum = 
+    typename GT::Construct_sum_of_vectors_3 sum =
       tr.geom_traits().construct_sum_of_vectors_3_object();
     typename GT::Compute_squared_length_3 sq_length =
       tr.geom_traits().compute_squared_length_3_object();
@@ -134,7 +134,7 @@ namespace Surface_mesher {
     Edge_dual edge_dual;
     edge_dual.reserve(12);
 
-    // va and vb are the extremities of the edge. 
+    // va and vb are the extremities of the edge.
     const Vertex_handle& va = e.first->vertex(e.second);
     const Vertex_handle& vb = e.first->vertex(e.third);
 
@@ -203,7 +203,7 @@ namespace Surface_mesher {
 	  next_circumcenter = edge_dual[0];
 
 	// remember vc is finite.
-	const Vector_3 first_vector = 
+	const Vector_3 first_vector =
 	  cross_product(create_vector(va->point(),
 				      vb->point()),
 			create_vector(va->point(),
@@ -215,7 +215,7 @@ namespace Surface_mesher {
 	const Vertex_handle& vd_in_next = next_cell->vertex(index_d_in_next);
 	CGAL_assertion_code(tr.is_infinite(vd_in_next));
 
-	const Vector_3 second_vector = 
+	const Vector_3 second_vector =
 	  cross_product(create_vector(vb->point(), // special
 				      va->point()),// order
 			create_vector(vb->point(),
@@ -234,7 +234,7 @@ namespace Surface_mesher {
 	  % sq_norm_second_vector;
 #endif
 
-	edge_dual.push_back(translate(last_circumcenter, 
+	edge_dual.push_back(translate(last_circumcenter,
 				      scale(first_vector,
 					    CGAL::sqrt(sq_radius / sq_norm_first_vector))));
 	edge_dual.push_back(translate(edge_middle,
@@ -243,7 +243,7 @@ namespace Surface_mesher {
 	edge_dual.push_back(translate(next_circumcenter,
 				      scale(second_vector,
 					    CGAL::sqrt(sq_radius / sq_norm_second_vector))));
-	if(cell_after != begin) 
+	if(cell_after != begin)
 	{
 	  edge_dual.push_back(next_circumcenter);
 	  ++circ; // again (third time), increment circ
@@ -251,7 +251,7 @@ namespace Surface_mesher {
 	}
       }
       else // the cell 'current_cell' is finite
-      { 
+      {
 	CGAL_assertion_code(++number_of_finite_incident_cells);
 	CGAL_assertion(!tr.is_infinite(current_cell));
 
@@ -274,7 +274,7 @@ namespace Surface_mesher {
 
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INTERSECTION
     CGAL_assertion_code(
-    std::cerr << 
+    std::cerr <<
       boost::format("  number of finite/infinite incident cells: %1%/%2%\n"
 		    "  edge_dual.size(): %3%\n")
       % number_of_finite_incident_cells
@@ -289,7 +289,7 @@ namespace Surface_mesher {
 		   (number_of_infinite_incident_cells!=0 ? 1 : 0) );
     CGAL_assertion(edge_dual.size() >= 3);
 
-    Circulator_from_container<Edge_dual> 
+    Circulator_from_container<Edge_dual>
       vor_circ(&edge_dual), vor_begin(vor_circ); //Circulator in the list of
 						//points of the edge dual
 						//(a Voronoi facet).
@@ -300,7 +300,7 @@ namespace Surface_mesher {
       const Point_3& current = *vor_circ;
       const Point_3& next = *++vor_circ;
 
-      Object o = 
+      Object o =
 	meshtraits.intersect_curves_with_triangle(surf,
 						  Triangle_3(current,
 							     next,
@@ -327,17 +327,17 @@ namespace Surface_mesher {
     return Object();
   } // end of compute_edge_intersection_curve(Tr, Surface_3, SMTraits, Edge)
 
-  template <typename Tr, 
+  template <typename Tr,
 	    typename Surface_mesh_traits>
-  typename Tr::Point 
+  typename Tr::Point
   lineic_center(const Tr& tr,
 		  const typename Surface_mesh_traits::Surface_3& surf,
 		  const Surface_mesh_traits& meshtraits,
 		  const typename Tr::Edge& e)
   {
     typedef typename Surface_mesh_traits::Intersection_point Intersection_point;
-    // the following object cast can throw a 'Bad_object_cast' exception 
-    Intersection_point point = 
+    // the following object cast can throw a 'Bad_object_cast' exception
+    Intersection_point point =
       object_cast<Intersection_point>(compute_edge_intersection_curve(tr,
 					     surf,
 					     meshtraits,
@@ -369,7 +369,7 @@ namespace Surface_mesher {
     class Surface_,
     class SurfaceMeshTraits,
     class EdgesCriteria,
-    class Container = 
+    class Container =
       typename details::Surface_mesher_edges_base_types<C2T3>::Default_container
     >
   class Surface_mesher_edges_level_base :
@@ -479,8 +479,8 @@ namespace Surface_mesher {
     }
   public:
     // Constructor
-    Surface_mesher_edges_level_base (C2T3& co, 
-				     const Surface& s, 
+    Surface_mesher_edges_level_base (C2T3& co,
+				     const Surface& s,
 				     const Surface_mesh_traits& mesh_traits,
 				     const Edges_criteria& c) :
       Triangulation_mesher_level_traits_3<Tr>(co.triangulation()),
@@ -507,12 +507,12 @@ namespace Surface_mesher {
 
     Edge get_next_element_impl()
     {
-      const typename Container::value_type container_value = 
+      const typename Container::value_type container_value =
 	Container::get_next_element_impl();
       refinement_point_cache = container_value.second.second;
       const Edge& e = container_value.second.first;
-      CGAL_assertion_code(const Vertex_handle& va = container_value.first.first);    
-      CGAL_assertion_code(const Vertex_handle& vb = container_value.first.second);    
+      CGAL_assertion_code(const Vertex_handle& va = container_value.first.first);
+      CGAL_assertion_code(const Vertex_handle& vb = container_value.first.second);
       CGAL_assertion_code(const Cell_handle& c = e.first);
       CGAL_assertion_code(const int i = e.second);
       CGAL_assertion_code(const int j = e.third);
@@ -539,7 +539,7 @@ namespace Surface_mesher {
     }
 
     Zone conflicts_zone_impl(const Point_3& p,
-			     const Edge& e) const 
+			     const Edge& e) const
     {
       Zone zone;
 
@@ -547,7 +547,7 @@ namespace Surface_mesher {
       zone.cell =
 	tr.locate(p, zone.locate_type, zone.i, zone.j, e.first);
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
-      std::cerr << 
+      std::cerr <<
 	boost::format("-> edge Edge(%1%, %2%, %3%)=(%4%, %5%)\n"
 		      "     insertion point: %6% (locate_type=%7%)\n")
 	% &*e.first % e.second % e.third
@@ -564,7 +564,7 @@ namespace Surface_mesher {
       return zone;
     }
 
-    void scan_triangulation_impl() 
+    void scan_triangulation_impl()
     {
 #ifdef CGAL_SURFACE_MESHER_VERBOSE
       std::cout << "scanning edges (curves)..." << std::endl;
@@ -584,7 +584,7 @@ namespace Surface_mesher {
     {
       std::set<Edge> edges;
 
-      all_edges(zone.cells.begin(), zone.cells.end(), 
+      all_edges(zone.cells.begin(), zone.cells.end(),
 		inserter(edges));
 
       for(typename std::set<Edge>::iterator eit = edges.begin();
@@ -592,7 +592,7 @@ namespace Surface_mesher {
 	  ++eit)
 	if( test_if_edge_is_encroached(*eit, p) )
 	  return CONFLICT_BUT_ELEMENT_CAN_BE_RECONSIDERED;
-      
+
       return NO_CONFLICT;
     }
 
@@ -607,7 +607,7 @@ namespace Surface_mesher {
       CGAL_assertion_code((order_pair(va, vb)));
 
       std::set<Edge> edges;
-      all_edges(zone.cells.begin(), zone.cells.end(), 
+      all_edges(zone.cells.begin(), zone.cells.end(),
 		CGAL::inserter(edges));
 
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
@@ -631,7 +631,7 @@ namespace Surface_mesher {
 #endif
 	}
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
-      std::cerr << 
+      std::cerr <<
 	boost::format("     before insertion: remove %1% edges\n")
 	% number_of_edges_removed;
 #endif
@@ -642,7 +642,7 @@ namespace Surface_mesher {
     void remove_edges(const Point_3&, const Zone& zone)
     {
       std::set<Edge> edges;
-      all_edges(zone.cells.begin(), zone.cells.end(), 
+      all_edges(zone.cells.begin(), zone.cells.end(),
 		CGAL::inserter(edges));
 
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
@@ -661,7 +661,7 @@ namespace Surface_mesher {
 #endif
 	}
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
-      std::cerr << 
+      std::cerr <<
 	boost::format("     before insertion: remove %1% edges\n")
 	% number_of_edges_removed;
 #endif
@@ -679,7 +679,7 @@ namespace Surface_mesher {
 		CGAL::inserter(edges));
 
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
-      std::cerr << 
+      std::cerr <<
 	boost::format("     after insertion: %1% new edges \n")
 	% edges.size();
 #endif // CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
@@ -688,7 +688,7 @@ namespace Surface_mesher {
 	  ++eit)
 	new_edge(*eit);
 #ifdef CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
-      std::cerr << 
+      std::cerr <<
 	boost::format("     c2t3.number_of_marked_edges=%1%\n"
 		      "     number of bad edges=%2%\n")
 	% c2t3.number_of_marked_edges()
@@ -696,7 +696,7 @@ namespace Surface_mesher {
 #endif // CGAL_SURFACE_MESHER_EDGES_DEBUG_INSERTIONS
     }
 
-  private: 
+  private:
     /** Test if the edge e is encroached by the point p, that is if the
 	circumscribed sphere centered a the surfacic center of e contains
 	the point p in its interior. */
@@ -711,7 +711,7 @@ namespace Surface_mesher {
 	Edge_info& info = c2t3.get_info(e);
 	if(!info.is_cached)
 	{
-	  info.lineic_center = lineic_center(tr, 
+	  info.lineic_center = lineic_center(tr,
 					     surf,
 					     meshtraits,
 					     e);
@@ -741,7 +741,7 @@ namespace Surface_mesher {
                                                          surf,
                                                          meshtraits,
                                                          e);
-      if(const Intersection_point* point = 
+      if(const Intersection_point* point =
          object_cast<Intersection_point>(&obj))
       {
         p = static_cast<Point_3>(*point);
@@ -786,7 +786,7 @@ namespace Surface_mesher {
       return "#edges";
     }
 
-    bool check_restricted_delaunay () 
+    bool check_restricted_delaunay ()
     {
       // to be done
       return true;

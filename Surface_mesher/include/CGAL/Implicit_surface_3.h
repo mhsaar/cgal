@@ -39,7 +39,7 @@ namespace CGAL {
     // The type of the argument `Function` will be ignored anyway.
     // The parameter is here only for backward-compatibility.
     >
-  class Implicit_surface_3 
+  class Implicit_surface_3
   {
   public:
     typedef GT Geom_traits;
@@ -64,7 +64,7 @@ namespace CGAL {
 	gt(gt)
     {
       squared_error = error_bound * error_bound;
-      squared_error = squared_error * 
+      squared_error = squared_error *
         gt.compute_squared_radius_3_object()(bounding_sphere);
     }
 

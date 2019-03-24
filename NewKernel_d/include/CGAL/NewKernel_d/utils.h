@@ -27,7 +27,7 @@
 #  pragma warning(push)
 #  pragma warning(disable:4003) // not enough actual parameters for macro 'BOOST_PP_EXPAND_I'
                                 // https://lists.boost.org/boost-users/2014/11/83291.php
-#endif                          
+#endif
 
 #ifdef CGAL_CXX11
 #include <type_traits>

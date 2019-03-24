@@ -68,7 +68,7 @@ template <> class Algebraic_structure_traits< Gmpq >
 template <> class Real_embeddable_traits< Gmpq >
   : public INTERN_RET::Real_embeddable_traits_base< Gmpq , CGAL::Tag_true > {
   public:
-  
+
     class Sgn
       : public CGAL::cpp98::unary_function< Type, ::CGAL::Sign > {
       public:

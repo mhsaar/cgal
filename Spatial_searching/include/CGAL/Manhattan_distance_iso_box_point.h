@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Hans Tangelder (<hanst@cs.uu.nl>)
 
@@ -44,10 +44,10 @@ namespace CGAL {
     typedef Iso_box_d                  Query_item;
     typedef typename internal::Get_dimension_tag<SearchTraits>::Dimension Dimension;
     typedef typename CGAL::cpp11::result_of<typename SearchTraits::Construct_max_vertex_d(Query_item)>::type Max_vertex;
-    
+
     Manhattan_distance_iso_box_point(const SearchTraits& traits_=SearchTraits()):traits(traits_) {}
-      
-    
+
+
     // obsolete as we no longer store dimension Manhattan_distance_iso_box_point(const int d) : the_dimension(d) {}
 
     inline FT transformed_distance(const Query_item& q, const Point_d& p) const {
@@ -61,9 +61,9 @@ namespace CGAL {
 		  qe = construct_it(maxv,1), qminit = construct_it(construct_min_vertex(q)),
 		  pit = construct_it(p);
 		for (; qmaxit != qe; ++pit,++qmaxit,++qminit) {
-			if ((*pit)>(*qmaxit)) distance += 
-			(*pit)-(*qmaxit); 
-			else if ((*pit)<(*qminit)) distance += 
+			if ((*pit)>(*qmaxit)) distance +=
+			(*pit)-(*qmaxit);
+			else if ((*pit)<(*qminit)) distance +=
 			(*qminit)-(*pit);	
 		}
         	return distance;
@@ -81,9 +81,9 @@ namespace CGAL {
                 typename SearchTraits::Cartesian_const_iterator_d qmaxit = construct_it(maxv),
 		  qe = construct_it(maxv,1), qminit = construct_it(construct_min_vertex(q));
 		for (unsigned int i = 0; qmaxit != qe; ++ qmaxit, ++qminit, ++i)  {
-			if (r.min_coord(i)>(*qmaxit)) 
-			  distance +=(r.min_coord(i)-(*qmaxit)); 
-			if (r.max_coord(i)<(*qminit)) 
+			if (r.min_coord(i)>(*qmaxit))
+			  distance +=(r.min_coord(i)-(*qmaxit));
+			if (r.max_coord(i)<(*qminit))
 			  distance += ((*qminit)-r.max_coord(i));
 	        }
 		return distance;
@@ -101,7 +101,7 @@ namespace CGAL {
 		  qe = construct_it(maxv,1), qminit = construct_it(construct_min_vertex(q));
 		for (unsigned int i = 0; qmaxit != qe; ++ qmaxit, ++qminit, ++i)  {
 			if (r.min_coord(i)>(*qmaxit)) {
-                          dists[i]=(r.min_coord(i)-(*qmaxit)); 
+                          dists[i]=(r.min_coord(i)-(*qmaxit));
 			  distance +=dists[i];
                         }
 			if (r.max_coord(i)<(*qminit)) {
@@ -112,8 +112,8 @@ namespace CGAL {
 		return distance;
 	}
 
-    inline 
-    FT 
+    inline
+    FT
     max_distance_to_rectangle(const Query_item& q,
 			      const Kd_tree_rectangle<FT,Dimension>& r) const {
       FT distance=FT(0);
@@ -125,16 +125,16 @@ namespace CGAL {
       typename SearchTraits::Cartesian_const_iterator_d qmaxit = construct_it(maxv),
 	qe = construct_it(maxv,1), qminit = construct_it(construct_min_vertex(q));
       for (unsigned int i = 0; qmaxit != qe; ++ qmaxit, ++qminit, ++i)  {
-	if ( r.max_coord(i)-(*qminit) >(*qmaxit)-r.min_coord(i) )  
+	if ( r.max_coord(i)-(*qminit) >(*qmaxit)-r.min_coord(i) )
 	  distance += (r.max_coord(i)-(*qminit));
-	else 
+	else
 	  distance += ((*qmaxit)-r.min_coord(i));
       }
       return distance;
     }
 
-     inline 
-    FT 
+     inline
+    FT
     max_distance_to_rectangle(const Query_item& q,
 			      const Kd_tree_rectangle<FT,Dimension>& r,std::vector<FT>& dists) const {
       FT distance=FT(0);
@@ -158,15 +158,15 @@ namespace CGAL {
       return distance;
     }
 	
-  inline 
-  FT 
+  inline
+  FT
   transformed_distance(FT d) const
   {
     return d;
   }
 
-  inline 
-  FT 
+  inline
+  FT
   inverse_of_transformed_distance(FT d) const
   {
     return d;

@@ -1324,7 +1324,7 @@ namespace CGAL {
       returns the infinite floating value that prevents a facet to be used.
     */
     coord_type infinity() const { return std::numeric_limits<coord_type>::infinity(); }
-    /// @}      
+    /// @}
 
     //---------------------------------------------------------------------
     // For a border edge e we determine the incident facet which has the highest

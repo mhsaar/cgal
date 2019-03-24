@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -159,7 +159,7 @@ class Segment_Delaunay_graph_Linf_2;
 
 template<class Gt,
 	 class ST = Segment_Delaunay_graph_storage_traits_2<Gt>,
-	 class D_S = Triangulation_data_structure_2 < 
+	 class D_S = Triangulation_data_structure_2 <
                 Segment_Delaunay_graph_vertex_base_2<ST>,
                 Segment_Delaunay_graph_face_base_2<Gt> >,
 	 class LTag = Tag_false >
@@ -273,7 +273,7 @@ protected:
 public:
   typedef boost::transform_iterator<Proj_input_to_site, All_inputs_iterator>
   Input_sites_iterator;
-  
+
   typedef boost::transform_iterator<Proj_site, Finite_vertices_iterator>
   Output_sites_iterator;
 protected:
@@ -310,7 +310,7 @@ protected:
 
   // the edge list
   typedef typename
-  CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Internal::Which_list<Edge,List_tag>::List 
+  CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Internal::Which_list<Edge,List_tag>::List
   List;
 
 
@@ -446,11 +446,11 @@ public:
   }
 
   inline Finite_edges_iterator finite_edges_begin() const {
-    return DG::finite_edges_begin();    
+    return DG::finite_edges_begin();
   }
 
   inline Finite_edges_iterator finite_edges_end() const {
-    return DG::finite_edges_end();    
+    return DG::finite_edges_end();
   }
 
   inline All_faces_iterator all_faces_begin() const {
@@ -490,7 +490,7 @@ public:
   }
 
   inline Output_sites_iterator output_sites_end() const {
-    return Output_sites_iterator(finite_vertices_end());    
+    return Output_sites_iterator(finite_vertices_end());
   }
 
 public:
@@ -504,7 +504,7 @@ public:
 
   inline Vertex_circulator
   incident_vertices(Vertex_handle v,
-		    Face_handle f = Face_handle()) const { 
+		    Face_handle f = Face_handle()) const {
     return DG::incident_vertices(v, f);
   }
 
@@ -513,7 +513,7 @@ public:
 		 Face_handle f = Face_handle()) const {
     return DG::incident_edges(v, f);
   }
- 
+
 public:
   // PREDICATES
   //-----------
@@ -803,7 +803,7 @@ public:
     return v;
   }
 
-  inline Vertex_handle insert(const Point_2& p0, const Point_2& p1, 
+  inline Vertex_handle insert(const Point_2& p0, const Point_2& p1,
 			      Vertex_handle vnear) {
     // update input site container
     Point_handle_pair php = register_input_site(p0, p1);
@@ -824,7 +824,7 @@ public:
   Vertex_handle insert(const Site_2& t, Vertex_handle vnear)
   {
     // the intended use is to unify the calls to insert(...);
-    // thus the site must be an exact one; 
+    // thus the site must be an exact one;
     CGAL_precondition( t.is_input() );
 
     // update input site container
@@ -929,7 +929,7 @@ public:
     CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Internal::
       Check_type_equality_for_info<Info_t, Info>();
     // the intended use is to unify the calls to insert(...);
-    // thus the site must be an exact one; 
+    // thus the site must be an exact one;
     CGAL_precondition( t.is_input() );
 
     // update input site container
@@ -1053,10 +1053,10 @@ protected:
 
   inline void unregister_input_site(const Point_handle& h1,
 				    const Point_handle& h2)
-  {   
+  {
     Site_rep_2 rep(h1, h2, false);
     typename Input_sites_container::iterator it = isc_.find(rep);
-    
+
     Site_rep_2 sym_rep(h2, h1, false);
     typename Input_sites_container::iterator sym_it = isc_.find(sym_rep);
 
@@ -1205,7 +1205,7 @@ public:
     return str;
   }
 
-  template < class Stream > 
+  template < class Stream >
   Stream& draw_skeleton(Stream& str) const
   {
     Finite_edges_iterator eit = finite_edges_begin();
@@ -1241,7 +1241,7 @@ public:
     Object o = primal(e);
 
     if (CGAL::assign(l, o))   str << l;
-    if (CGAL::assign(s, o))   str << s; 
+    if (CGAL::assign(s, o))   str << s;
     if (CGAL::assign(r, o))   str << r;
     if (CGAL::assign(ps, o))  ps.draw(str);
 
@@ -1340,7 +1340,7 @@ protected:
   Edge flip(Face_handle& f, int i) {
     CGAL_precondition ( f != Face_handle() );
     CGAL_precondition (i == 0 || i == 1 || i == 2);
-    CGAL_precondition( this->dimension()==2 ); 
+    CGAL_precondition( this->dimension()==2 );
 
     CGAL_precondition( f->vertex(i) != this->_tds.mirror_vertex(f, i) );
 
@@ -1419,7 +1419,7 @@ public:
   Object primal(const Edge e) const;
 
   inline Object primal(const Edge_circulator& ec) const {
-    return primal(*ec); 
+    return primal(*ec);
   }
 
   inline Object primal(const Finite_edges_iterator& ei) const {
@@ -1438,7 +1438,7 @@ public:
 			f->vertex(2)->site());
   }
 
-  inline Point_2 circumcenter(const Site_2& t0, const Site_2& t1, 
+  inline Point_2 circumcenter(const Site_2& t0, const Site_2& t1,
 			      const Site_2& t2) const {
     return
     geom_traits().construct_svd_vertex_2_object()(t0, t1, t2);
@@ -1561,8 +1561,8 @@ protected:
   }
 
   inline Construct_sdg_bisector_segment_2
-  construct_sdg_bisector_segment_2_object() const { 
-    return Construct_sdg_bisector_segment_2(); 
+  construct_sdg_bisector_segment_2_object() const {
+    return Construct_sdg_bisector_segment_2();
   }
 
 protected:

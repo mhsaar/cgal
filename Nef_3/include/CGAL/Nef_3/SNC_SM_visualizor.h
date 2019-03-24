@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel    <seel@mpi-sb.mpg.de>
 //                 Miguel Granados <granados@mpi-sb.mpg.de>
@@ -39,13 +39,13 @@
 namespace CGAL {
 
 template <typename Map_>
-class SNC_SM_BooleColor 
+class SNC_SM_BooleColor
 {
-  typedef typename Map_::SVertex_const_handle   SVertex_const_handle;   
-  typedef typename Map_::SHalfedge_const_handle SHalfedge_const_handle;   
-  typedef typename Map_::SHalfloop_const_handle SHalfloop_const_handle;   
-  typedef typename Map_::SFace_const_handle     SFace_const_handle;   
-  typedef typename Map_::Mark Mark;   
+  typedef typename Map_::SVertex_const_handle   SVertex_const_handle;
+  typedef typename Map_::SHalfedge_const_handle SHalfedge_const_handle;
+  typedef typename Map_::SHalfloop_const_handle SHalfloop_const_handle;
+  typedef typename Map_::SFace_const_handle     SFace_const_handle;
+  typedef typename Map_::Mark Mark;
 public:
   Color color(SVertex_const_handle, Mark m) const
   { return ( m ? CGAL::black() : CGAL::white() ); }
@@ -62,7 +62,7 @@ public:
 /*{\Manpage {SNC_SM_visualizor}{Map_}{Drawing sphere maps}{V}}*/
 
 template <typename Map_, typename Color_ = SNC_SM_BooleColor<Map_> >
-class SNC_SM_visualizor 
+class SNC_SM_visualizor
 {
 /*{\Mdefinition An instance |\Mvar| of the data type |\Mname| is a
 decorator to draw the structure of a sphere map into the surface of a
@@ -75,34 +75,34 @@ public:
   typedef typename Map_::Sphere_kernel   Sphere_kernel;
   typedef CGAL::Map<Sphere_kernel> Map;
   typedef SM_const_decorator<Map_>   SNC_SM_explorer;
-  typedef SNC_SM_triangulator<Map_,Map,Sphere_kernel> 
+  typedef SNC_SM_triangulator<Map_,Map,Sphere_kernel>
                                           SNC_SM_triangulator;
 
   typedef typename Map_::Vertex_handle Vertex_handle;
-  typedef typename Map_::SVertex_const_handle SVertex_const_handle;   
-  typedef typename Map_::SHalfedge_const_handle SHalfedge_const_handle; 
-  typedef typename Map_::SFace_const_handle SFace_const_handle;     
+  typedef typename Map_::SVertex_const_handle SVertex_const_handle;
+  typedef typename Map_::SHalfedge_const_handle SHalfedge_const_handle;
+  typedef typename Map_::SFace_const_handle SFace_const_handle;
   typedef typename Map_::SVertex_const_iterator SVertex_const_iterator;
   typedef typename Map_::SHalfedge_const_iterator SHalfedge_const_iterator;
   typedef typename Map_::SFace_const_iterator SFace_const_iterator;
   typedef typename Map_::Mark Mark;
 
   // types from the local sphere map type that stores triangulation:
-  typedef typename Map::Vertex_const_iterator   
+  typedef typename Map::Vertex_const_iterator
     SM_Vertex_const_iterator;
-  typedef typename Map::Halfedge_const_iterator 
+  typedef typename Map::Halfedge_const_iterator
     SM_Halfedge_const_iterator;
-  typedef typename Map::Halfloop_const_iterator 
+  typedef typename Map::Halfloop_const_iterator
     SM_Halfloop_const_iterator;
-  typedef typename Map::Face_const_iterator     
+  typedef typename Map::Face_const_iterator
     SM_Face_const_iterator;
-  
+
 
   typedef typename Sphere_kernel::Sphere_point    Sphere_point;
   typedef typename Sphere_kernel::Sphere_segment  Sphere_segment;
   typedef typename Sphere_kernel::Sphere_circle   Sphere_circle;
   typedef typename Sphere_kernel::Sphere_triangle Sphere_triangle;
- 
+
   typedef Color_                                  Color_objects;
 
 protected:
@@ -134,7 +134,7 @@ void draw_map() const
   SHalfedge_const_iterator e;
   CGAL_nef3_forall_sedges(e,E_) {
     if ( E_.source(e) == E_.target(e) ) {
-      S_.push_back(E_.circle(e), CO_.color(e,E_.mark(e))); 
+      S_.push_back(E_.circle(e), CO_.color(e,E_.mark(e)));
     } else {
       S_.push_back(Sphere_segment(E_.point(E_.source(e)),
 				  E_.point(E_.target(e)),
@@ -179,7 +179,7 @@ void draw_map() const
    triangles, edges, loops, and vertices taken from MT_ */
 
 void draw_triangulation() const
-{ 
+{
   // draw sphere segments underlying edges of triangulation:
   SHalfedge_const_iterator ed;
   SVertex_const_iterator vd;
@@ -208,7 +208,7 @@ void draw_triangulation() const
 
 }
 
-}; // end of SNC_SM_visualizor 
+}; // end of SNC_SM_visualizor
 
 
 

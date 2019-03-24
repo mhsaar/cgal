@@ -43,7 +43,7 @@ namespace CGAL {
 
 /*! \class
  */
-class Td_inactive_trapezoid 
+class Td_inactive_trapezoid
 {
 public:
   /*! Operator==. */

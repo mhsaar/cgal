@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -62,7 +62,7 @@ private:
     ag2_predicate_profiler::side_of_bisector_counter++;
 #endif
 
-    // this function compares the distances of the point(x, y) from the 
+    // this function compares the distances of the point(x, y) from the
     // disks {(x1, y1), w1} and {(x2, y2), w2}
     RT D1 = CGAL::square(p1.x() - p.x()) + CGAL::square(p1.y() - p.y());
     RT D2 = CGAL::square(p2.x() - p.x()) + CGAL::square(p2.y() - p.y());
@@ -96,7 +96,7 @@ private:
 #ifdef AG2_PROFILE_PREDICATES
     ag2_predicate_profiler::side_of_bisector_counter++;
 #endif
-    // this function compares the distances of the point(x, y) from the 
+    // this function compares the distances of the point(x, y) from the
     // disks {(x1, y1), w1} and {(x2, y2), w2}
 
     RT D1 = CGAL::square(p1.x() - p.x()) + CGAL::square(p1.y() - p.y());

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Thomas Herrmann, Lutz Kettner
 
@@ -30,7 +30,7 @@
 #include <iostream>
 #include <CGAL/convex_hull_3.h>
 
-#include <CGAL/Polyhedron_3.h> 
+#include <CGAL/Polyhedron_3.h>
 #include <CGAL/HalfedgeDS_list.h>
 
 #include <CGAL/assertions.h>
@@ -56,13 +56,13 @@ class Width_3 {
   // +----------------------------------------------------------------------+
  private:
   //the current best plane coefficients: e1:Ax+By+Cz+1=0
-  //                                     e2:Ax+By+Cz+D=0     
+  //                                     e2:Ax+By+Cz+D=0
   RT A,B,C,D,K;
 
   // Width itself
   RT WNum,WDenom;
 
-  // Planes and directions are derived from these variables 
+  // Planes and directions are derived from these variables
 
   // A list with all quadruples A/K, B/K, C/K, D/K
   std::vector< std::vector<RT> > allsolutions;
@@ -72,7 +72,7 @@ class Width_3 {
 
   //The traits class object
   Traits tco;
-  
+
   //The new origin to know how to translate back
   Point_3 neworigin;
 
@@ -96,18 +96,18 @@ class Width_3 {
     num=WNum;
     denom=WDenom;
   }
-  
+
   Vector_3 get_build_direction() {
     return tco.make_vector(A,B,C);
   }
-  
+
   void get_width_planes(Plane_3& e1, Plane_3& e2) {
     RT a,b,c,d,k;
     get_width_coefficients(a,b,c,d,k);
     e1=tco.make_plane(a,b,c,d);
     e2=tco.make_plane(a,b,c,k);
   }
-    
+
   void get_all_build_directions(std::vector<Vector_3>& alldir) {
     typename std::vector< std::vector<RT> >::iterator it=alloptimal.begin();
     RT a,b,c;
@@ -178,7 +178,7 @@ class Width_3 {
     convex_hull_3( begin, beyond, P, CHT());
     width_3_convex(P);
   }
-  
+
   template <class InputPolyhedron>
   Width_3(InputPolyhedron& Poly):
     A(0), B(0), C(0), D(2), K(1), WNum(0), WDenom(1) {
@@ -191,7 +191,7 @@ class Width_3 {
     allsolutions.clear();
     alloptimal.clear();
   }
-  
+
   // +----------------------------------------------------------------------+
   // | Begin of private function area                                       |
   // +----------------------------------------------------------------------+
@@ -199,7 +199,7 @@ class Width_3 {
   // Just to remember:
   // E1: -axh - byh - czh - kwh <= 0          axh + byh + czh + kwh >= 0
   // E2:  axh + byh + czh + dwh <= 0
-  // VF-pair: 3xE1 + 1xE2 
+  // VF-pair: 3xE1 + 1xE2
   // EE-pair: 2xE1 + 2xE2
   // plane equation in facets: Ax + By + Cz + 1 = 0
   //                           ax + by + cz + k = 0 (A=a/k,...)
@@ -207,7 +207,7 @@ class Width_3 {
   //-----------------------------
   //---Combinatorial functions---
   //-----------------------------
-  
+
   // *** PREPARATION_CHECK ***
   //---------------------------
   //This function determines the next facet if the halfedge e is a
@@ -215,12 +215,12 @@ class Width_3 {
   //PRECONDITION: e is the LAST edge in the go_on or impassable list!
   template <class InputDA, class Halfedge_handle_, class Facet_handle_>
     bool preparation_check(InputDA& dao,
-			   Halfedge_handle_& e, 
+			   Halfedge_handle_& e,
 			   Facet_handle_& fnext,
 			   std::vector<Halfedge_handle_>& go_on,
 			   std::vector<Halfedge_handle_>& imp)
     {
-    //If the halfedge flag impassable is set then we can pop e from the stack 
+    //If the halfedge flag impassable is set then we can pop e from the stack
     //of the possibale go_on edges
     DEBUGMSG(PREPARATION_CHECK,"\nBegin PREPARATION_CHECK");
     DEBUGENDL(PREPARATION_CHECK,"Edge e: "<<e->opposite()->vertex()->point()
@@ -249,7 +249,7 @@ class Width_3 {
       } else {
 	DEBUGMSG(PREPARATION_CHECK," is a valable candidate. Compute next "
 		 <<"facet and erase from go_on. Set visited flag of all to "
-		 <<"fnext incident edges."); 
+		 <<"fnext incident edges.");
 	//e is a valable candidate. Thus set fnext to the next facet we visit
 	fnext=h->facet();
 	//Delete e from go_on and insert the edges of fnext (except opposite
@@ -276,9 +276,9 @@ class Width_3 {
   //To compute the neighbors of a vertex. The vertex is implicitely given
   //as the vertex the halfedge points to.
   template <class Halfedge_handle_, class Vertex_handle_>
-    void neighbors_of(const Halfedge_handle_& h, 
+    void neighbors_of(const Halfedge_handle_& h,
 		      std::vector<Vertex_handle_>& V) {
-    DEBUGMSG(NEIGHBORS_OF,"\nBegin NEIGHBORS_OF"); 
+    DEBUGMSG(NEIGHBORS_OF,"\nBegin NEIGHBORS_OF");
     DEBUGENDL(NEIGHBORS_OF,"Determining the neighbors of: ",
 	      h->vertex()->point());
     Halfedge_handle_ e=h;
@@ -302,19 +302,19 @@ class Width_3 {
 
   }
 
-  //During the algorithm we have to build union and minus set 
+  //During the algorithm we have to build union and minus set
   //of two sets and check wheater two sets are cutting each othe ror not
 
   // *** SETMINUS ***
   //------------------
-  //Builds the set A\B where the set A is changed 
+  //Builds the set A\B where the set A is changed
   template <class Vertex_handle_>
-    void setminus(std::vector<Vertex_handle_>& res, 
-		  const std::vector<Vertex_handle_>& 
+    void setminus(std::vector<Vertex_handle_>& res,
+		  const std::vector<Vertex_handle_>&
 		  without) {
     DEBUGMSG(SETMINUS,"\nBegin SETMINUS");
     typename std::vector<Vertex_handle_>::iterator resit;
-    typename std::vector<Vertex_handle_>::const_iterator 
+    typename std::vector<Vertex_handle_>::const_iterator
       withoutit=without.begin();
     //Scan through all elements of without and check if they are also in res.
     //If so delete the element from res.
@@ -335,11 +335,11 @@ class Width_3 {
   //------------------
   //Builds the union of two sets A and B. The result is stored in A
   //POSTCONDITION: Every element in A is stored once.
-  template <class Vertex_handle_> 
-    void setunion(std::vector<Vertex_handle_>&res, 
+  template <class Vertex_handle_>
+    void setunion(std::vector<Vertex_handle_>&res,
 		  std::vector<Vertex_handle_>& uni) {
     DEBUGMSG(SETUNION,"\nBegin SETUNION");
-    typename std::vector<Vertex_handle_>::iterator 
+    typename std::vector<Vertex_handle_>::iterator
       uniit=uni.begin();
     typename std::vector<Vertex_handle_>::iterator resit;
     //Scan the uni set and add every new element in res
@@ -356,13 +356,13 @@ class Width_3 {
 
   // *** SETCUT ***
   //----------------
-  //Checks if two sets are cutting each other or not (the common elements are 
+  //Checks if two sets are cutting each other or not (the common elements are
   //not determined
   template <class Vertex_handle_>
-    bool setcut(std::vector<Vertex_handle_>& AA, 
+    bool setcut(std::vector<Vertex_handle_>& AA,
 		std::vector<Vertex_handle_>& BB) {
     DEBUGMSG(SETCUT,"\nBegin SETCUT");
-    typename std::vector<Vertex_handle_>::iterator 
+    typename std::vector<Vertex_handle_>::iterator
       Ait=AA.begin();
     typename std::vector<Vertex_handle_>::iterator Bfindit;
     while(Ait!=AA.end()) {
@@ -412,20 +412,20 @@ class Width_3 {
     DEBUGENDL(COMPUTE_PLANE_EQUATION,"Plane Coefficients: ",f->plane());
     DEBUGMSG(COMPUTE_PLANE_EQUATION,"End COMPUTE_PLANE_EQUATION");
   }
-  
+
   // *** SOLVE_3X3 ***
   //-------------------
   //To solve a special 3x3 system. The rows of the coefficient matrix
   //are the (homogeneous) x,y,z-coordinates of points and the right
-  //hand side is the homogeneous part of the point times the provided 
+  //hand side is the homogeneous part of the point times the provided
   //coefficient. The system is solved with Cramer's Rule. The sign of
-  //the coefficients is chosen in a way that (0,0,0) lies on the positive 
+  //the coefficients is chosen in a way that (0,0,0) lies on the positive
   //side of the plane.
   template<class InputDA, class PolyPoint_>
     void solve_3x3(InputDA,
-		   const PolyPoint_& p, 
+		   const PolyPoint_& p,
 		   const PolyPoint_& q,
-		   const PolyPoint_& r, 
+		   const PolyPoint_& r,
 		   RT& a, RT& b, RT& c, RT& k) {
     DEBUGMSG(SOLVE_3X3,"\nBegin SOLVE_3X3");
     RT px,py,pz,ph;
@@ -447,7 +447,7 @@ class Width_3 {
 	sig=-1;
 	k=-k;
       }
-      else 
+      else
 	CGAL_assertion_msg(k!=0,"Couldn't solve plane equation system");
     }
     a=sig*(-ph*(qy*rz-ry*qz)+qh*(py*rz-ry*pz)-rh*(py*qz-qy*pz));
@@ -457,24 +457,24 @@ class Width_3 {
     RT dummy=0;
     DEBUGENDL(SOLVE_3X3,"Solution of 3x3 (before GCD computation):\n",a
 	      <<std::endl
-	      <<b<<std::endl<<c<<std::endl<<k<<std::endl); 
+	      <<b<<std::endl<<c<<std::endl<<k<<std::endl);
     simplify_solution(a,b,c,k,dummy);
 #endif
     DEBUGENDL(SOLVE_3X3,"Solution of 3x3:\n",a<<std::endl
-	      <<b<<std::endl<<c<<std::endl<<k<<std::endl); 
+	      <<b<<std::endl<<c<<std::endl<<k<<std::endl);
     DEBUGMSG(SOLVE_3X3,"End SOLVE_3X3");
   }
-  
+
   // *** SOLVE_4X4 ***
   //-------------------
   //To enumerate EE-pairs we need to solve a 4x4 linear equation system
   //The rows of the coefficient matrix
   //are the (homogeneous) x,y,z-coordinates of points and the right
-  //hand side is the homogeneous part of the point times the provided 
+  //hand side is the homogeneous part of the point times the provided
   //coefficient. The system is solved with Cramer's Rule.
   template<class InputDA, class PolyPoint_>
     bool solve_4x4(InputDA,
-		   const PolyPoint_& p, 
+		   const PolyPoint_& p,
 		   const PolyPoint_& q,
 		   const PolyPoint_& r,
 		   const PolyPoint_& v,
@@ -495,7 +495,7 @@ class Width_3 {
     DEBUGENDL(SOLVE_4X4,"",qx<<" "<<qy<<" "<<qz<<" 0 : "<<-qh);
     DEBUGENDL(SOLVE_4X4,"",rx<<" "<<ry<<" "<<rz<<" "<<rh<<" : 0");
     DEBUGENDL(SOLVE_4X4,"",vx<<" "<<vy<<" "<<vz<<" "<<vh<<" : 0");
-    
+
     k=-rh*(px*(qy*vz-vy*qz)-qx*(py*vz-vy*pz)+vx*(py*qz-qy*pz))
       +vh*(px*(qy*rz-ry*qz)-qx*(py*rz-ry*pz)+rx*(py*qz-qy*pz));
     RT sig(1);
@@ -510,7 +510,7 @@ class Width_3 {
 	return false;
       }	
     }
-    
+
     a=sig*(-ph*(qy*(rz*vh-vz*rh)-ry*qz*vh+vy*qz*rh)
       +qh*(py*(rz*vh-vz*rh)-ry*pz*vh+vy*pz*rh));
     b=sig*(ph*(qx*(rz*vh-vz*rh)-rx*qz*vh+vx*qz*rh)
@@ -534,13 +534,13 @@ class Width_3 {
     if (a==0 && b==0 && c==0) {
       DEBUGENDL(SOLVE_4X4,"Solution of 4x4:\n ",a<<std::endl<<b<<std::endl<<c
 		<<std::endl
-		<<d<<std::endl<<k); 
+		<<d<<std::endl<<k);
       CGAL_assertion(a!=0);
       CGAL_error();
     } else {
 #ifdef GCD_COMPUTATION
       DEBUGENDL(SOLVE_4X4,"Unique Solution of 4x4 (before GCD computation):\n",
-		a<<std::endl<<b<<std::endl<<c<<std::endl<<d<<std::endl<<k); 
+		a<<std::endl<<b<<std::endl<<c<<std::endl<<d<<std::endl<<k);
       simplify_solution(a,b,c,d,k);
 #endif
       DEBUGENDL(SOLVE_4X4,"Unique Solution of 4x4:\n",
@@ -553,11 +553,11 @@ class Width_3 {
   // *** CHECK_FEASIBILITY ***
   //---------------------------
   //This function checks the feasibility of a provided quadruple A/K, B/K,
-  //C/K and D/K. Because we do not want to check the feasibility for all 
+  //C/K and D/K. Because we do not want to check the feasibility for all
   //the points the list of points is also expected.
   template<class InputDA, class Vertex_handle_>
     bool check_feasibility(InputDA,
-			   const RT& a, const RT& b, const RT& c, 
+			   const RT& a, const RT& b, const RT& c,
 			   const RT& d, const RT& k,
 			   const std::vector<Vertex_handle_>& V) {
     DEBUGMSG(CHECK_FEASIBILITY,"\nBegin CHECK_FEASIBILITY");
@@ -568,7 +568,7 @@ class Width_3 {
       return false;
     }
 
-    typename std::vector<Vertex_handle_>::const_iterator 
+    typename std::vector<Vertex_handle_>::const_iterator
       it=V.begin();
     RT tmp;
     while ( it!=V.end() ) {
@@ -582,7 +582,7 @@ class Width_3 {
 		  (*it)->point()<<" failed.");
 	if (tmp+k*ph < 0){
 	  DEBUGENDL(CHECK_FEASIBILITY,"E1 not satisfied: ",tmp+k*ph);
-	} else { 
+	} else {
 	  DEBUGENDL(CHECK_FEASIBILITY,"E2 not satisfied: ",tmp+d*ph);
 	}
 #endif
@@ -662,17 +662,17 @@ class Width_3 {
 
   // ---Width functions---
   // *********************
-  
+
   // *** INITIAL_VF_PAIR ***
   //-------------------------
-  //After the first initialization phase we have to compute an initial 
-  //Vertex-Facet pair to start with the enumeration 
+  //After the first initialization phase we have to compute an initial
+  //Vertex-Facet pair to start with the enumeration
   //PRECONDITION: Normal of initial plane points to the interior of the
   //              convex hull
   template<class InputDA, class Facet_handle_, class Polyhedron_,
            class Halfedge_handle_>
     void initial_VF_pair(InputDA& dao,
-			 Facet_handle_& f, 
+			 Facet_handle_& f,
 			 Polyhedron_& P,
 			 std::vector<Halfedge_handle_>& go_on)
     {
@@ -687,13 +687,13 @@ class Width_3 {
     CGAL_assertion(K>0);
     DEBUGMSG(ASSERTION_OUTPUT,"K greater (strictly) than 0. ASSERTION OK.");
 
-    //Start with an impossible configuration for the still unknown 
+    //Start with an impossible configuration for the still unknown
     //coefficient D=K, ie plane E1 == plane E2
     D=K;
     DEBUGENDL(INITIAL_VF_PAIR,"Starting with values:\nA:",A<<std::endl
 	      <<"B: "<<B<<std::endl<<"C: "<<C<<std::endl<<"D: "
 	      <<D<<std::endl<<"K: "<<K);
-    
+
     std::vector<Vertex_handle> apv;
 #if !(defined(CGAL_KERNEL_NO_ASSERTIONS) || defined(CGAL_NO_ASSERTIONS) \
   || (!defined(CGAL_KERNEL_CHECK_EXPENSIVE) && !defined(CGAL_CHECK_EXPENSIVE))\
@@ -726,8 +726,8 @@ class Width_3 {
       DEBUGENDL(INITIAL_VF_PAIR,"Distance from p to current plane e1: ",
 		distpie1*hompart);
       //If pi is not between e1 and e2, compute a new plane e2 through pi
-      //If pi is also ON the current plane e2, then insert pi in the list 
-      //of current antipodal vertices of the facet f 
+      //If pi is also ON the current plane e2, then insert pi in the list
+      //of current antipodal vertices of the facet f
       if (hompart*distpie1 >= pih*maxdist) {
 	DEBUGMSG(INITIAL_VF_PAIR,"Distance of this point is greater (or equal)"
 		 <<" than all the distances before."
@@ -810,15 +810,15 @@ class Width_3 {
     }
     DEBUGMSG(INITIAL_VF_PAIR,"End INITIAL_VF_PAIR");
   }
-  
+
   // *** CHECK_ABOUT_VF_PAIRS ***
   //------------------------------
   //This function checks if a facet and a subset of a given set of vertices
   //build a vertex facet pair
   template<class InputDA, class Facet_handle_, class Vertex_handle_>
-    bool 
+    bool
     check_about_VF_pairs(InputDA& dao,
-			 Facet_handle_& f, 
+			 Facet_handle_& f,
 			 const std::vector<Vertex_handle_>& V)
     {
     DEBUGMSG(CHECK_ABOUT_VF_PAIRS,"\nBegin CHECK_ABOUT_VF_PAIRS");
@@ -861,13 +861,13 @@ class Width_3 {
       }
       CGAL_assertion(a*vx+b*vy+c*vz+k*vh>0);
       DEBUGMSG(ASSERTION_OUTPUT,"v not on e1. ASSERTION OK.");
-      //Else we look if we can find a witness in the neighborhood of v that 
+      //Else we look if we can find a witness in the neighborhood of v that
       //shows that v is not an antipodal vertex of f
       neighbors_of((*vtxit)->halfedge(),W);
-      
+
       //Assume there is no witness for infeasibility
       feasible = true;
-      
+
       //Scan all possible witnesses
       while(!W.empty()) {
 	neighborit=W.begin();
@@ -892,19 +892,19 @@ class Width_3 {
 	    //restrictions. Therefore compute the new neighbors of n
 	    std::vector<typename InputDA::Vertex_handle> Wnew;
 	    neighbors_of((*neighborit)->halfedge(),Wnew);
-	    
+	
 	    //Erase v from the vertices to be considered as new witnesses
 	    typename
 	      std::vector<typename InputDA::Vertex_handle>
 	      ::iterator  res= std::find(Wnew.begin(),Wnew.end(),*vtxit);
-	    if ( res!=Wnew.end() ) 
+	    if ( res!=Wnew.end() )
 	      Wnew.erase(res);
 	    //Erase all the elements we already considered from the new
 	    //set of witnesses
 	    setminus(Wnew,visited_points);
 	    //Erase the neighbor vertex itself from the set of witnesses
 	    W.erase(neighborit);
-	    //Compute the new whole set of witnesses, that is add the 
+	    //Compute the new whole set of witnesses, that is add the
 	    //remaining new ones to the old set of witnesses
 	    setunion(W,Wnew);
 	  } else {
@@ -922,12 +922,12 @@ class Width_3 {
 	  W.erase(neighborit);
 	}
       } //end while(!W.empty())
-      
+
       //Now we can determine if we have a feasible solution or not. Because
       //the feasible flag can only be set to false during the while-loop
       //we can be sure of the feasibility of our solution (no witness found)
       //if feasible is false then we have found a witness that v is not an
-      //antipodal vertex. So we go on in the list of possible antipodal 
+      //antipodal vertex. So we go on in the list of possible antipodal
       //vertices otherwise.
       if (feasible == true) {
 	DEBUGMSG(CHECK_ABOUT_VF_PAIRS,"All witnesses checked. "
@@ -962,8 +962,8 @@ class Width_3 {
   // *** UPDATE_WIDTH ***
   //----------------------
   //This function we use to update the current best width. The old width is
-  //compared with a new provided one and the better solution will we taken 
-  //as the new width. This function also saves all the possible quadruples 
+  //compared with a new provided one and the better solution will we taken
+  //as the new width. This function also saves all the possible quadruples
   //to be the width of the point set.
   void update_width(RT& a, RT& b, RT& c, RT& d, RT& k) {
     //Update the list of all possible solutions
@@ -975,7 +975,7 @@ class Width_3 {
     sol.push_back(d);
     sol.push_back(k);
     allsolutions.push_back(sol);
-    
+
     //Compute the squared width provided by the new solution
     RT tocompareNum=(k-d)*(k-d);
     RT tocompareDenom=(a*a+b*b+c*c);
@@ -1006,21 +1006,21 @@ class Width_3 {
   //------------------------
   //During the 3rd phase of the width-algorithm we have to rotate planes to
   //enumerate all possible edge-edge pairs. This rotating (in primal context)
-  //resp. tracking edges (in the dual context) is made by the following 
-  //function. The edge we rotate about is called e. To ensure only to 
-  //enumerate a pair once (...only going forward) we need a set of 
+  //resp. tracking edges (in the dual context) is made by the following
+  //function. The edge we rotate about is called e. To ensure only to
+  //enumerate a pair once (...only going forward) we need a set of
   //already visited vertices (Visited) and a set of vertices from that we know
   //they are antipodal to the first facet (V). In this function we don't
   //know the antipodal vertices of the second facet.
   template <class InputDA, class Halfedge_handle_, class Vertex_handle_>
     void EE_computation(InputDA,
 			Halfedge_handle_& e,
-			std::vector<Vertex_handle_>& V, 
+			std::vector<Vertex_handle_>& V,
 			std::vector<Vertex_handle_>& Visited,
 			std::vector<Vertex_handle_>& Nnew) {
     DEBUGMSG(EE_COMPUTATION,"\nBegin EE_COMPUTATION");
     //Compute end points of e and two witnesses: Each in one of the two
-    //facets participating 
+    //facets participating
     Point_3 p,q;
     p=e->opposite()->vertex()->point();
     q=e->vertex()->point();
@@ -1032,7 +1032,7 @@ class Width_3 {
     typename std::vector<typename InputDA::Vertex_handle>
       ::iterator  vtxit=V.begin();
 
-    //Consider all the vertices in V. EE-pairs consist of p,q and the 
+    //Consider all the vertices in V. EE-pairs consist of p,q and the
     //vertex v in V and another neighbor vertex of v
     while(vtxit != V.end() ) {
       std::vector<typename InputDA::Vertex_handle> R;
@@ -1054,13 +1054,13 @@ class Width_3 {
       //Now look at the modified set of neighbor vertices. For each neighbor r
       //we assume (p,q) and (v,r) to be an EE-pair and want then to find
       //witnesses that against this quadruple. If no such witness exist
-      //(p,q) and (v,r) are a legal EE-pair. In that case we break the 
+      //(p,q) and (v,r) are a legal EE-pair. In that case we break the
       //quest and update all the sets Visited Nnew and V. If we have considered
-      //all vertices v in V and all the respective r in R and if we have 
+      //all vertices v in V and all the respective r in R and if we have
       //not found a legal EE-pair, then an error occurs
       while (rit!=R.end()) {
 	RT a,b,c,d,k;
-	//It could be that the system is not uniquely solvable we only want to 
+	//It could be that the system is not uniquely solvable we only want to
 	//enumerate proper solutions no degenerate ones
 	if(solve_4x4(InputDA(),p,q,(*rit)->point(),(*vtxit)->point(),
 			      a,b,c,d,k)){
@@ -1090,12 +1090,12 @@ class Width_3 {
 		     <<"active restrictions");
 	    //Therefore we update the width
 	    update_width(a,b,c,d,k);
-	    //The next region we consider (because we only go forward) 
+	    //The next region we consider (because we only go forward)
 	    //contains (at least) r
 	    Nnew.push_back(*rit);
 
 	    //Now we look if we are in a special case, that is we look if
-	    //other restrictions according to  neighboring vertices of r 
+	    //other restrictions according to  neighboring vertices of r
 	    //are also active. If so Nnew is expanded we them.
 	    std::vector<typename InputDA::Vertex_handle> S;
 	    neighbors_of((*rit)->halfedge(),S);
@@ -1106,7 +1106,7 @@ class Width_3 {
 	    //The check of more than 4 active restrictions begins
 	    typename
 	      std::vector<typename InputDA::Vertex_handle>
-	      ::iterator sit; 
+	      ::iterator sit;
 	    while(!S.empty()) {
 	      sit=S.begin();
 	      RT sx,sy,sz,sh;
@@ -1130,7 +1130,7 @@ class Width_3 {
 		S.erase(sit);
 	      }
 	    } //end while (!S.empty())
-	    //Since we have now enumerated all EE-pairs with the active 
+	    //Since we have now enumerated all EE-pairs with the active
 	    //restrictions according to p,q and v we can now leave
 	    //Nnew contains now all new active restrictions
 	    DEBUGMSG(EE_COMPUTATION,"End EE_COMPUTATION");
@@ -1146,13 +1146,13 @@ class Width_3 {
     //There must be a new EE-pair. If not, an error occurs
     std::cerr<<"No new EE-pair found!"<<std::endl;
     CGAL_error();
-  }  
-  
-  
+  }
+
+
   // *** EE_PAIRS ***
   //------------------------
   //This function is similar to EE_computation. The difference is that now
-  //we know the antipodal vertices of BOTH participating facets 
+  //we know the antipodal vertices of BOTH participating facets
   template <class InputDA, class Halfedge_handle_>
     void EE_pairs(InputDA& dao,
 		  Halfedge_handle_& e,
@@ -1190,7 +1190,7 @@ class Width_3 {
 	  ::iterator  rit=R.begin();
 	while (rit!=R.end()) {
 	  RT a,b,c,d,k;
-	  //It could be that the system is not uniquely solvable we only want 
+	  //It could be that the system is not uniquely solvable we only want
 	  //to enumerate proper solutions no degenerate ones
 	  if(solve_4x4(InputDA(),p,q,(*rit)->point(),(*vtxit)->point(),
 				a,b,c,d,k)){
@@ -1200,9 +1200,9 @@ class Width_3 {
 	      std::vector<typename InputDA::Vertex_handle> S;
 	      neighbors_of((*rit)->halfedge(),S);
 	      setminus(S,V);
-	      typename 
+	      typename
 		std::vector<typename InputDA::Vertex_handle>
-		::iterator sit; 
+		::iterator sit;
 	      while(!S.empty()) {
 		sit=S.begin();
 		RT sx,sy,sz,sh;
@@ -1228,7 +1228,7 @@ class Width_3 {
 	  }//if(proper)
 	  ++rit;
 	}//end while(!R.empty())
-	if (do_break == true) 
+	if (do_break == true)
 	  break;
 	++vtxit;
       }//end while(!V.end())
@@ -1238,22 +1238,22 @@ class Width_3 {
     impassable.pop_back();
     //Go on with next edge
     DEBUGMSG(EE_PAIRS,"End EE_PAIRS");
-  }  
+  }
 
 
   // *** ORIGIN_INSIDE_CH ***
   //-------------------------
   // To ensure that zero lies completly inside the convex hull of a point set.
   // Returns true if the point set is not coplanar, false otherwise
-  // PRECONDITION: Iterator range has at least 3 points 
+  // PRECONDITION: Iterator range has at least 3 points
   template<class InputDA, class Vertex_iterator_>
     bool origin_inside_CH(Vertex_iterator_& start,
-			  Vertex_iterator_& beyond, 
+			  Vertex_iterator_& beyond,
 			  InputDA){
     DEBUGMSG(ORIGIN_INSIDE_CH,"\nBegin ORIGIN_INSIDE_CH");
     typename InputDA::Vertex_iterator first=start;
-    //Take 4 points that build a tetrahedron. This tetrahedron is also 
-    //contained in the convex hull of the points. Thus every point 
+    //Take 4 points that build a tetrahedron. This tetrahedron is also
+    //contained in the convex hull of the points. Thus every point
     //in/on this tetrahedron is a valable point for a new origin
     typename InputDA::PolyPoint p,q,r,s;
     p=(*first).point();
@@ -1276,7 +1276,7 @@ class Width_3 {
     RT dummy=0;
     DEBUGENDL(ORIGIN_INSIDE_CH,"Solution of 3x3 (before GCD "
 	      <<"computation):\n",tmpa<<std::endl
-	      <<tmpb<<std::endl<<tmpc<<std::endl<<tmpk<<std::endl); 
+	      <<tmpb<<std::endl<<tmpc<<std::endl<<tmpk<<std::endl);
     simplify_solution(tmpa,tmpb,tmpc,tmpk,dummy);
 #endif
     if (first==beyond) {
@@ -1289,7 +1289,7 @@ class Width_3 {
       C=tmpc;
       K=tmpk;
       DEBUGENDL(ORIGIN_INSIDE_CH,"Solution of 3x3:\n",A<<std::endl
-		<<B<<std::endl<<C<<std::endl<<K<<std::endl); 
+		<<B<<std::endl<<C<<std::endl<<K<<std::endl);
       D=K;
       std::vector <RT> sol;
       sol.push_back(A);
@@ -1312,7 +1312,7 @@ class Width_3 {
 	++first;
       }
       //If we could not find a valable 4th point, then the set of the points
-      //is coplanar. Therefore the width is zero and we can terminate the 
+      //is coplanar. Therefore the width is zero and we can terminate the
       //algorithm
       if (tmpa*sx+tmpb*sy+tmpc*sz+tmpk*sh==0) {
 	DEBUGMSG(ORIGIN_INSIDE_CH,"n coplanar Points. Compute plane through "
@@ -1324,7 +1324,7 @@ class Width_3 {
 	C=tmpc;
 	K=tmpk;
 	DEBUGENDL(ORIGIN_INSIDE_CH,"Solution of 3x3:\n",A<<std::endl
-		  <<B<<std::endl<<C<<std::endl<<K<<std::endl); 
+		  <<B<<std::endl<<C<<std::endl<<K<<std::endl);
 	D=K;
 	std::vector <RT> sol;
 	sol.push_back(A);
@@ -1410,7 +1410,7 @@ class Width_3 {
       std::vector<Halfedge_handle> go_on;
       std::vector<Halfedge_handle> impassable;
 
-      //Ensure that the plane equations are determined because of the 
+      //Ensure that the plane equations are determined because of the
       //compare operator in DA
       Facet_handle feq=P.facets_begin();
       while(feq!=P.facets_end()) {
@@ -1437,7 +1437,7 @@ class Width_3 {
 	  dao.set_impassable_flag(esf,false);
 	  ++esf;
 	}
-      
+
 #if !(defined(CGAL_KERNEL_NO_ASSERTIONS) || defined(CGAL_NO_ASSERTIONS) \
       || defined(NDEBUG))
       CGAL_assertion(int(P.size_of_halfedges())==halfedgecount);
@@ -1450,7 +1450,7 @@ class Width_3 {
 #endif
       DEBUGMSG(WIDTH_3_CONVEX,"All flags set to false.");
 
-      //Now begin with the main enumeration 
+      //Now begin with the main enumeration
       Facet_handle f = P.facets_begin();
       initial_VF_pair(dao,f,P,go_on);
 
@@ -1491,15 +1491,15 @@ class Width_3 {
       std::vector<Vertex_handle> Visited;
       std::vector<Vertex_handle> N;
       std::vector<Vertex_handle> Nnew;
-      
-      //While there still exist an edge we can rotate an incident facet with 
-      //known antipodal vertices in the other facet with unknown antipodal 
+
+      //While there still exist an edge we can rotate an incident facet with
+      //known antipodal vertices in the other facet with unknown antipodal
       //vertices then do this rotation
       while ( !go_on.empty()) {
 	DEBUGENDL(WIDTH_3_CONVEX,"Size of go_on: ",go_on.size());
 #ifdef GO_ON_OUTPUT
 	DEBUGMSG(GO_ON_OUTPUT,"Edges on stack go_on:");
-	typename std::vector<Halfedge_handle>::iterator 
+	typename std::vector<Halfedge_handle>::iterator
 	  goonit=go_on.begin();
 	while(goonit!=go_on.end()) {
 	  DEBUGENDL(GO_ON_OUTPUT,"Edge: ",
@@ -1591,7 +1591,7 @@ class Width_3 {
     }
     DEBUGMSG(WIDTH_3_CONVEX,"Width computed.");
   }
-};  
+};
 
 } //namespace CGAL
 

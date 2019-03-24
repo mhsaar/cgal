@@ -76,7 +76,7 @@ public:
   typedef          R_                       R;
 
 #ifdef CGAL_CXX11
-#if defined(BOOST_MSVC) && (BOOST_MSVC == 1900)  
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1900)
 #  pragma warning(push)
 #  pragma warning(disable: 4309)
 #endif
@@ -86,7 +86,7 @@ public:
 #if defined(BOOST_MSVC) && (BOOST_MSVC == 1900)
 #  pragma warning(pop)
 #endif
-  
+
 //  // called from Construct_vector_d
 //  template<class...U> explicit Vector_d(Eval_functor&&,U&&...u)
 //	  : Rep(Eval_functor(), std::forward<U>(u)...){}
@@ -288,7 +288,7 @@ std::ostream& operator <<(std::ostream& os, const Vector_d<R_>& v)
       write(os, *b);
     }
   }
-  
+
   return os;
 }
 

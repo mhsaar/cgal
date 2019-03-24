@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -118,7 +118,7 @@ circumcenter(const Face_handle& f) const
 template<class Gt, class Agds, class LTag>
 typename Apollonius_graph_2<Gt,Agds,LTag>::Point_2
 Apollonius_graph_2<Gt,Agds,LTag>::
-circumcenter(const Site_2& p0, const Site_2& p1, 
+circumcenter(const Site_2& p0, const Site_2& p1,
 	     const Site_2& p2) const
 {
   return
@@ -140,7 +140,7 @@ circumcircle(const Face_handle& f) const
 template<class Gt, class Agds, class LTag>
 typename Apollonius_graph_2<Gt,Agds,LTag>::Site_2
 Apollonius_graph_2<Gt,Agds,LTag>::
-circumcircle(const Site_2& p0, const Site_2& p1, 
+circumcircle(const Site_2& p0, const Site_2& p1,
 	     const Site_2& p2) const
 {
   return
@@ -328,7 +328,7 @@ flip(Face_handle& f, int i)
 {
   CGAL_triangulation_precondition ( f != Face_handle() );
   CGAL_triangulation_precondition (i == 0 || i == 1 || i == 2);
-  CGAL_triangulation_precondition( dimension()==2 ); 
+  CGAL_triangulation_precondition( dimension()==2 );
 
   CGAL_triangulation_precondition( f->vertex(i) != tds().mirror_vertex(f,i) );
 
@@ -442,7 +442,7 @@ insert_second(const Site_2& p)
   Vertex_handle v(finite_vertices_begin());
   if ( is_hidden(v->site(), p) ) {
     v->add_hidden_site(p);
-    vnew = Vertex_handle();  
+    vnew = Vertex_handle();
   } else if ( is_hidden(p, v->site()) ) {
     v->add_hidden_site(v->site());
     v->set_site(p);
@@ -678,7 +678,7 @@ insert(const Site_2& p, Vertex_handle vnear)
   }
 
 
-  // we are in conflict with an Apollonius vertex; start from that and 
+  // we are in conflict with an Apollonius vertex; start from that and
   // find the entire conflict region and then repair the diagram
   List l;
   Face_map fm;
@@ -686,7 +686,7 @@ insert(const Site_2& p, Vertex_handle vnear)
 
   // MK:: NEED TO WRITE A FUNCTION CALLED find_conflict_region WHICH
   // IS GIVEN A STARTING FACE, A LIST, A FACE MAP, A VERTEX MAP AND A
-  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT 
+  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT
   // REGION AND EXPANDS THE CONFLICT REGION.
   initialize_conflict_region(start_f, l);
   expand_conflict_region(start_f, p, l, fm, vm, NULL);
@@ -1005,7 +1005,7 @@ get_faces_for_recycling(Face_map& fm, unsigned int n_wanted)
     vf.pop_back();
     this->_tds.delete_face(fp);
   }
-  
+
   return vf;
 }
 
@@ -1027,7 +1027,7 @@ remove_hidden_vertices(Vertex_map& vm)
 template<class Gt, class Agds, class LTag>
 typename Apollonius_graph_2<Gt,Agds,LTag>::Vertex_handle
 Apollonius_graph_2<Gt,Agds,LTag>::
-retriangulate_conflict_region(const Site_2& p,	List& l, 
+retriangulate_conflict_region(const Site_2& p,	List& l,
 			      Face_map& fm, Vertex_map& vm)
 {
   size_type vmsize = vm.size();
@@ -1150,7 +1150,7 @@ retriangulate_conflict_region(const Site_2& p,	List& l,
   //  std::vector<Face*> vf = get_faces_for_recycling(fm, l.size());
   std::list<Face*> vf;
 
-  // 4. copy the edge list to a vector of edges and clear the in place 
+  // 4. copy the edge list to a vector of edges and clear the in place
   //    list
   typedef typename Agds::Edge Agds_edge;
   std::vector<Agds_edge> ve;
@@ -1478,7 +1478,7 @@ finite_edge_interior_degenerated(const Vertex_handle& v1,
 				 const Vertex_handle& v4,
 				 const Vertex_handle& v, bool b) const
 {
-  CGAL_precondition( !is_infinite(v1) && !is_infinite(v2) && 
+  CGAL_precondition( !is_infinite(v1) && !is_infinite(v2) &&
 		     !is_infinite(v) );
   if ( !is_infinite( v4 ) ) {
     CGAL_precondition( is_infinite(v3) );
@@ -1548,7 +1548,7 @@ infinite_edge_interior(const Vertex_handle& v1,
 		       const Vertex_handle& v4,
 		       const Vertex_handle& v, bool b) const
 {
-  CGAL_precondition( !is_infinite(v3) && !is_infinite(v4) && 
+  CGAL_precondition( !is_infinite(v3) && !is_infinite(v4) &&
 		     !is_infinite(v) );
 
   if ( !is_infinite( v1 ) ) {
@@ -1813,7 +1813,7 @@ remove_degree_d_vertex(Vertex_handle v)
     remove_degree_2(v);
     return;
   }
-  
+
   Apollonius_graph_2<Gt,Agds,LTag> ag_small;
 
   std::map<Vertex_handle,Vertex_handle> vmap;
@@ -1826,7 +1826,7 @@ remove_degree_d_vertex(Vertex_handle v)
     if ( is_infinite(vh_large) ) {
       vh_small = ag_small.infinite_vertex();
       vmap[vh_small] = vh_large;
-    } else { 
+    } else {
       vh_small = ag_small.insert(vc->site());
       if ( vh_small != Vertex_handle() ) {
 	vmap[vh_small] = vh_large;
@@ -1859,7 +1859,7 @@ remove_degree_d_vertex(Vertex_handle v)
   List l;
   Face_map fm;
   Vertex_map vm;
-  std::vector<Vh_triple*> flipped_edges;  
+  std::vector<Vh_triple*> flipped_edges;
 
   ag_small.find_conflict_region_remove(v, vn, l, fm, vm,
 				       &flipped_edges);
@@ -1968,10 +1968,10 @@ Apollonius_graph_2<Gt,Agds,LTag>::file_output(std::ostream& os) const
   std::map<Vertex_handle,int> V;
   std::map<Face_handle,int> F;
 
-  // first vertex (infinite vertex) 
+  // first vertex (infinite vertex)
   int inum = 0;
   V[infinite_vertex()] = inum++;
-  
+
   // finite vertices
   if (is_ascii(os)) os << std::endl;
   for (Finite_vertices_iterator vit = finite_vertices_begin();
@@ -2007,7 +2007,7 @@ Apollonius_graph_2<Gt,Agds,LTag>::file_output(std::ostream& os) const
     if( is_ascii(os) ) { os << std::endl; }
   }
   if( is_ascii(os) ) { os << std::endl; }
-    
+
   // neighbor pointers of the  faces
   for( All_faces_iterator it = all_faces_begin();
        it != all_faces_end(); ++it) {
@@ -2099,7 +2099,7 @@ Apollonius_graph_2<Gt,Agds,LTag>::file_input(std::istream& is)
     // read non-combinatorial info of the vertex
     //    is >> *(V[i]);
   }
-  
+
   // Creation of the faces
   int index;
   int dim = (dimension() == -1 ? 1 : dimension() + 1);
@@ -2117,7 +2117,7 @@ Apollonius_graph_2<Gt,Agds,LTag>::file_input(std::istream& is)
     //      is >> *(F[i]) ;
   }
 
-  // Setting the neighbor pointers 
+  // Setting the neighbor pointers
   for (i = 0; i < m; ++i) {
     for (int j = 0; j < dimension()+1; ++j){
       is >> index;

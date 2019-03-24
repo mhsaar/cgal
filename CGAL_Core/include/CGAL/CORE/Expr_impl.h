@@ -18,14 +18,14 @@
  *
  * File: Expr.cpp
  *
- * Written by 
+ * Written by
  *       Koji Ouchi <ouchi@simulation.nyu.edu>
  *       Chee Yap <yap@cs.nyu.edu>
  *       Igor Pechtchanski <pechtcha@cs.nyu.edu>
  *       Vijay Karamcheti <vijayk@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
- *       Sylvain Pion <pion@cs.nyu.edu> 
+ *       Sylvain Pion <pion@cs.nyu.edu>
  *
  * WWW URL: http://cs.nyu.edu/exact/
  * Email: exact@cs.nyu.edu
@@ -45,9 +45,9 @@
 
 #include <CGAL/CORE/Expr.h>
 #include <cmath>
-#include <sstream> 
+#include <sstream>
 
-namespace CORE { 
+namespace CORE {
 
 #if defined(CORE_DEBUG_BOUND) && !defined(CGAL_HEADER_ONLY)
 unsigned int BFMSS_counter = 0;

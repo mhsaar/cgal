@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel        <seel@mpi-sb.mpg.de>
 //                 Miguel Granados     <granados@mpi-sb.mpg.de>
@@ -118,18 +118,18 @@ class Halffacet_base  {
       bool is_twin() const { return (&*twin_ < this); }
 
       bool is_valid( bool verb = false, int level = 0) const {
-      
+
 	Verbose_ostream verr(verb);
 	verr << "begin CGAL::SNC_items<...>::Halffacet_base::is_valid( verb=true, "
 	  "level = " << level << "):" << std::endl;
 
 	bool valid = (twin_ != NULL && twin_ != Halffacet_handle());
 	valid = valid && (volume_ != NULL && volume_ != Volume_handle());
-      
-	valid = valid && (supporting_plane_.a() != 0 || 
+
+	valid = valid && (supporting_plane_.a() != 0 ||
 			  supporting_plane_.b() != 0 ||
 			  supporting_plane_.c() != 0);
-      
+
 	valid = valid && (!boundary_entry_objects_.empty());
 
 	verr << "end of CGAL::SNC_items<...>::Halffacet_base::is_valid(): structure is "

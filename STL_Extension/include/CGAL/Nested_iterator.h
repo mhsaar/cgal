@@ -1,9 +1,9 @@
-// Copyright (c) 2003  
+// Copyright (c) 2003
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@cse.nd.edu>
 
@@ -59,7 +59,7 @@ namespace internal {
       return this->begin(base_it) == this->end(base_it);
     }
 
-    
+
   };
 
   template<class F_iterator>
@@ -70,7 +70,7 @@ namespace internal {
     typedef typename Predicate::Traits::Iterator         Iterator;
     typedef typename Predicate::Traits::Base_iterator    Base_iterator;
 
-  public:    
+  public:
     FI_w_begin_end() : F_iterator() {}
 
     FI_w_begin_end(Base_iterator it2,
@@ -159,7 +159,7 @@ public:
 	  nested_it_ = this->begin( this->base() );
 	}
       }
-    } 
+    }
     return *this;
   }
 
@@ -190,13 +190,13 @@ public:
 
   Self operator--(int)
   {
-    
+
     Self tmp = *this;
     --(*this);
     return tmp;
   }
 
-  
+
   reference  operator*()  const
   {
     return *nested_it_;

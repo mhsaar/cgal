@@ -16,7 +16,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Sylvain Pion
 
@@ -43,7 +43,7 @@ const double trunc_min = double(-base)*(base/2)/double(base-1);
 // We face portability issues with the ISO C99 functions "nearbyint",
 // so I re-implement it for my need.
 template < typename T >
-inline 
+inline
 int my_nearbyint(const T& d)
 {
   int z = int(d);
@@ -70,6 +70,9 @@ template < typename T >
 inline
 void MP_Float::construct_from_builtin_fp_type(T d)
 {
+    // Fix "...::exp is used uninitialized" errors with Crosstool v16.
+    exp = 0;
+
     if (d == 0)
       return;
 

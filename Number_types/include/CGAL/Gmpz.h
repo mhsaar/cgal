@@ -194,8 +194,8 @@ struct Needs_parens_as_product<Gmpz> {
 
 
 /*! \ingroup NiX_Modular_traits_spec
- *  \brief a model of concept ModularTraits, 
- *  specialization of NiX::Modular_traits. 
+ *  \brief a model of concept ModularTraits,
+ *  specialization of NiX::Modular_traits.
  */
 template<>
 class Modular_traits< Gmpz > {
@@ -215,7 +215,7 @@ class Modular_traits< Gmpz > {
         NT operator()(const Residue_type& x){
           return NT(x.get_value());
         }
-    };    
+    };
 };
 
 } //namespace CGAL
@@ -227,7 +227,7 @@ class Modular_traits< Gmpz > {
 namespace Eigen {
   template<class> struct NumTraits;
   template<> struct NumTraits<CGAL::Gmpz>
-  {     
+  {
     typedef CGAL::Gmpz Real;
     typedef CGAL::Gmpq NonInteger;
     typedef CGAL::Gmpz Nested;

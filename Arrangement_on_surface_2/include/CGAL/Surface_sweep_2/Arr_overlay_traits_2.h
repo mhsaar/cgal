@@ -349,7 +349,7 @@ public:
 
   class Parameter_space_in_x_2;
   class Parameter_space_in_y_2;
-  
+
   /*! A functor that computes intersections between x-monotone curves. */
   class Intersect_2 {
   protected:

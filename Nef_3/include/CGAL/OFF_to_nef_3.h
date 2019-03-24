@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Ralf Osbild <osbild@mpi-sb.mpg.de>
 
@@ -87,7 +87,7 @@ class number_type_converter_nef_3<Homogeneous_tag, Kernel> {
       RT ry (outy.str().c_str());
       RT rz (outz.str().c_str());
       RT rw (outw.str().c_str());
-      
+
       return Point_3 (rx, ry, rz, rw);
   }
 };

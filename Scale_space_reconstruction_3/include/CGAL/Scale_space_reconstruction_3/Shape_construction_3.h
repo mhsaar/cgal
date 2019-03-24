@@ -43,7 +43,7 @@
 
 namespace CGAL {
 
-// provides a generalized constructor for the shape of a set of points. 
+// provides a generalized constructor for the shape of a set of points.
 /* \ingroup PkgScaleSpaceReconstruction3Classes
  *  The shape of a set of points is ill-defined. Specifically,
  *  because a set of points has no inherent notion of connectivity,
@@ -123,7 +123,7 @@ public:
         if( shape ) return new Shape( *shape, squared_radius, Shape::GENERAL );
         else return new Shape( squared_radius, Shape::GENERAL );
     }
-    
+
     /// constructs a new shape.
     /** Important note: Shape_construction_3 does not take responsibility for destroying
      *  the object after use.
@@ -178,7 +178,7 @@ public:
 	typedef typename GeomTraits::Point_3                                    Point;
 private:
     typedef internal::Auto_count<Point>                                     PointIndex;
-       
+
 public:
     Shape_construction_3() {}
 
@@ -190,7 +190,7 @@ public:
         if( shape ) return new Shape( *shape, squared_radius );
         else return new Shape( squared_radius );
     }
-    
+
     //  Construct a new shape.
     /*  Note: Shape_construction_3 does not take responsibility for destroying
      *  the object after use.

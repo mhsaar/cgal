@@ -20,7 +20,7 @@
  * Synopsis:
  *	 Useful parameters for Core Library which users may change
  *
- * Written by 
+ * Written by
  *       Chee Yap <yap@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>

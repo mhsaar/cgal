@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -77,7 +77,7 @@ class Vertex
     Delaunay_face_handle fvalid = find_valid_vertex(f_);
     for (int i = 0; i < 3; i++) {
       int ccw_i = CW_CCW_2::ccw(i);
-      
+
       // if I want to return also infinite edges replace the test in
       // the if statement by the following test (i.e., should omit the
       // testing for infinity):

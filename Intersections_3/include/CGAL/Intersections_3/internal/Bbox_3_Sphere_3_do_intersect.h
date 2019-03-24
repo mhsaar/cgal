@@ -30,7 +30,7 @@
 
 
 namespace CGAL {
-  
+
 namespace Intersections {
 
 namespace internal {
@@ -107,15 +107,15 @@ namespace internal {
       return do_intersect_sphere_box_3(sphere, bbox, K());
     }
 
-  
+
     template <class K>
     bool do_intersect(const typename K::Sphere_3& sphere,
                       const CGAL::Bbox_3& bbox,
                       const K&)
     {
-          return do_intersect_sphere_box_3(sphere, bbox, K());  
+          return do_intersect_sphere_box_3(sphere, bbox, K());
     }
-  
+
     template <class K>
     bool do_intersect(const typename K::Iso_cuboid_3& bbox,
                       const typename K::Sphere_3& sphere,
@@ -124,13 +124,13 @@ namespace internal {
       return do_intersect_sphere_box_3(sphere, bbox, K());
     }
 
-  
+
     template <class K>
     bool do_intersect(const typename K::Sphere_3& sphere,
                       const typename K::Iso_cuboid_3& bbox,
                       const K&)
     {
-          return do_intersect_sphere_box_3(sphere, bbox, K());  
+          return do_intersect_sphere_box_3(sphere, bbox, K());
     }
 
 } // namespace internal

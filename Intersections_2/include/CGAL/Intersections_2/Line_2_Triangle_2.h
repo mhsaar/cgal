@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -37,7 +37,7 @@
 #include <CGAL/Intersection_traits_2.h>
 
 namespace CGAL {
-  
+
 namespace Intersections {
 
 namespace internal {
@@ -64,8 +64,8 @@ protected:
 };
 
 template <class K>
-inline 
-bool 
+inline
+bool
 do_intersect(const typename K::Line_2 &p1,
 	     const typename K::Triangle_2 &p2,
 	     const K&)
@@ -76,8 +76,8 @@ do_intersect(const typename K::Line_2 &p1,
 }
 
 template <class K>
-inline 
-bool 
+inline
+bool
 do_intersect(const typename K::Triangle_2 &p2,
 	     const typename K::Line_2 &p1,
 	     const K& k)
@@ -166,7 +166,7 @@ intersection_segment() const
 template <class K>
 typename CGAL::Intersection_traits
 <K, typename K::Line_2, typename K::Triangle_2>::result_type
-intersection(const typename K::Line_2 &line, 
+intersection(const typename K::Line_2 &line,
 	     const typename K::Triangle_2 &tr,
 	     const K&)
 {

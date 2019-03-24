@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -41,7 +41,7 @@ namespace CGAL {
 /**
  * \namespace Mesh_2
  *   Defines classes that are not yet documented.
- * 
+ *
  * \namespace Mesh_2::details
  *   Namespace for internal use.
  */
@@ -118,10 +118,10 @@ namespace Mesh_2 {
       const Vertex_handle& vi = fh->vertex(i);
       const Vertex_handle& mvi = tr.tds().mirror_vertex(fh, i);
 
-      return( ( tr.is_infinite(vi) || 
+      return( ( tr.is_infinite(vi) ||
                 this->operator()(tr, va, vb, vi->point()) )
               &&
-              ( tr.is_infinite(mvi) || 
+              ( tr.is_infinite(mvi) ||
                 this->operator()(tr, va, vb, mvi->point()) )
               );
     }
@@ -136,7 +136,7 @@ namespace Mesh_2 {
       CGAL_assume_code( bool should_be_true = )
       tr.is_edge(va, vb, fh, i);
       CGAL_assume( should_be_true == true );
-      
+
       return this->operator()(tr, fh, i);
     }
 
@@ -260,7 +260,7 @@ namespace Mesh_2 {
 
       Side_of_oriented_circle_2 in_circle =
         tr.geom_traits().side_of_oriented_circle_2_object();
-      
+
       const Point& p = vp->point();
       const Point& q = vq->point();
       const Point& r = vr->point();
@@ -283,7 +283,7 @@ namespace Mesh_2 {
 template <
   class Tr,
   class Is_locally_conform = Is_locally_conforming_Gabriel<Tr>,
-  class Container = 
+  class Container =
     typename details::Refine_edges_base_types<Tr>::Default_container
 >
 class Refine_edges_base :
@@ -294,7 +294,7 @@ class Refine_edges_base :
 public:
   typedef typename Tr::Finite_edges_iterator Finite_edges_iterator;
   typedef typename Tr::Face_circulator Face_circulator;
-  
+
   typedef typename Tr::Vertex_handle Vertex_handle;
   typedef typename Tr::Face_handle Face_handle;
   typedef typename Tr::Edge Edge;
@@ -341,7 +341,7 @@ protected:
 
     for(Finite_edges_iterator ei = tr.finite_edges_begin();
         ei != tr.finite_edges_end();
-        ++ei) 
+        ++ei)
     {
       if(ei->first->is_constrained(ei->second) &&
          !is_locally_conform(tr, ei->first, ei->second) )
@@ -356,7 +356,7 @@ protected:
     // with constraint hierarchy
 
     for(typename Tr::Subconstraint_iterator it = tr.subconstraints_begin();
-        it != tr.subconstraints_end(); ++it) 
+        it != tr.subconstraints_end(); ++it)
     {
       const Vertex_handle& v1 = it->first.first;
       const Vertex_handle& v2 = it->first.second;
@@ -441,7 +441,7 @@ public:
     const bool n_does_conflict = (zone.locate_type == Tr::EDGE) ||
       triangulation_ref_impl().test_conflict(p, n);
 
-    CGAL_assertion(f_does_conflict || 
+    CGAL_assertion(f_does_conflict ||
                    n_does_conflict);
 
     const int ni = triangulation_ref_impl().tds().mirror_index(f, i);
@@ -456,7 +456,7 @@ public:
       *edges_out++ = std::make_pair(n, ni);
     }
 
-    std::pair<OutputItFaces,OutputItEdges> pit = 
+    std::pair<OutputItFaces,OutputItEdges> pit =
       std::make_pair(faces_out,edges_out);
 
     if(f_does_conflict) {
@@ -468,7 +468,7 @@ public:
       pit = triangulation_ref_impl().propagate_conflicts(p,n,Tr::ccw(ni),pit);
       pit = triangulation_ref_impl().propagate_conflicts(p,n,Tr:: cw(ni),pit);
     }
-    return zone; 
+    return zone;
   }
 
   Vertex_handle insert_impl(const Point& p, Zone& zone)
@@ -505,7 +505,7 @@ public:
       Saves the handles of the edge that will be splitted.
       This function is overridden in class Refine_edge_with_clusters.
   */
-  Point refinement_point_impl(const Edge& edge) 
+  Point refinement_point_impl(const Edge& edge)
   {
     typename Geom_traits::Construct_midpoint_2
       midpoint = tr.geom_traits().construct_midpoint_2_object();
@@ -530,10 +530,10 @@ public:
 					 Zone& zone)
   {
     Mesher_level_conflict_status status = NO_CONFLICT;
-    
+
     for(typename Zone::Edges_iterator eit = zone.boundary_edges.begin();
         eit != zone.boundary_edges.end(); ++eit)
-      { 
+      {
         const Face_handle& fh = eit->first;
         const int& i = eit->second;
 
@@ -562,7 +562,7 @@ public:
    * Scans the edges of the star boundary, to test if they are both
    * locally conforming. If not, push them in the list of edges to be
    * conformed.
-   * 
+   *
    */
   void after_insertion_impl(const Vertex_handle& v)
   {
@@ -585,7 +585,7 @@ public:
     } while( fc != fcbegin );
 
     Face_handle fh;
-    int index = 0; // Avoids a warning. 
+    int index = 0; // Avoids a warning.
                    // We know that is_edge must return true, and is_edge will assign something to index
                    // but the compiler does not so it will issue a maybe uninitialized warning
 
@@ -608,7 +608,7 @@ public:
 
     if(!is_locally_conform(tr, va, v))
       add_constrained_edge_to_be_conformed(va, v);
-    
+
     if(!is_locally_conform(tr, vb, v))
       add_constrained_edge_to_be_conformed(vb, v);
   } // end after_insertion_impl
@@ -634,7 +634,7 @@ protected:
   }
 
 private: /** \name DEBUGGING TYPES AND DATAS */
-  class From_pair_of_vertex_to_edge 
+  class From_pair_of_vertex_to_edge
     : public CGAL::cpp98::unary_function<Constrained_edge, Edge>
   {
     Tr& tr;
@@ -703,9 +703,9 @@ public:  /** \name DEBUGGING FUNCTIONS */
 template <typename Tr,
           typename Is_locally_conform = Is_locally_conforming_Gabriel<Tr>,
           typename Base = Refine_edges_base<Tr, Is_locally_conform> >
-struct Refine_edges : 
-  public Base, 
-  public details::Refine_edges_types<Tr, 
+struct Refine_edges :
+  public Base,
+  public details::Refine_edges_types<Tr,
     Refine_edges<Tr, Is_locally_conform, Base> >::Edges_mesher_level
 {
   typedef Refine_edges<Tr, Is_locally_conform, Base> Self;
@@ -715,7 +715,7 @@ struct Refine_edges :
 
   typedef typename Types::Edges_mesher_level Mesher;
 public:
-  Refine_edges(Tr& t, 
+  Refine_edges(Tr& t,
 	       Null_mesher_level& null_level)
     : Base(t), Mesher(null_level)
   {

@@ -44,7 +44,7 @@
 #include <CGAL/Point_set_processing_3/internal/Parallel_callback.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
-#include <tbb/scalable_allocator.h>  
+#include <tbb/scalable_allocator.h>
 #endif // CGAL_LINKED_WITH_TBB
 
 namespace CGAL {
@@ -139,7 +139,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
       , advancement (advancement)
       , interrupted (interrupted)
     { }
-    
+
     void operator()(const tbb::blocked_range<std::size_t>& r) const
     {
       for( std::size_t i = r.begin(); i != r.end(); ++i)
@@ -155,7 +155,7 @@ jet_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
 #endif // CGAL_LINKED_WITH_TBB
 
 
-  
+
 } /* namespace internal */
 /// \endcond
 
@@ -213,7 +213,7 @@ jet_estimate_normals(
   const NamedParameters& np)
 {
   using boost::choose_param;
-  
+
   CGAL_TRACE("Calls jet_estimate_normals()\n");
 
   // basic geometric types
@@ -260,7 +260,7 @@ jet_estimate_normals(
 
   // Instanciate a KD-tree search.
   // Note: We have to convert each input iterator to Point_3.
-  std::vector<Point> kd_tree_points; 
+  std::vector<Point> kd_tree_points;
   for(it = points.begin(); it != points.end(); it++)
     kd_tree_points.push_back(get(point_map, *it));
   Tree tree(kd_tree_points.begin(), kd_tree_points.end());
@@ -278,7 +278,7 @@ jet_estimate_normals(
    {
      Point_set_processing_3::internal::Parallel_callback
        parallel_callback (callback, kd_tree_points.size());
-     
+
      std::vector<Vector> normals (kd_tree_points.size (),
                                   CGAL::NULL_VECTOR);
      CGAL::internal::Jet_estimate_normals<Kernel, SvdTraits, Tree>
@@ -300,7 +300,7 @@ jet_estimate_normals(
        for(it = points.begin(); it != points.end(); it++, ++ nb)
 	 {
 	   Vector normal = internal::jet_estimate_normal<Kernel,SvdTraits,Tree>(
-										get(point_map,*it), 
+										get(point_map,*it),
 										tree, k, degree_fitting);
 
 	   put(normal_map, *it, normal); // normal_map[it] = normal
@@ -357,7 +357,7 @@ jet_estimate_normals(
      degree_fitting (degree_fitting).
      geom_traits(Kernel()));
 }
-  
+
 #if defined(CGAL_EIGEN3_ENABLED) || defined(CGAL_LAPACK_ENABLED)
 // deprecated API
 template <typename ConcurrencyTag,
@@ -418,7 +418,7 @@ jet_estimate_normals(
      normal_map (normal_map).
      degree_fitting (degree_fitting));
 }
-  
+
 // deprecated API
 template <typename ConcurrencyTag,
 	  typename ForwardIterator,

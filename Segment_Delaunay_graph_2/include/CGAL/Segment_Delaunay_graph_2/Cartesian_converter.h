@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -107,7 +107,7 @@ private:
     // t is a segment
     return K2_Site_2::construct_site_2
       ( Base::operator()(t.source_of_supporting_site()),
-	Base::operator()(t.target_of_supporting_site()) );    
+	Base::operator()(t.target_of_supporting_site()) );
   }
 
 public:

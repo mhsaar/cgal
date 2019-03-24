@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -49,7 +49,7 @@ private:
 public:
   typedef NT                 FT;
   typedef NT                 RT;
-  
+
 public:
   Sqrt_extension_2()
     : a0_(0), a1_(0), a2_(0), a3_(0), A_(0), B_(0) {}
@@ -240,7 +240,7 @@ operator-(const Sqrt_extension_2<NT>& x, const Sqrt_extension_2<NT>& y)
 //===================================================================
 
 
-template <class NT> 
+template <class NT>
 class Algebraic_structure_traits<Sqrt_extension_2<NT> >
     :public Algebraic_structure_traits_base<Sqrt_extension_2<NT>,CGAL::Integral_domain_without_division_tag>{
 private:
@@ -255,55 +255,55 @@ class Real_embeddable_traits<Sqrt_extension_2<NT> >{
 private:
     typedef Real_embeddable_traits<NT> RET_NT;
 public:
-    
+
     typedef Sqrt_extension_2<NT> Real_embeddable;
-    
-    class Abs 
+
+    class Abs
         : public CGAL::cpp98::unary_function< Real_embeddable, Real_embeddable >{
     public:
         Real_embeddable operator()(const Real_embeddable& x) const {
             return (x>=0)?x:-x;
         }
-    };    
+    };
 
-    class Sgn 
+    class Sgn
         : public CGAL::cpp98::unary_function< Real_embeddable, CGAL::Sign >{
     public:
         CGAL::Sign operator()(const Real_embeddable& x) const {
             return x.sign();
         }
     };
-    
-    class Compare 
+
+    class Compare
         : public CGAL::cpp98::binary_function< Real_embeddable,
                                                Real_embeddable,
                                                CGAL::Comparison_result >
     {
     public:
         CGAL::Comparison_result operator()(
-                const Real_embeddable& x, 
+                const Real_embeddable& x,
                 const Real_embeddable& y) const {
             CGAL_exactness_precondition( CGAL::compare(x.e(), y.e()) == EQUAL );
             CGAL_exactness_precondition( CGAL::compare(x.f(), y.f()) == EQUAL );
             return (x - y).sign();
         }
     };
-    
-    class To_double 
+
+    class To_double
         : public CGAL::cpp98::unary_function< Real_embeddable, double >{
     public:
         double operator()(const Real_embeddable& x) const {
             return x.to_double();
         }
     };
-    
-    class To_interval 
+
+    class To_interval
         : public CGAL::cpp98::unary_function< Real_embeddable, std::pair< double, double > >{
     public:
         std::pair<double,double> operator()(const Real_embeddable& x) const {
             return x.to_interval();
         }
-    };   
+    };
 };
 
 // operator <<
@@ -314,7 +314,7 @@ operator<<(Stream& os, const Sqrt_extension_2<NT>& x)
 {
   os << "(" << x.a()  << ")+(" << x.b() << ") sqrt{" << x.e() << "}";
   os << "+(" << x.c() << ") sqrt{" << x.f() << "}";
-  os << "+(" << x.d() << ") sqrt{(" << x.e() << ") (" << x.f() 
+  os << "+(" << x.d() << ") sqrt{(" << x.e() << ") (" << x.f()
      << ")}";
   return os;
 }

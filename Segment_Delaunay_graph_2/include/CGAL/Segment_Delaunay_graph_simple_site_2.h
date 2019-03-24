@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -42,7 +42,7 @@ namespace CGAL {
    */
 
 template <class R_>
-class Segment_Delaunay_graph_simple_site_2 
+class Segment_Delaunay_graph_simple_site_2
 {
 public:
   typedef R_ R;
@@ -112,7 +112,7 @@ public:
   bool is_input() const { return true; }
   bool is_input(unsigned int) const { return true; }
 
-  const Point_2& point() const { 
+  const Point_2& point() const {
     CGAL_precondition ( is_point() );
     return p_[0];
   }
@@ -152,17 +152,17 @@ public:
 
 
   Segment_2 segment() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return Segment_2( p_[0], p_[1] );
   }
 
   const Point_2& source() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return p_[0];
   }
 
   const Point_2& target() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return p_[1];
   }
 
@@ -221,7 +221,7 @@ protected:
 
 template <class R>
 std::ostream&
-operator<<(std::ostream& os, 
+operator<<(std::ostream& os,
 	   const Segment_Delaunay_graph_simple_site_2<R>& s)
 {
   if (!s.is_defined())

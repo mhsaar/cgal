@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Manuel Caroli <Manuel.Caroli@sophia.inria.fr>
 
@@ -29,7 +29,7 @@
 #include <CGAL/triangulation_assertions.h>
 #include <CGAL/Periodic_3_offset_3.h>
 
-namespace CGAL { 
+namespace CGAL {
 
 // Triangulation_3 has calls to Construct_point_3 to handle weighted and bare points.
 // The default inherited Construct_point_3 inherited by Periodic_3_triangulation_remove_traits_3
@@ -114,7 +114,7 @@ public:
       Coplanar_orientation_3;
   typedef Point_offset_adaptor<Self, typename PT::Orientation_3>
       Orientation_3;
-  
+
   // Delaunay Triangulation traits
   typedef Point_offset_adaptor<Self,
 	  typename PT::Coplanar_side_of_bounded_circle_3>

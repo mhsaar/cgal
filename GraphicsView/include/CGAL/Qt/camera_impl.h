@@ -6,7 +6,7 @@
  This file is part of a fork of the QGLViewer library version 2.7.0.
  http://www.libqglviewer.com - contact@libqglviewer.com
 
- This file may be used under the terms of the GNU General Public License 
+ This file may be used under the terms of the GNU General Public License
  version 3.0 as published by the Free Software Foundation and
  appearing in the LICENSE file included in the packaging of this file.
 
@@ -75,7 +75,7 @@ Camera::Camera(QObject *parent)
   // Dummy values
   setScreenWidthAndHeight(600, 400);
 
-  
+
   // focusDistance is set from setFieldOfView()
 
   // #CONNECTION# Camera copy constructor
@@ -2379,14 +2379,14 @@ void Camera::getFrustum(double frustum[6])
         E(projectionMatrix_[14]),F(projectionMatrix_[10]);
     double B1 = (B+1)/(1-B), D1 = (1-D)/(D+1),
         E1=(E+1)/(1-E);
-    
+
     l = -2*B1/(1+B1*A);
     r = 2+A*l;
     t = 2*D1/(C*(1+D1));
     b =t -2/C;
     n = -2/(F*(1+E1));
     f=n-2/F;
-    
+
   }
   frustum[0] = l;
   frustum[1] = r;

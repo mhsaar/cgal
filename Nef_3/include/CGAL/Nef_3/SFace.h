@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel        <seel@mpi-sb.mpg.de>
 //                 Miguel Granados     <granados@mpi-sb.mpg.de>
@@ -44,7 +44,7 @@
 namespace CGAL {
 
 template <typename Refs>
-class SFace_base { 
+class SFace_base {
   #ifdef CGAL_I_DO_WANT_TO_USE_GENINFO
   typedef void* GenPtr;
   #else
@@ -59,7 +59,7 @@ class SFace_base {
   typedef typename Refs::Volume_const_handle  Volume_const_handle;
   typedef typename Refs::Object_list          Object_list;
   typedef typename Refs::SFace_cycle_iterator SFace_cycle_iterator;
-  typedef typename Refs::SFace_cycle_const_iterator 
+  typedef typename Refs::SFace_cycle_const_iterator
     SFace_cycle_const_iterator;
   Vertex_handle  center_vertex_;
   Volume_handle  volume_;
@@ -95,7 +95,7 @@ class SFace_base {
 	return *this;
       }
 
-    SFace_cycle_iterator sface_cycles_begin() 
+    SFace_cycle_iterator sface_cycles_begin()
     { return boundary_entry_objects_.begin(); }
     SFace_cycle_iterator sface_cycles_end()
     { return boundary_entry_objects_.end(); }
@@ -120,7 +120,7 @@ class SFace_base {
     const GenPtr& info() const { return info_; }
 
     bool is_valid( bool verb = false, int level = 0) const {
-      
+
       Verbose_ostream verr(verb);
       verr << "begin CGAL::SNC_items<...>::SFace_base::is_valid( verb=true, "
 	"level = " << level << "):" << std::endl;
@@ -130,7 +130,7 @@ class SFace_base {
 			volume_ != NULL);
 
       if(boundary_entry_objects_.empty()) {
-	valid = valid && 
+	valid = valid &&
 	  (center_vertex_->shalfedges_begin() == center_vertex_->shalfedges_end());
       }
       verr << "end of CGAL::SNC_items<...>::SFace_base::is_valid(): structure is "

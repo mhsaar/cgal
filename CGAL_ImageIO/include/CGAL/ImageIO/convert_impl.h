@@ -29,8 +29,8 @@
  *
  * AUTHOR:
  * Gregoire Malandain (greg@sophia.inria.fr)
- * 
- * CREATION DATE: 
+ *
+ * CREATION DATE:
  * June, 9 1998
  *
  * ADDITIONS, CHANGES
@@ -69,16 +69,16 @@ void ConvertBuffer( void *bufferIn,
     return;
 
   if ( bufferLength <= 0 ) {
-    fprintf( stderr, " Fatal error in %s: buffer length is negative or zero.\n", 
+    fprintf( stderr, " Fatal error in %s: buffer length is negative or zero.\n",
 	     proc );
     return;
   }
   if ( (bufferIn == (void*)NULL) || (bufferOut == (void*)NULL) ) {
-    fprintf( stderr, " Fatal error in %s: NULL buffer(s).\n", 
+    fprintf( stderr, " Fatal error in %s: NULL buffer(s).\n",
 	     proc );
     return;
   }
-  
+
   switch ( typeOut ) {
   case CGAL_SCHAR : {
     s8buf = (s8*)bufferOut;
@@ -107,7 +107,7 @@ void ConvertBuffer( void *bufferIn,
       }
       break;
     default :
-      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n", 
+      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n",
 	       proc );
       return;
     }
@@ -116,7 +116,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_UCHAR : {
     u8buf = (u8*)bufferOut;
     u8 min = 0, max = 255;
@@ -149,7 +149,7 @@ void ConvertBuffer( void *bufferIn,
       }
       break;
     default :
-      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n", 
+      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n",
 	       proc );
       return;
     }
@@ -159,7 +159,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_SSHORT : {
     s16buf = (s16*)bufferOut;
     s16 min = -32768, max = 32767;
@@ -203,7 +203,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_USHORT : {
     u16buf = (u16*)bufferOut;
     u16 min = 0, max = 65535;
@@ -241,7 +241,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_INT :
     s32buf = (s32*)bufferOut;
     switch( typeIn ) {
@@ -272,7 +272,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_FLOAT :
     r32buf = (r32*)bufferOut;
     switch( typeIn ) {
@@ -326,7 +326,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-    
+
   case CGAL_DOUBLE :
     r64buf = (r64*)bufferOut;
     switch( typeIn ) {
@@ -371,7 +371,7 @@ void ConvertBuffer( void *bufferIn,
       (void)memcpy( bufferOut, bufferIn, bufferLength * sizeof(r64) );
       break;
     default :
-      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n", 
+      fprintf( stderr, " Error in %s: such conversion not yet implemented.\n",
 	       proc );
       return;
     }
@@ -379,7 +379,7 @@ void ConvertBuffer( void *bufferIn,
 
 
 
-   
+
   default :
     fprintf( stderr, " Error in %s: such output type not yet handled.\n",
 	     proc );
@@ -399,7 +399,7 @@ void Convert_r32_to_s8( r32 *theBuf,
   int i;
   r32* tb = theBuf;
   s8* rb = resBuf;
-  
+
   for ( i=0; i<size; i++, tb++, rb++ ) {
     if ( *tb < -128.0 ) {
       *rb = -128;
@@ -425,7 +425,7 @@ void Convert_r32_to_u8( r32 *theBuf,
   int i;
   r32* tb = theBuf;
   u8* rb = resBuf;
-  
+
   for ( i=0; i<size; i++, tb++, rb++ ) {
     if ( *tb < 0.0 ) {
       *rb = 0;
@@ -449,7 +449,7 @@ void Convert_r32_to_s16( r32 *theBuf,
   int i;
   r32* tb = theBuf;
   s16* rb = resBuf;
-  
+
   for ( i=0; i<size; i++, tb++, rb++ ) {
     if ( *tb < -32768.0 ) {
       *rb = -32768;
@@ -475,7 +475,7 @@ void Convert_r32_to_u16( r32 *theBuf,
   int i;
   r32* tb = theBuf;
   u16* rb = resBuf;
-  
+
   for ( i=0; i<size; i++, tb++, rb++ ) {
     if ( *tb < 0.0 ) {
       *rb = 0;
@@ -488,4 +488,4 @@ void Convert_r32_to_u16( r32 *theBuf,
 }
 
 
-      
+

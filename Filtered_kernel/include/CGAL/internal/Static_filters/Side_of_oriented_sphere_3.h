@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Sylvain Pion
 
@@ -96,7 +96,7 @@ public:
           double astz = CGAL::abs(stz);
 
 #ifdef CGAL_USE_SSE2_MAX
-          CGAL::Max<double> mmax; 
+          CGAL::Max<double> mmax;
           maxx = mmax(maxx, aqtx, artx, astx);
           maxy = mmax(maxy, aqty, arty, asty);
           maxz = mmax(maxz, aqtz, artz, astz);
@@ -115,17 +115,17 @@ public:
 #endif
 
           double eps = 1.2466136531027298e-13 * maxx * maxy * maxz;
-  
+
 #ifdef CGAL_USE_SSE2_MAX
           /*
-          CGAL::Min<double> mmin; 
+          CGAL::Min<double> mmin;
           double tmp = mmin(maxx, maxy, maxz);
           maxz = mmax(maxx, maxy, maxz);
           maxx = tmp;
           */
           sse2minmax(maxx,maxy,maxz);
           // maxy can contain ANY element
-          
+
 #else
           // Sort maxx < maxy < maxz.
           if (maxx > maxz)

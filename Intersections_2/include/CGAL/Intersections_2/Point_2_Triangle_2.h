@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -112,7 +112,7 @@ intersection_point() const
 template <class K>
 typename Intersection_traits<K, typename K::Point_2, typename K::Triangle_2>
 ::result_type
-intersection(const typename K::Point_2 &pt, 
+intersection(const typename K::Point_2 &pt,
 	     const typename K::Triangle_2 &tr,
 	     const K&)
 {
@@ -132,7 +132,7 @@ inline
 typename Intersection_traits<K, typename K::Point_2, typename K::Triangle_2>
 ::result_type
 intersection(const typename K::Triangle_2 &tr,
-	     const typename K::Point_2 &pt, 
+	     const typename K::Point_2 &pt,
 	     const K&k)
 {
   return internal::intersection(pt, tr, k);

@@ -36,11 +36,11 @@ template<class R, class Tag> struct Exact_intersect_xz_2;
 template <class R>
 struct Exact_intersect_xz_2 <R,Cartesian_tag>
 {
-   typedef typename R::Point_2     Point_2; 
-   typedef typename R::Segment_2   Segment_2; 
+   typedef typename R::Point_2     Point_2;
+   typedef typename R::Segment_2   Segment_2;
 
-   typedef typename R::Point_3     Point_3; 
-   typedef typename R::Segment_3   Segment_3; 
+   typedef typename R::Point_3     Point_3;
+   typedef typename R::Segment_3   Segment_3;
 
    CGAL::Object operator() (Segment_3 s3, Segment_3 t3)
    {  Point_2 p2, q2;
@@ -75,11 +75,11 @@ struct Exact_intersect_xz_2 <R,Cartesian_tag>
 template <class R>
 struct Exact_intersect_xz_2 <R,Homogeneous_tag>
 {  // Homogeneous
-   typedef typename R::Point_2     Point_2; 
-   typedef typename R::Segment_2   Segment_2; 
+   typedef typename R::Point_2     Point_2;
+   typedef typename R::Segment_2   Segment_2;
 
-   typedef typename R::Point_3     Point_3; 
-   typedef typename R::Segment_3   Segment_3; 
+   typedef typename R::Point_3     Point_3;
+   typedef typename R::Segment_3   Segment_3;
 
    CGAL::Object operator() (Segment_3 s3, Segment_3 t3)
    {  Point_2 p2, q2;
