@@ -386,7 +386,8 @@
    || defined(_M_ALPHA) || defined(_WIN64)
 #  define CGAL_LITTLE_ENDIAN
 #else
-#  error Unknown endianness
+// Default to little endian for all other archtechtures.
+#  define CGAL_LITTLE_ENDIAN
 #endif
 
 
