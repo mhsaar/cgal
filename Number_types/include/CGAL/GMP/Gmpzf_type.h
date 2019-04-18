@@ -583,10 +583,10 @@ bool operator>(const Gmpzf &a, int b)
 }
 
 inline Gmpzf min BOOST_PREVENT_MACRO_SUBSTITUTION(const Gmpzf& x,const Gmpzf& y){
-  return (x<=y)?x:y; 
+  return (x<=y)?x:y;
 }
 inline Gmpzf max BOOST_PREVENT_MACRO_SUBSTITUTION(const Gmpzf& x,const Gmpzf& y){
-  return (x>=y)?x:y; 
+  return (x>=y)?x:y;
 }
 
 } //namespace CGAL

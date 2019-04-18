@@ -125,7 +125,7 @@ namespace CGAL {
 	}
 	return loe;
       }
-    
+
     FT compute_distance_to_facet_center(const Facet& f,
 					const Vertex_handle v) const {
       const Point& fcenter = f.first->get_facet_surface_center(f.second);
@@ -172,7 +172,7 @@ namespace CGAL {
       // For before_insertion
 
       // Actions to perform on a facet inside the conflict zone
-      void 
+      void
       before_insertion_handle_facet_inside_conflict_zone (const Facet& f) {
 	Facet cote = f;
         //	Facet autre_cote = SMB::mirror_facet(cote);
@@ -191,7 +191,7 @@ namespace CGAL {
       }
 
       // Action to perform on a facet on the boundary of the conflict zone
-      void 
+      void
       before_insertion_handle_facet_on_boundary_of_conflict_zone(const Facet& f)
       {
 	// perform the same operations as for an internal facet

@@ -1,9 +1,9 @@
-// Copyright (c) 1998-2004  
+// Copyright (c) 1998-2004
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 //                 Michel Hoffmann <hoffmann@inf.ethz.ch>
@@ -41,7 +41,7 @@
 namespace CGAL {
 
 namespace internal {
-  
+
   template <class K>
   inline typename K::FT
   squared_distance(const typename K::Point_2 & pt1,
@@ -90,7 +90,7 @@ namespace internal {
   squared_distance(const typename K::Point_2 &pt,
 		   const typename K::Line_2 &line,
 		   const K& k)
-  {  
+  {
     typedef typename K::Kernel_tag Tag;
     Tag tag;
     return squared_distance(pt, line, k, tag);
@@ -98,13 +98,13 @@ namespace internal {
 
   template <class K>
   inline typename K::FT
-  squared_distance(const typename K::Line_2 &line, 
+  squared_distance(const typename K::Line_2 &line,
 		   const typename K::Point_2 &pt,
 		   const K& k)
   {
     return internal::squared_distance(pt, line, k);
   }
-  
+
   template <class K>
   typename K::FT
   squared_distance(const typename K::Point_2 &pt,
@@ -183,10 +183,10 @@ namespace internal {
   }
 
   template <class K>
-  inline typename K::RT 
-  _distance_measure_sub(const typename K::RT &startwcross, 
+  inline typename K::RT
+  _distance_measure_sub(const typename K::RT &startwcross,
 			const typename K::RT &endwcross,
-			const typename K::Point_2 &start, 
+			const typename K::Point_2 &start,
 			const typename K::Point_2 &end)
   {
     return  CGAL_NTS abs(wmult((K*)0, startwcross, end.hw())) -
@@ -287,10 +287,10 @@ namespace internal {
   }
 
   template <class K>
-  inline typename K::RT 
-  _distance_measure_sub(const typename K::RT &startwcross, 
+  inline typename K::RT
+  _distance_measure_sub(const typename K::RT &startwcross,
 			const typename K::RT &endwcross,
-			const typename K::Vector_2 &start, 
+			const typename K::Vector_2 &start,
 			const typename K::Vector_2 &end)
   {
     return  CGAL_NTS abs(wmult((K*)0, startwcross, end.hw())) -
@@ -405,7 +405,7 @@ namespace internal {
   template <class K>
   typename K::FT
   _sqd_to_line(const typename K::Vector_2 &diff,
-	       const typename K::RT & wcross, 
+	       const typename K::RT & wcross,
 	       const typename K::Vector_2 &dir )
   {
     typedef typename K::RT RT;
@@ -534,7 +534,7 @@ namespace internal {
       }
     }
   }
-  
+
   template <class K>
   typename K::FT
   squared_distance(const typename K::Line_2 &line,
@@ -615,7 +615,7 @@ namespace internal {
   template <class K>
   inline typename K::FT
   squared_distance_indexed(const typename K::Point_2 &pt,
-			   const typename K::Ray_2 &ray, 
+			   const typename K::Ray_2 &ray,
 			   int ind,
 			   const K& k)
   {
@@ -627,7 +627,7 @@ namespace internal {
   template <class K>
   inline typename K::FT
   squared_distance_indexed(const typename K::Point_2 &pt,
-			   const typename K::Segment_2 &seg, 
+			   const typename K::Segment_2 &seg,
 			   int ind,
 			   const K& k)
   {
@@ -637,7 +637,7 @@ namespace internal {
       return internal::squared_distance(pt, seg.target(), k);
     return internal::squared_distance(pt, seg.supporting_line(), k);
   }
-  
+
 } // namespace internal
 
 template <class K>

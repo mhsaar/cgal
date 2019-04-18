@@ -19,9 +19,9 @@
 // Author(s)     : Monique Teillaud, Sylvain Pion, Pedro Machado
 
 // Partially supported by the IST Programme of the EU as a Shared-cost
-// RTD (FET Open) Project under Contract No  IST-2000-26473 
-// (ECG - Effective Computational Geometry for Curves and Surfaces) 
-// and a STREP (FET Open) Project under Contract No  IST-006413 
+// RTD (FET Open) Project under Contract No  IST-2000-26473
+// (ECG - Effective Computational Geometry for Curves and Surfaces)
+// and a STREP (FET Open) Project under Contract No  IST-006413
 // (ACS -- Algorithms for Complex Shapes)
 
 #ifndef CGAL_CIRCULAR_KERNEL_CIRCULAR_ARC_POINT_2_H
@@ -45,14 +45,14 @@ namespace internal {
     typedef typename CK::FT                      FT;
     typedef typename CK::Root_of_2               Root_of_2;
     typedef typename CK::Point_2                 Point_2;
-    
+
   public: // fixme ?
     typedef typename CK::Root_for_circles_2_2 Root_for_circles_2_2;
     typedef typename CK::template Handle<Root_for_circles_2_2>::type  Base;
-    
-    Circular_arc_point_2_base() 
+
+    Circular_arc_point_2_base()
     {}
-    
+
     Circular_arc_point_2_base(const Root_for_circles_2_2 & np)
       :  _p(np)
     {}
@@ -61,23 +61,23 @@ namespace internal {
       :  _p(p.x(),p.y()/*,1,1,-p.x()-p.y()*/)
     {}
 
-    const Root_of_2 & x() const 
+    const Root_of_2 & x() const
     { return get_pointee_or_identity(_p).x(); }
-    
-    const Root_of_2 & y() const 
+
+    const Root_of_2 & y() const
     { return get_pointee_or_identity(_p).y(); }
-    
+
     CGAL::Bbox_2 bbox() const
     {
       return get_pointee_or_identity(_p).bbox();
     }
 
-    const Root_for_circles_2_2 & coordinates() const 
+    const Root_for_circles_2_2 & coordinates() const
     { return get_pointee_or_identity(_p); }
 
     bool equal_ref(const Circular_arc_point_2_base &p) const
     {
-      return CGAL::identical(_p, p._p);      
+      return CGAL::identical(_p, p._p);
     }
 
   private:
@@ -120,7 +120,7 @@ public:
     : P_point(p), bb(NULL)
   {}
 
-  Filtered_bbox_circular_arc_point_2_base(const Self &c) 
+  Filtered_bbox_circular_arc_point_2_base(const Self &c)
     : P_point(c), bb(c.bb ? new Bbox_2(*(c.bb)) : NULL)
   {}
 
@@ -130,7 +130,7 @@ public:
     {
       this->P_point::operator=(c);
 
-      if (bb != NULL){ 
+      if (bb != NULL){
         delete bb;
       }
       bb = c.bb ? new Bbox_2(*(c.bb)) : NULL;
@@ -140,22 +140,22 @@ public:
 	
   ~Filtered_bbox_circular_arc_point_2_base() {
     if(bb) {
-      delete bb; 
+      delete bb;
       bb = 0;
     }
   }
 
   ////Bbox related accessors////
-  
+
   bool has_no_bbox() const
   { return (bb==NULL);}
 
   Bbox_2  bbox() const
-  { 
+  {
     if(this->has_no_bbox())
       bb= new Bbox_2(P_point::bbox());
-              
-    return *bb;     
+
+    return *bb;
   }
 
 private:

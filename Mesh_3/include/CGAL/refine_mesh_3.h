@@ -454,7 +454,7 @@ CGAL_PRAGMA_DIAG_POP
 } // end namespace parameters
 
 
-  
+
 #if defined(BOOST_MSVC)
 #  pragma warning(push)
 #  pragma warning(disable:4003) // not enough actual parameters for macro

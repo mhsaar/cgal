@@ -43,7 +43,7 @@
 #include <CGAL/Point_set_processing_3/internal/Parallel_callback.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
-#include <tbb/scalable_allocator.h>  
+#include <tbb/scalable_allocator.h>
 #endif // CGAL_LINKED_WITH_TBB
 
 namespace CGAL {
@@ -140,7 +140,7 @@ jet_smooth_point(
       , advancement (advancement)
       , interrupted (interrupted)
     { }
-    
+
     void operator()(const tbb::blocked_range<std::size_t>& r) const
     {
       for( std::size_t i = r.begin(); i != r.end(); ++i)
@@ -217,7 +217,7 @@ jet_smooth_point_set(
   const NamedParameters& np)
 {
   using boost::choose_param;
-  
+
   // basic geometric types
   typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
   typedef typename Point_set_processing_3::GetK<PointRange, NamedParameters>::Kernel Kernel;
@@ -247,12 +247,12 @@ jet_smooth_point_set(
 
   // precondition: at least 2 nearest neighbors
   CGAL_point_set_processing_precondition(k >= 2);
-  
+
   typename PointRange::iterator it;
 
   // Instanciate a KD-tree search.
   // Note: We have to convert each input iterator to Point_3.
-  std::vector<Point> kd_tree_points; 
+  std::vector<Point> kd_tree_points;
   for(it = points.begin(); it != points.end(); it++)
     kd_tree_points.push_back(get(point_map, *it));
   Tree tree(kd_tree_points.begin(), kd_tree_points.end());
@@ -268,7 +268,7 @@ jet_smooth_point_set(
    {
      Point_set_processing_3::internal::Parallel_callback
        parallel_callback (callback, kd_tree_points.size());
-     
+
      std::vector<Point> mutated_points (kd_tree_points.size (), CGAL::ORIGIN);
      CGAL::internal::Jet_smooth_pwns<Kernel, SvdTraits, Tree>
        f (tree, k, kd_tree_points, degree_fitting, degree_monge,
@@ -343,7 +343,7 @@ jet_smooth_point_set(
      degree_monge (degree_monge).
      geom_traits(Kernel()));
 }
-  
+
 #if defined(CGAL_EIGEN3_ENABLED) || defined(CGAL_LAPACK_ENABLED)
 // deprecated API
 template <typename ConcurrencyTag,
@@ -425,7 +425,7 @@ jet_smooth_point_set(
 #endif // CGAL Eigen / Lapack
 #endif // CGAL_NO_DEPRECATED_CODE
 /// \endcond
-  
+
 
 } //namespace CGAL
 

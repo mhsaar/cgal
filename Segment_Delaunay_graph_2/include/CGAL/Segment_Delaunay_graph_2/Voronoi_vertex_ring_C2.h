@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -101,7 +101,7 @@ private:
     RT nq = CGAL::square(q.x()) + CGAL::square(q.y());
     RT nr = CGAL::square(r.x()) + CGAL::square(r.y());
 
-    ux_ppp = 
+    ux_ppp =
       np * (q.y() - r.y()) + nq * (r.y() - p.y()) + nr * (p.y() - q.y());
     uy_ppp =
       -(np * (q.x() - r.x()) + nq * (r.x() - p.x()) + nr * (p.x() - q.x()));
@@ -136,7 +136,7 @@ private:
       return;
     }
 
-    
+
 
     RT a1, b1, c1, a2, b2, c2;
     compute_supporting_line(q.supporting_site(), a1, b1, c1);
@@ -232,7 +232,7 @@ private:
 
     RT I = b1 * c2_ + b2 * c1_;
     RT J = a1 * c2_ + a2 * c1_;
-    
+
     RT c1c2 = RT(2) * c1_ * c2_;
     RT a1a2 = a1 * a2;
     RT b1b2 = b1 * b2;
@@ -282,7 +282,7 @@ private:
       s_rho = s1 * CGAL::sign(e);
     }
 
-    
+
     Sqrt_1 rho = Zero;
     if ( s_rho == POSITIVE ) {
       rho = One;
@@ -290,7 +290,7 @@ private:
       rho = -One;
     }
 
-    
+
     Sqrt_1 vz(-a1a2 - b1b2, RT(1), D1D2);
 
     RT A = a1a2 - b1b2;
@@ -406,7 +406,7 @@ private:
 			   const Site_2& s, const Line_2& l) const
   {
     CGAL_precondition( supp.is_segment() && s.is_segment() );
-    
+
     if ( same_segments(supp.supporting_site(),
 		       s.supporting_site()) ) {
       return false;
@@ -443,7 +443,7 @@ private:
 
   void
   orient_lines(const Site_2& p, const Site_2& q,
-	       const Site_2& r, RT a[], RT b[], RT c[]) const 
+	       const Site_2& r, RT a[], RT b[], RT c[]) const
   {
     CGAL_precondition( p.is_segment() && q.is_segment() &&
 		       r.is_segment() );
@@ -452,7 +452,7 @@ private:
     l[0] = compute_supporting_line(p.supporting_site());
     l[1] = compute_supporting_line(q.supporting_site());
     l[2] = compute_supporting_line(r.supporting_site());
-    
+
     bool is_oriented[3] = {false, false, false};
 
     if ( is_on_positive_halfspace(p, q, l[0]) ||
@@ -525,7 +525,7 @@ private:
 	- l[(i+2)%3].a() * l[(i+1)%3].b();
     }
 
-    
+
     Sqrt_1 Zero(RT(0), RT(0), d[0]);
     Sqrt_1 sqrt_D0(RT(0), RT(1), d[0]);
 
@@ -641,7 +641,7 @@ private:
     uy = Sqrt_3(cy[0] * sqrt_D0, cy[1] + Zero, cy[2] + Zero,
 		Zero, D1, D2);
     uz = Sqrt_3(cz[0] * sqrt_D0, cz[1] + Zero, cz[2] + Zero,
-		Zero, D1, D2);      
+		Zero, D1, D2);
   }
 
   //--------------------------------------------------------------------------
@@ -684,7 +684,7 @@ private:
     return ( same_points(p, s.source_site()) ||
 	     same_points(p, s.target_site()) );
   }
-  
+
 
   //--------------------------------------------------------------------------
   //--------------------------------------------------------------------------
@@ -702,7 +702,7 @@ private:
     return s_uz * s_l;
   }
 
-  
+
   //--------------------------------------------------------------------------
 
   Orientation
@@ -733,7 +733,7 @@ private:
 
     return s_uz * s_l;
   }
-    
+
 
   //--------------------------------------------------------------------------
   //--------------------------------------------------------------------------
@@ -760,7 +760,7 @@ private:
       return ZERO;
     }
 
-    if (  ( p_.is_segment() && is_endpoint_of(t, p_) ) || 
+    if (  ( p_.is_segment() && is_endpoint_of(t, p_) ) ||
 	  ( q_.is_segment() && is_endpoint_of(t, q_) ) ||
 	  ( r_.is_segment() && is_endpoint_of(t, r_) )  ) {
       use_result = true;
@@ -792,7 +792,7 @@ private:
   //--------------------------------------------------------------------------
 
   template<class Type>
-  inline  
+  inline
   Sign incircle_p(const Site_2& st, Type type) const
   {
     CGAL_precondition( st.is_point() );
@@ -902,7 +902,7 @@ private:
   //--------------------------------------------------------------------------
   //--------------------------------------------------------------------------
 
-  Sign incircle_p(const Site_2& t) const 
+  Sign incircle_p(const Site_2& t) const
   {
     if ( is_degenerate_Voronoi_circle() ) {
       return POSITIVE;
@@ -927,7 +927,7 @@ private:
     return s;
   }
 
-  Sign incircle_p_no_easy(const Site_2& t) const 
+  Sign incircle_p_no_easy(const Site_2& t) const
   {
     Sign s(ZERO);
     switch ( v_type ) {
@@ -999,7 +999,7 @@ private:
   //--------------------------------------------------------------------------
   //--------------------------------------------------------------------------
 
-  
+
   Sign incircle(const Line_2& l, PPP_Type) const
   {
     Point_2 pref = p_ref().point();
@@ -1028,7 +1028,7 @@ private:
     Sqrt_1 vy = uy_pps - pref.y() * uz_pps;
 
     Sqrt_1 Rs = CGAL::square(vx) + CGAL::square(vy);
-    
+
     RT Ns = CGAL::square(l.a()) + CGAL::square(l.b());
 
     Sqrt_1 Ls =
@@ -1183,9 +1183,9 @@ private:
 
   //--------------------------------------------------------------------------
 
-  
 
-  Sign incircle_s(const Site_2& t) const 
+
+  Sign incircle_s(const Site_2& t) const
   {
     CGAL_precondition( t.is_segment() );
 
@@ -1362,7 +1362,7 @@ public:
       typedef Algebraic_structure_traits<FT> AST;
       return x(typename AST::Algebraic_category());
   }
-    
+
   inline FT y() const {
       typedef Algebraic_structure_traits<FT> AST;
       return y(typename AST::Algebraic_category());
@@ -1415,7 +1415,7 @@ public:
     if ( is_degenerate_Voronoi_circle() ) {
       return degenerate_point();
     }
-    
+
     return Point_2(x(), y());
   }
 
@@ -1446,7 +1446,7 @@ public:
 
   //--------------------------------------------------------------------------
 
-  Sign incircle(const Site_2& t) const 
+  Sign incircle(const Site_2& t) const
   {
     Sign s;
 
@@ -1459,7 +1459,7 @@ public:
     return s;
   }
 
-  Sign incircle_no_easy(const Site_2& t) const 
+  Sign incircle_no_easy(const Site_2& t) const
   {
     Sign s;
 
@@ -1475,7 +1475,7 @@ public:
   //--------------------------------------------------------------------------
 
 
-  Orientation orientation(const Line_2& l) const 
+  Orientation orientation(const Line_2& l) const
   {
     Orientation o(COLLINEAR);
     switch ( v_type ) {

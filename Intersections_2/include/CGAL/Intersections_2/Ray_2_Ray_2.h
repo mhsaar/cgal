@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -37,7 +37,7 @@
 
 
 namespace CGAL {
-  
+
 namespace Intersections {
 
 namespace internal {
@@ -147,7 +147,7 @@ Ray_2_Ray_2_pair<K>::intersection_type() const
                     return _result;
                 }
             }
-            
+
         } else {
             typedef typename K::FT FT;
             if (dir1.y() > FT(0)) {
@@ -191,9 +191,9 @@ Ray_2_Ray_2_pair<K>::intersection_type() const
                     return _result;
                 }
             }
-            
+
         }
-        } 
+        }
     default:
         CGAL_kernel_assertion(false); // should not be reached:
         return _result;
@@ -238,7 +238,7 @@ Ray_2_Ray_2_pair<K>::intersection_ray() const
 template <class K>
 typename CGAL::Intersection_traits
   <K, typename K::Ray_2, typename K::Ray_2>::result_type
-intersection(const typename K::Ray_2 &ray1, 
+intersection(const typename K::Ray_2 &ray1,
 	     const typename K::Ray_2 &ray2,
 	     const K&)
 {

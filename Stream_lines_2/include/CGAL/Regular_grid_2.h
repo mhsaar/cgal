@@ -15,11 +15,11 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Abdelkrim Mebarki <Abdelkrim.Mebarki@sophia.inria.fr>
 
-#ifndef CGAL_REGULAR_GRID_2_H_ 
+#ifndef CGAL_REGULAR_GRID_2_H_
 #define CGAL_REGULAR_GRID_2_H_
 
 #include <CGAL/license/Stream_lines_2.h>
@@ -65,7 +65,7 @@ public:
 
   inline typename Geom_traits::Iso_rectangle_2 bbox() const;
 
-  std::pair<Vector_2,FT> 
+  std::pair<Vector_2,FT>
   get_field(const Point_2 & p) const
     {
       CGAL_streamlines_precondition(is_in_domain(p));
@@ -90,7 +90,7 @@ public:
 	FT>(domain_size_x,
 	    domain_size_y);
     }
-    
+
   inline FT container_value(int i) const
     {
       if (i < 2*number_of_samples_x*number_of_samples_y)
@@ -111,7 +111,7 @@ Regular_grid_2<StreamLinesTraits_2>::bbox() const
 }
 
 template <class StreamLinesTraits_2>
-inline int 
+inline int
 Regular_grid_2<StreamLinesTraits_2>::get_index(int i, int j) const
 {
   return 2*(number_of_samples_x*j + i);
@@ -142,7 +142,7 @@ Regular_grid_2<StreamLinesTraits_2>::get_field(int i, int j) const
 
 template <class StreamLinesTraits_2>
 inline void
-Regular_grid_2<StreamLinesTraits_2>::set_field(int i, 
+Regular_grid_2<StreamLinesTraits_2>::set_field(int i,
 					       int j, const Vector_2
 					       & v)
 {
@@ -162,7 +162,7 @@ Regular_grid_2<StreamLinesTraits_2>::is_in_domain(const Point_2 & p)
 }
 
 template <class StreamLinesTraits_2>
-bool 
+bool
 Regular_grid_2<StreamLinesTraits_2>::is_in_samples(int i,
 						   int j)
   const
@@ -172,7 +172,7 @@ Regular_grid_2<StreamLinesTraits_2>::is_in_samples(int i,
 }
 
 template <class StreamLinesTraits_2>
-typename Regular_grid_2<StreamLinesTraits_2>::Vector_2 
+typename Regular_grid_2<StreamLinesTraits_2>::Vector_2
 Regular_grid_2<StreamLinesTraits_2>::get_vector_field(const Point_2 &
 						      p) const
 {
@@ -216,7 +216,7 @@ Regular_grid_2<StreamLinesTraits_2>::get_vector_field(const Point_2 &
 template <class StreamLinesTraits_2>
 typename Regular_grid_2<StreamLinesTraits_2>::FT
 Regular_grid_2<StreamLinesTraits_2>::get_density_field(const Point_2 & ) const
-						       
+						
 {
   return 1.0;
 }

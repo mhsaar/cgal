@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -38,7 +38,7 @@
 
 
 namespace CGAL {
-  
+
 namespace Intersections {
 
 namespace internal {
@@ -207,7 +207,7 @@ Ray_2_Segment_2_pair<K>::intersection_type() const
                 _result = SEGMENT;
                 return _result;
             }
-        } 
+        }
         }
     default:
         CGAL_kernel_assertion(false); // should not be reached:
@@ -242,7 +242,7 @@ Ray_2_Segment_2_pair<K>::intersection_segment() const
 template <class K>
 typename CGAL::Intersection_traits
 <K, typename K::Ray_2, typename K::Segment_2>::result_type
-intersection(const typename K::Ray_2 &ray, 
+intersection(const typename K::Ray_2 &ray,
 	     const typename K::Segment_2&seg,
 	     const K&)
 {
@@ -264,7 +264,7 @@ template <class K>
 typename CGAL::Intersection_traits
 <K, typename K::Ray_2, typename K::Segment_2>::result_type
 intersection(const typename K::Segment_2 &seg,
-	     const typename K::Ray_2 &ray, 
+	     const typename K::Ray_2 &ray,
 	     const K& k)
 {
   return internal::intersection(ray, seg, k);

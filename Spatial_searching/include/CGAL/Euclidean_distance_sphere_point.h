@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Hans Tangelder (<hanst@cs.uu.nl>)
 
@@ -35,10 +35,10 @@ namespace CGAL {
 
   template <class SearchTraits>
   class Euclidean_distance_sphere_point {
-   
-    
+
+
     SearchTraits traits;
-    
+
     public:
 
     typedef typename SearchTraits::Point_d Point_d;
@@ -48,7 +48,7 @@ namespace CGAL {
     typedef typename SearchTraits::Compute_squared_radius_d Compute_squared_radius_d;
     typedef typename SearchTraits::Construct_cartesian_const_iterator_d Construct_cartesian_const_iterator_d;
     typedef typename SearchTraits::Cartesian_const_iterator_d Cartesian_const_iterator_d;
-    typedef Sphere_d Query_item;   
+    typedef Sphere_d Query_item;
     typedef typename internal::Get_dimension_tag<SearchTraits>::Dimension Dimension;
     public:
 
@@ -80,10 +80,10 @@ namespace CGAL {
 		  ce = construct_it(c,1);
 		for (unsigned int i = 0; cit != ce; ++i, ++cit) {
 			if ((*cit) < r.min_coord(i))
-				distance += 
+				distance +=
 				(r.min_coord(i)-(*cit))*(r.min_coord(i)-(*cit));
 			else if ((*cit) > r.max_coord(i))
-				distance +=  
+				distance +=
 				((*cit)-r.max_coord(i))*((*cit)-r.max_coord(i));
 			
 		};

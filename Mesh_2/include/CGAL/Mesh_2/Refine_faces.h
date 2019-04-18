@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -86,7 +86,7 @@ protected: // --- PROTECTED TYPES ---
       return false;
     }
   };
-  
+
   typedef CGAL::Double_map<Face_handle, Quality, Face_compare> Bad_faces;
 
 protected:
@@ -103,7 +103,7 @@ protected:
 public:
   /** \name CONSTRUCTORS */
 
-  Refine_faces_base(Tr& t, Criteria& criteria_, Previous& prev) 
+  Refine_faces_base(Tr& t, Criteria& criteria_, Previous& prev)
     : Triangulation_traits(t), criteria(criteria_), previous(prev)
   {
   }
@@ -193,7 +193,7 @@ public:
   /** \todo ?? */
   void before_conflicts_impl(const Face_handle&, const Point&)
   { /// @todo modularize
-    previous.set_imperative_refinement(current_badness == 
+    previous.set_imperative_refinement(current_badness ==
 				       Mesh_2::IMPERATIVELY_BAD);
   }
 
@@ -218,7 +218,7 @@ public:
 #ifdef CGAL_MESH_2_VERBOSE
     std::cerr << "*";
 #endif
-    typename Tr::Face_circulator fc = 
+    typename Tr::Face_circulator fc =
       triangulation_ref_impl().incident_faces(v), fcbegin(fc);
     do {
       fc->set_in_domain(true);
@@ -272,7 +272,7 @@ public:
   }
 
 }; // end class Refine_faces_base
-  
+
 // --- PRIVATE MEMBER FUNCTIONS ---
 
 template <typename Tr, typename Criteria, typename Previous>
@@ -376,9 +376,9 @@ template <typename Tr,
           typename Criteria,
           typename Previous,
           typename Base = Refine_faces_base<Tr, Criteria, Previous> >
-class Refine_faces : 
-  public Base, 
-  public details::Refine_faces_types<Tr, 
+class Refine_faces :
+  public Base,
+  public details::Refine_faces_types<Tr,
     Refine_faces<Tr, Criteria, Previous, Base>,
     Previous>::Faces_mesher_level
 {
@@ -464,7 +464,7 @@ public:
 
           return false;
         }
-    return true;  
+    return true;
   }
 
 }; // end Refine_faces

@@ -1,9 +1,9 @@
-// Copyright (c) 1997  
+// Copyright (c) 1997
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -90,7 +90,7 @@ public:
 private:
     void header() {
         os() << "#Inventor V2.0 ascii" << std::endl;
-        os() << "# File written with the help of the CGAL Library" 
+        os() << "# File written with the help of the CGAL Library"
 	     << std::endl;
     }
 };

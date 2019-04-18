@@ -36,12 +36,12 @@
 #include <CGAL/assertions.h>
 #include <stack>
 
-// TODO:  
-// * fix handle needles = O(nlogn)  
+// TODO:
+// * fix handle needles = O(nlogn)
 
 namespace CGAL {
 
-  template<class Arrangement_2_, class RegularizationCategory = CGAL::Tag_true> 
+  template<class Arrangement_2_, class RegularizationCategory = CGAL::Tag_true>
     class Simple_polygon_visibility_2 {
 
   public:
@@ -53,7 +53,7 @@ namespace CGAL {
   typedef typename K::Intersect_2                       Intersect_2;
 
   typedef typename Arrangement_2::Vertex_const_handle   Vertex_const_handle;
-  typedef typename Arrangement_2::Halfedge_const_handle       
+  typedef typename Arrangement_2::Halfedge_const_handle
   Halfedge_const_handle;
   typedef typename Arrangement_2::Halfedge_handle       Halfedge_handle;
   typedef typename Arrangement_2::Ccb_halfedge_const_circulator
@@ -76,7 +76,7 @@ namespace CGAL {
   Simple_polygon_visibility_2() : p_arr(NULL), traits(NULL) {}
 
   /*! Constructor given an arrangement and the Regularization tag. */
-  Simple_polygon_visibility_2(const Arrangement_2& arr): 
+  Simple_polygon_visibility_2(const Arrangement_2& arr):
   p_arr(&arr) {
     traits = p_arr->geometry_traits();
     point_location.attach(arr);
@@ -85,7 +85,7 @@ namespace CGAL {
     inserted_artificial_starting_vertex = false;
   }
 
-  
+
   std::string name() const { return std::string("S_visibility_2"); }
 
   /*! Method to check if the visibility object is attached or not to
@@ -123,8 +123,8 @@ namespace CGAL {
 
   /*! Computes the visibility object from the query point 'q' in the face
     'face' and constructs the output in 'out_arr'*/
-  template <typename VARR> 
-  typename VARR::Face_handle 
+  template <typename VARR>
+  typename VARR::Face_handle
   compute_visibility(const Point_2& q,
                      const Face_const_handle face,
                      VARR& out_arr) const
@@ -133,7 +133,7 @@ namespace CGAL {
     CGAL_precondition(!face->is_unbounded());
 
     out_arr.clear();
-    
+
     query_pt_is_vertex = false;
     query_pt_is_on_halfedge = false;
     inserted_artificial_starting_vertex = false;
@@ -155,10 +155,10 @@ namespace CGAL {
 
   /*! Computes the visibility region of the query point 'q' located on the
     halfedge 'he' and constructs the output in 'out_arr'*/
-  template <typename VARR> 
-  typename VARR::Face_handle 
+  template <typename VARR>
+  typename VARR::Face_handle
   compute_visibility(
-		     const Point_2& q, 
+		     const Point_2& q,
 		     const Halfedge_const_handle he,
 		     VARR& out_arr ) const
   {
@@ -215,7 +215,7 @@ namespace CGAL {
   mutable Arr_point_location point_location;
 
   /*! Stack of visibile points; manipulated when going through the sequence
-    of input vertices; contains the vertices of the visibility region after 
+    of input vertices; contains the vertices of the visibility region after
     the run of the algorithm*/
   mutable std::stack<Point_2> stack;
   /*! Sequence of input vertices*/
@@ -250,12 +250,12 @@ namespace CGAL {
 
 
     // Quick fix for now. Can be done faster
-    bool is_degenerate = false; 
+    bool is_degenerate = false;
 
     for(typename std::vector<Point_2>::size_type i = 0; i < points.size()-2;i++){
       if(CGAL::orientation(points[i],points[i+1],points[i+2]) == CGAL::COLLINEAR){
 	is_degenerate = true;
-	break; 
+	break;
       }
     }
     if(is_degenerate){
@@ -271,7 +271,7 @@ namespace CGAL {
       points.pop_back();
       //std::cout << " ordanary " << std::endl; 	
       typename VARR::Vertex_handle v_last, v_first;
-      v_last = v_first = 
+      v_last = v_first =
         out_arr.insert_in_face_interior(points[0],out_arr.unbounded_face());
 	
       for(unsigned int i = 0; i < points.size()-1; i++){
@@ -283,7 +283,7 @@ namespace CGAL {
 	  v_last = out_arr.insert_from_right_vertex(
 						    Segment_2(points[i], points[i+1]), v_last
 						    )->target();
-	}        
+	}
       }
       out_arr.insert_at_vertices(
 				 Segment_2(points.front(), points.back()),
@@ -307,7 +307,7 @@ namespace CGAL {
   }
 
 
-  /*! Finds a visible vertex from the query point 'q' in 'face' 
+  /*! Finds a visible vertex from the query point 'q' in 'face'
     to start the algorithm from*/
   Ccb_halfedge_const_circulator find_visible_start(Face_const_handle face,
                                                    const Point_2 &q) const
@@ -375,7 +375,7 @@ namespace CGAL {
     Ray_2 ray_origin( q, vertices[0] );
     do {
       switch(upcase) {
-      case LEFT: 
+      case LEFT:
 	left(i, w, q);
 	break;
       case RIGHT:
@@ -457,11 +457,11 @@ namespace CGAL {
 	  w = vertices[i];
 	  i++;
 	}
-      } 
+      }
     }
   }
 
-  /*! Scans the stack such that all vertices that were pushed before to the 
+  /*! Scans the stack such that all vertices that were pushed before to the
     stack and are now not visible anymore. */
   void right(Size_type& i, Point_2& w, const Point_2& q) const {
     Point_2 s_j;
@@ -640,7 +640,7 @@ namespace CGAL {
     }
     w = vertices[k+1];
   }
-  
+
   /*! Scan edges v_i,v_{i+1},...,v_n, until find an edge intersecting given ray
     or given segment. is_ray = true -> ray, false -> segment.
     The intersection point is returned by u */

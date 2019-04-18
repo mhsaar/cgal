@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -65,7 +65,7 @@ private:
 
   Boolean   predicate(const Site_2& p, const Site_2& q, const Tag_false&) const
   {
-    return are_same(p.point(), q.point()); 
+    return are_same(p.point(), q.point());
   }
 
   Boolean   predicate(const Site_2& p, const Site_2& q, const Tag_true&) const

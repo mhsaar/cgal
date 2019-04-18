@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -181,7 +181,7 @@ public:
   {
     s1x = s1.x();
     s1y = s1.y();
-    
+
     xj = s2.x() - s1.x();
     xk = s3.x() - s1.x();
 
@@ -223,7 +223,7 @@ public:
 
 private:
   inline
-  Sign sqrt_ext_sign(const FT& A, const FT& B, const FT& Exy2, 
+  Sign sqrt_ext_sign(const FT& A, const FT& B, const FT& Exy2,
 		     const FT& dx, const FT& dy,
 		     const Field_with_sqrt_tag&) const
   {

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -433,7 +433,7 @@ private:
 		      const Tag_false&) const
   {
     return true;
-  } 
+  }
 
   bool check_if_exact(const Site_2& s, unsigned int i,
 		      const Tag_true&) const
@@ -495,14 +495,14 @@ private:
     l[0] = compute_supporting_line(sp.supporting_site());
     l[1] = compute_supporting_line(sq.supporting_site());
     l[2] = compute_supporting_line(sr.supporting_site());
-    
+
     bool is_oriented[3] = {false, false, false};
 
     if ( is_on_positive_halfspace(sp, sq, l[0]) ||
     	 is_on_positive_halfspace(sp, sr, l[0]) ) {
       is_oriented[0] = true;
     } else {
-      
+
       l[0] = opposite_line(l[0]);
       if ( is_on_positive_halfspace(sp, sq, l[0]) ||
       	   is_on_positive_halfspace(sp, sr, l[0]) ) {
@@ -635,7 +635,7 @@ private:
 
     FT dist =
       a[(i_no+1)%3] * vx + b[(i_no+1)%3] * vy + c[(i_no+1)%3] * vw;
-    
+
 
     Sign sgn_dist = s_vw * CGAL::sign(dist);
 
@@ -756,7 +756,7 @@ private:
     CGAL_precondition( q.is_point() );
     CGAL_precondition( r.is_point() );
     CGAL_precondition( t.is_point() );
-    
+
     Oriented_side os =
       side_of_oriented_circle(p.point(), q.point(), r.point(), t.point());
     if ( os == ON_POSITIVE_SIDE ) { return NEGATIVE; }
@@ -819,7 +819,7 @@ private:
 
     // if p and t are the same point, then return ZERO
     if ( same_points(p, t) ) { return ZERO; }
-    
+
     // if t is an endpoint of either q or r, then t has to be outside
     // the Voronoi circle and thus the result is POSITIVE
     if ( is_endpoint_of(t, q) || is_endpoint_of(t, r) ) {
@@ -842,7 +842,7 @@ private:
     CGAL_precondition( p.is_segment() );
     CGAL_precondition( q.is_segment() );
     CGAL_precondition( r.is_segment() );
-    CGAL_precondition( t.is_point() ); 
+    CGAL_precondition( t.is_point() );
 
     // easy degeneracies --- start
 
@@ -935,7 +935,7 @@ private:
     Line_2 l = compute_supporting_line(t.supporting_site());
     compute_vv(p, q, r, type);
     Sign sl = incircle_xxxl(vv, p, q, r, l, type);
-    
+
     if (  certainly( sl == POSITIVE )  ) { return sl; }
     if (  !is_certain( sl == POSITIVE )  ) { return indeterminate<Sign>(); }
 
@@ -995,7 +995,7 @@ private:
       Point_2 p1 = pp1->point();
       Point_2 p2 = other_site(*pp1, t).point();
       compute_vv(p, q, r, type);
-        
+
       Compute_scalar_product_2 csp;
       return -CGAL::sign( csp(vv - p1, p2 - p1) );
     }
@@ -1348,7 +1348,7 @@ private:
     return CGAL::compare(d2, r2);
   }
 
-  
+
   Sign incircle_p_no_easy(const Site_2& p, const Site_2& q, const Site_2& r,
 			  const Site_2& t) const
   {
@@ -1395,7 +1395,7 @@ private:
 
 
   Sign incircle_s_no_easy(const Site_2& p, const Site_2& q, const Site_2& r,
-			  const Site_2& t) const 
+			  const Site_2& t) const
   {
     switch ( v_type ) {
     case PPP:
@@ -1482,7 +1482,7 @@ private:
   const Site_2& p_, &q_, &r_;
 
   // indicates whether the Voronoi vertex has been computed
-  mutable bool is_vv_computed; 
+  mutable bool is_vv_computed;
 
   // the type of the Voronoi vertex
   vertex_t v_type;

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Kerber <mkerber@mpi-inf.mpg.de>
 //
@@ -40,7 +40,7 @@ namespace CGAL {
      * \brief A class that controls the used shear factors
      *
      * The objects returns positive integers that are used as shear factors.
-     * It choses integers from the range \c 1..max at random , 
+     * It choses integers from the range \c 1..max at random ,
      * where \c c is a positive integer
      * initially set in the constructor (8 by default). No integer is given
      * twice by \c get_shear_factor(), at least if the failed ones are reported
@@ -50,9 +50,9 @@ namespace CGAL {
      */
     template<typename Int,int InitialMax=8>
       class Shear_controller {
-      
+
     public:
-      
+
       //! Constructor, getting the maximal absolute value of the shear factor
       Shear_controller()
 	:
@@ -74,7 +74,7 @@ namespace CGAL {
 	  if(2*failures>this->m_max) {
 	    this->m_max*=2;
 	  }
-	  
+	
 	}
 
         //! Gets a shear factor
@@ -99,7 +99,7 @@ namespace CGAL {
 	}
 
         Random rng;
-      
+
 	// Maximal absolute value
 	Int m_max;
 

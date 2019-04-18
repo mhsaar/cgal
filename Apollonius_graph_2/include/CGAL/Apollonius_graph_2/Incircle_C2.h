@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -181,7 +181,7 @@ private:
       return sign_a_plus_b_x_sqrt_c(A, B, l.delta());
     }
 
-  
+
   inline Orientation
   orientation(const Bitangent_line& l,
 	      const Inverted_weighted_point& u) const
@@ -239,7 +239,7 @@ public:
     CGAL_assertion( o1 != COLLINEAR || o2 != COLLINEAR );
     if ( o1 == o2 ) { return POSITIVE; }
     return NEGATIVE;
-  }  
+  }
 
 };
 

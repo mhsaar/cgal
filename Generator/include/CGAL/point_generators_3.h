@@ -1,9 +1,9 @@
-// Copyright (c) 1997  
+// Copyright (c) 1997
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Lutz Kettner  <kettner@inf.ethz.ch>
 //                 Pedro Machado Manhaes de Castro  <pmmc@cin.ufpe.br>
@@ -39,7 +39,7 @@
 
 namespace CGAL {
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_sphere_3 : public Random_generator_base<P> {
     void generate_point();
@@ -70,7 +70,7 @@ generate_point() {
     double alpha = this->_rnd.get_double() * 2.0 * CGAL_PI;
     double z     = 2 * this->_rnd.get_double() - 1.0;
     double r     = std::sqrt( 1 - z * z);
-    r *= std::pow( this->_rnd.get_double() , 1.0/3.0 );  
+    r *= std::pow( this->_rnd.get_double() , 1.0/3.0 );
     Creator creator;
     this->d_item = creator( T(this->d_range * r * std::cos(alpha)),
                             T(this->d_range * r * std::sin(alpha)),
@@ -78,7 +78,7 @@ generate_point() {
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_on_sphere_3 : public Random_generator_base<P> {
     void generate_point();
@@ -116,7 +116,7 @@ generate_point() {
 }
 
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_cube_3 : public Random_generator_base<P>{
     void generate_point();
@@ -150,7 +150,7 @@ generate_point() {
 
 template <class OutputIterator, class Creator>
 OutputIterator
-points_on_cube_grid_3( double a, std::size_t n, 
+points_on_cube_grid_3( double a, std::size_t n,
                          OutputIterator o, Creator creator)
 {
     if  (n == 0)
@@ -198,11 +198,11 @@ points_on_cube_grid_3( double a, std::size_t n, OutputIterator o)
 {
     typedef std::iterator_traits<OutputIterator> ITraits;
     typedef typename ITraits::value_type         P;
-    return points_on_square_grid_3(a, n, o, 
+    return points_on_square_grid_3(a, n, o,
                  Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P>());
 }
 
-template < class P, class Creator = 
+template < class P, class Creator =
 Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_in_triangle_3 : public Random_generator_base<P> {
 	P _p,_q,_r;
@@ -254,7 +254,7 @@ void Random_points_in_triangle_3<P, Creator>::generate_point() {
 	this->d_item = creator(ret[0],ret[1],ret[2]);
 }
 
-template < class P, class Creator = 
+template < class P, class Creator =
                    Creator_uniform_3<typename Kernel_traits<P>::Kernel::RT,P> >
 class Random_points_on_segment_3 : public Random_generator_base<P> {
     P _p;

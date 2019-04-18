@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -219,7 +219,7 @@ public:
 
   Vertex_handle  insert(const Point_2& p) {
     Point_handle ph = this->register_input_site(p);
-    Storage_site_2 ss = 
+    Storage_site_2 ss =
       this->st_.construct_storage_site_2_object()(ph);
     return insert_point(p, ss, UNDEFINED_LEVEL);
   }
@@ -250,7 +250,7 @@ public:
 
   Vertex_handle  insert(const Site_2& t) {
     // the intended use is to unify the calls to insert(...);
-    // thus the site must be an exact one; 
+    // thus the site must be an exact one;
     CGAL_precondition( t.is_input() );
 
     if ( t.is_segment() ) {
@@ -286,7 +286,7 @@ public:
     CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Internal::
       Check_type_equality_for_info<Info_t, Info>();
     // the intended use is to unify the calls to insert(...);
-    // thus the site must be an exact one; 
+    // thus the site must be an exact one;
     CGAL_precondition( t.is_input() );
 
     if ( t.is_segment() ) {
@@ -327,7 +327,7 @@ protected:
     }
 
     Vertex_handle vertices[sdg_hierarchy_2__maxlevel];
-  
+
     insert_point(p, ss, level, vertices);
 
     return vertices[0];
@@ -343,7 +343,7 @@ protected:
 			     Vertex_handle* vertices);
 
   Vertex_handle insert_segment(const Point_2& p0, const Point_2& p1,
-			       const Storage_site_2& ss, int level); 
+			       const Storage_site_2& ss, int level);
 
   Vertex_handle insert_segment_interior(const Site_2& t,
 					const Storage_site_2& ss,
@@ -409,7 +409,7 @@ public:
 protected:
   void nearest_neighbor(const Site_2& p,
 			Vertex_handle vnear[sdg_hierarchy_2__maxlevel],
-			bool force_point) const; 
+			bool force_point) const;
 
 public:
   // MISCELLANEOUS
@@ -491,7 +491,7 @@ std::ostream& operator<<(std::ostream& os,
   sdgh.file_output(os);
   return os;
 }
-			 
+			
 
 } //namespace CGAL
 

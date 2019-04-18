@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     :  Peter Hachenberger <hachenberger@mpi-sb.mpg.de>
 #ifndef CGAL_CD3_YVERTICAL_WALL_BUILDER_H
@@ -69,7 +69,7 @@ class YVertical_wall_builder : public Modifier_base<typename Nef_::SNC_and_PL> {
 
  public:
   YVertical_wall_builder() {}
-    
+
   void operator()(SNC_and_PL& sncpl) {
     SNC_structure* sncp(sncpl.sncp);
 
@@ -81,7 +81,7 @@ class YVertical_wall_builder : public Modifier_base<typename Nef_::SNC_and_PL> {
     Halfedge_iterator ei;
     CGAL_forall_halfedges(ei, *sncp) {
       if(ei->point() != Sphere_point(1,0,0)) continue;
-      SHalfedge_around_svertex_circulator 
+      SHalfedge_around_svertex_circulator
 	svc(ei->out_sedge()), send(svc);
       CGAL_For_all(svc, send) {
 	if(!svc->incident_sface()->mark()) continue;
@@ -91,11 +91,11 @@ class YVertical_wall_builder : public Modifier_base<typename Nef_::SNC_and_PL> {
 	break;
       }
     }
-    
+
     Vertical_redge_iterator vri;
     for(vri = redges_begin(); vri != redges_end(); ++vri) {
       Halfedge_handle ei(*vri);
-      SHalfedge_around_svertex_circulator 
+      SHalfedge_around_svertex_circulator
 	svc(ei->out_sedge()), send(svc);
       CGAL_For_all(svc, send) {
 	if(!svc->incident_sface()->mark()) continue;

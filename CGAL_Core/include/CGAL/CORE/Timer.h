@@ -31,7 +31,7 @@
  *              long clock = timer.getClocks();     // get CPU clocks
  *              long seconds = time.getSeconds();   // get seconds
  *
- * Written by 
+ * Written by
  *       Zilin Du <zilin@cs.nyu.edu>
  *
  * WWW URL: http://cs.nyu.edu/exact/
@@ -48,7 +48,7 @@
 #include <CGAL/CORE/Impl.h>
 #include <ctime>
 
-namespace CORE { 
+namespace CORE {
 
 class Timer {
 private:

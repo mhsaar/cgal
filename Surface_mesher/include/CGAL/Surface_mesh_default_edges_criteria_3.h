@@ -66,15 +66,15 @@ public:
     typename GT::Compute_squared_distance_3 sq_distance =
       GT().compute_squared_distance_3_object();
 
-    if(sq_radius_bound != FT(0) && 
+    if(sq_radius_bound != FT(0) &&
        sq_distance(va->point(), vb->point()) > sq_radius_bound)
       return true;
-    
-    typename GT::Construct_midpoint_3 midpoint = 
+
+    typename GT::Construct_midpoint_3 midpoint =
       GT().construct_midpoint_3_object();
 
     return sq_distance_bound != FT(0) &&
-      sq_distance(lineic_center, midpoint(va->point(), vb->point())) > 
+      sq_distance(lineic_center, midpoint(va->point(), vb->point())) >
       sq_distance_bound;
   }
 private:

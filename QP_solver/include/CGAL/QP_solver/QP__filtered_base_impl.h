@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
@@ -65,7 +65,7 @@ init( )
               v_it != this->solver().c_auxiliary_value_iterator_end(); ++v_it) {
         if (*v_it > row_max_c) row_max_c = (*v_it);
     }
-        
+
     handled_A.insert( handled_A.end(), m, false);
     row_max_A.insert( row_max_A.end(), m, nt0);
 
@@ -105,18 +105,18 @@ init_NT( )
 // C_j   := max_j (|c_j|, max_i |A_ij|, max_i |D_ij|)
 //
 // U := max(
-//          d_NT * R_0, 
+//          d_NT * R_0,
 //          max_{i basic} |lambda_NT[i]| * R_i^A,
 //          max_{j basic} |x_NT[j]| * R_j^D
 //         )
 // W := max(
-//          d_NT, 
+//          d_NT,
 //          max_{i basic} |lambda_NT[i]|,
 //          max_{j basic} |x_NT[j]|
 //         )
 // Note: all max_{j basic} are over basic ORIGINAL variables only
 //
-// q := (1+1/64) * 
+// q := (1+1/64) *
 //      (#basic constraints + #basic original variables + 1) *
 //      (#basic constraints + #basic original variables + 2) * 2^(-53)
 //
@@ -125,7 +125,7 @@ init_NT( )
 // min (U * q, W * q * C_j)
 //
 // the code maintains and manipulates:
-// 
+//
 // row_max_c    = R_0   (set in init() for phase I, transition() for phase II)
 // row_max_A[i] = R_i^A (set in update_maxima())
 // row_max_D[i] = R_i^D (set in update_maxima(Tag_false))
@@ -137,17 +137,17 @@ init_NT( )
 // -------------------------------
 // in the scalar product considered on p.100, we have another term:
 // d * w_j, where w_j is the correction term 2 x_N^T D_Nj that shows
-// up additionally in the pricing and that the QP_solver maintains in 
+// up additionally in the pricing and that the QP_solver maintains in
 // the vector w. The first bound on p.101 yields U, while the second
 // bound yields W. This means that
 // - C_j = max_y|y_i| has an additional term |w_NT[j]| in the maximum,
 // - U has an additional term d_NT * R_w in the maximum, where
-// 
+//
 //     R_w = max_j |w_j|
 //
 // The problem is that R_w is not a static quantity like max_j|c_j|,
 // so it has to be handled per j in certify_mu_j_NT:
-// --> for q: (c+b)*(c+b+1) -> (c+b+1)*(c+b+2) 
+// --> for q: (c+b)*(c+b+1) -> (c+b+1)*(c+b+2)
 // --> for bound1: take d_NT * |w_NT[j]| into account for U
 // --> for bound2: take |w_NT[j]| into account for C_j
 
@@ -327,7 +327,7 @@ certify_mu_j_NT( int j, Tag_false) const // case with bounds
   // check against first bound, taking w_j_NT into account
   // q has been set in previous call to update_maxima()
   // bound1_with_w = (U + d_NT*|w_j|) * q
-  NT bound1_with_w = bound1 + (d_NT * w_j_NT_abs * q); 
+  NT bound1_with_w = bound1 + (d_NT * w_j_NT_abs * q);
   if ( mu >= bound1_with_w) {
     CGAL_qpe_debug {
       this->vout() << "  ok [1]" << std::endl;

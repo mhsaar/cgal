@@ -78,10 +78,10 @@ public:
     };
 
     typedef INTERN_AST::Mod_per_operator< Type > Mod;
-  
+
   class Is_square
     : public CGAL::cpp98::binary_function< Type, Type&, bool > {
-  public:      
+  public:
     bool operator()( const Type& x, Type& y ) const {
       y = CGAL::approximate_sqrt(x);
       return y * y == x;
@@ -102,7 +102,7 @@ class Real_embeddable_traits< Gmpzf >
     typedef Algebraic_structure_traits<Gmpzf> AST;
 public:
   typedef AST::Is_zero Is_zero;
-  
+
     struct Sgn
         : public CGAL::cpp98::unary_function< Type, ::CGAL::Sign > {
     public:

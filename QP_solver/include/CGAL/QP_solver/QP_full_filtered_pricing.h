@@ -15,11 +15,11 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
-//                 Franz Wessendorp 
+//                 Franz Wessendorp
 //                 Kaspar Fischer
 
 #ifndef CGAL_QP_FULL_FILTERED_PRICING_H
@@ -63,7 +63,7 @@ class QP_full_filtered_pricing : public QP__filtered_base<Q,ET,Tags,NT_,ET2NT_> 
 
     // operations
     int  pricing(int& direction );
-    
+
     // cleanup
     ~QP_full_filtered_pricing() { };
 
@@ -86,11 +86,11 @@ QP_full_filtered_pricing( ET2NT et2nt)
     : Base( "full filtered"),
       Filtered_base( et2nt)
 { }
-    
+
 // operations
 template < typename Q, typename ET, typename Tags, class NT_, class ET2NT_ >
 int  QP_full_filtered_pricing<Q,ET,Tags,NT_,ET2NT_>::
-pricing (int& direction) 
+pricing (int& direction)
 {
   return (pricing_helper(direction, Is_nonnegative()));
 }
@@ -138,7 +138,7 @@ pricing_helper(int& /*direction*/, Tag_true ) // standard form
 		this->vout() << "--> exact check of entering variable failed!"
 		       << std::endl;
 	    }
-	    
+	
 	    min_j  = -1;
 	    min_mu = this->nt0;
 	}
@@ -155,7 +155,7 @@ pricing_helper(int& /*direction*/, Tag_true ) // standard form
 
 	    // variable non-basic?
 	    if ( ! this->solver().is_basic( j)) {
-	    
+	
 	        // don't price artificial variables
 	        if (this->solver().is_artificial( j)) continue;
 
@@ -170,7 +170,7 @@ pricing_helper(int& /*direction*/, Tag_true ) // standard form
 	    }
 	}
     }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
     // return index of entering variable
@@ -219,7 +219,7 @@ pricing_helper(int& direction, Tag_false ) // bounds for variables
 		this->vout() << "--> exact check of entering variable failed!"
 		       << std::endl;
 	    }
-	    
+	
 	    min_j  = -1;
 	    min_mu = this->nt0;
 	}
@@ -235,7 +235,7 @@ pricing_helper(int& direction, Tag_false ) // bounds for variables
 
 	    // variable non-basic?
 	    if ( ! this->solver().is_basic( j)) {
-	    
+	
 	        // don't price artificial variables
 	        if (this->solver().is_artificial( j)) continue;
 
@@ -249,7 +249,7 @@ pricing_helper(int& direction, Tag_false ) // bounds for variables
 	    }
 	}
     }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
 

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Kaspar Fischer <fischerk@inf.ethz.ch>
 
@@ -53,12 +53,12 @@ namespace CGAL {
     struct Selector {
       typedef Tag_true Is_exact;
     };
-    
+
     template<>
     struct Selector<float> {
       typedef Tag_false Is_exact;
     };
-  
+
     template<>
     struct Selector<double> {
       typedef Tag_false Is_exact;
@@ -74,7 +74,7 @@ namespace CGAL {
     typedef typename Traits::Point Point;
     typedef typename Traits::Cartesian_const_iterator C_it;
     typedef typename Appel_impl::Selector<FT>::Is_exact Exact_flag;
-    
+
   private: // member variables and invariants for them:
     Traits& tco;                    // traits class object
     std::vector<const Point *> P;   // input points
@@ -125,7 +125,7 @@ namespace CGAL {
     // value in eps_exact is correct.
     double eps_exact;
     bool is_exact_eps_uptodate;
-    
+
     // Khachian's algorithm is only guaranteed to work when the input
     // points linearly span the whole space (i.e., if dim(span(P)) =
     // d, or, equivalently, when the smallest enclosing ellipsoid has
@@ -139,7 +139,7 @@ namespace CGAL {
     // If is_deg is true, the variable x has no meaning.
     std::vector<FT> x;
     #endif // CGAL_APPEL_ASSERTION_MODE
-    
+
     // The inverse of the (d x d)-matrix M(x) is stored in the
     // variable mi.  The element (M(x)^{-1})_{ij} is stored in
     // mi[i+j*d].  (It would actually be enough to only store the
@@ -148,7 +148,7 @@ namespace CGAL {
     //
     // Todo: optimize by only storing one half of mi.
     std::vector<FT> mi;
-    
+
     // The following variable sum is used to build, during the
     // initialization phase, the (d x d)-matrix M(x).  The variable is
     // only defined if is_deg is true; once is_deg becomes false, the
@@ -182,7 +182,7 @@ namespace CGAL {
     //
     //    ex_max = argmax_{0 <= i < n} ex[i].
     //
-    int ex_max; 
+    int ex_max;
 
     // We sometimes need temporary storage.  We allocate this once at
     // instance construction time:
@@ -204,7 +204,7 @@ namespace CGAL {
     #endif // CGAL_APPEL_STATS_MODE
 
   private: // internal helper routines:
-    
+
     template<typename NumberType, typename InputIterator>
     NumberType excess(InputIterator p)
       // Computes p^T M(x)^{-1} p, where x is the current solution.
@@ -221,7 +221,7 @@ namespace CGAL {
       typedef NumberType NT;
       NT result(0);
       InputIterator qi(p);
-      
+
       for (int i=0; i<d; ++i) {
 
 	// compute i-th entry of the vector M(x)^{-1} p into tmp:
@@ -294,7 +294,7 @@ namespace CGAL {
       // gives a hint on how much storage is needed.
       tco(tco), n(0),
       d_P(dim), d(Embed? d_P+1 : d_P), is_deg(true),
-      #ifdef CGAL_APPEL_ASSERTION_MODE 
+      #ifdef CGAL_APPEL_ASSERTION_MODE
       x(n_est),
       #endif // CGAL_APPEL_ASSERTION_MODE
       mi(d*d), sum(d*d), ex(n_est), tmp(d), t(d*d)
@@ -309,7 +309,7 @@ namespace CGAL {
 	for (int j=0; j<d; ++j)
 	  sum[i+j*d] = FT(0);
     }
-    
+
     ~Khachiyan_approximation();
 
     template<typename InputIterator>
@@ -437,7 +437,7 @@ namespace CGAL {
 	  ++iterations;
 	else if (eps <= 1.0)
 	  counting = true;
-      
+
       // output stats:
       CGAL_APPEL_LOG("appel",
 		"  Took " << iterations << " iterations (upper " <<
@@ -449,7 +449,7 @@ namespace CGAL {
     }
 
   public: // access:
-    
+
     bool is_degenerate() const
     // Returns true if and only if dim(span(P)) < d, with P being the
     // input points (i.e., the points added so far) and d the
@@ -535,7 +535,7 @@ namespace CGAL {
     //
     // Complexity: O(n d^2)
     bool is_valid(bool verbose);
-    
+
   private: // internal assertion routines (only avalable in debug mode):
 
     #ifdef CGAL_APPEL_ASSERTION_MODE
@@ -605,11 +605,11 @@ namespace CGAL {
 
     void rank_1_update(int k,const FT& tau);
     // Efficiently computes into mi the inverse of M(x'), where
-    // 
+    //
     //   x' = (1 - tau) x + tau e_k
     //
     // with tau = eps/((1+eps)d-1) and where eps satisfies
-    // 
+    //
     //   p_k^T M(x)^{-1} p_k = (1+eps) d.                       (**)
     //
     // In addition, the routine efficiently updates the array ex to

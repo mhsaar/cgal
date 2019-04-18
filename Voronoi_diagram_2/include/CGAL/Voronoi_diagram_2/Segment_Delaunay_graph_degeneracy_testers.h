@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -200,13 +200,13 @@ class Segment_Delaunay_graph_face_tester_2
     size_type n_inf = 0;     // number of infinite edges
     // number of non-degenerate/non-infinite edges
     size_type n_non_degen = 0;
-      
+
     Edge e[2];
     Edge_tester e_tester;
     do {
       if ( e_tester(dual, ec) ) { ++n_degen; }
       else if ( dual.is_infinite(ec) ) { ++n_inf; }
-      else { 
+      else {
 	if ( !dual.is_infinite(ec) ) {
 	  if ( n_non_degen < 2 ) {
 	    e[n_non_degen] = *ec;

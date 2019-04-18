@@ -55,7 +55,7 @@ int writeGis( char *name, _image* im) {
 
   length=strlen(name);
   outputName= (char *)ImageIO_alloc(length+8);
-  
+
   if ( strncmp( name+length-4, ".dim", 4 ) == 0 ) {
     extLength = 4;
   }
@@ -93,7 +93,7 @@ int writeGis( char *name, _image* im) {
   }
 
   ImageIO_close(im);
-  
+
   strncpy( outputName, name, length-extLength );
   if ( strncmp( name+length-3, ".gz", 3 ) == 0 ) {
     strcpy( outputName+length-extLength, ".ima.gz" );
@@ -227,7 +227,7 @@ int writeGis( char *name, _image* im) {
       } /* end of switch ( im->wdim ) */
     } /* end of switch( im->wordKind ) */
 
-    ImageIO_free( str ); 
+    ImageIO_free( str );
     if (outputName != NULL) ImageIO_free(outputName);
     return static_cast<int>(res);
   }
@@ -240,12 +240,12 @@ int writeGis( char *name, _image* im) {
 
 CGAL_INLINE_FUNCTION
 int testGisHeader(char *,const char *name) {
-   if (( !strncmp(name+strlen(name)-4, ".dim", 4)) || 
-       ( !strncmp(name+strlen(name)-4, ".ima", 4)) || 
-       ( !strncmp(name+strlen(name)-7, ".ima.gz", 7)) || 
+   if (( !strncmp(name+strlen(name)-4, ".dim", 4)) ||
+       ( !strncmp(name+strlen(name)-4, ".ima", 4)) ||
+       ( !strncmp(name+strlen(name)-7, ".ima.gz", 7)) ||
        ( !strncmp(name+strlen(name)-7, ".dim.gz", 7)) )
      return 0;
-  else 
+  else
     return -1;
 }
 
@@ -259,8 +259,8 @@ int readGisHeader( const char* name,_image* im)
   int n=0, nusermax = 20;
 
   str = (char*)ImageIO_alloc( _LGTH_STRING_+1 );
-  
-  if ( !fgetns(str, _LGTH_STRING_, im) ) 
+
+  if ( !fgetns(str, _LGTH_STRING_, im) )
     { ImageIO_free( str ); return -1; }
 
   std::istringstream iss;
@@ -274,12 +274,12 @@ int readGisHeader( const char* name,_image* im)
   case 4 :    break;
   default :
     fprintf( stderr, "readGisHeader: unable to read dimensions in '%s'\n", name );
-    ImageIO_free( str ); 
+    ImageIO_free( str );
     return -1;
   }
   if ( im->vdim > 1 ) {
     im->vectMode = VM_INTERLACED;
-  } 
+  }
   else {
     im->vectMode = VM_SCALAR;
   }
@@ -307,7 +307,7 @@ int readGisHeader( const char* name,_image* im)
 	if ( status != 1 ) {
 	  fprintf( stderr, "readGisHeader: error while reading -dx in '%s'\n", s-4 );
 	  *s = '\0';
-	} 
+	}
 	else {
 	  while ( *s == '.' || (*s >= '0' && *s <= '9') ) s++;
 	}
@@ -318,7 +318,7 @@ int readGisHeader( const char* name,_image* im)
 	if ( status != 1 ) {
 	  fprintf( stderr, "readGisHeader: error while reading -dy in '%s'\n", s-4 );
 	  *s = '\0';
-	} 
+	}
 	else {
 	  while ( *s == '.' || (*s >= '0' && *s <= '9') ) s++;
 	}
@@ -329,19 +329,19 @@ int readGisHeader( const char* name,_image* im)
 	if ( status != 1 ) {
 	  fprintf( stderr, "readGisHeader: error while reading -dz in '%s'\n", s-4 );
 	  *s = '\0';
-	} 
+	}
 	else {
 	  while ( *s == '.' || (*s >= '0' && *s <= '9') ) s++;
 	}
       }
       else if ( !strncmp( s, "-dt ", 4 ) ) {
 	ADD_USER_STRING
-	s += 4; 
-	while ( *s == '.' || (*s >= '0' && *s <= '9') ) s++; 
+	s += 4;
+	while ( *s == '.' || (*s >= '0' && *s <= '9') ) s++;
       }
 
       else if ( !strncmp( s, "-type ", 6 ) ) {
-	s += 6; 
+	s += 6;
 	if ( !strncmp( s, "U8", 2 ) ) {
 	  im->wdim     = 1;
 	  im->wordKind = WK_FIXED;
@@ -353,7 +353,7 @@ int readGisHeader( const char* name,_image* im)
 	  im->wordKind = WK_FIXED;
 	  im->sign     = SGN_SIGNED;
 	  s += 2;
-	} 
+	}
 	else if ( !strncmp( s, "U16", 3 ) ) {
 	  im->wdim     = 2;
 	  im->wordKind = WK_FIXED;
@@ -392,7 +392,7 @@ int readGisHeader( const char* name,_image* im)
 	}
 	else {
 	  fprintf( stderr, "readGisHeader: unknown type '%s'\n", s-6 );
-	  *s = '\0'; 
+	  *s = '\0';
 	}
       }
 
@@ -416,7 +416,7 @@ int readGisHeader( const char* name,_image* im)
 	}
 	else {
 	  fprintf( stderr, "readGisHeader: unknown byte order '%s'\n", s-4 );
-	  *s = '\0'; 
+	  *s = '\0';
 	}
       }
 
@@ -432,7 +432,7 @@ int readGisHeader( const char* name,_image* im)
 	}
 	else {
 	  fprintf( stderr, "readGisHeader: unknown architecture '%s'\n", s-4 );
-	  *s = '\0'; 
+	  *s = '\0';
 	}
       }
 
@@ -441,30 +441,30 @@ int readGisHeader( const char* name,_image* im)
 	if ( !strncmp( s, "binar", 5 ) ) {
 	  im->dataMode = DM_BINARY;
 	  s += 5;
-	} 
+	}
 	else if ( !strncmp( s, "ascii", 5 ) ) {
 	  im->dataMode = DM_ASCII;
 	  s += 5;
-	} 
+	}
 	else {
 	  fprintf( stderr, "readGisHeader: unknown data type '%s'\n", s-4 );
 	  ImageIO_free( str );
 	  return -1;
 	}
       }
-      
-      
+
+
       else {
 	fprintf( stderr, "readGisHeader: unknown indentifier '%s'\n", s );
 	ADD_USER_STRING
-	*s = '\0'; 
+	*s = '\0';
       }
 
     } while( *s != '\0' && *s != '\n' );
 
   }
   ImageIO_free( str );
-  
+
 
   if ( im->endianness == END_UNKNOWN ) {
     im->endianness = _getEndianness();
@@ -473,29 +473,29 @@ int readGisHeader( const char* name,_image* im)
 
   /* header is read. close header file and open data file. */
   if( name != NULL ) {
-    
+
     std::size_t length = strlen(name) ;
     char* data_filename = (char *) ImageIO_alloc(length+4) ;
-    
+
     if( strcmp( name+length-4, ".dim" ) ) {
       fprintf (stderr,
 	       "readGisHeader: error: file header extension must be .dim\n");
       ImageIO_free( data_filename );
       return -1;
     }
-    
+
     ImageIO_close(im);
 
 
     /* open data file
      */
-    
+
     strcpy(data_filename,name);
     strcpy(data_filename+length-3, "ima.gz");
     _openReadImage(im,data_filename);
-    
+
     if(!im->fd) {
-      
+
       strcpy(data_filename,name);
       strcpy(data_filename+length-3, "ima");
       _openReadImage(im,data_filename);
@@ -520,7 +520,7 @@ int readGisHeader( const char* name,_image* im)
       unsigned int n;
       char *tmp;
       int ret, iv=0;
-      
+
       if ( im->wdim != 1 || im->wordKind != WK_FIXED ) {
 	fprintf(stderr, "readGisHeader: error: unable to read such ascii type\n" );
 	return -1;
@@ -532,7 +532,7 @@ int readGisHeader( const char* name,_image* im)
 	im->data = ( void*) ImageIO_alloc(size);
 	if(!im->data) return -1;
       }
-      
+
       n = 0;
       str = (char*)ImageIO_alloc( _LGTH_STRING_+1 );
       while( fgetns( str, _LGTH_STRING_, im ) != 0 &&
@@ -546,7 +546,7 @@ int readGisHeader( const char* name,_image* im)
 	    tmp++;
 	  if ( *tmp == '\0' || *tmp == '\n' || *tmp == EOF )
 	    continue;
-	  
+	
 	  /* read a number
 	   */
 	  switch ( im->wordKind ) {
@@ -558,16 +558,16 @@ int readGisHeader( const char* name,_image* im)
 	    ImageIO_free( str );
 	    return -1;
 	  }
-	  
+	
 	  if ( ret != 1 ) {
 	    fprintf( stderr, "readGisHeader: error in reading ascii data\n" );
 	    ImageIO_free( im->data ); im->data = NULL;
 	    ImageIO_free( str );
 	    return -1;	
 	  }
-	  
-	  if ( im->wordKind == WK_FIXED 
-	       && im->sign == SGN_UNSIGNED 
+	
+	  if ( im->wordKind == WK_FIXED
+	       && im->sign == SGN_UNSIGNED
 	       && im->wdim == 1 ) {
 	    unsigned char *buf = (unsigned char *)im->data;
 	    buf += n;
@@ -576,8 +576,8 @@ int readGisHeader( const char* name,_image* im)
 	    else                 *buf = (unsigned char)iv;
 	    n ++;
 	  }
-	  else if ( im->wordKind == WK_FIXED 
-		    && im->sign == SGN_SIGNED 
+	  else if ( im->wordKind == WK_FIXED
+		    && im->sign == SGN_SIGNED
 		    && im->wdim == 1 ) {
 	    char *buf = (char *)im->data;
 	    buf += n;
@@ -586,8 +586,8 @@ int readGisHeader( const char* name,_image* im)
 	    else                 *buf = (char)iv;
 	    n ++;
 	  }
-	  else if ( im->wordKind == WK_FIXED 
-		    && im->sign == SGN_UNSIGNED 
+	  else if ( im->wordKind == WK_FIXED
+		    && im->sign == SGN_UNSIGNED
 		    && im->wdim == 2 ) {
 	    unsigned short int *buf = (unsigned short int *)im->data;
 	    buf += n;
@@ -596,8 +596,8 @@ int readGisHeader( const char* name,_image* im)
 	    else                   *buf = (unsigned short int)iv;
 	    n ++;
 	  }
-	  else if ( im->wordKind == WK_FIXED 
-		    && im->sign == SGN_SIGNED 
+	  else if ( im->wordKind == WK_FIXED
+		    && im->sign == SGN_SIGNED
 		    && im->wdim == 2 ) {
 	    short int *buf = (short int *)im->data;
 	    buf += n;
@@ -611,10 +611,10 @@ int readGisHeader( const char* name,_image* im)
 	    ImageIO_free( str );
 	    return -1;
 	  }
-	  
+	
 
 
-	  /* skip a number 
+	  /* skip a number
 	   */
 	  while ( (*tmp >= '0' && *tmp <= '9') || *tmp == '.' || *tmp == '-' )
 	    tmp++;
@@ -626,7 +626,7 @@ int readGisHeader( const char* name,_image* im)
 
   }
 
-  
+
   /* check header validity */
   if ( im->xdim > 0 && im->ydim > 0 && im->zdim > 0 && im->vdim > 0 &&
        im->vx > 0.0 && im->vy > 0.0 && im->vz > 0.0 &&
@@ -677,7 +677,7 @@ bool writeGisHeader( const _image* inr )
       break;
     default :
       fprintf( stderr, "%s: unknown wordSign\n", proc );
-      return false;    
+      return false;
     }
     break;
   case WK_FLOAT :
@@ -689,15 +689,15 @@ bool writeGisHeader( const _image* inr )
     }
     else {
       fprintf( stderr, "%s: unknown WK_FLOAT word dim\n", proc );
-      return false;    
+      return false;
     }
     break;
   default :
     fprintf( stderr, "%s: unknown wordKind for image\n", proc );
-    return false;  
+    return false;
   }
   oss << "\n";
-  
+
   oss << "-dx "<< inr->vx <<"\n";
   oss << "-dy "<< inr->vy <<"\n";
   if ( inr->zdim > 1 )
@@ -730,7 +730,7 @@ bool writeGisHeader( const _image* inr )
 
 
 CGAL_INLINE_FUNCTION
-int writeGisData( const _image*) 
+int writeGisData( const _image*)
 {
   return -1;
 }

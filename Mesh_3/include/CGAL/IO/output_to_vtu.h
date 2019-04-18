@@ -38,7 +38,7 @@
 namespace CGAL{
 
 template <class C3T3>
-void 
+void
 write_cells_tag(std::ostream& os,
                 const C3T3 & c3t3,
                 std::map<typename C3T3::Triangulation::Vertex_handle, std::size_t> & V,
@@ -60,7 +60,7 @@ write_cells_tag(std::ostream& os,
   os << "    <Cells>\n"
      << "      <DataArray Name=\"connectivity\""
      << formatattribute << typeattribute;
-  
+
   if (binary) { // if binary output, just write the xml tag
     os << " offset=\"" << offset << "\"/>\n";
     offset += (4 * c3t3.number_of_cells() + 1) * sizeof(std::size_t);
@@ -77,11 +77,11 @@ write_cells_tag(std::ostream& os,
     }
     os << "\n      </DataArray>\n";
   }
-  
+
   // Write offsets
   os   << "      <DataArray Name=\"offsets\""
        << formatattribute << typeattribute;
-  
+
   if (binary) {  // if binary output, just write the xml tag
     os << " offset=\"" << offset << "\"/>\n";
     offset += (c3t3.number_of_cells() + 1) * sizeof(std::size_t);
@@ -96,7 +96,7 @@ write_cells_tag(std::ostream& os,
       {
 	cells_offset += 4;
 	os << cells_offset << " ";
-      }  
+      }
     os << "\n      </DataArray>\n";
   }
 
@@ -148,7 +148,7 @@ write_cells(std::ostream& os,
 
 
 template <class Tr>
-void 
+void
 write_c3t3_points_tag(std::ostream& os,
                       const Tr & tr,
                       std::size_t size_of_vertices,
@@ -170,12 +170,12 @@ write_c3t3_points_tag(std::ostream& os,
      << format;
 
   if (binary) {
-    os << "\" offset=\"" << offset << "\"/>\n";    
+    os << "\" offset=\"" << offset << "\"/>\n";
     offset += 3 * size_of_vertices * sizeof(FT) + sizeof(std::size_t);
     // dim coords per points + length of the encoded data (size_t)
   }
   else {
-    os << "\">\n";  
+    os << "\">\n";
     for( Finite_vertices_iterator vit = tr.finite_vertices_begin();
          vit != tr.finite_vertices_end();
          ++vit)
@@ -194,7 +194,7 @@ write_c3t3_points_tag(std::ostream& os,
   os << "    </Points>\n";
 }
 
-// writes the points appended data at the end of the .vtu file 
+// writes the points appended data at the end of the .vtu file
 template <class Tr>
 void
 write_c3t3_points(std::ostream& os,
@@ -224,7 +224,7 @@ write_c3t3_points(std::ostream& os,
 
 // writes the attribute tags before binary data is appended
 template <class T>
-void 
+void
 write_attribute_tag(std::ostream& os,
 		    const std::string& attr_name,
 		    const std::vector<T>& attribute,
@@ -246,15 +246,15 @@ write_attribute_tag(std::ostream& os,
     else
       type = "UInt64";
   }
-  os << "      <DataArray type=\"" << type << "\" Name=\"" << attr_name << "\" format=\"" << format; 
+  os << "      <DataArray type=\"" << type << "\" Name=\"" << attr_name << "\" format=\"" << format;
 
   if (binary) {
-    os << "\" offset=\"" << offset << "\"/>\n";    
+    os << "\" offset=\"" << offset << "\"/>\n";
     offset += attribute.size() * sizeof(T) + sizeof(std::size_t);
   }
   else {
     typedef typename std::vector<T>::const_iterator Iterator;
-    os << "\">\n";   
+    os << "\">\n";
     for (Iterator it = attribute.begin();
 	 it != attribute.end();
 	 ++it )
@@ -263,7 +263,7 @@ write_attribute_tag(std::ostream& os,
   }
 }
 
-// writes the attributes appended data at the end of the .vtu file 
+// writes the attributes appended data at the end of the .vtu file
 template <typename FT>
 void
 write_attributes(std::ostream& os,
@@ -299,7 +299,7 @@ void output_to_vtu_with_attributes(std::ostream& os,
 #else // CGAL_BIG_ENDIAN
   os << " byte_order=\"BigEndian\"";
 #endif
-  
+
   switch(sizeof(std::size_t)) {
   case 4: os << " header_type=\"UInt32\""; break;
   case 8: os << " header_type=\"UInt64\""; break;
@@ -335,7 +335,7 @@ void output_to_vtu_with_attributes(std::ostream& os,
   os << "   </Piece>\n"
      << "  </UnstructuredGrid>\n";
   if (binary) {
-    os << "<AppendedData encoding=\"raw\">\n_"; 
+    os << "<AppendedData encoding=\"raw\">\n_";
     write_c3t3_points(os,tr,V); // fills V if the mode is BINARY
     write_cells(os,c3t3,V);
     for(std::size_t i = 0; i< attributes.size(); ++i)
@@ -371,7 +371,7 @@ void output_to_vtu(std::ostream& os,
     double v = cit->subdomain_index();
     mids.push_back(v);
   }
-  
+
   std::vector<std::pair<const char*, const Vtu_attributes > > atts;
   Vtu_attributes v = &mids;
   atts.push_back(std::make_pair("MeshDomain", v));

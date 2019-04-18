@@ -18,10 +18,10 @@
  *
  * File: CoreAux.cpp
  * Synopsis:
- *       Auxiliary routines such as ceiling of log_2, etc. 
+ *       Auxiliary routines such as ceiling of log_2, etc.
  *       they are not specific to any Core classes.
  *
- * Written by 
+ * Written by
  *       Chee Yap <yap@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
@@ -44,7 +44,7 @@
 #include <CGAL/CORE/CoreAux.h>
 #include <CGAL/gmp.h>
 
-namespace CORE { 
+namespace CORE {
 
 ////////////////////////////////////////////////////////////
 //  More useful functions to implement:
@@ -195,7 +195,7 @@ int IntExponent(double d) {
  * */
 // Usage: core_error(message, file_with_error, line_number, err_type)
 //   where err_type=0 means WARNING, error_type=0 means ERROR
-CGAL_INLINE_FUNCTION 
+CGAL_INLINE_FUNCTION
 void core_error(std::string msg, std::string file, int lineno, bool err) {
   std::ofstream outFile(CORE_DIAGFILE, std::ios::app);  // open to append
   if (!outFile) {

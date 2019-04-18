@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Ron Wein    <wein@post.tau.ac.il>
 //                 Efi Fogel   <efif@post.tau.ac.il>
@@ -178,7 +178,7 @@ public:
 
 /*! \class
  * A DCEL class whose faces are extended with an auxiliary data field.
- * The Traits parameter corresponds to a geometric traits class, which 
+ * The Traits parameter corresponds to a geometric traits class, which
  * defines the Point_2 and X_monotone_curve_2 types.
  * The FaceData parameter specifies the object type stored with each face.
  */
@@ -208,7 +208,7 @@ public:
     typedef typename HalfedgeBase_::template rebind
                         <typename T::X_monotone_curve_2>   Rebind_halfedge;
     typedef typename Rebind_halfedge::other                Halfedge_base;
-   
+
   public:
 
     typedef Arr_face_extended_dcel<T,
@@ -229,7 +229,7 @@ public:
 
 /*! \class
  * A DCEL class whose features are extended with auxiliary data fields.
- * The Traits parameter corresponds to a geometric traits class, which 
+ * The Traits parameter corresponds to a geometric traits class, which
  * defines the Point_2 and X_monotone_curve_2 types.
  * The VertexData, HalfedgeData and FaceData parameter specify the object types
  * stored with each vertex, halfegde and face, respectively.
@@ -263,7 +263,7 @@ public:
     typedef typename HalfedgeBase_::template rebind
                         <typename T::X_monotone_curve_2>   Rebind_halfedge;
     typedef typename Rebind_halfedge::other                Halfedge_base;
-   
+
   public:
 
     typedef Arr_extended_dcel<T,
@@ -288,4 +288,4 @@ public:
 
 #include <CGAL/enable_warnings.h>
 
-#endif 
+#endif

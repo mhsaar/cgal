@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent Rineau <Laurent.Rineau@geometryfactory.com>
 
@@ -58,7 +58,7 @@ public:
   {
     setSeedsPen(QPen(::Qt::black, 10.));
   }
-  
+
   void operator()(typename T::Face_handle fh);
 
   const QBrush& facesInDomainBrush() const
@@ -171,7 +171,7 @@ protected:
   bool visible_seeds;
   bool visible_inside_edges;
   typename std::list<Point>::iterator seeds_begin, seeds_end;
-  
+
   QBrush in_domain_brush;
   QBrush blind_brush;
   QPen voronoi_pen;
@@ -179,7 +179,7 @@ protected:
 };
 
 template <typename T>
-void 
+void
 DelaunayMeshTriangulationGraphicsItem<T>::drawAll(QPainter *painter)
 {
   if(visibleFacesInDomain())
@@ -277,7 +277,7 @@ DelaunayMeshTriangulationGraphicsItem<T>::paintSeeds(QPainter *painter)
 }
 
 template <typename T>
-void 
+void
 DelaunayMeshTriangulationGraphicsItem<T>::operator()(typename T::Face_handle fh)
 {
   if(visibleFacesInDomain()) {

@@ -92,8 +92,8 @@ namespace CGAL {
     typedef Double_map<Facet, Quality> Bad_facets;
 
     // Constructor
-    Surface_mesher_base (C2T3& co, 
-                         const Surface& s, 
+    Surface_mesher_base (C2T3& co,
+                         const Surface& s,
                          const Surface_mesh_traits& mesh_traits,
                          const Criteria& c) :
       Triangulation_mesher_level_traits_3<Tr>(co.triangulation()),
@@ -390,7 +390,7 @@ namespace CGAL {
         {
           const Facet source_other_side = mirror_facet(source_facet);
           std::stringstream error_msg;
-          error_msg << 
+          error_msg <<
             boost::format("Surface_mesher ERROR: "
                           "A facet is not in conflict with its refinement point!\n"
                           "Debugging informations:\n"
@@ -443,7 +443,7 @@ namespace CGAL {
       for(typename std::vector<Cell_handle>::iterator cellule =
 	    cellules.begin();
 	  cellule != cellules.end();
-	  ++cellule) 
+	  ++cellule)
       {
 	// Look at all four facets of the cell, starting with the
 	// facet opposite to the new vertex
@@ -478,7 +478,7 @@ namespace CGAL {
 
     // Actions to perform on a facet inside the conflict zone
     bool before_insertion_handle_facet_inside_conflict_zone (const Facet& f,
-                                                             const Facet& source_facet) 
+                                                             const Facet& source_facet)
     {
       const Facet other_side = mirror_facet(f);
 
@@ -528,7 +528,7 @@ namespace CGAL {
 
     // Action to perform on any new facet
     template <bool remove_from_complex_if_not_in_restricted_Delaunay>
-    void new_facet (const Facet& f) 
+    void new_facet (const Facet& f)
     {
       const Facet other_side = mirror_facet(f);
 
@@ -592,7 +592,7 @@ namespace CGAL {
       typedef typename Surface_mesh_traits::Intersect_3 Intersect_3;
       Intersect_3 intersect = meshtraits.intersect_3_object();
       typename GT::Is_degenerate_3 is_degenerate;
-        
+
       Object dual = tr.dual(f);
 
       Object intersection;
@@ -696,7 +696,7 @@ namespace CGAL {
                    const Surface& surface,
                    const Surface_mesh_traits& mesh_traits,
                    const Criteria& criteria)
-      : Base(c2t3, surface, mesh_traits, criteria), 
+      : Base(c2t3, surface, mesh_traits, criteria),
         Mesher_lvl(null_mesher_level),
         initialized(false)
     {
@@ -710,7 +710,7 @@ namespace CGAL {
                    const Surface_mesh_traits& mesh_traits,
                    const Criteria& criteria,
 		   PreviousLevel& previous)
-      : Base(c2t3, surface, mesh_traits, criteria), 
+      : Base(c2t3, surface, mesh_traits, criteria),
         Mesher_lvl(previous),
         initialized(false)
     {
@@ -722,7 +722,7 @@ namespace CGAL {
     std::string debug_info() const
     {
       std::stringstream s;
-      s << Base::debug_info() 
+      s << Base::debug_info()
 	<< "," << Mesher_lvl::previous().debug_info();
       return s.str();
     }
@@ -762,7 +762,7 @@ namespace CGAL {
         std::cerr << "Legende of the following line: "
                   << "(#vertices,#steps," << this->debug_info_header()
                   << ")\n";
-	std::cerr 
+	std::cerr
 	  << boost::format("\r             \r"
 			   "(%1%,%2%,%3%) (%|4$.1f| vertices/s)")
 	  % tr.number_of_vertices()
@@ -775,7 +775,7 @@ namespace CGAL {
 	    CGAL_SURFACE_MESHER_TIME_PROFILER("Surface_mesher::one_step()");
 	    one_step (visitor);
 	  }
-	  std::cerr 
+	  std::cerr
 	    << boost::format("\r             \r"
 			     "(%1%,%2%,%3%) (%|4$.1f| vertices/s)")
 	    % tr.number_of_vertices()

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -88,7 +88,7 @@ private:
       Site_2 tp = Site_2::construct_site_2(p);
 
       return (  same_points(support.source_site(), tp) ||
-		same_points(support.target_site(), tp)  );      
+		same_points(support.target_site(), tp)  );
     }
     return false;
   }
@@ -137,7 +137,7 @@ private:
     RT dtpy = pp.y() - tp.y();
     RT dtqx = qp.x() - tp.x();
     RT minus_dtqy = -qp.y() + tp.y();
-    
+
     Sign s = sign_of_determinant(dtpx, dtpy, minus_dtqy, dtqx);
 
     CGAL_assertion( s != ZERO );
@@ -220,9 +220,9 @@ private:
     RT dtpy = pp.y() - tp.y();
     RT dtqx = qp.x() - tp.x();
     RT minus_dtqy = -qp.y() + tp.y();
-    
+
     Sign s = sign_of_determinant(dtpx, dtpy, minus_dtqy, dtqx);
-    
+
     CGAL_assertion( s != ZERO );
 
     return s;
@@ -312,7 +312,7 @@ private:
       RT dtpy = pp.y() - tp.y();
       RT dtqx = qp.x() - tp.x();
       RT minus_dtqy = -qp.y() + tp.y();
-      
+
       Sign s = sign_of_determinant(dtpx, dtpy, minus_dtqy, dtqx);
 
       CGAL_assertion( s != ZERO );
@@ -522,7 +522,7 @@ public:
   }
 
 
-  
+
 
   Sign operator()(const Site_2& p, const Site_2& q,
 		  const Site_2& t) const

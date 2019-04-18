@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -49,7 +49,7 @@ public:
 
   typedef Basic_predicates_C2<K>              Base;
   typedef Voronoi_vertex_C2<K,Method_tag>     Voronoi_vertex_2;
-  
+
   typedef typename Base::Point_2              Point_2;
   typedef typename Base::Segment_2            Segment_2;
   typedef typename Base::Line_2               Line_2;
@@ -65,7 +65,7 @@ public:
 
   typedef typename Base::Homogeneous_point_2  Homogeneous_point_2;
 
-  using Base::opposite_line;  
+  using Base::opposite_line;
   using Base::compute_supporting_line;
   using Base::oriented_side_of_line;
   using Base::compare_squared_distances_to_line;
@@ -148,7 +148,7 @@ private:
     } else {
       oq = oriented_side_of_line(lt, q);
     }
-    
+
 
     if ((op == ON_POSITIVE_SIDE && oq == ON_NEGATIVE_SIDE) ||
 	(op == ON_NEGATIVE_SIDE && oq == ON_POSITIVE_SIDE) ||
@@ -164,7 +164,7 @@ private:
     Voronoi_vertex_2 vpqr(sp, sq, r);
     Voronoi_vertex_2 vqps(sq, sp, s);
 
-    
+
     Line_2 lperp;
     if ( res == SMALLER ) {
       // p is closer to lt than q
@@ -205,7 +205,7 @@ private:
     if ( same_points(p, q.source_site()) ||
 	 same_points(p, q.target_site()) ) {
       return false;
-    }   
+    }
 
     if ( t.is_point() ) {
       return is_interior_in_conflict_both_ps_p(p, q, r, s, t, tag);
@@ -236,7 +236,7 @@ private:
     Voronoi_vertex_2 vqps(q, p, s);
 
     Line_2 lperp = compute_perpendicular(lq, p.point());
-      
+
     Oriented_side opqr = vpqr.oriented_side(lperp);
     Oriented_side oqps = vqps.oriented_side(lperp);
 
@@ -267,7 +267,7 @@ private:
     Line_2 lq = compute_supporting_line(sq.supporting_site());
 
     if ( oriented_side_of_line(lq, p) == ON_NEGATIVE_SIDE ) {
-      lq = opposite_line(lq); 
+      lq = opposite_line(lq);
     }
 
     if ( same_points(sp, st.source_site()) ||
@@ -314,7 +314,7 @@ private:
       if ( o_t1 == ON_NEGATIVE_SIDE ) {
 	return true;
       }
-	     
+	
       Comparison_result res =
 	compare_squared_distances_to_line(lq, p, t1.point());
 
@@ -330,7 +330,7 @@ private:
     Comparison_result res =
       CGAL::compare(lt.a() * lq.b(), lt.b() * lq.a());
     bool are_parallel = (res == EQUAL);
-      
+
     if ( are_parallel ) {
       Sign sgn = CGAL::sign(lt.a() * lq.a() + lt.b() * lq.b());
       bool have_opposite_directions = (sgn == NEGATIVE);
@@ -341,7 +341,7 @@ private:
       }
 
       if ( have_opposite_directions ) {
-	lq = opposite_line(lq); 	  
+	lq = opposite_line(lq); 	
       }
     }
 
@@ -374,7 +374,7 @@ private:
     // if ( !on_different_parabola_arcs ) { return true; }
     if (certainly( !on_different_parabola_arcs ) ) { return true; }
     if (! is_certain( !on_different_parabola_arcs ) ) { return indeterminate<Boolean>(); }
-      
+
     Homogeneous_point_2 pv = projection_on_line(lq, p);
     Homogeneous_point_2 hp(p);
 
@@ -386,7 +386,7 @@ private:
 
     CGAL_assertion( o_l_pqr != ON_ORIENTED_BOUNDARY ||
 		    o_l_qps != ON_ORIENTED_BOUNDARY );
-    
+
     if ( o_l_pqr == ON_ORIENTED_BOUNDARY ) {
       return ( o_l_qps == o_l_pv );
     } else {
@@ -415,7 +415,7 @@ private:
 				const Site_2& r, const Site_2& s,
 				const Site_2& t, Method_tag tag) const
   {
-    // checks if interior of voronoi edge is in conflict if both extrema 
+    // checks if interior of voronoi edge is in conflict if both extrema
     // of the voronoi edge touch the corresponding circles.
     // return true if interior is in conflict; false otherwise
     if ( t.is_segment() ) { return false; }
@@ -437,14 +437,14 @@ private:
 #else
     // OLD CODE: buggy if the edge is degenerate
     if ( (p.is_point() && q.is_point()) ||
-	 (p.is_segment() && q.is_segment()) ) { 
+	 (p.is_segment() && q.is_segment()) ) {
       return true;
     }
 #endif
 
     if ( p.is_point() && q.is_segment() ) {
       Line_2 lq = compute_supporting_line(q.supporting_site());
-    
+
       Comparison_result res =
 	compare_squared_distances_to_line(lq, p.point(), t.point());
 
@@ -509,7 +509,7 @@ private:
 	 same_points(sp, sq.target_site()) ) {
       return false;
     }
-   
+
     Line_2 lq = compute_supporting_line(sq.supporting_site());
 
     Voronoi_vertex_2 vpqr(sp, sq, r);
@@ -655,7 +655,7 @@ private:
     bool on_different_side =
       (opqr_perp == ON_POSITIVE_SIDE &&
        oqps_perp == ON_NEGATIVE_SIDE) ||
-      (opqr_perp == ON_NEGATIVE_SIDE && 
+      (opqr_perp == ON_NEGATIVE_SIDE &&
        oqps_perp == ON_POSITIVE_SIDE);
 
     return ( on_different_side );
@@ -729,7 +729,7 @@ public:
       same_points(p, t.source_site()) || same_points(p, t.target_site());
     bool bq =
       same_points(q, t.source_site()) || same_points(q, t.target_site());
-						       
+						
 
     return ( bp && bq );
   }

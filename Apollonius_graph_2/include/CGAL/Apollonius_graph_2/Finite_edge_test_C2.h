@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -129,7 +129,7 @@ private:
 
       FT uV_P_Uv = du * Dv + Du * dv;
       FT uV_M_Uv = du * Dv - Du * dv;
-      
+
 
       FT F1 = du2_P_dv2 * Dr2 + Du2_P_Dv2 * dr2
 	- uU_P_vV * drDr - CGAL::square(uV_M_Uv);
@@ -265,7 +265,7 @@ public:
 
   typedef Orientation_wrt_symmetry_axis_2<K>
                                     Orientation_wrt_symmetry_axis;
-  
+
 public:
   template<class Method_tag>
   Comparison_result
@@ -580,7 +580,7 @@ public:
     if ( !is_bs1 && is_bs2 ) { return false; }
 
     // both circles exist
-    
+
     // check whether the shadow region is connected, i.e., wether it is
     // of the form (a, b) or (-oo, a) U (b, +oo)
 
@@ -619,7 +619,7 @@ public:
   bool operator()(const Site_2& p1, const Site_2& p2,
 		  const Site_2& p3, const Site_2& q, bool b) const
   {
-    return Test_degenerated()(p1, p2, p3, q, b, Method_tag());    
+    return Test_degenerated()(p1, p2, p3, q, b, Method_tag());
   }
 
   inline
@@ -627,7 +627,7 @@ public:
 		  const Site_2& p3, const Site_2& p4,
 		  const Site_2& q, bool b) const
   {
-    return Test()(p1, p2, p3, p4, q, b, Method_tag());    
+    return Test()(p1, p2, p3, p4, q, b, Method_tag());
   }
 };
 

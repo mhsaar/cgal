@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -167,7 +167,7 @@ insert_third(const Site_2& t, const Storage_site_2& ss)
 	if ( xcmp31 == SMALLER ) {          // x3 < x1
 	  flip(f, f->index(v0));
 	} else {                            // x1 < x3 < x2
-	  flip(f, f->index(v)); 
+	  flip(f, f->index(v));
 	}
       }
     } else if ( xcmp12 == LARGER ) {  // x1 > x2
@@ -244,7 +244,7 @@ insert_third(const Storage_site_2& ss, Vertex_handle , Vertex_handle )
     }
     ++fc;
   }
-  
+
   return v;
 }
 
@@ -449,7 +449,7 @@ insert_point2(const Storage_site_2& ss, const Site_2& t,
   }
 
 
-  // we are in conflict with a Voronoi vertex; start from that and 
+  // we are in conflict with a Voronoi vertex; start from that and
   // find the entire conflict region and then repair the diagram
   List l;
 #ifndef CGAL_SDG_NO_FACE_MAP
@@ -461,7 +461,7 @@ insert_point2(const Storage_site_2& ss, const Site_2& t,
 
   // MK:: NEED TO WRITE A FUNCTION CALLED find_conflict_region WHICH
   // IS GIVEN A STARTING FACE, A LIST, A FACE MAP, A VERTEX MAP AND A
-  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT 
+  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT
   // REGION AND EXPANDS THE CONFLICT REGION.
   initialize_conflict_region(start_f, l);
 #ifdef CGAL_SDG_NO_FACE_MAP
@@ -582,7 +582,7 @@ find_faces_to_split(const Vertex_handle& v, const Site_2& t) const
     if ( found_f1 && found_f2 ) { break; }
 
     ++fc1, ++fc2;
-  } while ( fc_start != fc1 ); 
+  } while ( fc_start != fc1 );
 
 
   CGAL_assertion( found_f1 && found_f2 );
@@ -604,7 +604,7 @@ insert_exact_point_on_segment(const Storage_site_2& ss, const Site_2& t,
   CGAL_assertion( t.is_point() );
   CGAL_assertion( t.is_input() );
 
-  Storage_site_2 ssitev = v->storage_site();  
+  Storage_site_2 ssitev = v->storage_site();
 
   CGAL_assertion( ssitev.is_segment() );
 
@@ -830,7 +830,7 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
   // segments must have a conflict with at least one vertex
   CGAL_assertion( s == NEGATIVE );
 
-  // we are in conflict with a Voronoi vertex; start from that and 
+  // we are in conflict with a Voronoi vertex; start from that and
   // find the entire conflict region and then repair the diagram
   List l;
 #ifndef CGAL_SDG_NO_FACE_MAP
@@ -842,7 +842,7 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
 
   // MK:: NEED TO WRITE A FUNCTION CALLED find_conflict_region WHICH
   // IS GIVEN A STARTING FACE, A LIST, A FACE MAP, A VERTEX MAP AND A
-  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT 
+  // LIST OF FLIPPED EDGES AND WHAT IS DOES IS INITIALIZE THE CONFLICT
   // REGION AND EXPANDS THE CONFLICT REGION.
   initialize_conflict_region(start_f, l);
 #ifdef CGAL_SDG_NO_FACE_MAP
@@ -926,7 +926,7 @@ insert_intersecting_segment_with_tag(const Storage_site_2& ss,
   Vertex_triple vt = (this->*insert_point_on_segment_ptr)(ss, t, v, tag);
 
   Vertex_handle vsx = vt.first;
-  
+
   Storage_site_2 ss3 = st_.construct_storage_site_2_object()(ss, ssitev, true);
   Storage_site_2 ss4 = st_.construct_storage_site_2_object()(ss, ssitev, false);
   Site_2 s3 = ss3.site();
@@ -1539,7 +1539,7 @@ equalize_degrees(const Vertex_handle& v, Self& small_d,
   std::cerr << "degree of v: " << deg << std::endl;
 #endif
 
-#if !defined(CGAL_NO_ASSERTIONS) && !defined(NDEBUG)  
+#if !defined(CGAL_NO_ASSERTIONS) && !defined(NDEBUG)
   // we go around the boundary of the conflict region verify that all
   // edges are there
   CGAL_assertion( l.size() == degree(v) );
@@ -1941,7 +1941,7 @@ compute_vertex_map(const Vertex_handle& v, const Self& small_d,
     if ( is_infinite(vh_large) ) {
       vh_small = small_d.infinite_vertex();
       vmap[vh_small] = vh_large;
-    } else { 
+    } else {
 #if !defined(CGAL_NO_ASSERTIONS) && !defined(NDEBUG)
       vh_small = Vertex_handle();
 #endif
@@ -2042,7 +2042,7 @@ remove_degree_d_vertex(const Vertex_handle& v)
     remove_degree_2(v);
     return;
   }
-  
+
   Self sdg_small;
   compute_small_diagram(v, sdg_small);
 
@@ -2116,7 +2116,7 @@ remove_base(const Vertex_handle& v)
     return remove_first(v);
   } else if ( n == 2 ) {
     return remove_second(v);
-  } 
+  }
 
   // secondly check if the point to be deleted is adjacent to a segment
   if ( ssv.is_point() ) {
@@ -2167,7 +2167,7 @@ remove(const Vertex_handle& v)
   if ( is_point ) {
     h1 = ss.point();
   } else {
-    CGAL_assertion( ss.is_segment() );   
+    CGAL_assertion( ss.is_segment() );
     h1 = ss.source_of_supporting_site();
     h2 = ss.target_of_supporting_site();
   }
@@ -2353,7 +2353,7 @@ finite_edge_interior(const Vertex_handle& v1, const Vertex_handle& v2,
 		     const Vertex_handle& v3, const Vertex_handle& v4,
 		     const Vertex_handle& v, Sign sgn, int) const
 {
-  CGAL_precondition( !is_infinite(v1) && !is_infinite(v2) && 
+  CGAL_precondition( !is_infinite(v1) && !is_infinite(v2) &&
 		     !is_infinite(v) );
   if ( !is_infinite( v4 ) ) {
     CGAL_precondition( is_infinite(v3) );
@@ -2409,7 +2409,7 @@ infinite_edge_interior(const Vertex_handle& v1,
 		       const Vertex_handle& v4,
 		       const Vertex_handle& v, Sign sgn) const
 {
-  CGAL_precondition( !is_infinite(v3) && !is_infinite(v4) && 
+  CGAL_precondition( !is_infinite(v3) && !is_infinite(v4) &&
 		     !is_infinite(v) );
 
   if ( !is_infinite( v1 ) ) {
@@ -2814,7 +2814,7 @@ copy(Segment_Delaunay_graph_2& other, Handle_map& hm)
 			 boost::tuples::get<2>(old_srep) );
     isc_.insert( new_srep );
   }
-  
+
   CGAL_assertion( pc_.size() == other.pc_.size() );
   CGAL_assertion( isc_.size() == other.isc_.size() );
 
@@ -2832,7 +2832,7 @@ copy(Segment_Delaunay_graph_2& other, Handle_map& hm)
   DG::operator=(other);
 
   // now we have to update the sotrage sites in each vertex of the
-  // diagram and also update the 
+  // diagram and also update the
 
   // then update the storage sites for each vertex
   Intersections_tag itag;
@@ -3069,7 +3069,7 @@ file_input(std::istream& is, Storage_site_2& t,
       is >> p1 >> p2 >> q1 >> q2 >> r1 >> r2;
       t = st_.construct_storage_site_2_object()(P[p1], P[p2],
 						P[q1], P[q2],
-						P[r1], P[r2]);      
+						P[r1], P[r2]);
     }
   }
 }
@@ -3120,10 +3120,10 @@ file_output(std::ostream& os, Point_handle_mapper& P,
   std::map<Vertex_handle,size_type> V;
   std::map<Face_handle,size_type> F;
 
-  // first vertex (infinite vertex) 
+  // first vertex (infinite vertex)
   size_type inum = 0;
   V[infinite_vertex()] = inum++;
-  
+
   // finite vertices
   if (is_ascii(os)) os << std::endl;
   for (Finite_vertices_iterator vit = finite_vertices_begin();
@@ -3152,7 +3152,7 @@ file_output(std::ostream& os, Point_handle_mapper& P,
     if( is_ascii(os) ) { os << std::endl; }
   }
   if( is_ascii(os) ) { os << std::endl; }
-    
+
   // neighbor pointers of the  faces
   for( All_faces_iterator it = all_faces_begin();
        it != all_faces_end(); ++it) {
@@ -3223,9 +3223,9 @@ file_input(std::istream& is, bool read_handle_vector,
     CGAL_assertion( d == 1 );
     if ( number_of_vertices() > 0 ) { clear(); }
     file_input(is, ss, P, Intersections_tag());
-    insert_first(ss, *ss.point());  
+    insert_first(ss, *ss.point());
     file_input(is, ss, P, Intersections_tag());
-    insert_second(ss, *ss.point());  
+    insert_second(ss, *ss.point());
     return;
   }
 
@@ -3249,7 +3249,7 @@ file_input(std::istream& is, bool read_handle_vector,
     // read non-combinatorial info of the vertex
     //    is >> *(V[i]);
   }
-  
+
   // Creation of the faces
   int index;
   int dim = (dimension() == -1 ? 1 : dimension() + 1);
@@ -3267,7 +3267,7 @@ file_input(std::istream& is, bool read_handle_vector,
     //      is >> *(F[i]) ;
   }
 
-  // Setting the neighbor pointers 
+  // Setting the neighbor pointers
   for (i = 0; i < m; ++i) {
     for (int j = 0; j < dimension()+1; ++j){
       is >> index;

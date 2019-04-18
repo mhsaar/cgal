@@ -362,7 +362,7 @@ struct Projection_traits{
   typedef CGAL::Projection_traits_xy_3<K> Traits_xy_3;
   typedef CGAL::Projection_traits_yz_3<K> Traits_yz_3;
   typedef CGAL::Projection_traits_xz_3<K> Traits_xz_3;
-    
+
     Traits_xy_3 construct_traits_xy_3_object()const
     {return Traits_xy_3();}
     Traits_yz_3 construct_traits_yz_3_object()const
@@ -423,7 +423,7 @@ void coplanar_3_hull(InputIterator first, InputIterator beyond,
   typedef typename PTraits::Traits_xy_3 Traits_xy_3;
   typedef typename PTraits::Traits_yz_3 Traits_yz_3;
   typedef typename PTraits::Traits_xz_3 Traits_xz_3;
-  
+
   PTraits ptraits(traits);
 
   std::list<Point_3> CH_2;
@@ -541,7 +541,7 @@ farthest_outside_point(Face_handle f, std::list<Point>& outside_set,
    typedef typename std::list<Point>::iterator Outside_set_iterator;
    CGAL_ch_assertion(!outside_set.empty());
 
-   typename Traits::Plane_3 plane = 
+   typename Traits::Plane_3 plane =
        traits.construct_plane_3_object()(f->vertex(0)->point(),
                                          f->vertex(1)->point(),
                                          f->vertex(2)->point());

@@ -59,8 +59,8 @@ public:
   typedef typename Geom_traits::Line_3 Line_3;
   typedef typename Geom_traits::Triangle_3 Triangle_3;
 
-  typedef Polyhedral_oracle<Surface, 
-                            Point_creator, 
+  typedef Polyhedral_oracle<Surface,
+                            Point_creator,
                             Visitor,
                             Has_edges_tag_,
                             mesh_the_whole_bounding_box> Self;
@@ -122,7 +122,7 @@ public:
       pb[0] = s[1].x();
       pb[1] = s[1].y();
       pb[2] = s[1].z();
-      if(surface.pinpolyhedron_ptr->isPinPolyhedron(pa) == 
+      if(surface.pinpolyhedron_ptr->isPinPolyhedron(pa) ==
 	 surface.pinpolyhedron_ptr->isPinPolyhedron(pb))
 	return Object();
 #endif // CGAL_SURFACE_MESHER_POLYHEDRAL_SURFACE_USE_PINPOLYHEDRON
@@ -133,14 +133,14 @@ public:
       return surface.subfacets_tree_ptr->intersection(s);
 #endif
     }
-    
+
     Object operator()(const Surface_3& surface, const Ray_3& r) const {
 #ifdef CGAL_SURFACE_MESHER_POLYHEDRAL_SURFACE_USE_OCTREE
       return self.intersect_ray_surface(*surface.subfacets_tree_ptr, r);
 #endif
       return Object();
     }
-      
+
     Object operator()(const Surface_3& surface, const Line_3& l) const {
 #ifdef CGAL_SURFACE_MESHER_POLYHEDRAL_SURFACE_USE_OCTREE
       return self.intersect_line_surface(*surface.subfacets_tree_ptr, l);
@@ -167,9 +167,9 @@ public:
     }
 
     template <typename OutputIteratorPoints>
-    OutputIteratorPoints operator() (const Surface_3& surface, 
-                                     OutputIteratorPoints out, 
-                                     int n = 20) const // WARNING: why 20?    
+    OutputIteratorPoints operator() (const Surface_3& surface,
+                                     OutputIteratorPoints out,
+                                     int n = 20) const // WARNING: why 20?
     {
       for (typename Surface_3::Corner_vertices::const_iterator vit =
              surface.corner_vertices_ptr->begin();
@@ -235,7 +235,7 @@ public:
       Geom_traits().construct_translated_point_3_object();
     typename Geom_traits::Bounded_side_3 bounded_side =
       Geom_traits().bounded_side_3_object();
-    typename Geom_traits::Construct_scaled_vector_3 scale = 
+    typename Geom_traits::Construct_scaled_vector_3 scale =
       Geom_traits().construct_scaled_vector_3_object();
 
     const typename GT::Iso_cuboid_3& cuboid = surface.subfacets_tree_ptr->iso_cuboid();
@@ -254,8 +254,8 @@ public:
     while(! result.first)
     {
       result = surface.subfacets_tree_ptr->
-        number_of_intersections(segment(p, 
-					translate(p, 
+        number_of_intersections(segment(p,
+					translate(p,
 						  scale(vector(ORIGIN,
 							       *random_point++),
 							diameter))));

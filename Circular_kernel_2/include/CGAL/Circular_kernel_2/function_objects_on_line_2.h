@@ -19,9 +19,9 @@
 // Author(s)     : Monique Teillaud, Sylvain Pion, Pedro Machado
 
 // Partially supported by the IST Programme of the EU as a Shared-cost
-// RTD (FET Open) Project under Contract No  IST-2000-26473 
-// (ECG - Effective Computational Geometry for Curves and Surfaces) 
-// and a STREP (FET Open) Project under Contract No  IST-006413 
+// RTD (FET Open) Project under Contract No  IST-2000-26473
+// (ECG - Effective Computational Geometry for Curves and Surfaces)
+// and a STREP (FET Open) Project under Contract No  IST-006413
 // (ACS -- Algorithms for Complex Shapes)
 
 
@@ -45,7 +45,7 @@ namespace LinearFunctors {
     typedef typename CK::Line_2                Line_2;
     public:
 
-    typedef typename CK::Linear_kernel::Construct_line_2::result_type 
+    typedef typename CK::Linear_kernel::Construct_line_2::result_type
       result_type;
     using CK::Linear_kernel::Construct_line_2::operator();
 

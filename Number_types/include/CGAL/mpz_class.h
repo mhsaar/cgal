@@ -1,9 +1,9 @@
-// Copyright (c) 2002,2003,2007  
+// Copyright (c) 2002,2003,2007
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -301,8 +301,8 @@ public:
 };
 
 /*! \ingroup NiX_Modular_traits_spec
- *  \brief a model of concept ModularTraits, 
- *  specialization of NiX::Modular_traits. 
+ *  \brief a model of concept ModularTraits,
+ *  specialization of NiX::Modular_traits.
  */
 template<>
 class Modular_traits< mpz_class > {
@@ -321,7 +321,7 @@ public:
     NT operator()(const Residue_type& x){
       return NT(x.get_value());
     }
-  };    
+  };
 };
 
 

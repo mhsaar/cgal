@@ -42,7 +42,7 @@
 
 #include <CGAL/CORE/Impl.h>
 
-namespace CORE { 
+namespace CORE {
 
 /// hasExactDivision()
 ///   CHECKING if NT has exact division
@@ -112,14 +112,14 @@ class Promotion<T, T> {
  * where the two types are NT (type of coefficients) and N (type of evaluation point).
  */
 
-/* 
+/*
  * primary types: (11)
  *
- * 	bool, 
- *	char, unsigned char, 
+ * 	bool,
+ *	char, unsigned char,
  *	short, unsigned short,
- * 	int, unsigned int, 
- *	long, unsigned long, 
+ * 	int, unsigned int,
+ *	long, unsigned long,
  *	float, double
  *
  * CORE types: (5)

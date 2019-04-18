@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -37,7 +37,7 @@
 
 
 namespace CGAL {
-  
+
 namespace Intersections {
 
 namespace internal {
@@ -182,7 +182,7 @@ intersection_segment() const
     if (!_known)
         intersection_type();
     CGAL_kernel_assertion(_result == SEGMENT);
-    return construct_segment_2(translated_point(_ref_point, construct_scaled_vector(_dir,_min)), 
+    return construct_segment_2(translated_point(_ref_point, construct_scaled_vector(_dir,_min)),
 			       translated_point(_ref_point, construct_scaled_vector(_dir,_max)));
 }
 
@@ -191,7 +191,7 @@ intersection_segment() const
 template <class K>
 typename CGAL::Intersection_traits
 <K, typename K::Line_2, typename K::Iso_rectangle_2>::result_type
-intersection(const typename K::Line_2 &line, 
+intersection(const typename K::Line_2 &line,
 	     const typename K::Iso_rectangle_2 &iso,
 	     const K&)
 {
@@ -213,7 +213,7 @@ inline
 typename CGAL::Intersection_traits
 <K, typename K::Line_2, typename K::Iso_rectangle_2>::result_type
 intersection(const typename K::Iso_rectangle_2 &iso,
-	     const typename K::Line_2 &line, 
+	     const typename K::Line_2 &line,
 	     const K& k)
 {
   return internal::intersection(line, iso, k);

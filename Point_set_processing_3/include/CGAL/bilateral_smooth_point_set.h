@@ -16,7 +16,7 @@
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
 //
-// Author(s) : Shihao Wu, Clement Jamin, Pierre Alliez 
+// Author(s) : Shihao Wu, Clement Jamin, Pierre Alliez
 
 #ifndef CGAL_BILATERAL_SMOOTH_POINT_SET_H
 #define CGAL_BILATERAL_SMOOTH_POINT_SET_H
@@ -49,7 +49,7 @@
 #include <CGAL/Point_set_processing_3/internal/Parallel_callback.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
-#include <tbb/scalable_allocator.h>  
+#include <tbb/scalable_allocator.h>
 #include <tbb/atomic.h>
 #endif // CGAL_LINKED_WITH_TBB
 
@@ -61,7 +61,7 @@
 #endif // CGAL_LINKED_WITH_TBB
 
 
-//#define CGAL_PSP3_VERBOSE 
+//#define CGAL_PSP3_VERBOSE
 
 namespace CGAL {
 
@@ -92,7 +92,7 @@ public:
   Kd_tree_element(const Kd_tree_element& other)
     : Base(other), index(other.index)
   {}
-  
+
   Kd_tree_element& operator=(const Kd_tree_element&)=default;
 };
 
@@ -115,13 +115,13 @@ public:
 
 /// Compute bilateral projection for each point
 /// according to their KNN neighborhood points
-/// 
+///
 /// \pre `k >= 2`, radius > 0 , sharpness_angle > 0 && sharpness_angle < 90
 ///
 /// @tparam Kernel Geometric traits class.
 /// @tparam Tree KD-tree.
 ///
-/// @return 
+/// @return
 
 template <typename Kernel>
 CGAL::Point_with_normal_3<Kernel>
@@ -149,12 +149,12 @@ compute_denoise_projection(
   FT iradius16 = -(FT)4.0/radius2;
   FT project_dist_sum = FT(0.0);
   FT project_weight_sum = FT(0.0);
-  Vector normal_sum = CGAL::NULL_VECTOR; 
+  Vector normal_sum = CGAL::NULL_VECTOR;
 
   FT cos_sigma = cos(sharpness_angle / 180.0 * 3.1415926);
   FT sharpness_bandwidth = std::pow((CGAL::max)(1e-8, 1 - cos_sigma), 2);
 
-  typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::const_iterator 
+  typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::const_iterator
     pwn_iter = neighbor_pwns.begin();
   for (; pwn_iter != neighbor_pwns.end(); ++pwn_iter)
   {
@@ -179,8 +179,8 @@ compute_denoise_projection(
   Vector update_normal = normal_sum / project_weight_sum;
   update_normal = update_normal / sqrt(update_normal.squared_length());
 
-  Point update_point = query.position() - update_normal * 
-                      (project_dist_sum / project_weight_sum); 
+  Point update_point = query.position() - update_normal *
+                      (project_dist_sum / project_weight_sum);
 
   return Pwn(update_point, update_normal);
 }
@@ -200,8 +200,8 @@ std::vector<CGAL::Point_with_normal_3<Kernel>,
 compute_kdtree_neighbors(
   const CGAL::Point_with_normal_3<Kernel>& query, ///< 3D point
   const Tree& tree,                               ///< KD-tree
-  unsigned int k                                  ///< number of neighbors         
-)                       
+  unsigned int k                                  ///< number of neighbors
+)
 {
   // basic geometric types
   typedef CGAL::Point_with_normal_3<Kernel> Pwn;
@@ -219,7 +219,7 @@ compute_kdtree_neighbors(
   ++search_iterator;
   unsigned int i;
   std::vector<CGAL::Point_with_normal_3<Kernel>
-    , CGAL_PSP3_DEFAULT_ALLOCATOR<CGAL::Point_with_normal_3<Kernel> > 
+    , CGAL_PSP3_DEFAULT_ALLOCATOR<CGAL::Point_with_normal_3<Kernel> >
     > neighbor_pwns;
 
   for(i = 0; i < (k+1); ++i)
@@ -232,7 +232,7 @@ compute_kdtree_neighbors(
     ++search_iterator;
   }
 
-  // output 
+  // output
   return neighbor_pwns;
 }
 
@@ -297,7 +297,7 @@ class Compute_pwns_neighbors
 {
   typedef typename CGAL::Point_with_normal_3<Kernel> Pwn;
   typedef typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> > Pwns;
-  typedef typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> > 
+  typedef typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >
                                                                 Pwns_neighbors;
   typedef typename Kernel::FT FT;
 
@@ -314,27 +314,27 @@ public:
                          cpp11::atomic<std::size_t>& advancement,
                          cpp11::atomic<bool>& interrupted)
     : m_k(k), m_tree(tree), m_pwns(pwns), m_pwns_neighbors(neighbors)
-    , advancement (advancement), interrupted (interrupted) {} 
+    , advancement (advancement), interrupted (interrupted) {}
 
-  void operator() ( const tbb::blocked_range<size_t>& r ) const 
+  void operator() ( const tbb::blocked_range<size_t>& r ) const
   {
     for (size_t i = r.begin(); i!=r.end(); i++)
     {
       if (interrupted)
         break;
-      
+
       m_pwns_neighbors[i] = bilateral_smooth_point_set_internal::
         compute_kdtree_neighbors<Kernel, Tree>(m_pwns[i], m_tree, m_k);
       ++ advancement;
     }
   }
 };
-/// \endcond  
+/// \endcond
 
 /// \cond SKIP_IN_MANUAL
 /// This is for parallelization of function: compute_denoise_projection()
 template <typename Kernel>
-class Pwn_updater 
+class Pwn_updater
 {
   typedef typename CGAL::Point_with_normal_3<Kernel> Pwn;
   typedef typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> > Pwns;
@@ -349,32 +349,32 @@ class Pwn_updater
   cpp11::atomic<bool>& interrupted;
 
 public:
-  Pwn_updater(FT sharpness, 
+  Pwn_updater(FT sharpness,
     FT r,
     Pwns *in,
-    Pwns *out, 
+    Pwns *out,
     std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >* neighbors,
     cpp11::atomic<std::size_t>& advancement,
-    cpp11::atomic<bool>& interrupted): 
-  sharpness_angle(sharpness), 
+    cpp11::atomic<bool>& interrupted):
+  sharpness_angle(sharpness),
     radius(r),
     pwns(in),
     update_pwns(out),
     pwns_neighbors(neighbors),
     advancement (advancement),
-    interrupted (interrupted) {} 
+    interrupted (interrupted) {}
 
-  void operator() ( const tbb::blocked_range<size_t>& r ) const 
-  { 
-    for (size_t i = r.begin(); i != r.end(); ++i) 
+  void operator() ( const tbb::blocked_range<size_t>& r ) const
+  {
+    for (size_t i = r.begin(); i != r.end(); ++i)
     {
       if (interrupted)
         break;
       (*update_pwns)[i] = bilateral_smooth_point_set_internal::
-        compute_denoise_projection<Kernel>((*pwns)[i], 
-        (*pwns_neighbors)[i], 
+        compute_denoise_projection<Kernel>((*pwns)[i],
+        (*pwns_neighbors)[i],
         radius,
-        sharpness_angle);  
+        sharpness_angle);
       ++ advancement;
     }
   }
@@ -390,17 +390,17 @@ public:
 
 /**
    \ingroup PkgPointSetProcessing3Algorithms
- 
-   This function smooths an input point set by iteratively projecting each 
+
+   This function smooths an input point set by iteratively projecting each
    point onto the implicit surface patch fitted over its k nearest neighbors.
    Bilateral projection preserves sharp features according to the normal
-   (gradient) information. Both point positions and normals will be modified.  
-   For more details, please see section 4 in \cgalCite{ear-2013}.  
+   (gradient) information. Both point positions and normals will be modified.
+   For more details, please see section 4 in \cgalCite{ear-2013}.
 
-   A parallel version of this function is provided and requires the executable to be 
+   A parallel version of this function is provided and requires the executable to be
    linked against the <a href="https://www.threadingbuildingblocks.org">Intel TBB library</a>.
    To control the number of threads used, the user may use the tbb::task_scheduler_init class.
-   See the <a href="https://www.threadingbuildingblocks.org/documentation">TBB documentation</a> 
+   See the <a href="https://www.threadingbuildingblocks.org/documentation">TBB documentation</a>
    for more details.
 
    \pre Normals must be unit vectors
@@ -447,7 +447,7 @@ bilateral_smooth_point_set(
   const NamedParameters& np)
 {
   using boost::choose_param;
-  
+
   // basic geometric types
   typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
   typedef typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::type NormalMap;
@@ -456,15 +456,15 @@ bilateral_smooth_point_set(
   CGAL_static_assertion_msg(!(boost::is_same<NormalMap,
                               typename Point_set_processing_3::GetNormalMap<PointRange, NamedParameters>::NoMap>::value),
                             "Error: no normal map");
-  
+
   typedef typename CGAL::Point_with_normal_3<Kernel> Pwn;
   typedef typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> > Pwns;
   typedef typename Kernel::FT FT;
-  
+
   double sharpness_angle = choose_param(get_param(np, internal_np::sharpness_angle), 30.);
   const std::function<bool(double)>& callback = choose_param(get_param(np, internal_np::callback),
                                                                std::function<bool(double)>());
-  
+
   CGAL_point_set_processing_precondition(points.begin() != points.end());
   CGAL_point_set_processing_precondition(k > 1);
 
@@ -485,7 +485,7 @@ bilateral_smooth_point_set(
     typename boost::property_traits<PointMap>::reference p = get(point_map, *it);
     typename boost::property_traits<NormalMap>::reference n = get(normal_map, *it);
     CGAL_point_set_processing_precondition(n.squared_length() > 1e-10);
-    
+
     pwns.push_back(Pwn(p, n));
   }
 
@@ -498,7 +498,7 @@ bilateral_smooth_point_set(
    std::vector<Kd_tree_element,
      CGAL_PSP3_DEFAULT_ALLOCATOR<Kd_tree_element> > treeElements;
    treeElements.reserve(pwns.size());
-   typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::iterator 
+   typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::iterator
      pwn_iter = pwns.begin();
    for (unsigned int i = 0; pwn_iter != pwns.end(); ++pwn_iter)
    {
@@ -510,15 +510,15 @@ bilateral_smooth_point_set(
    CGAL::Real_timer task_timer;
    task_timer.start();
 #endif
-   FT guess_neighbor_radius = 0.0; 
+   FT guess_neighbor_radius = 0.0;
 
    for(pwn_iter = pwns.begin(); pwn_iter != pwns.end(); ++pwn_iter)
    {
      FT max_spacing = bilateral_smooth_point_set_internal::
        compute_max_spacing<Kernel,Tree>(*pwn_iter, tree, k);
-     guess_neighbor_radius = (CGAL::max)(max_spacing, guess_neighbor_radius); 
+     guess_neighbor_radius = (CGAL::max)(max_spacing, guess_neighbor_radius);
    }
-   
+
 #ifdef CGAL_PSP3_VERBOSE
    task_timer.stop();
 #endif
@@ -536,7 +536,7 @@ bilateral_smooth_point_set(
    // compute all neighbors
    std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> > pwns_neighbors;
    pwns_neighbors.resize(nb_points);
- 
+
 #ifndef CGAL_LINKED_WITH_TBB
   CGAL_static_assertion_msg (!(boost::is_convertible<ConcurrencyTag, Parallel_tag>::value),
 			     "Parallel_tag is enabled but TBB is unavailable.");
@@ -552,10 +552,10 @@ bilateral_smooth_point_set(
      tbb::parallel_for(tbb::blocked_range<size_t>(0, nb_points), f);
 
      bool interrupted = parallel_callback.interrupted();
-  
+
      // We interrupt by hand as counter only goes halfway and won't terminate by itself
      parallel_callback.interrupted() = true;
-     parallel_callback.join();       
+     parallel_callback.join();
 
      // If interrupted during this step, nothing is computed, we return NaN
      if (interrupted)
@@ -564,7 +564,7 @@ bilateral_smooth_point_set(
    else
 #endif
    {
-     typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >::iterator 
+     typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >::iterator
        pwns_iter = pwns_neighbors.begin();
 
      std::size_t nb = 0;
@@ -576,7 +576,7 @@ bilateral_smooth_point_set(
          return std::numeric_limits<double>::quiet_NaN();
      }
    }
-   
+
 #ifdef CGAL_PSP3_VERBOSE
    task_timer.stop();
    memory = CGAL::Memory_sizer().virtual_size();
@@ -595,7 +595,7 @@ bilateral_smooth_point_set(
    {
      Point_set_processing_3::internal::Parallel_callback
        parallel_callback (callback, 2 * nb_points, nb_points);
-     
+
      //tbb::task_scheduler_init init(4);
      tbb::blocked_range<size_t> block(0, nb_points);
      Pwn_updater<Kernel> pwn_updater(sharpness_angle,
@@ -617,26 +617,26 @@ bilateral_smooth_point_set(
 #endif // CGAL_LINKED_WITH_TBB
    {
      std::size_t nb = nb_points;
-     
-     typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::iterator 
+
+     typename std::vector<Pwn,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwn> >::iterator
        update_iter = update_pwns.begin();
-     typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >::iterator 
+     typename std::vector<Pwns,CGAL_PSP3_DEFAULT_ALLOCATOR<Pwns> >::iterator
        neighbor_iter = pwns_neighbors.begin();
-     for(pwn_iter = pwns.begin(); pwn_iter != pwns.end(); 
+     for(pwn_iter = pwns.begin(); pwn_iter != pwns.end();
          ++pwn_iter, ++update_iter, ++neighbor_iter, ++ nb)
      {
        *update_iter = bilateral_smooth_point_set_internal::
          compute_denoise_projection<Kernel>
-         (*pwn_iter, 
-          *neighbor_iter, 
-          guess_neighbor_radius, 
+         (*pwn_iter,
+          *neighbor_iter,
+          guess_neighbor_radius,
           sharpness_angle);
        if (callback && !callback ((nb+1) / double(2. * nb_points)))
          return std::numeric_limits<double>::quiet_NaN();
      }
    }
 #ifdef CGAL_PSP3_VERBOSE
-   task_timer.stop(); 
+   task_timer.stop();
    memory = CGAL::Memory_sizer().virtual_size();
    std::cout << "done: " << task_timer.time() << " seconds, "
              << (memory>>20) << " Mb allocated" << std::endl;
@@ -651,12 +651,12 @@ bilateral_smooth_point_set(
      put (point_map, *it, update_pwns[i].position());
      put (normal_map, *it, update_pwns[i].normal());
    }
-     
+
    return sum_move_error / nb_points;
 }
 
 /// \cond SKIP_IN_MANUAL
-// variant with default NP  
+// variant with default NP
 template <typename ConcurrencyTag,
           typename PointRange>
 double
@@ -697,7 +697,7 @@ bilateral_smooth_point_set(
      CGAL::parameters::point_map(point_map).normal_map(normal_map)
      .sharpness_angle(sharpness_angle).geom_traits(Kernel()));
 }
-  
+
 // deprecated API
 template <typename ConcurrencyTag,
           typename ForwardIterator,

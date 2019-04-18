@@ -382,7 +382,7 @@ public:
     /*!\brief
      * copy constructor
      */
-#ifdef DOXYGEN_RUNNING  
+#ifdef DOXYGEN_RUNNING
     Arc_2(const Self& a) :
         Base(static_cast<const Base&>(a)) {
     }

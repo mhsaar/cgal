@@ -90,7 +90,7 @@ int testIrisHeader(char *magic,const char *) {
   if((((unsigned char *)magic)[0]<<8) + ((unsigned char *)magic)[1]
      == IRIS_MAGIC)
     return 0;
-  else 
+  else
     return -1;
 }
 
@@ -182,7 +182,7 @@ static void readtab(const _image *im, unsigned long *tab, int n)
 /*****************************************************/
 static void addimgtag(byte *dptr, int xsize, int ysize)
 {
-  /* this is used to extract image data from core dumps. 
+  /* this is used to extract image data from core dumps.
      I doubt this is necessary...  --jhb */
 
   dptr    = dptr + (xsize * ysize * 4);
@@ -256,14 +256,14 @@ int readIrisImage( const char *, _image *im ) {
   /*  t1=texture_alloc();
   (void) strcpy(t1->name,fname);
   t1->type=IRIS;
-  
+
   t1->nrows = ysize;
   t1->ncols = xsize;
-    
+
   t1->image = create_int_array(t1->nrows,t1->ncols);*/
 
   /* got the raw image data.  Convert to an XV image (1,3 bytes / pix) */
-  if (zsize < 3) 
+  if (zsize < 3)
     {  /* grayscale */
       im->xdim = xsize;
       im->ydim = ysize;
@@ -276,7 +276,7 @@ int readIrisImage( const char *, _image *im ) {
 
       pic824 = (byte *) ImageIO_alloc((size_t) xsize * ysize);
       if (!pic824) exit(-1);
-      
+
       /* copy plane 3 from rawdata into pic824, inverting pic vertically */
       for (i = 0, bptr = pic824; i < ysize; i++)
 	{
@@ -284,17 +284,17 @@ int readIrisImage( const char *, _image *im ) {
 	  for (j = 0; j < xsize; j++, bptr++, rptr += 4)
 	    *bptr = *rptr;
 	}
-      
-      
+
+
       size = im->xdim * im->ydim;
       for (bptr = pic824, iptr = (unsigned char *) im->data,
 	     i = 0; i < size; ++i, ++iptr, ++bptr)
 	{
 	  *iptr = *bptr;
 	}
-      
+
       ImageIO_free(pic824);
-    
+
   }
 
   else {  /* truecolor */
@@ -308,9 +308,9 @@ int readIrisImage( const char *, _image *im ) {
     im->data = ImageIO_alloc(xsize * ysize * im->zdim * 4);
 
     pic824 = (byte *) ImageIO_alloc((size_t) xsize * ysize * 3);
-    if (!pic824) 
+    if (!pic824)
       exit(1);
-    
+
     /* copy plane 3 from rawdata into pic824, inverting pic vertically */
     for (i = 0, bptr = pic824; i< ysize; i++)
       {
@@ -322,8 +322,8 @@ int readIrisImage( const char *, _image *im ) {
 	  *bptr++ = rptr[1];
 	}
       }
-    
-    
+
+
     size = im->xdim * im->ydim;
     for (bptr = pic824, iptr = (unsigned char *) im->data, i = 0;
 	 i < size; ++i, iptr += 4, bptr += 3)
@@ -347,7 +347,7 @@ int readIrisImage( const char *, _image *im ) {
   ImageIO_free(rawdata);
 
   return 1;
-}     
+}
 
 
 
@@ -356,7 +356,7 @@ int readIrisImage( const char *, _image *im ) {
 static byte *getimagedata(const _image *im, unsigned short type, int xsize, int ysize,
 			  int zsize)
 {
-  /* read in a B/W RGB or RGBA iris image file and return a 
+  /* read in a B/W RGB or RGBA iris image file and return a
      pointer to an array of 4-byte pixels, arranged ABGR, NULL on error */
 
   byte   *base, *lptr;
@@ -383,7 +383,7 @@ static byte *getimagedata(const _image *im, unsigned short type, int xsize, int 
     lengthtab = (unsigned long *) ImageIO_alloc((size_t) tablen * sizeof(long));
     rledat    = (byte *)   ImageIO_alloc((size_t) rlebuflen);
 
-    if (!starttab || !lengthtab || !rledat) 
+    if (!starttab || !lengthtab || !rledat)
       exit(1);
 
     ImageIO_seek( im, 512L, SEEK_SET );
@@ -411,7 +411,7 @@ static byte *getimagedata(const _image *im, unsigned short type, int xsize, int 
     cur = 512 + 2*tablen*4;
 
     base = (byte *) ImageIO_alloc((size_t) (xsize*ysize+TAGLEN) * 4);
-    if (!base) 
+    if (!base)
       exit(1);
 
     addimgtag(base,xsize,ysize);
@@ -444,7 +444,7 @@ static byte *getimagedata(const _image *im, unsigned short type, int xsize, int 
 	    ImageIO_seek( im, (long) starttab[y+z*ysize], 0);
 	    cur = starttab[y+z*ysize];
 	  }
-	  
+	
 	  ImageIO_read(im, rledat, (size_t) lengthtab[y+z*ysize]);
 	  cur += lengthtab[y+z*ysize];
 	  expandrow(lptr,rledat,3-z);
@@ -462,7 +462,7 @@ static byte *getimagedata(const _image *im, unsigned short type, int xsize, int 
   else {  /* not RLE */
     verdat = (byte *) ImageIO_alloc((size_t) xsize);
     base   = (byte *) ImageIO_alloc((size_t) (xsize*ysize+TAGLEN) * 4);
-    if (!base || !verdat) 
+    if (!base || !verdat)
       exit(1);
 
     addimgtag(base,xsize,ysize);

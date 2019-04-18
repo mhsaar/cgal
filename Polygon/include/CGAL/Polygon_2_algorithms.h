@@ -1,9 +1,9 @@
-// Copyright (c) 1997  
+// Copyright (c) 1997
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Wieger Wesselink <wieger@cs.ruu.nl>
 
@@ -35,7 +35,7 @@
 #include <CGAL/Bbox_2.h>
 #include <CGAL/Polygon_2/polygon_assertions.h>
 
-/// 
+///
 namespace CGAL {
 
 //-----------------------------------------------------------------------//
@@ -68,14 +68,14 @@ ForwardIterator left_vertex_2(ForwardIterator first,
 /// Returns an iterator to the rightmost point from the range
 /// `[first,last)`. In case of a tie, the point
 /// with the largest `y`-coordinate is taken.
-/// 
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  In fact, only the members `Less_xy_2` and
 /// 	  `less_xy_2_object()` are used.
 /// \tparam ForwardIterator must have`Traits::Point_2` as value type.
 ///
-/// 
+///
 /// \sa `CGAL::left_vertex_2()`
 /// \sa `CGAL::top_vertex_2()`
 /// \sa `CGAL::bottom_vertex_2()`
@@ -94,7 +94,7 @@ ForwardIterator right_vertex_2(ForwardIterator first,
 /// 	  Only the members `Less_yx_2` and
 /// 	  `less_yx_2_object()` are used.
 /// \tparam ForwardIterator must have `Traits::Point_2` as value type.
-/// 
+///
 /// \sa `CGAL::left_vertex_2()`
 /// \sa `CGAL::right_vertex_2()`
 /// \sa `CGAL::bottom_vertex_2()`
@@ -113,7 +113,7 @@ ForwardIterator top_vertex_2(ForwardIterator first,
 /// 	  Only the members `Less_yx_2` and
 /// 	  `less_yx_2_object()` are used.
 /// \tparam ForwardIterator must have `Traits::Point_2` as value type.
-/// 
+///
 /// \sa `CGAL::left_vertex_2()`
 /// \sa `CGAL::right_vertex_2()`
 /// \sa `CGAL::top_vertex_2()`
@@ -130,7 +130,7 @@ ForwardIterator bottom_vertex_2(ForwardIterator first,
 /// clockwise polygons. If the polygon is not simple, the area is not well defined.
 /// The functionality is also available by the `polygon_area_2()` function, which
 /// returns the area instead of taking it as a parameter.
-/// 
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  Only the following members of this traits class are used:
@@ -139,13 +139,13 @@ ForwardIterator bottom_vertex_2(ForwardIterator first,
 ///   - `FT`
 ///   - `compute_area_2_object()`
 /// \tparam ForwardIterator must have `Traits::Point_2` as value type.
-/// 
+///
 /// \sa `CGAL::polygon_area_2()`
 /// \sa `PolygonTraits_2`
 /// \sa `CGAL::orientation_2()`
 /// \sa `CGAL::Polygon_2`
 template <class ForwardIterator, class PolygonTraits>
-void 
+void
 area_2( ForwardIterator first, ForwardIterator last,
    	typename PolygonTraits::FT &result,
         const PolygonTraits& traits)
@@ -170,20 +170,20 @@ area_2( ForwardIterator first, ForwardIterator last,
 /// `[first,last)`.
 /// The sign is positive for counterclockwise polygons, negative for
 /// clockwise polygons. If the polygon is not simple, the area is not well defined.
-/// 
+///
 /// \tparam Traits is a model of the concept `PolygonTraits_2`. Only the following members of this traits class are used:
 ///   - `Compute_area_2` : Computes the signed area of the
 /// 	    oriented triangle defined by 3 `Point_2` passed as arguments.
 ///   - `FT`
 ///   - `compute_area_2_object`
 /// \tparam ForwardIterator must have `Traits::Point_2` as value type.
-/// 
-/// 
+///
+///
 /// \sa `PolygonTraits_2 `
 /// \sa `CGAL::orientation_2()`
 /// \sa `CGAL::Polygon_2 `
 template <class ForwardIterator, class PolygonTraits>
-typename PolygonTraits::FT 
+typename PolygonTraits::FT
 polygon_area_2( ForwardIterator first, ForwardIterator last,
 		const PolygonTraits& traits)
 {
@@ -205,7 +205,7 @@ polygon_area_2( ForwardIterator first, ForwardIterator last,
 }
 
 /// Checks if the polygon is convex.
-/// 
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  Only the following members of this traits class are used:
@@ -223,9 +223,9 @@ bool is_convex_2(ForwardIterator first,
 		 const PolygonTraits& traits);
 
 /// Checks if the polygon defined by the
-/// iterator range `[first,last)` is simple, that is, if the edges 
+/// iterator range `[first,last)` is simple, that is, if the edges
 /// do not intersect, except consecutive edges in their common vertex.
-/// 
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  Only the following members of this traits class are used:
@@ -235,14 +235,14 @@ bool is_convex_2(ForwardIterator first,
 ///   - `less_xy_2_object()`
 ///   - `orientation_2_object()`
 /// \tparam ForwardIterator must have `PolygonTraits::Point_2` as value type.
-/// 
+///
 /// \cgalHeading{Implementation}
-/// 
+///
 /// The simplicity test is implemented by means of a plane sweep algorithm.
 /// The algorithm is quite robust when used with inexact number types.
 /// The running time is `O(n log n)`, where n is the number of vertices of the
 /// polygon.
-/// 
+///
 /// \sa `PolygonTraits_2`
 /// \sa `CGAL::Polygon_2`
 template <class ForwardIterator, class PolygonTraits>
@@ -286,8 +286,8 @@ Oriented_side oriented_side_2(ForwardIterator first,
 /// outside. If the point is on a polygon edge, a special value is returned.  A
 /// simple polygon divides the plane in an unbounded and a bounded region.
 /// According to the definition points in the bounded region are inside the polygon.
-/// 
-/// 
+///
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  Only the following members of this traits class are used:
@@ -298,15 +298,15 @@ Oriented_side oriented_side_2(ForwardIterator first,
 ///   - `compare_y_2_object()`
 ///   - `orientation_2_object()`
 /// \tparam ForwardIterator must have `Traits::Point_2` as value type.
-/// 
+///
 /// \cgalHeading{Implementation}
-/// 
+///
 /// The running time is linear in the number of vertices of the polygon.
 /// A horizontal ray is taken to count the number of intersections.
 /// Special care is taken that the result is correct even if there are degeneracies
 /// (if the ray passes through a vertex).
 ///
-/// 
+///
 /// \sa `PolygonTraits_2`
 /// \sa `CGAL::oriented_side_2()`
 /// \sa `CGAL::Polygon_2 `
@@ -319,7 +319,7 @@ Bounded_side bounded_side_2(ForwardIterator first,
 
 /// Computes if a polygon is clockwise or counterclockwise oriented.
 /// \pre `is_simple_2(first, last, traits);`
-/// 
+///
 /// \tparam Traits is a model of the concept
 /// 	  `PolygonTraits_2`.
 /// 	  Only the following members of this traits class are used:
@@ -327,9 +327,9 @@ Bounded_side bounded_side_2(ForwardIterator first,
 ///   - `less_xy_2_object()`
 ///   - `orientation_2_object()`
 /// \tparam ForwardIterator must have`Traits::Point_2` as value type.
-/// 
-/// 
-/// 
+///
+///
+///
 /// \sa `PolygonTraits_2`
 /// \sa `CGAL::is_simple_2()`
 /// \sa `CGAL::Polygon_2`
@@ -349,9 +349,9 @@ template <class ForwardIterator>
 inline
 ForwardIterator left_vertex_2(ForwardIterator first,
 			      ForwardIterator last)
-{  
+{
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return left_vertex_2(first, last, K());
 }
 
@@ -360,9 +360,9 @@ template <class ForwardIterator>
 inline
 ForwardIterator right_vertex_2(ForwardIterator first,
 			       ForwardIterator last)
-{ 
+{
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return right_vertex_2(first, last, K());
 }
 
@@ -373,7 +373,7 @@ ForwardIterator top_vertex_2(ForwardIterator first,
 			     ForwardIterator last)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return top_vertex_2(first, last, K());
 }
 
@@ -384,7 +384,7 @@ ForwardIterator bottom_vertex_2(ForwardIterator first,
 				ForwardIterator last)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return bottom_vertex_2(first, last, K());
 }
 
@@ -395,7 +395,7 @@ void area_2(ForwardIterator first,
 	    Numbertype& result)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   area_2(first, last, result, K());
 }
 
@@ -407,7 +407,7 @@ bool is_convex_2(ForwardIterator first,
 		 ForwardIterator last)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return is_convex_2(first, last, K());
 }
 
@@ -419,7 +419,7 @@ bool is_simple_2(ForwardIterator first,
 		 ForwardIterator last)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return is_simple_2(first, last, K());
 }
 
@@ -431,7 +431,7 @@ Oriented_side oriented_side_2(
   const typename std::iterator_traits<ForwardIterator>::value_type& point)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return oriented_side_2(first, last, point, K());
 }
 
@@ -444,7 +444,7 @@ Bounded_side bounded_side_2(
   const typename std::iterator_traits<ForwardIterator>::value_type& point)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return bounded_side_2(first, last, point, K());
 }
 
@@ -456,7 +456,7 @@ Orientation orientation_2(ForwardIterator first,
 			  ForwardIterator last)
 {
   typedef typename Kernel_traits<
-    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K; 
+    typename std::iterator_traits<ForwardIterator>::value_type>::Kernel K;
   return orientation_2(first, last, K());
 }
 

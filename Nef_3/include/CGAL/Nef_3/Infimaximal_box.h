@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Peter Hachenberger    <hachenberger@mpi-sb.mpg.de>
 
@@ -121,7 +121,7 @@ class Infimaximal_box {
   }
 
   template <typename SNC_structure>
-  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle , 
+  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle ,
 				SNC_structure& ) {
     return false;
   }
@@ -143,7 +143,7 @@ class Infimaximal_box {
     return NT(1);
   }
 
-  static void compute_min_max(const Plane_3& , NT orth_coords[3], int& /* min */, int& /* max */) { 
+  static void compute_min_max(const Plane_3& , NT orth_coords[3], int& /* min */, int& /* max */) {
     (void)orth_coords;
   }
 
@@ -156,9 +156,9 @@ class Infimaximal_box {
   }
 
   template <typename SNC_constructor, typename Mark>
-  static std::list<typename SNC_constructor::Vertex_handle> 
-    create_vertices_on_infibox(SNC_constructor&, 
-			       const Plane_3&, const std::list<Point_3>&, 
+  static std::list<typename SNC_constructor::Vertex_handle>
+    create_vertices_on_infibox(SNC_constructor&,
+			       const Plane_3&, const std::list<Point_3>&,
 			       const Mark&, const Mark&, const Mark&) {
     // TODO: warning oder assertion einbauen
     return std::list<typename SNC_constructor::Vertex_handle>();
@@ -169,8 +169,8 @@ class Infimaximal_box {
     return std::list<Point_3>();
   }
 
-  static typename std::list<Point_3>::const_iterator segment_on_side(int /*side_of_point*/, 
-							      const std::list<Point_3>& segs) {  
+  static typename std::list<Point_3>::const_iterator segment_on_side(int /*side_of_point*/,
+							      const std::list<Point_3>& segs) {
     return segs.begin();
   }
 
@@ -207,7 +207,7 @@ class Infimaximal_box {
 
   template <typename Halfedge_handle>
   static bool is_edge_on_infibox(Halfedge_handle ) {
-    return false; 
+    return false;
   }
 
   template <typename Vertex_handle>
@@ -240,7 +240,7 @@ class Infimaximal_box<Tag_true, Kernel> {
   typedef typename Kernel::Aff_transformation_3  Aff_transformation_3;
 
   enum Boundary { EXCLUDED=0, INCLUDED=1 };
-  
+
   static const int RADIUS = 10000000;
 
   static bool standard_kernel() {
@@ -275,11 +275,11 @@ class Infimaximal_box<Tag_true, Kernel> {
 
   static Point_3 simplify(Point_3& p) {
     CGAL_assertion(p.hw().degree() == 0);
-    int deg = p.hx().degree() > p.hy().degree() 
-      ? p.hx().degree() 
+    int deg = p.hx().degree() > p.hy().degree()
+      ? p.hx().degree()
       : p.hy().degree();
-    deg = p.hz().degree() > deg 
-      ? p.hz().degree() 
+    deg = p.hz().degree() > deg
+      ? p.hz().degree()
       : deg;
     return Point_3(p.hx().degree() == deg ? p.hx()[deg] : 0,
 		   p.hy().degree() == deg ? p.hy()[deg] : 0,
@@ -365,16 +365,16 @@ class Infimaximal_box<Tag_true, Kernel> {
   }
 
   template <typename SNC_structure>
-  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle sf, 
+  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle sf,
 				SNC_structure& snc) {
     typename SNC_structure::SNC_decorator D(snc);
     return (D.volume(sf) == snc.volumes_begin());
   }
 
   template <typename SNC_constructor, typename Mark>
-  static std::list<typename SNC_constructor::Vertex_handle> 
-    create_vertices_on_infibox(SNC_constructor& C, 
-			       const Plane_3& h, const std::list<Point_3>& points, 
+  static std::list<typename SNC_constructor::Vertex_handle>
+    create_vertices_on_infibox(SNC_constructor& C,
+			       const Plane_3& h, const std::list<Point_3>& points,
 			       const Mark& bnd, const Mark& inside, const Mark& outside) {
     return C.create_vertices_on_infibox(h,points,bnd,inside,outside);
   }
@@ -386,17 +386,17 @@ class Infimaximal_box<Tag_true, Kernel> {
 
   static void compute_min_max(const Plane_3& h, NT orth_coords[3], int& min, int& max) {
     Vector_3 orth = h.orthogonal_vector();
-    
+
     orth_coords[0] = CGAL_NTS abs(orth.hx()[0]);
     orth_coords[1] = CGAL_NTS abs(orth.hy()[0]);
     orth_coords[2] = CGAL_NTS abs(orth.hz()[0]);
-    
+
     max = 0;
     if(orth_coords[1] > orth_coords[0])
       max = 1;
     if(orth_coords[2] > orth_coords[max])
-      max = 2;   
-    
+      max = 2;
+
     min = 0;
     if(orth_coords[1] < orth_coords[0])
       min = 1;
@@ -428,7 +428,7 @@ class Infimaximal_box<Tag_true, Kernel> {
     RT hz(pin.hz()-lz);
     RT hw(pin.hw());
     Point_3 p(Point_3(lx,ly,lz,hw).transform(aff));
-    return Point_3(hx+p.hx(),hy+p.hy(),hz+p.hz(),hw);    
+    return Point_3(hx+p.hx(),hy+p.hy(),hz+p.hz(),hw);
   }
 
   static Point_3 normalize_transformed_vertex(const Point_3& p) {
@@ -483,8 +483,8 @@ class Infimaximal_box<Tag_true, Kernel> {
     return Point_3();
   }
 
-  static typename std::list<Point_3>::const_iterator segment_on_side(int side_of_point, 
-								     const std::list<Point_3>& segs) {  
+  static typename std::list<Point_3>::const_iterator segment_on_side(int side_of_point,
+								     const std::list<Point_3>& segs) {
 
     typename std::list<Point_3>::const_iterator s1,t1;
     for(s1 = segs.begin(); s1 != segs.end(); ++s1) {
@@ -492,29 +492,29 @@ class Infimaximal_box<Tag_true, Kernel> {
       ++t1;
       if(t1 == segs.end()) t1 = segs.begin();
       switch(side_of_point) {
-      case  1: 
-	if( s1->hx()(1) != s1->hw()) continue; 
+      case  1:
+	if( s1->hx()(1) != s1->hw()) continue;
 	if( t1->hx()(1) != t1->hw()) continue;
 	return s1;
-      case -1: 
+      case -1:
 	if(-s1->hx()(1) != s1->hw()) continue;
-	if(-t1->hx()(1) != t1->hw()) continue; 
+	if(-t1->hx()(1) != t1->hw()) continue;
 	return s1;
-      case  2: 
+      case  2:
 	if( s1->hy()(1) != s1->hw()) continue;
 	if( t1->hy()(1) != t1->hw()) continue;
 	return s1;	break;
-      case -2: 
-	if(-s1->hy()(1) != s1->hw()) continue; 
-	if(-t1->hy()(1) != t1->hw()) continue; 
+      case -2:
+	if(-s1->hy()(1) != s1->hw()) continue;
+	if(-t1->hy()(1) != t1->hw()) continue;
 	return s1;
-      case  3: 
-	if( s1->hz()(1) != s1->hw()) continue; 
-	if( t1->hz()(1) != t1->hw()) continue; 
+      case  3:
+	if( s1->hz()(1) != s1->hw()) continue;
+	if( t1->hz()(1) != t1->hw()) continue;
 	return s1;
-      case -3: 
-	if(-s1->hz()(1) != s1->hw()) continue; 
-	if(-t1->hz()(1) != t1->hw()) continue; 
+      case -3:
+	if(-s1->hz()(1) != s1->hw()) continue;
+	if(-t1->hz()(1) != t1->hw()) continue;
 	return s1;
       default: CGAL_error_msg( "wrong value");
       }
@@ -571,7 +571,7 @@ class Infimaximal_box<Tag_true, Kernel> {
 #ifdef CGAL_NEF_INDEXED_ITEMS
 				  , base
 #endif
-				  ); 
+				  );
   }
 
   template <typename Halfedge_handle>
@@ -585,18 +585,18 @@ class Infimaximal_box<Tag_true, Kernel> {
     RT Outer(0,CGAL_NTS abs(p.hw()[0]));
 
     // TODO: are these lines really redundant??
-    if(CGAL_NTS abs(p.hx()) == Outer && 
+    if(CGAL_NTS abs(p.hx()) == Outer &&
        ((p.hx() > 0 && v.hx() > 0)||(p.hx() < 0 && v.hx() < 0))) return false;
-    if(CGAL_NTS abs(p.hy()) == Outer && 
+    if(CGAL_NTS abs(p.hy()) == Outer &&
        ((p.hy() > 0 && v.hy() > 0)||(p.hy() < 0 && v.hy() < 0))) return false;
-    if(CGAL_NTS abs(p.hz()) == Outer && 
+    if(CGAL_NTS abs(p.hz()) == Outer &&
        ((p.hz() > 0 && v.hz() > 0)||(p.hz() < 0 && v.hz() < 0))) return false;
 
     if(CGAL_NTS abs(p.hx()) == Outer && v.hx() == 0) return true;
     if(CGAL_NTS abs(p.hy()) == Outer && v.hy() == 0) return true;
     if(CGAL_NTS abs(p.hz()) == Outer && v.hz() == 0) return true;
 
-    return false; 
+    return false;
   }
 
 
@@ -607,18 +607,18 @@ class Infimaximal_box<Tag_true, Kernel> {
     CGAL_NEF_TRACEN("Point " << p);
     if(is_standard(p)) return false;
 
-    CGAL_NEF_TRACEN("Circle " << sh->circle() << 
+    CGAL_NEF_TRACEN("Circle " << sh->circle() <<
 	   " has signum " << sign_of(sh->circle()));
     CGAL_assertion(p.hw().degree() == 0);
     RT R(0,CGAL_NTS abs(p.hw()[0]));
 
-    if((sh->circle().a() == 0 && sh->circle().b() == 0 
-	&& CGAL_NTS abs(p.hz())== R) || 
-       (sh->circle().a() == 0 && sh->circle().c() == 0 
+    if((sh->circle().a() == 0 && sh->circle().b() == 0
+	&& CGAL_NTS abs(p.hz())== R) ||
+       (sh->circle().a() == 0 && sh->circle().c() == 0
 	&& CGAL_NTS abs(p.hy())== R) ||
-       (sh->circle().b() == 0 && sh->circle().c() == 0 
+       (sh->circle().b() == 0 && sh->circle().c() == 0
 	&& CGAL_NTS abs(p.hx())== R))
-      if(is_edge_on_infibox(sh->source()) && 
+      if(is_edge_on_infibox(sh->source()) &&
 	 is_edge_on_infibox(sh->twin()->source()))
 	return true;
 
@@ -637,10 +637,10 @@ class Infimaximal_box<Tag_true, Kernel> {
       }
     return true;
   }
-  
+
   template <typename Sphere_map>
   static bool is_complex_facet_infibox_intersection(const Sphere_map& sm) {
-    
+
     typename Sphere_map::SHalfedge_const_iterator sei;
     bool found = false;
     CGAL_forall_sedges(sei, sm) {
@@ -665,13 +665,13 @@ class Infimaximal_box<Tag_true, Kernel> {
     Point_3 p(e->center_vertex()->point());
     Direction_3 d(e->vector());
 
-    if((CGAL_NTS abs(p.hx()) == CGAL_NTS abs(p.hw()) || 
+    if((CGAL_NTS abs(p.hx()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(1,0,0) ||
 	d == Direction_3(-1,0,0)) &&
-       (CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()) || 
+       (CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(0,1,0) ||
 	d == Direction_3(0,-1,0)) &&
-       (CGAL_NTS abs(p.hz()) == CGAL_NTS abs(p.hw()) || 
+       (CGAL_NTS abs(p.hz()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(0,0,1) ||
 	d == Direction_3(0,0,-1)))
       return true;
@@ -683,7 +683,7 @@ class Infimaximal_box<Tag_true, Kernel> {
 
     Point_3 p(e->center_vertex()->point());
     Direction_3 d(e->vector());
-    
+
     if(d == Direction_3(1,0,0) || d == Direction_3(-1,0,0)) {
       if(CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()))
 	return true;
@@ -724,7 +724,7 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
   typedef typename Kernel::Aff_transformation_3  Aff_transformation_3;
 
   enum Boundary { EXCLUDED=0, INCLUDED=1 };
-  
+
   static const int RADIUS = 10000000;
 
   static bool standard_kernel() {
@@ -759,11 +759,11 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
 
   static Point_3 simplify(Point_3& p) {
     CGAL_assertion(p.hw().degree() == 0);
-    int deg = p.hx().degree() > p.hy().degree() 
-      ? p.hx().degree() 
+    int deg = p.hx().degree() > p.hy().degree()
+      ? p.hx().degree()
       : p.hy().degree();
-    deg = p.hz().degree() > deg 
-      ? p.hz().degree() 
+    deg = p.hz().degree() > deg
+      ? p.hz().degree()
       : deg;
     return Point_3(p.hx().degree() == deg ? p.hx()[deg] : 0,
 		   p.hy().degree() == deg ? p.hy()[deg] : 0,
@@ -851,16 +851,16 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
   }
 
   template <typename SNC_structure>
-  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle sf, 
+  static bool is_beyond_Infibox(typename SNC_structure::SFace_handle sf,
 				SNC_structure& snc) {
     typename SNC_structure::SNC_decorator D(snc);
     return (D.volume(sf) == snc.volumes_begin());
   }
 
   template <typename SNC_constructor, typename Mark>
-  static std::list<typename SNC_constructor::Vertex_handle> 
-    create_vertices_on_infibox(SNC_constructor& C, 
-			       const Plane_3& h, const std::list<Point_3>& points, 
+  static std::list<typename SNC_constructor::Vertex_handle>
+    create_vertices_on_infibox(SNC_constructor& C,
+			       const Plane_3& h, const std::list<Point_3>& points,
 			       const Mark& bnd, const Mark& inside, const Mark& outside) {
     return C.create_vertices_on_infibox(h,points,bnd,inside,outside);
   }
@@ -872,17 +872,17 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
 
   static void compute_min_max(const Plane_3& h, NT orth_coords[3], int& min, int& max) {
     Vector_3 orth = h.orthogonal_vector();
-    
+
     orth_coords[0] = CGAL_NTS abs(orth.hx()[0]);
     orth_coords[1] = CGAL_NTS abs(orth.hy()[0]);
     orth_coords[2] = CGAL_NTS abs(orth.hz()[0]);
-    
+
     max = 0;
     if(orth_coords[1] > orth_coords[0])
       max = 1;
     if(orth_coords[2] > orth_coords[max])
-      max = 2;   
-    
+      max = 2;
+
     min = 0;
     if(orth_coords[1] < orth_coords[0])
       min = 1;
@@ -914,7 +914,7 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
     RT hz(pin.hz()-lz);
     RT hw(pin.hw());
     Point_3 p(Point_3(lx,ly,lz,hw).transform(aff));
-    return Point_3(hx+p.hx(),hy+p.hy(),hz+p.hz(),hw);    
+    return Point_3(hx+p.hx(),hy+p.hy(),hz+p.hz(),hw);
   }
 
   static Point_3 normalize_transformed_vertex(const Point_3& p) {
@@ -969,8 +969,8 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
     return Point_3();
   }
 
-  static typename std::list<Point_3>::const_iterator segment_on_side(int side_of_point, 
-								     const std::list<Point_3>& segs) {  
+  static typename std::list<Point_3>::const_iterator segment_on_side(int side_of_point,
+								     const std::list<Point_3>& segs) {
 
     typename std::list<Point_3>::const_iterator s1,t1;
     for(s1 = segs.begin(); s1 != segs.end(); ++s1) {
@@ -978,29 +978,29 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
       ++t1;
       if(t1 == segs.end()) t1 = segs.begin();
       switch(side_of_point) {
-      case  1: 
-	if( s1->hx()(1) != s1->hw()) continue; 
+      case  1:
+	if( s1->hx()(1) != s1->hw()) continue;
 	if( t1->hx()(1) != t1->hw()) continue;
 	return s1;
-      case -1: 
+      case -1:
 	if(-s1->hx()(1) != s1->hw()) continue;
-	if(-t1->hx()(1) != t1->hw()) continue; 
+	if(-t1->hx()(1) != t1->hw()) continue;
 	return s1;
-      case  2: 
+      case  2:
 	if( s1->hy()(1) != s1->hw()) continue;
 	if( t1->hy()(1) != t1->hw()) continue;
 	return s1;	break;
-      case -2: 
-	if(-s1->hy()(1) != s1->hw()) continue; 
-	if(-t1->hy()(1) != t1->hw()) continue; 
+      case -2:
+	if(-s1->hy()(1) != s1->hw()) continue;
+	if(-t1->hy()(1) != t1->hw()) continue;
 	return s1;
-      case  3: 
-	if( s1->hz()(1) != s1->hw()) continue; 
-	if( t1->hz()(1) != t1->hw()) continue; 
+      case  3:
+	if( s1->hz()(1) != s1->hw()) continue;
+	if( t1->hz()(1) != t1->hw()) continue;
 	return s1;
-      case -3: 
-	if(-s1->hz()(1) != s1->hw()) continue; 
-	if(-t1->hz()(1) != t1->hw()) continue; 
+      case -3:
+	if(-s1->hz()(1) != s1->hw()) continue;
+	if(-t1->hz()(1) != t1->hw()) continue;
 	return s1;
       default: CGAL_error_msg( "wrong value");
       }
@@ -1057,7 +1057,7 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
 #ifdef CGAL_NEF_INDEXED_ITEMS
 				  , base
 #endif
-				  ); 
+				  );
   }
 
   template <typename Halfedge_handle>
@@ -1071,18 +1071,18 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
     RT Outer(0,CGAL_NTS abs(p.hw()[0]));
 
     // TODO: are these lines really redundant??
-    if(CGAL_NTS abs(p.hx()) == Outer && 
+    if(CGAL_NTS abs(p.hx()) == Outer &&
        ((p.hx() > 0 && v.hx() > 0)||(p.hx() < 0 && v.hx() < 0))) return false;
-    if(CGAL_NTS abs(p.hy()) == Outer && 
+    if(CGAL_NTS abs(p.hy()) == Outer &&
        ((p.hy() > 0 && v.hy() > 0)||(p.hy() < 0 && v.hy() < 0))) return false;
-    if(CGAL_NTS abs(p.hz()) == Outer && 
+    if(CGAL_NTS abs(p.hz()) == Outer &&
        ((p.hz() > 0 && v.hz() > 0)||(p.hz() < 0 && v.hz() < 0))) return false;
 
     if(CGAL_NTS abs(p.hx()) == Outer && v.hx() == 0) return true;
     if(CGAL_NTS abs(p.hy()) == Outer && v.hy() == 0) return true;
     if(CGAL_NTS abs(p.hz()) == Outer && v.hz() == 0) return true;
 
-    return false; 
+    return false;
   }
 
 
@@ -1093,18 +1093,18 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
     CGAL_NEF_TRACEN("Point " << p);
     if(is_standard(p)) return false;
 
-    CGAL_NEF_TRACEN("Circle " << sh->circle() << 
+    CGAL_NEF_TRACEN("Circle " << sh->circle() <<
 	   " has signum " << sign_of(sh->circle()));
     CGAL_assertion(p.hw().degree() == 0);
     RT R(0,CGAL_NTS abs(p.hw()[0]));
 
-    if((sh->circle().a() == 0 && sh->circle().b() == 0 
-	&& CGAL_NTS abs(p.hz())== R) || 
-       (sh->circle().a() == 0 && sh->circle().c() == 0 
+    if((sh->circle().a() == 0 && sh->circle().b() == 0
+	&& CGAL_NTS abs(p.hz())== R) ||
+       (sh->circle().a() == 0 && sh->circle().c() == 0
 	&& CGAL_NTS abs(p.hy())== R) ||
-       (sh->circle().b() == 0 && sh->circle().c() == 0 
+       (sh->circle().b() == 0 && sh->circle().c() == 0
 	&& CGAL_NTS abs(p.hx())== R))
-      if(is_edge_on_infibox(sh->source()) && 
+      if(is_edge_on_infibox(sh->source()) &&
 	 is_edge_on_infibox(sh->twin()->source()))
 	return true;
 
@@ -1123,10 +1123,10 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
       }
     return true;
   }
-  
+
   template <typename Sphere_map>
   static bool is_complex_facet_infibox_intersection(const Sphere_map& sm) {
-    
+
     typename Sphere_map::SHalfedge_const_iterator sei;
     bool found = false;
     CGAL_forall_sedges(sei, sm) {
@@ -1151,13 +1151,13 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
     Point_3 p(e->center_vertex()->point());
     Direction_3 d(e->vector());
 
-    if((CGAL_NTS abs(p.hx()) == CGAL_NTS abs(p.hw()) || 
+    if((CGAL_NTS abs(p.hx()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(1,0,0) ||
 	d == Direction_3(-1,0,0)) &&
-       (CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()) || 
+       (CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(0,1,0) ||
 	d == Direction_3(0,-1,0)) &&
-       (CGAL_NTS abs(p.hz()) == CGAL_NTS abs(p.hw()) || 
+       (CGAL_NTS abs(p.hz()) == CGAL_NTS abs(p.hw()) ||
 	d == Direction_3(0,0,1) ||
 	d == Direction_3(0,0,-1)))
       return true;
@@ -1169,7 +1169,7 @@ class Infimaximal_box<Tag_true, CGAL::Pseudo_extended_homogeneous<RT_> > {
 
     Point_3 p(e->center_vertex()->point());
     Direction_3 d(e->vector());
-    
+
     if(d == Direction_3(1,0,0) || d == Direction_3(-1,0,0)) {
       if(CGAL_NTS abs(p.hy()) == CGAL_NTS abs(p.hw()))
 	return true;

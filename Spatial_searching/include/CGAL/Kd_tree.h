@@ -131,7 +131,7 @@ private:
     leaf_nodes.push_back(node);
     Leaf_node_handle nh = &leaf_nodes.back();
 
-   
+
     return nh;
   }
 
@@ -200,8 +200,8 @@ private:
       nh->upper_ch = create_leaf_node(c);
     }
 
-    
-    
+
+
 
     return nh;
   }
@@ -232,7 +232,7 @@ private:
       nh->upper_ch = create_leaf_node(c);
     }
 
-   
+
 
     return nh;
   }

@@ -18,7 +18,7 @@
  *
  * File: BigFloat.cpp
  * Synopsis:
- *       BigFloat numbers with error bounds 
+ *       BigFloat numbers with error bounds
  *
  *       EXACTNESS PROPERTY:
  *       ==================
@@ -29,7 +29,7 @@
  *       but this again preserves exactness.  Such exactness
  *       properties are used in our Newton iteration/Sturm Sequences.
  *
- * Written by 
+ * Written by
  *       Chee Yap <yap@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
@@ -54,9 +54,9 @@
 #include <CGAL/CORE/BigFloat.h>
 #include <CGAL/CORE/Expr.h>
 #include <CGAL/tss.h>
-#include <sstream> 
+#include <sstream>
 
-namespace CORE { 
+namespace CORE {
 
 
 ////////////////////////////////////////////////////////////
@@ -288,13 +288,13 @@ void BigFloatRep::normal() {
     m   >>= bits_f;  // reduce mantissa by bits_f many bits
     err >>= bits_f;  // same for err
     err +=  2;       // why 2?
-    exp +=  f;       
+    exp +=  f;
   }
   if (err == 0)      // unlikely, if err += 2 above
     eliminateTrailingZeroes();
 }
 
-// bigNormal(err) 
+// bigNormal(err)
 //     convert a bigInt error value (=err) into an error that fits into
 //     a long number.  This is done by
 //     by increasing the exponent, and corresponding decrease
@@ -340,7 +340,7 @@ void BigFloatRep::add(const BigFloatRep& x, const BigFloatRep& y) {
     } else {//  x.err > 0
       m   = x.m + chunkShift(y.m, - expDiff); // negative shift!
       err = x.err + 5; // To account for y.err (but why 5?)
-      exp = x.exp;     // 
+      exp = x.exp;     //
       // normal();
     }
   } else if (!expDiff) {//  x.exp == y.exp

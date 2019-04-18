@@ -62,7 +62,7 @@ CGAL_INLINE_FUNCTION
 int testBmpHeader(char *magic,const char *) {
   if( !strncmp(magic, BMP_MAGIC, strlen(BMP_MAGIC)))
     return 0;
-  else 
+  else
     return -1;
 }
 
@@ -105,7 +105,7 @@ int readBmpImage( const char *name,_image *im)
 
 
 CGAL_INLINE_FUNCTION
-void *_readBmpImage( const char *name, 
+void *_readBmpImage( const char *name,
 		     int *dimx, int *dimy, int *dimz )
 {
   const char *proc="_readBmpImage";
@@ -120,10 +120,10 @@ void *_readBmpImage( const char *name,
   long filePos = 0;
   int numImages = 0, i = 0;
   int rc = 0;
-    
+
     fp = fopen(name, "rb");
     if (fp == NULL) {
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: error in opening %s\n", proc, name );
       return( (void*)NULL );
     }
@@ -137,7 +137,7 @@ void *_readBmpImage( const char *name,
     rc = readUINT16little(fp, &fileType);
     if (rc != 0) {
       fclose(fp);
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: error in getting file type %s\n", proc, name );
       return( (void*)NULL );
     }
@@ -234,7 +234,7 @@ void *_readBmpImage( const char *name,
     fclose(fp);
 
 
-  
+
     /*
      * At this point, everything's been read.  Display status messages based
      * on the return values.
@@ -242,29 +242,29 @@ void *_readBmpImage( const char *name,
     switch (rc) {
     case 1000:
     case 1006:
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: File is not a valid bitmap file\n", proc );
       break;
     case 1001:
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: Illegal information in an image\n", proc );
       break;
     case 1002:
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: Legal information that I can't handle yet in an image\n", proc );
       break;
     case 1003:
     case 1004:
     case 1005:
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: Ran out of memory\n", proc );
       break;
     case 0:
-      if ( get_static_verbose_bmp() > 1 ) 
+      if ( get_static_verbose_bmp() > 1 )
 	fprintf( stderr, "%s: Got good data from file, writing results\n", proc );
       break;
     default:
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: Error reading file rc=%d\n", proc,rc );
       break;
     }
@@ -293,17 +293,17 @@ void *_readBmpImage( const char *name,
 	}
 	return( (void*)NULL );
     }
-    
-    
+
+
     /*
      * Dump the images.
      */
-    if ( get_static_verbose_bmp() > 1 ) 
+    if ( get_static_verbose_bmp() > 1 )
       fprintf (stderr, "%s: There are %d images in the file\n", proc, numImages);
 
-    if ( numImages >= 2 ) 
+    if ( numImages >= 2 )
       fprintf (stderr, "%s: read only first image among %d\n", proc, numImages );
-    
+
     /*
      * my stuff:
      * just reading one bmp image
@@ -313,7 +313,7 @@ void *_readBmpImage( const char *name,
 
       buf = (void*)malloc( widths[0]*heights[0]*3 * sizeof( unsigned char ) );
       if ( buf == (void*)NULL ) {
-	if ( get_static_verbose_bmp() ) 
+	if ( get_static_verbose_bmp() )
 	  fprintf( stderr, "%s: error in allocating data buffer for %s\n", proc, name );
 
 	for (i=0; i<numImages; i++) {
@@ -341,15 +341,15 @@ void *_readBmpImage( const char *name,
 	myBuf[i+1] = argbs[0][row * widths[0] + col].green;
 	myBuf[i+2] = argbs[0][row * widths[0] + col].blue;
       }
-      
+
       *dimx = int(widths[0]);
       *dimy = int(heights[0]);
       *dimz = 3;
 
     } else {
-      if ( get_static_verbose_bmp() ) 
+      if ( get_static_verbose_bmp() )
 	fprintf( stderr, "%s: no image or null image\n", proc );
-      
+
       for (i=0; i<numImages; i++) {
 	if (argbs[i] != NULL)
 	  free(argbs[i]);
@@ -363,7 +363,7 @@ void *_readBmpImage( const char *name,
       free(xorMasks);
       free(widths);
       free(heights);
-      
+
       return( (void*)NULL );
     }
 
@@ -382,7 +382,7 @@ void *_readBmpImage( const char *name,
     free(xorMasks);
     free(widths);
     free(heights);
-    
+
     return( buf );
 
 
@@ -425,13 +425,13 @@ void *_readBmpImage( const char *name,
       } else {
 	/*
 	 * If there image has no colors, say so.  (monochrome ICO and PTR
-	 * files) 
+	 * files)
 	 */
 	fprintf (stderr, "No color image\n");
       }
 
 
-      
+
       if (xorMasks[i] != NULL) {
 	/*
 	 * If the image has an xor mask, dump it.  (ICO and PTR files)
@@ -452,7 +452,7 @@ void *_readBmpImage( const char *name,
 	 */
 	fprintf (stderr, "No xor mask\n");
       }
-      
+
 
 
       if (andMasks[i] != NULL) {
@@ -475,13 +475,13 @@ void *_readBmpImage( const char *name,
 	 */
 	fprintf (stderr, "No and mask\n");
       }
-      
+
 
       if (i != numImages-1)
 	fprintf (stderr, "\n------------------------------------------\n\n");
-      
+
     }
-    
+
     /*
      * Dumping is complete.  Free all the arrays and quit
      */
@@ -499,7 +499,7 @@ void *_readBmpImage( const char *name,
     free(xorMasks);
     free(widths);
     free(heights);
-    
+
     return( buf );
 #endif
 }
@@ -509,7 +509,7 @@ void IoBmp_verbose ( )
 {
   if ( get_static_verbose_bmp() <= 0 )
     get_static_verbose_bmp() = 1;
-  else 
+  else
     get_static_verbose_bmp() += 1;
 }
 

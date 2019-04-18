@@ -36,7 +36,7 @@ namespace CGAL {
     typename GT,
     typename Function_
     >
-  class Poisson_implicit_surface_3 
+  class Poisson_implicit_surface_3
   {
   public:
     typedef GT Geom_traits;
@@ -61,7 +61,7 @@ namespace CGAL {
 	gt(gt)
     {
       squared_error = error_bound * error_bound;
-      squared_error = squared_error * 
+      squared_error = squared_error *
         gt.compute_squared_radius_3_object()(bounding_sphere);
     }
 
@@ -129,7 +129,7 @@ namespace CGAL {
 
   // non documented class
   template <typename FT, typename Point>
-  class Poisson_implicit_function_wrapper : public CGAL::cpp98::unary_function<Point, FT> 
+  class Poisson_implicit_function_wrapper : public CGAL::cpp98::unary_function<Point, FT>
   {
     typedef FT (*Poisson_implicit_function)(FT, FT, FT);
 

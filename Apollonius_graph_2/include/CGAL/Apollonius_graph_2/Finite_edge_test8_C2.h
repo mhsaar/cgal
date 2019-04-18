@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -141,7 +141,7 @@ public:
 
       Orientation o123_2 = orientation123(p2, q);
       if ( o123_2 != NEGATIVE ) { return false; }
-      
+
       Orientation o142_1 = orientation142(p1, q);
       if ( o142_1 != NEGATIVE ) { return false; }
 
@@ -272,7 +272,7 @@ public:
 
       Orientation o123_2 = orientation123(p2, q);
       if ( o123_2 != NEGATIVE ) { return false; }
-      
+
       Orientation o142_1 = orientation142(p1, q);
       if ( o142_1 != NEGATIVE ) { return false; }
 
@@ -562,8 +562,8 @@ public:
 
   inline
   Sign sqrt_ext_sign(const FT& A1, const FT& Dr, const FT& B,
-		     const FT& Dx1, const FT& Dy1, 
-		     const FT& Dx2, const FT& Dy2, 
+		     const FT& Dx1, const FT& Dy1,
+		     const FT& Dx2, const FT& Dy2,
 		     const Field_with_sqrt_tag&) const
   {
     FT D = CGAL::square(Dx1) + CGAL::square(Dy1) - CGAL::square(Dr);
@@ -572,7 +572,7 @@ public:
 
   inline
   Sign sqrt_ext_sign(const FT& A1, const FT& Dr, const FT& B,
-		     const FT& Dx1, const FT& Dy1, 
+		     const FT& Dx1, const FT& Dy1,
 		     const FT& Dx2, const FT& Dy2,
 		     const Integral_domain_without_division_tag&) const
   {
@@ -693,7 +693,7 @@ public:
 		  const Site_2& q, bool b) const
   {
     typedef Finite_edge_interior_conflict_2<K,MTag> Old_Test;
-    bool t = Test_degenerated()(p1, p2, q, b, Method_tag());    
+    bool t = Test_degenerated()(p1, p2, q, b, Method_tag());
     //    bool t = Old_Test()(p1, p2, q, b);
 #ifndef NDEBUG
     bool t_old = Old_Test()(p1, p2, q, b);
@@ -716,7 +716,7 @@ public:
   bool operator()(const Site_2& p1, const Site_2& p2,
 		  const Site_2& p3, const Site_2& q, bool b) const
   {
-    return Test_degenerated()(p1, p2, p3, q, b, Method_tag());    
+    return Test_degenerated()(p1, p2, p3, q, b, Method_tag());
   }
 
   inline
@@ -725,7 +725,7 @@ public:
 		  const Site_2& q, bool b) const
   {
     typedef Finite_edge_interior_conflict_2<K,MTag> Old_Test;
-    bool t = Test()(p1, p2, p3, p4, q, b, Method_tag());    
+    bool t = Test()(p1, p2, p3, p4, q, b, Method_tag());
     //    bool t = Old_Test()(p1, p2, p3, p4, q, b);
 #ifndef NDEBUG
     bool t_old = Old_Test()(p1, p2, p3, p4, q, b);
@@ -747,7 +747,7 @@ public:
 
     CGAL_assertion( t == t_old );
 #endif
-    return t; //Test()(p1, p2, p3, p4, q, b, Method_tag());    
+    return t; //Test()(p1, p2, p3, p4, q, b, Method_tag());
   }
 };
 

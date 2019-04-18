@@ -1,9 +1,9 @@
-// Copyright (c) 1999  
+// Copyright (c) 1999
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Stefan Schirra
 
@@ -364,7 +364,7 @@ public:
   RT
   hm(int i, int j) const
   { return this->Ptr()->homogeneous(i,j); }
-  
+
   bool operator==(const Aff_transformationH3 &t)const
   {
     for(int i=0; i<3; ++i)
@@ -373,7 +373,7 @@ public:
           return false;
     return true;
   }
-  
+
   bool operator!=(const Aff_transformationH3 &t)const
   {
     return !(*this == t);

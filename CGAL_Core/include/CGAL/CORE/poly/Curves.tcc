@@ -18,7 +18,7 @@
  *
  *  File: Curves.tcc
  *
- *  Description: 
+ *  Description:
  *  	This file contains the implementations of
  *		functions defined by Curves.h
  *	It is included through Curves.h
@@ -45,7 +45,7 @@ template <class NT>
 BiPoly<NT>::BiPoly(){ // zero polynomial
     ydeg = -1;
   }
-  
+
   //BiPoly(n)
 
 template <class NT>
@@ -63,20 +63,20 @@ BiPoly<NT>::BiPoly(int n){// creates a BiPoly with nominal y-degree equal to n.
     if (n<0) return; // coeffX not needed
     for(int i=0; i<= ydeg; i++){
       Polynomial<NT> temp;
-      coeffX.push_back(temp);      
+      coeffX.push_back(temp);
     }
   }
 
   //BiPoly(vp)
 template <class NT>
-BiPoly<NT>::BiPoly(std::vector<Polynomial<NT> > vp){ 
+BiPoly<NT>::BiPoly(std::vector<Polynomial<NT> > vp){
     // From vector of Polynomials
     ydeg = vp.size() - 1;
     if(ydeg >=0){
       coeffX = vp;
     }
   }
-  
+
   //BiPoly(p, flag):
   //	if true, it converts polynomial p(X) into P(Y)
   // 	if false, it creates the polynomial Y-p(X)
@@ -124,7 +124,7 @@ BiPoly<NT>::BiPoly(int deg, int *d, NT *C){
       for(int j=0; j <=d[i]; j++)
 	c[j] = C[i+j];
       temp = Polynomial<NT>(d[i],c);
-      coeffX.push_back(temp);      
+      coeffX.push_back(temp);
     }
     delete[] c;
   }//BiPoly(deg,d[],C[])
@@ -196,7 +196,7 @@ void BiPoly<NT>::constructX(int n, BiPoly<NT>& P){
   CGAL_assertion(n>= -1);
   P.deleteCoeffX();//Clear the present coeffecients
   Polynomial<NT> q(n);//Nominal degree n
-  q.setCoeff(n,NT(1)); 
+  q.setCoeff(n,NT(1));
   if (n>0) q.setCoeff(0,NT(0));
   P.coeffX.push_back(q);
   P.ydeg = 0;
@@ -267,7 +267,7 @@ template <class NT>
 int BiPoly<NT>::matchparen(const char* cstr, int start){
   int count = 0;
   int j=start;
-  
+
   do{
     if(cstr[j] == '('){
       count++;
@@ -275,9 +275,9 @@ int BiPoly<NT>::matchparen(const char* cstr, int start){
     if(cstr[j] == ')'){
       count--;
     }
-    j++;      
+    j++;
   }while(count != 0 );//j is one more than the matching ')'
-  
+
   return j-1;
 }
 
@@ -420,7 +420,7 @@ BiPoly<NT> BiPoly<NT>::getbipoly(string s){
   ////////////////////////////////////////////////////////
   // METHODS
   ////////////////////////////////////////////////////////
-  
+
   // filedump (msg, ofs, com, com2)
   // 	where msg and com are strings.
   // 	msg is an message and com is the character preceding each line
@@ -479,11 +479,11 @@ void BiPoly<NT>::dump(std::string msg, std::string com,
     }
     return Polynomial<Expr>(vE);
   }//yPolynomial
-    
+
     But this has many problems.
     Solution below is to have special yExprPolynomial(x).
     *********************************************************** */
-  
+
 template <class NT>
 Polynomial<NT> BiPoly<NT>::yPolynomial(const NT & x) {
     NT coeffVec[ydeg+1];
@@ -523,9 +523,9 @@ template <class NT>
     return Polynomial<BigFloat>(d, coeffVec);
   }
 
-  // xPolynomial(y) 
+  // xPolynomial(y)
   //   returns the polynomial (in X) when we substitute Y=y
-  //   
+  //
   //   N.B. May need the
   //   		Polynomial<Expr> xExprPolynomial(Expr y)
   //   version too...
@@ -541,14 +541,14 @@ Polynomial<NT> BiPoly<NT>::xPolynomial(const NT & y) {
     }
     return res;
   }//xPolynomial
-  
+
 
   // getYdegree()
 template <class NT>
 int BiPoly<NT>::getYdegree() const {
     return ydeg;
   }
-  
+
   // getXdegree()
 template <class NT>
 int BiPoly<NT>::getXdegree(){
@@ -584,7 +584,7 @@ Expr BiPoly<NT>::eval(Expr x, Expr y){//Evaluate the polynomial at (x,y)
   ////////////////////////////////////////////////////////
   // Polynomial arithmetic (these are all self-modifying)
   ////////////////////////////////////////////////////////
-  
+
   // Expands the nominal y-degree to n;
   //	Returns n if nominal y-degree is changed to n
   //	Else returns -2
@@ -593,10 +593,10 @@ template <class NT>
 int BiPoly<NT>::expand(int n) {
     if ((n <= ydeg)||(n < 0))
       return -2;
-    
+
     for(int i=ydeg+1; i <=n ;i++)
       coeffX.push_back(Polynomial<NT>::polyZero());
-    
+
     ydeg = n;
     return n;
   }//expand
@@ -641,7 +641,7 @@ BiPoly<NT> & BiPoly<NT>::operator+=( BiPoly<NT>& P) { // +=
 
   return *this;
   }//operator+=
-   
+
   // Self-subtraction
 template <class NT>
 BiPoly<NT> & BiPoly<NT>::operator-=( BiPoly<NT>& P) { // -=
@@ -664,7 +664,7 @@ BiPoly<NT> & BiPoly<NT>::operator*=( BiPoly<NT>& P) { // *=
     Polynomial<NT>* c = new Polynomial<NT> [d + 1];
     for(int i=0; i <=d; i++)
       c[i] = Polynomial<NT>();
-    
+
     for (int i = 0; i<=P.getYdegree(); i++)
       for (int j = 0; j<=ydeg; j++) {
 	if(!zeroP(P.coeffX[i]) && !zeroP(coeffX[j]))
@@ -680,7 +680,7 @@ BiPoly<NT> & BiPoly<NT>::operator*=( BiPoly<NT>& P) { // *=
     ydeg = d;
     return *this;
   }//operator*=
-  
+
   // Multiply by a polynomial in X
 template <class NT>
 BiPoly<NT> & BiPoly<NT>::mulXpoly( Polynomial<NT> & p) {
@@ -734,7 +734,7 @@ BiPoly<NT> & BiPoly<NT>::mulYpower(int s) {
   }//mulYpower
 
 
-  
+
   // Divide by a polynomial in X.
   // We replace the coeffX[i] by the pseudoQuotient(coeffX[i], P)
 template <class NT>
@@ -750,7 +750,7 @@ BiPoly<NT> & BiPoly<NT>::divXpoly( Polynomial<NT> & p) {
   }// divXpoly
 
 
-  
+
   //Using the standard definition of pseudRemainder operation.
   //	--No optimization!
 template <class NT>
@@ -787,7 +787,7 @@ BiPoly<NT> BiPoly<NT>::pseudoRemainderY (BiPoly<NT> & Q){
 
 
     return BiPoly<NT>(vP);
-    
+
   }//pseudoRemainder
 
   //Partial Differentiation
@@ -807,7 +807,7 @@ BiPoly<NT> & BiPoly<NT>::differentiateX() {
     if (ydeg >= 0)
       for (int i=0; i<=ydeg; i++)
 	coeffX[i].differentiate();
-    
+
     return *this;
   }// differentiation wrt X
 
@@ -818,7 +818,7 @@ BiPoly<NT> & BiPoly<NT>::differentiateXY(int m, int n) {//m times wrt X and n ti
       (*this).differentiateX();
     for(int i=1; i <=n; i++)
       (*this).differentiateY();
-    
+
     return *this;
   }
 
@@ -842,11 +842,11 @@ BiPoly<NT> & BiPoly<NT>::convertXpoly(){
       for(int j=0; j<=ydeg; j++){
 	cs[j] = coeffX[j].getCoeffi(i);
       }
-      
+
       vP.push_back(Polynomial<NT>(ydeg, cs));
     }
     delete[] cs;
-      
+
     ydeg = xdeg;
     coeffX = vP;
     return (*this);
@@ -860,7 +860,7 @@ bool BiPoly<NT>::setCoeff(int i, Polynomial<NT> p){
     coeffX[i] = p;
     return true;
   }
-  
+
 template <class NT>
 void BiPoly<NT>::reverse() {
     Polynomial<NT> tmp;
@@ -885,7 +885,7 @@ Polynomial<NT>  BiPoly<NT>::replaceYwithX(){
 
     return Polynomial<NT>(m,cs);
   }//replaceYwithX
-  
+
 template <class NT>
 BiPoly<NT>&  BiPoly<NT>::pow(unsigned int n){
 
@@ -936,7 +936,7 @@ bool isZeroPinY(BiPoly<NT> & P){
 
 // gcd(P,Q)
 //   This gcd is based upon the subresultant PRS to avoid
-//   exponential coeffecient growth and gcd computations, both of which 
+//   exponential coeffecient growth and gcd computations, both of which
 //   are expensive since the coefficients are polynomials
 
 template <class NT>
@@ -965,7 +965,7 @@ BiPoly<NT> gcd( BiPoly<NT>& P ,BiPoly<NT>& Q){
       return BiPoly<NT>(vP);//Had to do this for the type of
                             //return value
       }
-    
+
     int delta = m - n;
     Polynomial<NT> a(Q.coeffX[n]);
     std::vector<NT> vN;
@@ -1011,7 +1011,7 @@ Polynomial<NT>  resY( BiPoly<NT>& P ,BiPoly<NT>& Q){
   Polynomial<NT> b(Q.coeffX[n]);
   Polynomial<NT> lc(P.coeffX[m]), C, temp;
   BiPoly<NT> r;
-  
+
   r = P.pseudoRemainderY(Q);
   C = b * r.coeffX[r.getTrueYdegree()];
   C = C.pseudoRemainder(lc);
@@ -1033,7 +1033,7 @@ Polynomial<NT>  resY( BiPoly<NT>& P ,BiPoly<NT>& Q){
 // resX(P,Q):
 //      Resultant of Bi-Polys P and Q w.r.t. X.
 //      So the resultant is a polynomial in Y
-//	We first convert P, Q to polynomials in X. Then 
+//	We first convert P, Q to polynomials in X. Then
 // 	call resY and then turns it back into a polynomial in Y
 //	QUESTION: is this last switch really necessary???
 template <class NT>
@@ -1090,18 +1090,18 @@ BiPoly<NT> operator*(const  BiPoly<NT>& P, const BiPoly<NT>& Q ) { // +
 
 template < class NT >
 Curve<NT>::Curve(){} // zero polynomial
-  
+
   //Curve(vp):
   //    construct from a vector of polynomials
 template < class NT >
 Curve<NT>::Curve(std::vector<Polynomial<NT> > vp)
 	  : BiPoly<NT>(vp){
   }
-  
+
   //Curve(p):
   //	Converts a polynomial p(X) to a BiPoly in one of two ways:
-  // 	    (1) if flag is false, the result is Y-p(X) 
-  // 	    (2) if flag is true, the result is p(Y) 
+  // 	    (1) if flag is false, the result is Y-p(X)
+  // 	    (2) if flag is true, the result is p(Y)
   //    The default is (1) because we usually want to plot the
   //        graph of the polynomial p(X)
 template < class NT >
@@ -1177,17 +1177,17 @@ int Curve<NT>::verticalIntersections(const BigFloat & x, BFVecInterval & vI,
     int s = vI.size();
     if ((aprec != 0) && (s>0))
 	Ss.newtonRefineAllRoots(vI, aprec);
-    
+
     return s;
   }
-  
+
   // plot(eps, x1, y1, x2, y2)
   //
   // 	All parameters have defaults
   //
   //    Gives the points on the curve at resolution "eps".  Currently,
   //    eps is viewed as delta-x step size (but it could change).
-  //    The display is done in the rectangale 
+  //    The display is done in the rectangale
   //    defined by [(x1, y1), (x2, y2)].
   //    The output is written into a file in the format specified
   //    by our drawcurve function (see COREPATH/ext/graphics).
@@ -1266,7 +1266,7 @@ cout <<"Number of roots at " << xCurr << " are " << numRoots<<endl;
 
   int limit = ((x2 - xCurr + eps)/eps).intValue()+1;
   //std::cout << "Limit = " << limit << std::endl;
-  machine_double plotCurves[this->getTrueYdegree()][limit];//plot buffer 
+  machine_double plotCurves[this->getTrueYdegree()][limit];//plot buffer
   machine_double yval;
 
   for (unsigned int i=0; i< numRoots; i++) {
@@ -1320,7 +1320,7 @@ cout <<"Number of roots at " << xCurr << " are " << numRoots<<endl;
       for (unsigned int i=0; i< numRoots; i++) {
          yval = (vI[i].first + vI[i].second).doubleValue()/2;
 	 // HERE SHOULD BE A LOOP TO OUTPUT MORE POINTS IN CASE THE slope IS LARGE
-	 // Idea: let previous value of yval be yval-old.  
+	 // Idea: let previous value of yval be yval-old.
 	 //
 	 // Two cases:
 	 // (1) When i=0:
@@ -1351,7 +1351,7 @@ cout <<"Number of roots at " << xCurr << " are " << numRoots<<endl;
    }//main while loop
 
    // Need to flush out the final x-interval:
-   if ((numRoots>0) && (numPoints >0)) { 
+   if ((numRoots>0) && (numPoints >0)) {
 	// write to output file
         outFile << "########################################\n";
         outFile << "# New x-interval with " << numRoots << " roots\n";
@@ -1421,12 +1421,12 @@ void  Yintersections( Curve<NT>& P ,Curve<NT>& Q, BFVecInterval &vI){
 }
 
 // Display Intervals
-// 
+//
 template <class NT>//DO I NEED THIS OVERHERE AS WELL?
 void showIntervals(char* s, BFVecInterval &vI) {
    std::cout << s;
    for (unsigned int i=0; i< vI.size(); i++) {
-   	std::cout << "[ " << vI[i].first << ", " 
+   	std::cout << "[ " << vI[i].first << ", "
    		<< vI[i].second << " ],  " ;
    }
    std::cout << std::endl;

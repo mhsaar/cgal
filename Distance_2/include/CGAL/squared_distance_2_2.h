@@ -1,9 +1,9 @@
-// Copyright (c) 1998-2004  
+// Copyright (c) 1998-2004
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman
 
@@ -222,7 +222,7 @@ namespace internal {
   template <class K>
   typename K::FT
   squared_distance_indexed(const typename K::Point_2 &pt,
-			   const typename K::Triangle_2 &triangle, 
+			   const typename K::Triangle_2 &triangle,
 			   int ind1, int ind2,
 			   const K& k)
   {
@@ -333,7 +333,7 @@ namespace internal {
 	mindist = FT(0);
       }
     } else {
-      // Check if all the triangle vertices lie 
+      // Check if all the triangle vertices lie
       // at the same side of the segment.
       const Line_2 &sl = ray.supporting_line();
       Oriented_side or_s = sl.oriented_side(triangle.vertex(0));
@@ -405,7 +405,7 @@ namespace internal {
 	mindist = FT(0);
       }
     } else {
-      // Check if all the triangle vertices lie 
+      // Check if all the triangle vertices lie
       // at the same side of the segment.
       const Point_2 &vt1 = seg.source();
       const Point_2 &vt2 = seg.target();

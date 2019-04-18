@@ -17,27 +17,27 @@
  *
  *
  * File: Poly.tcc
- * Purpose: 
+ * Purpose:
  *	Template implementations of the functions
  *	of the Polynomial<NT> class (found in Poly.h)
- * 
- * OVERVIEW:  
+ *
+ * OVERVIEW:
  *	Each polynomial has a nominal "degree" (this
  *		is an upper bound on the true degree, which
  *		is determined by the first non-zero coefficient).
  *	Coefficients are parametrized by some number type "NT".
  *	Coefficients are stored in the "coeff" array of
- *		length "degree + 1".  
+ *		length "degree + 1".
  *	IMPORTANT CONVENTION: the zero polynomial has degree -1
  *		while nonzero constant polynomials have degree 0.
  *	
  * Bugs:
  *	Currently, coefficient number type NT only accept
  *			NT=BigInt and NT=int
- * 
+ *
  *	To see where NT=Expr will give trouble,
  *			look for NOTE_EXPR below.
- * 
+ *
  * Author: Chee Yap, Sylvain Pion and Vikram Sharma
  * Date:   May 28, 2002
  *
@@ -101,7 +101,7 @@ Polynomial<NT>::Polynomial(const VecNT & vN) {
 }
 
 template <class NT>
-Polynomial<NT>::Polynomial(const Polynomial<NT> & p):degree(-1) { 
+Polynomial<NT>::Polynomial(const Polynomial<NT> & p):degree(-1) {
   //degree must be initialized to -1 otherwise delete is called on coeff in operator=
   coeff = NULL;//WHY?
   *this = p;	// reduce to assignment operator=
@@ -125,8 +125,8 @@ Polynomial<NT>::Polynomial(int n, const char * s[]) {
 //    		'-' [term] | '-' [term] '+/-' [poly]
 //    [term] -> [basic term] | [basic term] [term] | [basic term]*[term]
 //    [basic term] -> [number] | 'x' | [basic term] '^' [number]
-//                    | '(' [poly] ')' 
-//COMMENT: 
+//                    | '(' [poly] ')'
+//COMMENT:
 //  [number] is assumed to be a BigInt; in the future, we probably
 //  want to generalize this to BigFloat, etc.
 //
@@ -225,7 +225,7 @@ template <class NT>
 int Polynomial<NT>::matchparen(const char* cstr, int start){
   int count = 0;
   int j=start;
-  
+
   do{
     if(cstr[j] == '('){
       count++;
@@ -233,9 +233,9 @@ int Polynomial<NT>::matchparen(const char* cstr, int start){
     if(cstr[j] == ')'){
       count--;
     }
-    j++;      
+    j++;
   }while(count != 0 );//j is one more than the matching ')'
-  
+
   return j-1;
 }
 
@@ -574,11 +574,11 @@ Polynomial<NT> Polynomial<NT>::reduceStep (
   //  isDivisible(x,y), gcd(x,y), div_exact(x,y) in the following:
   //  ============================================================
   if (isDivisible(myLC, qLC)) { // myLC is divisible by qLC
-    LC = div_exact(myLC, qLC);	 
+    LC = div_exact(myLC, qLC);	
     R.setCoeff(0, 1);  		 //  C = 1,
 
     R.setCoeff(R.degree, LC); //  M = LC * X^(myDeg-pDeg)
-    q.mulScalar(LC); 	  //  q = M*P. 
+    q.mulScalar(LC); 	  //  q = M*P.
   }
   else if (isDivisible(qLC, myLC)) { // qLC is divisible by myLC
     LC = div_exact(qLC, myLC);	 //
@@ -588,7 +588,7 @@ Polynomial<NT> Polynomial<NT>::reduceStep (
       // if (LC = -1), then we have qLC and
       // myLC are mutually divisible, and
       // we would be updating R twice!
-      R.setCoeff(0, LC); 	   // C = LC, 
+      R.setCoeff(0, LC); 	   // C = LC,
       R.setCoeff(R.degree, 1);     // M = X^(myDeg-pDeg)(THIS WAS NOT DONE)
       mulScalar(LC); 	   	   // THIS => THIS * LC
 
@@ -618,10 +618,10 @@ Polynomial<NT> Polynomial<NT>::reduceStep (
 }// reduceStep
 
 // For internal use only:
-// Checks that c*A = B*m + AA 
+// Checks that c*A = B*m + AA
 // 	where A=(*oldthis) and AA=(*newthis)
 template <class NT>
-Polynomial<NT> Polynomial<NT>::testReduceStep(const Polynomial<NT>& A, 
+Polynomial<NT> Polynomial<NT>::testReduceStep(const Polynomial<NT>& A,
 	const Polynomial<NT>& B) {
 std::cout << "+++++++++++++++++++++TEST REDUCE STEP+++++++++++++++++++++\n";
   Polynomial<NT> cA(A);
@@ -650,10 +650,10 @@ std::cout << "+++++++++++++++++END TEST REDUCE STEP+++++++++++++++++++++\n";
 
 // PSEUDO-REMAINDER and PSEUDO-QUOTIENT:
 // Let A = (*this) and B be the argument polynomial.
-// Let Quo be the returned polynomial, 
+// Let Quo be the returned polynomial,
 // and let the final value of (*this) be Rem.
 // Also, C is the constant that we maintain.
-// We are computing A divided by B.  The relation we guarantee is 
+// We are computing A divided by B.  The relation we guarantee is
 // 		(C * A) = (Quo * B)  + Rem
 // where deg(Rem) < deg(B).  So Rem is the Pseudo-Remainder
 // and Quo is the Pseudo-Quotient.
@@ -676,7 +676,7 @@ Polynomial<NT> Polynomial<NT>::pseudoRemainder (
 
 template <class NT>
 Polynomial<NT> Polynomial<NT>::pseudoRemainder (
-  const Polynomial<NT>& B, NT & C) { 
+  const Polynomial<NT>& B, NT & C) {
   contract();         // Let A = (*this).  Contract A.
   Polynomial<NT> tmpB(B);
   tmpB.contract();    // local copy of B
@@ -705,7 +705,7 @@ Polynomial<NT> Polynomial<NT>::pseudoRemainder (
     C *= tmpQuo.coeff[0];	    // C = c*C
     Quo.mulScalar(tmpQuo.coeff[0]); // Quo -> c*Quo
     tmpQuo.mulXpower(-1);           // tmpQuo is now equal to m
-    Quo += tmpQuo;                  // Quo -> Quo + m 
+    Quo += tmpQuo;                  // Quo -> Quo + m
   }
 
   return Quo;	// Quo is the pseudo-quotient
@@ -750,7 +750,7 @@ Polynomial<NT> & Polynomial<NT>::power(unsigned int n) {	// self-power
 //      This is because we would have to convert these coefficients into
 //      BigFloats, and this conversion precision is controlled by the
 //      global variables defRelPrec and defAbsPrec.
-//   
+//
 /*
 template <class NT>
 BigFloat Polynomial<NT>::eval(const BigFloat& f) const {	// evaluation
@@ -774,9 +774,9 @@ BigFloat Polynomial<NT>::eval(const BigFloat& f) const {	// evaluation
 ///
 /// User must be aware that the return type of eval is Max of Types NT and T.
 ///
-/// E.g., If NT is BigRat, and T is Expr then Max(NT,T)=Expr. 
+/// E.g., If NT is BigRat, and T is Expr then Max(NT,T)=Expr.
 /// 	
-/// REMARK: If NT is BigFloat, it is assumed that the BigFloat is error-free.  
+/// REMARK: If NT is BigFloat, it is assumed that the BigFloat is error-free.
 
 template <class NT>
 template <class T>
@@ -798,7 +798,7 @@ MAX_TYPE(NT, T) Polynomial<NT>::eval(const T& f) const {	// evaluation
 /// Approximate Evaluation of Polynomials
 /// 	the coefficients of the polynomial are approximated to some
 ///	specified composite precision (r,a).
-/// @param  f evaluation point 
+/// @param  f evaluation point
 /// @param  r relative precision to which the coefficients are evaluated
 /// @param  a absolute precision to which the coefficients are evaluated
 /// @return a BigFloat with error containing value of the polynomial.
@@ -807,7 +807,7 @@ MAX_TYPE(NT, T) Polynomial<NT>::eval(const T& f) const {	// evaluation
 // 	ASSERT: NT = BigRat or Expr
 //
 template <class NT>
-BigFloat Polynomial<NT>::evalApprox(const BigFloat& f, 
+BigFloat Polynomial<NT>::evalApprox(const BigFloat& f,
 	const extLong& r, const extLong& a) const {	// evaluation
   if (degree == -1)
     return BigFloat(0);
@@ -817,7 +817,7 @@ BigFloat Polynomial<NT>::evalApprox(const BigFloat& f,
   BigFloat val(0), c;
   for (int i=degree; i>=0; i--) {
     c = BigFloat(coeff[i], r, a);	
-    val *= f; 
+    val *= f;
     val += c;
   }
   return val;
@@ -848,7 +848,7 @@ BigFloat Polynomial<BigInt>::evalApprox(const BigFloat& /*f*/,
 
       r = 1 + lg(|P|_\infty) + lg(d+1)  		if f <= 1
       r = 1 + lg(|P|_\infty) + lg(d+1) + d*lg|f| 	if f > 1
-      
+
    if the filter fails, then we use Expr to do evaluation.
 
    This function is mainly called by Newton iteration (which
@@ -866,27 +866,27 @@ BigFloat Polynomial<NT>::evalExactSign(const BigFloat& val,
     CGAL_assertion(val.isExact());
     if (getTrueDegree() == -1)
       return BigFloat(0);
-  
+
     extLong r;
     r = 1 + BigFloat(height()).uMSB() + clLg(long(getTrueDegree()+1));
     if (val > 1)
       r += getTrueDegree() * val.uMSB();
     r += core_max(extLong(0), -oldMSB);
-  
+
     if (hasExactDivision<NT>::check()) { // currently, only to detect NT=Expr and NT=BigRat
         BigFloat rVal = evalApprox(val, r);
         if (rVal.isZeroIn()) {
 	  Expr eVal = eval(Expr(val));	// eval gives exact value
 	  eVal.approx(54,CORE_INFTY);  // if value is 0, we get exact 0
 	  return eVal.BigFloatValue();
-	} else 
+	} else
           return rVal;
     } else
 	return BigFloat(eval(val));
 
    //return 0; // unreachable
   }//evalExactSign
-  
+
 
 //============================================================
 // Bounds
@@ -958,7 +958,7 @@ BigInt Polynomial<NT>::UpperBound() const {
       } else {
       	lhsNeg = lhsNeg * B - coeff[i];
       	lhsPos = lhsPos * B;
-      } 
+      }
     }
     lhsNeg /= abs(coeff[deg]);
     lhsPos /= abs(coeff[deg]);
@@ -1124,7 +1124,7 @@ NT content(const Polynomial<NT>& p) {
 //	-- primPart(P) is just P/content(P)
 //	-- Should we return content(P) instead? [SHOULD IMPLEMENT THIS]
 // IMPORTANT: we require that content(P)>0, hence
-// 	the coefficients of primPart(P) does 
+// 	the coefficients of primPart(P) does
 // 	not change sign; this is vital for use in Sturm sequences
 template <class NT>
 Polynomial<NT> & Polynomial<NT>::primPart() {
@@ -1139,7 +1139,7 @@ Polynomial<NT> & Polynomial<NT>::primPart() {
 
   NT g = content(*this);
   if (g == 1 && coeff[d] > 0)
-     return (*this);  
+     return (*this);
   for (int i=0; i<=d; i++) {
      coeff[i] =  div_exact(coeff[i], g);
   }
@@ -1228,12 +1228,12 @@ void Polynomial<NT>::reverse() {
   }
 }//reverse
 
-// negate: 
+// negate:
 // 	multiplies the polynomial by -1
 // 	Chee: 4/29/04 -- added negate() to support negPseudoRemainder(B)
 template <class NT>
 Polynomial<NT> & Polynomial<NT>::negate() {
-  for (int i=0; i<= degree; i++) 
+  for (int i=0; i<= degree; i++)
     coeff[i] *= -1;  	// every NT must be able to construct from -1
   return *this;
 }//negate
@@ -1265,8 +1265,8 @@ int Polynomial<NT>::makeTailCoeffNonzero() {
 // filedump(string msg, ostream os, string com, string com2):
 //      Dumps polynomial to output stream os
 //      msg is any message
-//      NOTE: Default is com="#", which is placed at start of each 
-//            output line. 
+//      NOTE: Default is com="#", which is placed at start of each
+//            output line.
 template <class NT>
 void Polynomial<NT>::filedump(std::ostream & os,
                           std::string msg,
@@ -1287,7 +1287,7 @@ void Polynomial<NT>::filedump(std::ostream & os,
   // OUTPUT the first nonzero term
   os << commentString;
   if (coeff[i] == 1) {			// special cases when coeff[i] is
-    if (i>1) os << "x^" << i;	// either 1 or -1 
+    if (i>1) os << "x^" << i;	// either 1 or -1
     else if (i==1) os << "x" ;
     else os << "1";
   } else if (coeff[i] == -1) {
@@ -1298,10 +1298,10 @@ void Polynomial<NT>::filedump(std::ostream & os,
     os << coeff[i];
     if (i>1) os << "*x^" << i;
     else if (i==1) os << "x" ;
-  } 
+  }
   // OUTPUT the remaining nonzero terms
   for (i++ ; i<= getTrueDegree(); ++i) {
-    if (coeff[i] == 0) 
+    if (coeff[i] == 0)
       continue;
     termsInLine++;
     if (termsInLine % Polynomial<NT>::COEFF_PER_LINE == 0) {
@@ -1323,7 +1323,7 @@ void Polynomial<NT>::filedump(std::ostream & os,
 
       if (i==1) os << "*x";
       else os << "*x^" << i;
-    } 
+    }
   }
 }//filedump
 
@@ -1551,7 +1551,7 @@ Polynomial<NT> factorI(Polynomial<NT> p, int m){
         temp *= power(u[j],j-i+1);
      }
      u[i] = w[i-1].pseudoRemainder(temp);//i-1 since the array starts at 0
-  } 
+  }
 	
 	delete[] w;
   return u[m];

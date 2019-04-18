@@ -1,9 +1,9 @@
-// Copyright (c) 2001  
+// Copyright (c) 2001
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Geert-Jan Giezeman <geert@cs.uu.nl>
 //               : Susan Hert <hert@mpi-sb.mpg.de>
@@ -96,7 +96,7 @@ class Less_segments {
 };
 
 template <class ForwardIterator, class PolygonTraits>
-class Vertex_data : 
+class Vertex_data :
        public i_polygon::Vertex_data_base<ForwardIterator, PolygonTraits>
 {
 public:
@@ -266,7 +266,7 @@ insertion_event(Tree *tree, Vertex_index prev_vt,
             conflict1 = prev_vt;
 	    conflict2 = next_vt;
             return false;
-      
+
     }
     Edge_data
         &td_prev = edges[prev_vt.as_int()],
@@ -394,7 +394,7 @@ template <class ForwardIterator, class PolygonTraits>
 void
 Vertex_data<ForwardIterator, PolygonTraits>::
 find_conflict_between(Tree *, Vertex_index cur_vt,
-                      typename Tree::iterator seg1, 
+                      typename Tree::iterator seg1,
                       typename Tree::iterator seg2)
 {
 #if defined(CGAL_POLY_GENERATOR_DEBUG)
@@ -561,8 +561,8 @@ void make_simple_polygon(Iterator points_begin, Iterator points_end,
 	                                     points_end, polygon_traits);
 #if defined(CGAL_POLY_GENERATOR_DEBUG)
         std::cout << swap_interval.first << " "
-                  << swap_interval.second << std::endl; 
-        CGAL_polygon_assertion(swap_interval.first >= -1 && 
+                  << swap_interval.second << std::endl;
+        CGAL_polygon_assertion(swap_interval.first >= -1 &&
                                swap_interval.second >= -1 &&
                                swap_interval.first < size &&
                                swap_interval.second < size);

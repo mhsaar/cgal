@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Ralf Osbild <osbild@mpi-sb.mpg.de>
 
@@ -53,25 +53,25 @@ class Index_assigner {
   template<typename Handle>
     void assign_first_index() const {}
   template<typename Handle>
-    void assign_new_index() {} 
+    void assign_new_index() {}
 };
 
 template<> class Index_assigner<CGAL::SNC_indexed_items> {
   int first;
   int index;
  public:
- Index_assigner() : 
+ Index_assigner() :
   first(Index_generator::get_unique_index()), index(first) {}
-  
+
   template<typename Handle>
-    void assign_index(Handle& h) const 
+    void assign_index(Handle& h) const
     { h->set_index(index); }
   template<typename Handle>
-    void assign_first_index(Handle& h) const 
+    void assign_first_index(Handle& h) const
     { h->set_index(first); }
   template<typename Handle>
     void assign_new_index(Handle& h)
-    { h->set_index(); index = h->get_index(); } 
+    { h->set_index(); index = h->get_index(); }
 };
 */
 
@@ -90,7 +90,7 @@ class Compare_cpte {
       return p0.first < p1.first;
     else
       return p0.second < p1.second;
-  }  
+  }
 };
 
 class Compare_face {
@@ -98,7 +98,7 @@ class Compare_face {
  public:
   Compare_face() {}
 
-  template<typename Face>  
+  template<typename Face>
     bool operator()(const Face* f0, const Face* f1) const {
     return f0 < f1;
   }
@@ -109,12 +109,12 @@ template<typename Items,
   typename Edge, typename CompareEdges> class Index_matcher {
  public:
   Index_matcher() {}
-  template<typename Handle> 
+  template<typename Handle>
   void set_index(Handle /*h*/, Edge /*e*/) {}
 };
 
-template<typename Edge, typename CompareEdges> 
-  class Index_matcher<CGAL::SNC_indexed_items, Edge, CompareEdges> 
+template<typename Edge, typename CompareEdges>
+  class Index_matcher<CGAL::SNC_indexed_items, Edge, CompareEdges>
 {
 
   bool plusTwin;
@@ -294,7 +294,7 @@ bool projected_vertex_cycle_to_nef_3 (typename Nef_3::SNC_structure &snc,
 	   im_edge.set_index(p_svh, std::make_pair(&*t_target_vh, &*t_vh));
 	 else
 	   im_edge.set_index(p_svh, std::make_pair(&*t_vh, &*t_target_vh));
-	 
+	
 	 // create new sphere edges in SM
          SHalfedge_handle p_seh =
 	    p_dec.new_shalfedge_pair (p_svh_pred, p_svh);

@@ -17,15 +17,15 @@
  *
  *
  *  File: Sturm.h
- * 
- *  Description: 
+ *
+ *  Description:
  *  The templated class Sturm implements Sturm sequences.
  *  Basic capabilities include:
- *     counting number of roots in an interval, 
+ *     counting number of roots in an interval,
  *     isolating all roots in an interval
  *     isolating the i-th largest (or smallest) root in interval
  *  It is based on the Polynomial class.
- * 
+ *
  *   BigFloat intervals are used for this (new) version.
  *   It is very important that the BigFloats used in these intervals
  *   have no error at the beginning, and this is maintained
@@ -40,11 +40,11 @@
  *       (2) if x=y,  it represents a unique point x.
  *       (3) if x<y,  it represents the open interval (x,y).
  *           In this case, we always may sure that x, y are not zeros.
- * 
+ *
  *   TODO LIST and Potential Bugs:
  *   (1) Split an isolating interval to give definite sign (done)
  *   (2) Should have a test for square-free polynomials (done)
- * 
+ *
  *  Author:  Chee Yap and Sylvain Pion, Vikram Sharma
  *  Date:    July 20, 2002
  *
@@ -65,7 +65,7 @@
 #include "CGAL/CORE/Expr.h"
 #include "CGAL/CORE/poly/Poly.h"
 
-namespace CORE { 
+namespace CORE {
 
 // ==================================================
 // Sturm Class
@@ -83,7 +83,7 @@ public:
   Polynomial<NT> g;//GCD of input polynomial P and it's derivative P'
   NT cont;//Content of the square-free part of input polynomial P
   //Thus P = g * cont * seq[0]
-  static const int N_STOP_ITER = 10000;    // Stop IterE after this many iterations. 
+  static const int N_STOP_ITER = 10000;    // Stop IterE after this many iterations.
   bool NEWTON_DIV_BY_ZERO;   // This is set to true when there is divide by
   // zero in Newton iteration (at critical value)
   // User is responsible to check this and to reset.
@@ -124,7 +124,7 @@ public:
   // 	We need BigFloat version of Sturm(Polynomial<NT>pp) because
   // 	of curve verticalIntersection() ... .  We also introduce
   // 	various support methods in BigFloat.h (exact_div, gcd, etc).
-  // Constructor from a BigFloat polynomial 
+  // Constructor from a BigFloat polynomial
   //	Need the fake argument to avoid compiler overloading errors
   Sturm(Polynomial<BigFloat> pp, bool /* fake */) : NEWTON_DIV_BY_ZERO(false) {
     len = pp.getTrueDegree();
@@ -225,7 +225,7 @@ public:
   //   --the first polynomial eval is not yet done
   //   --special return value of -1, indicating x is root!
   int signVariations(const BigFloat & x) const {
-    if (len <= 0) return len; 
+    if (len <= 0) return len;
     int signx = sign(seq[0].evalExactSign(x));
     if (signx == 0)
       return (-1);    // THIS indicates that x is a root...
@@ -375,7 +375,7 @@ public:
       BigFloat mid = (x+y).div2(); // So mid is exact.
       if (sign(seq[0].evalExactSign(mid)) != 0)  { // usual case: mid is non-root
       	isolateRoots(x, mid, v);
-      	isolateRoots(mid, y, v); 
+      	isolateRoots(mid, y, v);
       } else { // special case: mid is a root
 	BigFloat tmpEps = (seq[0].sepBound()).div2();  // this is exact!
 	if(mid-tmpEps > x )//Since otherwise there are no roots in (x,mid)
@@ -401,11 +401,11 @@ public:
   }
 
   // isolateRoot(i)
-  ///   Isolates the i-th smallest root 
+  ///   Isolates the i-th smallest root
   ///         If i<0, isolate the (-i)-th largest root
   ///   Defaults to i=0 (i.e., the smallest positive root a.k.a. main root)
   BFInterval isolateRoot(int i = 0) const {
-    if (len <= 0) 
+    if (len <= 0)
        return BFInterval(1,0);   // ERROR CONDITION
     if (i == 0)
       return mainRoot();
@@ -577,14 +577,14 @@ public:
   }//End of newtonRefineAllRoots
 
   /** val = newtonIterN(n, bf, del, err, fuMSB, ffuMSB)
-   * 
+   *
    *    val is the root after n iterations of Newton
    *       starting from initial value of bf and is exact.
    *    fuMSB and ffuMSB are precision parameters for the approximating
    *		the coefficients of the underlyinbg polynomial, f(x).
    *    	THEY are used ONLY if the coefficients of the polynomial
    *		comes from a field (in particular, Expr or BigRat).
-   *		We initially approximate the coefficients of f(x) to fuMSB 
+   *		We initially approximate the coefficients of f(x) to fuMSB
    *		relative bits, and f'(x) to ffuMSB relative bits.
    *		The returned values of fuMSB and ffuMSB are the final
    *		precision used by the polynomial evaluation algorithm.
@@ -596,13 +596,13 @@ public:
    *    IMPORTANT: we assume that when x is an exact BigFloat,
    *    then Polynomial<NT>::eval(x) will be exact!
    *    But current implementation of eval() requires NT <= BigFloat.
-   * ****************************************************/    
+   * ****************************************************/
 
   BigFloat newtonIterN(long n, const BigFloat& bf, BigFloat& del,
 	unsigned long & err, extLong& fuMSB, extLong& ffuMSB) {
     if (len <= 0) return bf;   // Nothing to do!  User must
                                // check this possibility!
-    BigFloat val = bf;  
+    BigFloat val = bf;
     // val.makeExact();    // val is exact
 
     // newton iteration
@@ -646,7 +646,7 @@ public:
     return val;
   }//newtonIterN
 
-  //Another version of newtonIterN which does not return the error 
+  //Another version of newtonIterN which does not return the error
   //and passing the uMSB as arguments; it is easier for the user to call
   //this.
   BigFloat newtonIterN(long n, const BigFloat& bf, BigFloat& del){
@@ -677,7 +677,7 @@ public:
   //       in the Newton zone.  So we use the global N_STOP_ITER to
   //       prevent infinite loop.
 
-  BigFloat newtonIterE(int prec, const BigFloat& bf, BigFloat& del, 
+  BigFloat newtonIterE(int prec, const BigFloat& bf, BigFloat& del,
 	extLong& fuMSB, extLong& ffuMSB) {
     // usually, prec is positive
     int count = N_STOP_ITER; // upper bound on number of iterations
@@ -703,8 +703,8 @@ public:
     extLong fuMSB=0, ffuMSB=0;
     return newtonIterE(prec, bf, del, fuMSB, ffuMSB);
   }
-  // A Smale bound which is an \'a posteriori condition. Applying 
-  // Newton iteration to any point z satisfying this condition we are 
+  // A Smale bound which is an \'a posteriori condition. Applying
+  // Newton iteration to any point z satisfying this condition we are
   // sure to converge to the nearest root in a certain interval of z.
   // The condition is for all k >= 2,
   //    | \frac{p^(k)(z)}{k!p'(z)} |^{1\(k-1)} < 1/8 * |\frac{p'(z)}{p(z)}|
@@ -717,12 +717,12 @@ public:
     temp = core_abs(temp2/p[0].eval(z))/8;
     BigInt fact_k = 2;
     for(int k = 2; k <= deg; k++){
-      temp1 = core_abs(p[k].eval(z)/(fact_k*temp2)); 
+      temp1 = core_abs(p[k].eval(z)/(fact_k*temp2));
       if(k-1 == 2)
 	temp1 = sqrt(temp1);
       else
 	temp1 = root(temp1, k-1);
-      if(temp1 >= temp) return false; 
+      if(temp1 >= temp) return false;
     }
     return true;
     }
@@ -731,7 +731,7 @@ public:
   //An easily computable Smale's point estimate for Newton as compared to the
   //one above. The criterion is
   //
-  // ||f||_{\infty} * \frac{|f(z)|}{|f'(z)|^2} 
+  // ||f||_{\infty} * \frac{|f(z)|}{|f'(z)|^2}
   //                * \frac{\phi'(|z|)^2}{\phi(|z|)}  < 0.03
   // where
   //           \phi(r) = \sum_{i=0}{m}r^i,
@@ -749,7 +749,7 @@ public:
   //    \phi(r)        (r-1) (r^{m+1} - 1)
   //
   // Alternatively, we have
-  // 
+  //
   //    \phi'(r)^2     (mr^{m+1} + 1)^2
   //     ---------  <  -------------------          (2)
   //    \phi(r)        (r-1)^3 (r^{m+1} - 1)
@@ -762,7 +762,7 @@ public:
   //    \phi'(r)^2     m^2 (m + 1)
   //     ---------  =  -----------                  (3)
   //    \phi(r)            4
-  // 
+  //
   // REMARK: smaleBoundTest(z) actually computes an upper bound
   // 	on alpha(f,z), and compares it to 0.02 (then our theory
   // 	says that z is a robust approximate zero).
@@ -786,7 +786,7 @@ public:
     temp = temp*seq[0].height();  // remains exact
     //Thus, temp >=  ||f||_{\infty} |\frac{f(z)}{f'(z)^2}|
 
-    int m = seq[0].getTrueDegree();    
+    int m = seq[0].getTrueDegree();
     BigFloat x = core_abs(z);
     if (x==1)   // special case, using (3)
 	    return (temp * BigFloat(m*m*(m+1)).div2().div2() < 0.02);
@@ -825,7 +825,7 @@ public:
                *pow(BigFloat(2+p.height()),6*deg));
   }
 
-  //newtonRefine(J, a) 
+  //newtonRefine(J, a)
   //
   //    ASSERT(J is an isolating interval for some root x^*)
   //
@@ -851,7 +851,7 @@ std::cout << "In newtonRefine, input J=" << J.first
 
     if (len <= 0) return J;   // Nothing to do!  User must
                                // check this possibility!
-      
+
 
     if((J.second - J.first).uMSB() < -aprec){
       return (J);
@@ -893,7 +893,7 @@ std::cout << "In newtonRefine, input J=" << J.first
 
     //MAIN WHILE LOOP. We ensure that J always contains the root
 
-    while ( !smaleBoundTest(x) && 
+    while ( !smaleBoundTest(x) &&
 	    (J.second - J.first) > yap &&
 	   (J.second - J.first).uMSB() >= -aprec) {
       x = newtonIterN(N, x, del, err, fuMSB, ffuMSB);
@@ -947,7 +947,7 @@ std::cout << "In newtonRefine, input J=" << J.first
 	// one bit of accuracy, but you stand to loose an
 	// arbitrary amount of bits of accuracy if you are unlucky!
 	// So I will comment out the next line.  --Chee (Aug 9, 2004).
-	// 
+	//
 	// x = (J.second + J.first).div2();
 	if (J.first > x || J.second < x)
 	  x = (J.second + J.first).div2();
@@ -989,10 +989,10 @@ std::cout << "In newtonRefine, input J=" << J.first
       //x_0 is in NB(x^*) means that:
       //
       //    x_0 is in NB(x^*) iff |x_n-x^*| \le 2^{-2^{n}+1} |x_0-x^*|
-      //    
-      // where x_n is the n-th iterate of Newton.  
-      //    
-      //  LEMMA 1: if x_0  \in NB(x^*) then 
+      //
+      // where x_n is the n-th iterate of Newton.
+      //
+      //  LEMMA 1: if x_0  \in NB(x^*) then
       //               |x_0 - x^*| <= 2|del|      (*)
       //  and
       //               |x_1 - x^*| <= |del|       (**)
@@ -1007,19 +1007,19 @@ std::cout << "In newtonRefine, input J=" << J.first
       //         |x_0-x^*| - |del| <= |x_0-x^*|/2,
       //which follows from
       //         |x_0-x^* + del| <= |x_0-x^*|/2,
-      //which is equivalent to (***).  
+      //which is equivalent to (***).
       //The bound (**) follows from (*) and (***).
       //QED
       //
       //  COMMENT: the above derivation refers to the exact values,
       //  but what we compute is X_1 where X_1 is an approximation to
       //  x_1.  However, let us write X_1 = x_0 - DEL, where DEL is
-      //  an approximation to del.  
+      //  an approximation to del.
       //
       //  LEMMA 2:  If |DEL| >= |del|,
       //  then (**) holds with X_1 and DEL in place of x_1 and del.
-      //  
-      //  NOTE: We implemented this DEL in newtonIterE.   
+      //
+      //  NOTE: We implemented this DEL in newtonIterE.
 
 #ifdef CORE_DEBUG
       std::cout << "Inside Newton Refine: Refining Part " << std::endl;
@@ -1031,7 +1031,7 @@ std::cout << "In newtonRefine, input J=" << J.first
 #endif
       xSign = sign(seq[0].evalExactSign(x));
       if(xSign == 0){
-	J.first = J.second = x; 
+	J.first = J.second = x;
 	return J; // missing before!
       }
 
@@ -1055,9 +1055,9 @@ std::cout << "In newtonRefine, input J=" << J.first
 #ifdef CORE_DEBUG
     std::cout << " Returning from Newton Refine: J.first = " << J.first
 	      << " J.second = " << J.second << " aprec = " << aprec
-	      << " Sign at the interval endpoints = " 
+	      << " Sign at the interval endpoints = "
 	      << sign(seq[0].evalExactSign(J.first))
-	      << " : " << sign(seq[0].evalExactSign(J.second)) << " Err at starting = " 
+	      << " : " << sign(seq[0].evalExactSign(J.second)) << " Err at starting = "
 	      << J.first.err() << " Err at end = " << J.second.err() << std::endl;
 #endif
 
@@ -1077,7 +1077,7 @@ std::cout << "In newtonRefine, input J=" << J.first
 
 
 // ==================================================
-// Helper Functions 
+// Helper Functions
 // ==================================================
 
 // isZeroIn(I):

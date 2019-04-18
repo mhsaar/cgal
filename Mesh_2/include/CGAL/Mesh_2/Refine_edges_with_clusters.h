@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -47,10 +47,10 @@ namespace Mesh_2 {
 template <
   class Tr,
   class Is_locally_conform = Is_locally_conforming_Gabriel<Tr>,
-  class Container = 
+  class Container =
     typename details::Refine_edges_base_types<Tr>::Default_container
 >
-class Refine_edges_base_with_clusters : 
+class Refine_edges_base_with_clusters :
     public Refine_edges_base<Tr, Is_locally_conform, Container>
 {
   typedef Refine_edges_base<Tr, Is_locally_conform, Container> Super;
@@ -65,7 +65,7 @@ class Refine_edges_base_with_clusters :
 
   typedef typename Tr::Finite_edges_iterator Finite_edges_iterator;
   typedef typename Tr::Face_circulator Face_circulator;
-  
+
   typedef typename Triangulation_mesher_level_traits_2<Tr>::Zone Zone;
 
   typedef typename Clusters<Tr>::Cluster Cluster;
@@ -85,7 +85,7 @@ class Refine_edges_base_with_clusters :
 public:
   /** \name CONSTRUCTORS */
 
-  Refine_edges_base_with_clusters(Tr& tr_, Clusters<Tr>& c_) 
+  Refine_edges_base_with_clusters(Tr& tr_, Clusters<Tr>& c_)
     : Super(tr_), clusters(c_)
   {
   }
@@ -107,7 +107,7 @@ public:
     va_has_a_cluster = false;
     vb_has_a_cluster = false;
     cluster_splitted = false;
-    
+
     // true bellow to remove ca and cb because they will
     // be restored by update_cluster(...).
     if( clusters.get_cluster(this->va,this->vb,ca,ca_it) ) {
@@ -152,12 +152,12 @@ public:
     std::cerr << "clusters.size()=" << clusters.size() << std::endl;
 #endif // CGAL_MESH_2_DEBUG_CLUSTERS
     Super::after_insertion_impl(v);
-    if( va_has_a_cluster ) 
+    if( va_has_a_cluster )
       clusters.update_cluster(ca,ca_it,this->va,this->vb,v,cluster_splitted);
     if( vb_has_a_cluster )
       clusters.update_cluster(cb,cb_it,this->vb,this->va,v,cluster_splitted);
 #ifdef CGAL_MESH_2_DEBUG_CLUSTERS
-    std::cerr << "clusters.size() after update_cluster=" 
+    std::cerr << "clusters.size() after update_cluster="
 	      << clusters.size() << std::endl;
 #endif // CGAL_MESH_2_DEBUG_CLUSTERS
   }
@@ -181,7 +181,7 @@ public:
         const Face_handle& fh = eit->first;
         const int& i = eit->second;
 
-        if(fh->is_constrained(i) && 
+        if(fh->is_constrained(i) &&
            !this->is_locally_conform(this->tr, fh, i, p))
           {
 	    const Vertex_handle& v1 = fh->vertex( this->tr.cw (i));
@@ -259,7 +259,7 @@ private:
       this->tr.geom_traits().construct_translated_point_2_object();
 
     typedef typename Geom_traits::FT FT;
-    
+
 
     cluster_splitted = true;
 
@@ -308,12 +308,12 @@ protected:
 template <
   typename Tr,
   typename Is_locally_conform = Is_locally_conforming_Gabriel<Tr>,
-  typename Base = Refine_edges_base_with_clusters<Tr, 
+  typename Base = Refine_edges_base_with_clusters<Tr,
                                                   Is_locally_conform>
 >
-struct Refine_edges_with_clusters : 
-  public Base, 
-  public details::Refine_edges_types<Tr, 
+struct Refine_edges_with_clusters :
+  public Base,
+  public details::Refine_edges_types<Tr,
     Refine_edges_with_clusters<Tr, Is_locally_conform, Base>
     >::Edges_mesher_level
 {

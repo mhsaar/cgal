@@ -17,10 +17,10 @@
  *
  *
  * File: BigRat.h
- * Synopsis: 
+ * Synopsis:
  * 		a wrapper class for mpq from GMP
- * 
- * Written by 
+ *
+ * Written by
  *       Chee Yap <yap@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
@@ -38,7 +38,7 @@
 
 #include <CGAL/CORE/BigInt.h>
 
-namespace CORE { 
+namespace CORE {
 
 class BigRatRep : public RCRepImpl<BigRatRep> {
 public:
@@ -273,7 +273,7 @@ public:
   void canonicalize() {
     makeCopy();
     mpq_canonicalize(get_mp());
-  } 
+  }
   /// Has Exact Division
   static bool hasExactDivision() {
     return true;
@@ -401,7 +401,7 @@ inline BigRat gcd(const BigRat& x, const BigRat& y) {
 // A trivial implementation is to return true always. But this
 // caused tPolyRat to fail.
 // So we follow the definition of
-// Expr::isDivisible(e1, e2) which checks if e1/e2 is an integer.  
+// Expr::isDivisible(e1, e2) which checks if e1/e2 is an integer.
 inline bool isInteger(const BigRat& x) {
   return BigInt(x.get_den_mp()) == 1;
 }

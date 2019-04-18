@@ -16,7 +16,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s) : Lakulish Antani, Christophe Delage, Jane Tournois, Pierre Alliez
 //
@@ -50,21 +50,21 @@ class Lipschitz_sizing_field_2
 public:
   typedef typename Tr::Geom_traits      Geom_traits;
   typedef typename Geom_traits::Point_2 Point;
-    
+
   typedef Delaunay_triangulation_2<Geom_traits> Delaunay_triangulation;
   typedef typename Delaunay_triangulation::All_faces_iterator Face_iterator;
   typedef typename Delaunay_triangulation::Finite_vertices_iterator Vertex_iterator;
   typedef typename Delaunay_triangulation::Face_circulator Face_circulator;
-    
+
   typedef Search_traits_2<Geom_traits> Tree_traits;
   typedef Orthogonal_k_neighbor_search<Tree_traits> Neighbor_search;
   typedef typename Neighbor_search::Tree Search_tree;
-    
+
   typedef Apollonius_graph_traits_2<Geom_traits> Apollonius_traits;
   typedef Apollonius_graph_2<Apollonius_traits> Apollonius_graph;
   typedef typename Apollonius_traits::Site_2 Site;
 
-public:    
+public:
   typedef std::list<Site> Site_set_2;
 
 public:
@@ -91,7 +91,7 @@ public:
     generate_sites();
     generate_apollonius();
   }
-    
+
   // constructor with point set and K as parameters
   template <typename InputIterator>
   Lipschitz_sizing_field_2(InputIterator first,
@@ -195,7 +195,7 @@ protected:
 	ppi != points.end();ppi++)
       dt.insert(*ppi);
   }
-    
+
 
   // pole extraction
   void extract_poles()
@@ -208,7 +208,7 @@ protected:
 	Face_circulator fc = dt.incident_faces(vi);
 	Face_circulator c = fc;
 	std::list<Point> vv;
-			    
+			
 	if (fc != NULL)
 	  {
 	    do
@@ -217,7 +217,7 @@ protected:
 		  vv.push_back(dt.dual(c));
 	      } while (++c != fc);
 	  }
-			    
+			
 	// find the farthest voronoi vertex from this point
 	typename std::list<Point>::iterator maxp = vv.begin();
 	for (typename std::list<Point>::iterator pi = vv.begin(); pi != vv.end(); pi++)
@@ -228,7 +228,7 @@ protected:
 	      }
 	  }
 	poles.push_back(*maxp);
-			    
+			
 	// find the farthest voronoi vertex from this point in the other half-plane
 	typename std::list<Point>::iterator maxp2 = vv.begin();
 	for (typename std::list<Point>::iterator pi = vv.begin(); pi != vv.end(); pi++)
@@ -282,7 +282,7 @@ protected:
     sites.sort(Compare_site_2());
     ag.insert(sites.begin(),sites.end());
   }
-			    
+			
   double weighted_distance(const Point p,
 			   const Site s) const
   {

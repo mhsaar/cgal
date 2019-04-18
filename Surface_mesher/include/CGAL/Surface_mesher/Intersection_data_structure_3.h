@@ -44,7 +44,7 @@ class Intersection_data_structure_3 {
   typedef Simple_cartesian<double> Double_kernel;
   typedef typename Double_kernel::Point_3 DPoint_3;
 
-  typedef Segment_tree_map_traits_3<Double_kernel, 
+  typedef Segment_tree_map_traits_3<Double_kernel,
 				    Type> Traits;
 
   typedef typename GT::Triangle_3 Triangle_3;
@@ -92,9 +92,9 @@ public:
 
   Intersection_type do_intersect_properly(const Triangle_3& t, const Segment_3& s) const
   {
-    typename GT::Construct_vertex_3 vertex = 
+    typename GT::Construct_vertex_3 vertex =
       gt.construct_vertex_3_object();
-    typename GT::Coplanar_3 coplanar = 
+    typename GT::Coplanar_3 coplanar =
       gt.coplanar_3_object();
     typename GT::Do_intersect_3 do_intersect =
       gt.do_intersect_3_object();
@@ -150,7 +150,7 @@ public:
     elements.push_back(e);
     bounding_box = bounding_box + e.bbox();
   }
-  
+
   void create_data_structure()
   {
     using boost::bind;
@@ -164,14 +164,14 @@ public:
     epsilon = max_width * std::numeric_limits<double>::epsilon();
 
     std::vector<Interval> intervals;
-    for(typename Elements::const_iterator it = elements.begin(), 
-	  end = elements.end(); it != end; ++it) 
+    for(typename Elements::const_iterator it = elements.begin(),
+	  end = elements.end(); it != end; ++it)
     {
       intervals.push_back(make_interval(*it));
     }
     tree.make_tree(intervals.begin(),
 		   intervals.end());
-    
+
 //     tree.make_tree(make_transform_iterator(elements.begin(),
 // 					   bind(&make_interval,_1)),
 // 		   make_transform_iterator(elements.end(),
@@ -180,7 +180,7 @@ public:
     elements.clear();
   }
 
-  const Bbox_3& bbox() const 
+  const Bbox_3& bbox() const
   {
     return bounding_box;
   }
@@ -200,26 +200,26 @@ public:
 				     bbox().zmax());
   }
 
-  typename Elements::size_type number_of_elements() const 
+  typename Elements::size_type number_of_elements() const
   {
     return nb_of_elements;
   }
 
   template <class Type2>
-  Object intersection(const Type2& e) 
-  {    
+  Object intersection(const Type2& e)
+  {
     std::vector<Interval> intervals;
 
     tree.window_query(std::make_pair(make_pure_interval(e), Type()),
 		      std::back_inserter(intervals));
-#ifdef CGAL_SURFACE_MESHER_DEBUG_INTERSECTION_DATA_STRUCTURE    
+#ifdef CGAL_SURFACE_MESHER_DEBUG_INTERSECTION_DATA_STRUCTURE
     std::cerr << boost::format("intersection percentage: %1$.1f%% query=(%2%, %3%)\n")
       % ( 100. * intervals.size() / number_of_elements() )
       % make_pure_interval(e).first
       % make_pure_interval(e).second;
 #endif
     for(typename std::vector<Interval>::const_iterator it = intervals.begin(),
-	  end = intervals.end(); it != end; ++it) 
+	  end = intervals.end(); it != end; ++it)
     {
       Object inter = proper_intersection(it->second, e);
       if(!inter.is_empty())
@@ -232,19 +232,19 @@ public:
   std::pair<bool,int> number_of_intersections(const Type2& e)
   {
     int result = 0;
-    
+
     std::vector<Interval> intervals;
 
     tree.window_query(std::make_pair(make_pure_interval(e), Type()),
 				     std::back_inserter(intervals));
-#ifdef CGAL_SURFACE_MESHER_DEBUG_INTERSECTION_DATA_STRUCTURE    
+#ifdef CGAL_SURFACE_MESHER_DEBUG_INTERSECTION_DATA_STRUCTURE
     std::cerr << boost::format("number_of_intersections percentage: %1$.1f%% query=(%2%, %3%)\n")
       % ( 100. * intervals.size() / number_of_elements() )
       % make_pure_interval(e).first
       % make_pure_interval(e).second;
 #endif
     for(typename std::vector<Interval>::const_iterator it = intervals.begin(),
-	  end = intervals.end(); it != end; ++it) 
+	  end = intervals.end(); it != end; ++it)
     {
       switch(do_intersect_properly(it->second, e)) {
       case INSIDE:

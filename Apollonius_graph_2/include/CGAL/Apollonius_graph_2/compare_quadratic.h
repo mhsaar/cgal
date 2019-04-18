@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -170,7 +170,7 @@ value_of_Q3(const FT& a2, const FT& b2, const FT& J, const FT& G,
 	    const FT& K)
 {
   return FT(2) * b2 * J - a2 * (G - K);
-} 
+}
 
 template < class FT >
 inline FT
@@ -178,7 +178,7 @@ value_of_Q3p(const FT& a1, const FT& b1, const FT& J, const FT& G,
 	     const FT& K)
 {
   return a1 * (G + K) - FT(2) * b1 * J;
-} 
+}
 
 
 //--------------------------------------------------------------------
@@ -261,7 +261,7 @@ dfmt_compare_l1_l2(const FT& a1, const FT& b1, const FT& c1,
 {
   FT J = value_of_J(a1, b1, a2, b2);
   FT K = value_of_K(a1, b1, c1, a2, b2, c2);
-    
+
   if ( CGAL::is_positive(J) ) {
     if ( CGAL::is_positive(K) )  return SMALLER;  // l1 < l2
 	
@@ -320,11 +320,11 @@ dfmt_compare_l1_r2(const FT& a1, const FT& b1, const FT& c1,
   if ( CGAL::is_negative(K) ) return SMALLER;   // l1 < r2
 
   FT Jp = value_of_Jp(b1, c1, b2, c2);
-    
+
   if ( CGAL::is_positive(Jp) ) return LARGER;  // l1 > r2
-    
+
   FT R0 = value_of_R0(J, Jp, a1, c1, a2, c2);
-    
+
   Sign s_R0 = CGAL::sign(R0);
   if ( s_R0 == NEGATIVE ) return SMALLER;   // l1 < r2
   if ( s_R0 == POSITIVE ) return LARGER;    // l1 > r2
@@ -348,11 +348,11 @@ dfmt_compare_r1_l2(const FT& a1, const FT& b1, const FT& c1,
   if ( CGAL::is_negative(K) ) return LARGER;   // r1 > l2
 
   FT Jp = value_of_Jp(b1, c1, b2, c2);
-    
+
   if ( CGAL::is_negative(Jp) ) return SMALLER;  // r1 < l2
-    
+
   FT R0 = value_of_R0(J, Jp, a1, c1, a2, c2);
-    
+
   Sign s_R0 = CGAL::sign(R0);
   if ( s_R0 == NEGATIVE ) return LARGER;   // r1 > l2
   if ( s_R0 == POSITIVE ) return SMALLER;  // r1 < l2
@@ -371,7 +371,7 @@ dfmt_compare_r1_r2(const FT& a1, const FT& b1, const FT& c1,
 
   FT J = value_of_J(a1, b1, a2, b2);
   FT K = value_of_K(a1, b1, c1, a2, b2, c2);
-    
+
   if ( CGAL::is_positive(J) ){
     if ( CGAL::is_positive(K) )  return SMALLER;   // r1 < r2   1,2
 
@@ -551,11 +551,11 @@ ke_compare_l1_r2(const FT& a1, const FT& b1, const FT& c1,
 #endif
 
   FT Jp = value_of_Jp(b1, c1, b2, c2);
-    
+
   if ( CGAL::is_positive(Jp) ) { return LARGER; }
 
   FT P4 = value_of_P4<FT>(J, Jp, a1c2 - a2c1);
-    
+
   Sign s_P4 = CGAL::sign(P4);
   if ( s_P4 == POSITIVE ) { return SMALLER; }
   if ( s_P4 == NEGATIVE ) { return LARGER; }
@@ -605,9 +605,9 @@ ke_compare_r1_l2(const FT& a1, const FT& b1, const FT& c1,
 #endif
 
   FT Jp = value_of_Jp(b1, c1, b2, c2);
-    
+
   if ( CGAL::is_negative(Jp) ) { return SMALLER; }
-    
+
   FT P4 = value_of_P4<FT>(J, Jp, a1c2 - a2c1);
 
   Sign s_P4 = CGAL::sign(P4);
@@ -633,7 +633,7 @@ ke_compare_r1_r2(const FT& a1, const FT& b1, const FT& c1,
   FT a2c1 = a2 * c1;
   FT K = value_of_K<FT>(a1c2, a2c1, b1 * b2);
   Sign s_K = CGAL::sign(K);
-    
+
   if ( s_J == POSITIVE ) {
     if ( s_K == POSITIVE )  { return SMALLER; }
     else if ( s_K == NEGATIVE ) {
@@ -714,7 +714,7 @@ ke_compare_r1_r2(const FT& a1, const FT& b1, const FT& c1,
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-// the following functions do the filtering for the r1-r2 tree without 
+// the following functions do the filtering for the r1-r2 tree without
 // using C++ exceptions
 
 template < class CT, class ET >
@@ -802,7 +802,7 @@ dfmt_compare_r1_r2_filtered(const CT& a1, const CT& b1, const CT& c1,
       return dfmt_compare_r1_r2(ET(a1), ET(b1), ET(c1),
 				ET(a2), ET(b2), ET(c2));
     }
-    
+
 
     IT R0 = value_of_R0(D1, D2, K);
     FPU_set_cw(backup);
@@ -887,9 +887,9 @@ ke_compare_r1_r2_filtered(const CT& a1, const CT& b1, const CT& c1,
   IT a2c1 = a2i * c1i;
 
   IT K = value_of_K(a1c2, a2c1, b1i * b2i);
-    
+
   if ( J.inf() > 0 ) {
-    if ( K.inf() > 0 )  { 
+    if ( K.inf() > 0 )  {
       FPU_set_cw(backup);
       return SMALLER;
     } else if ( K.sup() < 0 ) {

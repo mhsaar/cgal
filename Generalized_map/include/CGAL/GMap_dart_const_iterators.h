@@ -135,7 +135,7 @@ namespace CGAL {
     {}
     /* Main constructor. */
     GMap_dart_const_iterator_basic_of_cell(const Map_& amap,
-                                           Dart_const_handle adart, 
+                                           Dart_const_handle adart,
                                            size_type amark):
       Base(amap,adart,amark)
     {}

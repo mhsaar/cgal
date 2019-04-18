@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -92,7 +92,7 @@ class Voronoi_diagram_2
   typedef typename Delaunay_graph::Vertex_circulator  Dual_vertex_circulator;
   typedef typename Delaunay_graph::Face_circulator    Dual_face_circulator;
 
-  typedef typename Delaunay_graph::Finite_vertices_iterator 
+  typedef typename Delaunay_graph::Finite_vertices_iterator
   Dual_vertices_iterator;
 
   typedef typename Delaunay_graph::Finite_faces_iterator
@@ -592,7 +592,7 @@ public:
 
   // SITE ITERATOR
   Site_iterator sites_begin() const {
-    return Site_iterator(faces_begin());    
+    return Site_iterator(faces_begin());
   }
 
   Site_iterator sites_end() const {
@@ -696,7 +696,7 @@ public:
 
     return valid;
   }
-  
+
   // I/O
   //----
  public:

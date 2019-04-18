@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -45,7 +45,7 @@ namespace internal {
 
     In_place_edge_list_iterator(const Edge& e, unsigned int idx)
       : e(e), idx(idx) {}
-    
+
     In_place_edge_list_iterator(const Self& other)
     {
       e = other.e;

@@ -15,13 +15,13 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
-//                 Franz Wessendorp 
-//                 Kaspar Fischer 
-                                                                               
+//                 Franz Wessendorp
+//                 Kaspar Fischer
+
 #ifndef CGAL_QP_SOLVER_QP_BASIS_INVERSE_H
 #define CGAL_QP_SOLVER_QP_BASIS_INVERSE_H
 
@@ -33,7 +33,7 @@
 #include <vector>
 
 namespace CGAL {
-                    
+
 // =================
 // class declaration
 // =================
@@ -53,7 +53,7 @@ class QP_basis_inverse {
                                         Self;
 
   private:
-    
+
     // private types
     typedef std::vector<ET>             Row;
     typedef std::vector<Row>            Matrix;
@@ -74,7 +74,7 @@ class QP_basis_inverse {
 
     // set-up
     void  set( int n, int m, int nr_equalities);
-    
+
     // init
     template < class InputIterator >                            // phase I
     void  init_( unsigned int art_size, InputIterator art_first);
@@ -104,36 +104,36 @@ class QP_basis_inverse {
     void  multiply( ForwardIterator v_l_it, ForwardIterator v_x_it,
                      OutputIterator y_l_it,  OutputIterator y_x_it) const
         { multiply( v_l_it, v_x_it, y_l_it, y_x_it, Is_LP(), Tag_true()); }
-    
+
     // special matrix-vector multiplication functions for LPs
     template < class ForwardIterator, class OutputIterator >  inline
     void  multiply_l( ForwardIterator v_x_it, OutputIterator y_l_it) const
         { CGAL_qpe_assertion( is_LP || is_phaseI);
           multiply__l( v_x_it, y_l_it); }
-    
+
     template < class ForwardIterator, class OutputIterator >  inline
     void  multiply_x( ForwardIterator v_l_it, OutputIterator y_x_it) const
         { CGAL_qpe_assertion( is_LP || is_phaseI);
 	  multiply__x( v_l_it, y_x_it); }
-    
+
     // vector-matrix multiplication ( x^T = u^T M )
     template < class ForwardIterator, class OutputIterator >  inline
     void  multiply_transposed( ForwardIterator u_l_it, ForwardIterator u_x_it,
                                 OutputIterator x_l_it,  OutputIterator x_x_it)
                                                                           const
         { multiply( u_l_it, u_x_it, x_l_it, x_x_it); } // M_B^{-1} is symmetric
-    
+
     // special vector-matrix multiplication functions for LPs
     template < class ForwardIterator, class OutputIterator >  inline
     void  multiply_transposed_l( ForwardIterator u_x_it,
                                   OutputIterator x_l_it) const
         { multiply_l( u_x_it, x_l_it); }        // Note: M_B^{-1} is symmetric
-    
+
     template < class ForwardIterator, class OutputIterator >  inline
     void  multiply_transposed_x( ForwardIterator u_l_it,
                                   OutputIterator x_x_it) const
         { multiply_x( u_l_it, x_x_it); }        // Note: M_B^{-1} is symmetric
-    
+
     // vector-vector multiplication ( y = u^T v )
     template < class InputIterator1, class InputIterator2 >  inline
     typename std::iterator_traits<InputIterator1>::value_type
@@ -141,51 +141,51 @@ class QP_basis_inverse {
 		   InputIterator2 v_l_it, InputIterator2 v_x_it) const
         { return inner_product_l( u_l_it, v_l_it)
 	       + inner_product_x( u_x_it, v_x_it); }
-    
+
     template < class InputIterator1, class InputIterator2 >  inline
     typename std::iterator_traits<InputIterator1>::value_type
     inner_product_l( InputIterator1 u_l_it, InputIterator2 v_l_it) const
         { return inner_product( u_l_it, v_l_it, s); }
-    
+
     template < class InputIterator1, class InputIterator2 >  inline
     typename std::iterator_traits<InputIterator1>::value_type
     inner_product_x( InputIterator1 u_x_it, InputIterator2 v_x_it) const
         { return inner_product( u_x_it, v_x_it, b); }
 	
-    
+
     // update functions
     // ----------------
     // entering of original variable (update type U1)
     template < class ForwardIterator >
     void  enter_original_( ForwardIterator y_l_it,
 			   ForwardIterator y_x_it, const ET& z);
-    
+
     // leaving of original variable (update type U2)
     void  leave_original( );
-    
+
     // entering of slack variable (update type U3)
     void  enter_slack( );
 
     // leaving of slack variable (update type U4)
     template < class ForwardIterator >
     void  leave_slack_( ForwardIterator u_x_it);
-    
+
     // replacing of original by original variable (update type U5)
     template < class ForwardIterator >
     void  enter_original_leave_original_( ForwardIterator y, unsigned int k);
-    
+
     // replacing of slack by slack variable (update type U6)
     template < class ForwardIterator >
     void  enter_slack_leave_slack_( ForwardIterator u, unsigned int k);
-    
+
     // replacing of slack by original variable (update type U7)
     template < class ForwardIterator1, class ForwardIterator2 >
     void  enter_original_leave_slack_( ForwardIterator1 y, ForwardIterator2 u);
-    
+
     // replacing of original by slack variable (update type U8)
     void  enter_slack_leave_original( );
-    
-    
+
+
     // replacing of original by original variable with precondition in QP-case
     // for phaseII                               (update type UZ_1)
     template < class ForwardIterator >
@@ -213,12 +213,12 @@ class QP_basis_inverse {
     // for phaseII                               (update type UZ_4)
     template < class ForwardIterator >
     void  z_replace_slack_by_slack(ForwardIterator u_x_it, unsigned int k_j);
-    
+
 
     // copying of reduced basis inverse row in (upper) C-half
     template < class OutIt >
     void  copy_row_in_C(OutIt y_l_it, OutIt y_x_it, unsigned int k);
-    
+
     // copying of reduced basis inverse row in (lower) B_O-half
     template < class OutIt >
     void  copy_row_in_B_O(OutIt y_l_it, OutIt y_x_it, unsigned int k);
@@ -233,10 +233,10 @@ class QP_basis_inverse {
 	  swap_constraint( i, Is_LP()); }
 
   private:
-    
+
     // constants
     const ET                 et0, et1, et2;
-                                        
+
     // data members
     Matrix                   M;         // basis inverse, stored row-wise
     ET                       d;         // denominator
@@ -252,7 +252,7 @@ class QP_basis_inverse {
 
     CGAL::Verbose_ostream&   vout;      // used for diagnostic output
 
-    Row                      x_l, tmp_l;  // used in the 
+    Row                      x_l, tmp_l;  // used in the
     Row                      x_x, tmp_x;  // update functions
 
     // private member functions
@@ -294,12 +294,12 @@ class QP_basis_inverse {
     template < class ForIt1, class ForIt2 >                     // LP case
     void  update_inplace_LP_( ForIt1 x_x_it, ForIt2 y_x_it,
 			      const ET&  d_new, const ET&  d_old);
-			      
+			
     template < class ForIt >                                  // QP case only
     void  z_update_inplace( ForIt psi1_l_it, ForIt psi1_x_it,
                             ForIt psi2_l_it, ForIt psi2_x_it,
 			    const ET& omega0, const ET& omega1,
-			    const ET& omega2, const ET& omega3); 
+			    const ET& omega2, const ET& omega3);
 
     void  update_entry( ET& entry,   const ET& d_new,
 			const ET& y, const ET& d_old) const;
@@ -309,7 +309,7 @@ class QP_basis_inverse {
     void  swap_variable  ( unsigned int, Tag_false);            // QP case
     void  swap_constraint( unsigned int, Tag_true );            // LP case
     void  swap_constraint( unsigned int, Tag_false);            // QP case	
-    
+
     // diagnostic output
     void  print( );
 
@@ -346,7 +346,7 @@ class QP_basis_inverse {
         if ( tmp_x.size() < art_size) {
             tmp_x.insert( tmp_x.end(), art_size-tmp_x.size(), et0);
         }
-        
+
         CGAL_qpe_debug {
             if ( vout.verbose()) print();
         }
@@ -371,7 +371,7 @@ class QP_basis_inverse {
 	// compute 'Q^T * 2 D_B' ( Q = A_B^-1 )	
 	p_begin = M.begin();
 	r_begin = M.begin();
-	if (b > 0) r_begin += l+s-1;   	// initialize only if for loops 
+	if (b > 0) r_begin += l+s-1;   	// initialize only if for loops
 					// are entered
 	for ( col = 0; col < b; ++col, ++twice_D_it) {
             ++p_begin;
@@ -439,7 +439,7 @@ class QP_basis_inverse {
     {
         // assert QP case
         Assert_compile_time_tag( Tag_false(), Is_LP());
-    
+
         // update matrix in-place
         // ----------------------
         // handle sign of new denominator
@@ -448,13 +448,13 @@ class QP_basis_inverse {
 
         // update matrix
         update_inplace_QP( y_l_it, y_x_it, z, ( z_neg ? -d : d));
-                                                                      
+
         // append new row and column ("after R")
         // -------------------------------------
         typename Row::iterator  row_it;
 	ForwardIterator           y_it;
         unsigned int            col, k = l+(++b);
-    
+
 //      // allocate new row, if necessary
 //      // BG: replaced this by the ensure_physical_row construct below
 //      if ( k <= M.size()) {
@@ -466,7 +466,7 @@ class QP_basis_inverse {
 //      }
 	ensure_physical_row(k-1);
 	row_it = M[ k-1].begin();
-    
+
         // store entries in new row
         for (   col = 0,                              y_it = y_l_it;
                 col < s;
@@ -479,17 +479,17 @@ class QP_basis_inverse {
             *row_it = ( z_neg ? *y_it : -( *y_it));
         }
         *row_it = ( z_neg ? -d : d);
-    
+
         // store new denominator
 	// ---------------------
         d = ( z_neg ? -z : z);
         CGAL_qpe_assertion( d > et0);
-    
+
         CGAL_qpe_debug {
             if ( vout.verbose()) print();
         }
     }
-    
+
     // leaving of slack variable (update type U4)
     template < class ForwardIterator >
     void
@@ -497,7 +497,7 @@ class QP_basis_inverse {
     {
         // assert QP case
         Assert_compile_time_tag( Tag_false(), Is_LP());
-    
+
         // update matrix in-place
         // ----------------------
         // compute new row/column of basis inverse
@@ -508,16 +508,16 @@ class QP_basis_inverse {
         ET    z     = -inner_product_x( x_x.begin(), u_x_it);
         bool  z_neg = ( z < et0);
         CGAL_qpe_assertion( z != et0);
-    
+
         // update matrix
         update_inplace_QP( x_l.begin(), x_x.begin(), z, ( z_neg ? -d : d));
-                                                                      
+
         // insert new row and column ("after P")
         // -------------------------------------
         typename Row   ::iterator  row_it, x_it;
         typename Matrix::iterator  col_it;
         unsigned int               col, k = l+b;
-    
+
         // store entries in new row
 	if (M[s].size()==0) {
 	   // row has to be filled first
@@ -529,19 +529,19 @@ class QP_basis_inverse {
             *row_it = ( z_neg ? *x_it : -( *x_it));
         }
         *row_it = ( z_neg ? -d : d);
-    
+
         for (   col = l,   col_it = M.begin()+l,          x_it = x_x.begin();
                 col < k;
               ++col,     ++col_it,                      ++x_it              ) {
             (*col_it)[ s] = ( z_neg ? *x_it : -( *x_it));
         }
         ++s;
-    
+
         // store new denominator
 	// ---------------------
         d = ( z_neg ? -z : z);
         CGAL_qpe_assertion( d > et0);
-    
+
         CGAL_qpe_debug {
             if ( vout.verbose()) print();
 	}
@@ -584,7 +584,7 @@ class QP_basis_inverse {
 		for (   col = 0, row_it = matrix_it->begin(), row_k_it = row_k;
 			col < b;
 		      ++col,   ++row_it,                    ++row_k_it       ){
-        
+
 		    // update in place
 		    update_entry( *row_it, z, minus_y * *row_k_it, d);
 		}
@@ -596,7 +596,7 @@ class QP_basis_inverse {
 	    for (   col = 0,   row_it = row_k;
 		    col < b;
 		  ++col,     ++row_it        ) {
-        
+
 		*row_it = -( *row_it);
 	    }
 	}
@@ -611,7 +611,7 @@ class QP_basis_inverse {
             if ( vout.verbose()) print();
 	}
     }
-    
+
     // replacing of slack variable (update type U6) [ replace row ]
     template < class ForwardIterator >
     void
@@ -675,7 +675,7 @@ class QP_basis_inverse {
             if ( vout.verbose()) print();
 	}
     }
-    
+
     // replacing of slack by original variable (update type U7) [ grow ]
     template < class ForwardIterator1, class ForwardIterator2 >
     void  enter_original_leave_slack( ForwardIterator1 y_x_it,
@@ -694,7 +694,7 @@ class QP_basis_inverse {
 	
         // update matrix
 	update_inplace_LP( x_x.begin(), y_x_it, z, ( z_neg ? -d : d));
-                                                  
+
         // append new row and column
         // -------------------------
         typename Matrix::iterator  matrix_it;
@@ -711,7 +711,7 @@ class QP_basis_inverse {
 	    matrix_it = M.begin();
 	} 	
 	
-	// store 'x_x' in new row 
+	// store 'x_x' in new row
 	x_it = x_x.begin();
 	for ( col = 0; col < b; ++col, ++row_it, ++x_it) {
 		*row_it = ( z_neg ? *x_it : -( *x_it));
@@ -723,12 +723,12 @@ class QP_basis_inverse {
 		(*matrix_it)[b] = ( z_neg ? *y_x_it : -( *y_x_it));
 	}
 	++s; ++b;
-    
+
         // store new denominator
 	// ---------------------
         d = ( z_neg ? -z : z);
         CGAL_qpe_assertion( d > et0);
-    
+
         CGAL_qpe_debug {
             if ( vout.verbose()) print();
         }
@@ -763,24 +763,24 @@ class QP_basis_inverse {
 	}
 	b = art_size;
     }
-    
+
     // append row in Q if no allocated row available
     void ensure_physical_row (unsigned int row) {
     	unsigned int rows = static_cast<unsigned int>(M.size());
 	CGAL_qpe_assertion(rows >= row);
 	if (rows == row) {
             M.push_back(Row(row+1, et0));
-	    
+	
 	    // do we have to grow x_x?
 	    CGAL_qpe_assertion(x_x.size() >= row-l);
 	    if (x_x.size() == row-l)
 	       x_x.push_back(et0);
-	    
+	
 	    // do we have to grow tmp_x?
 	    CGAL_qpe_assertion(tmp_x.size() >= row-l);
 	    if (tmp_x.size() == row-l)
 	       tmp_x.push_back(et0);
-	    
+	
             CGAL_qpe_assertion(M[row].size()==row+1);
 	    CGAL_qpe_debug {
 	      if ( vout.verbose()) {
@@ -789,7 +789,7 @@ class QP_basis_inverse {
             }
 	}
     }
-    
+
     // matrix-vector multiplication (QP case)
     template < class ForIt, class OutIt, class Use1stArg >
     void
@@ -809,10 +809,10 @@ class QP_basis_inverse {
         typename Row   ::const_iterator     row_it;     // left  of diagonal
         typename Matrix::const_iterator  column_it;     // right of diagonal
         ForIt                                 v_it;
-    
+
         unsigned int  row, count, k = l+b;
         ET            sum;
-    
+
         // compute  P v_l + Q^T v_x	
         for (   row = 0,   matrix_it = M.begin();
                 row < s;
@@ -836,18 +836,18 @@ class QP_basis_inverse {
 		    sum += (*column_it)[ row] * *v_it;
 		}
 	    }
-    
+
             // Q^T:
             for (   count = 0,       column_it  = M.begin()+l,   v_it = v_x_it;
                     count < b;
                   ++count,         ++column_it,                ++v_it) {
                 sum += (*column_it)[ row] * *v_it;
             }
-    
+
             // store result
             *y_l_it = sum;
         }
-    
+
         // compute  Q v_l + R v_x
         for (   row = l,   matrix_it = M.begin()+l;
                 row < k;
@@ -864,26 +864,26 @@ class QP_basis_inverse {
 		    sum += *row_it * *v_it;
 		}
 	    }
-    
+
 	    // R: left of diagonal (including)
             for (                row_it =  matrix_it->begin()+l, v_it = v_x_it;
                                  row_it != matrix_it->end();
                                ++row_it,                       ++v_it) {
                 sum += *row_it * *v_it;
             }
-    
+
             // R: right of diagonal (excluding)
             for (   count = row+1,   column_it = ++matrix_it;
                     count < k;
                   ++count,         ++column_it,                ++v_it) {
                 sum += (*column_it)[ row] * *v_it;
             }
-    
+
             // store result
             *y_x_it = sum;
         }
     }
-    
+
     // matrix-vector multiplication (LP case)
     template < class ForIt, class OutIt, class Dummy > inline
     void
@@ -893,7 +893,7 @@ class QP_basis_inverse {
         multiply__l( v_x_it, y_l_it);
         multiply__x( v_l_it, y_x_it);
     }
-    
+
     // special matrix-vector multiplication functions for LPs
     template < class ForIt, class OutIt > inline
     void
@@ -902,27 +902,27 @@ class QP_basis_inverse {
         typename Matrix::const_iterator  matrix_it = M.begin();
         typename Matrix::const_iterator  column_it;
         ForIt                                 v_it;
-    
+
         unsigned int  row, count;
         ET            sum;
-    
+
 	// QP?
 	if ( is_QP) matrix_it += l;
 
         // compute  Q^T v_x
         for ( row = 0; row < s; ++row,                              ++y_l_it) {
             sum = et0;
-    
+
             for (   count = 0,   column_it = matrix_it,   v_it = v_x_it;
                     count < b;
                   ++count,     ++column_it,             ++v_it) {
                 sum += (*column_it)[ row] * *v_it;
             }
-    
+
             *y_l_it = sum;
         }
     }
-    
+
     template < class ForIt, class OutIt > inline
     void
     multiply__x( ForIt v_l_it, OutIt y_x_it) const
@@ -941,23 +941,23 @@ class QP_basis_inverse {
 	    *y_x_it = inner_product( matrix_it->begin(), v_l_it, s);
 	}
     }
-    
-    // vector-vector multiplication  
+
+    // vector-vector multiplication
     template < class InIt1, class InIt2 > inline
-    typename std::iterator_traits<InIt1>::value_type  
+    typename std::iterator_traits<InIt1>::value_type
     inner_product( InIt1 u_it, InIt2 v_it, unsigned int n) const
     {
 	typedef  typename std::iterator_traits<InIt1>::value_type  NT;
-    
+
         // compute u^T v
 	NT sum = NT( 0);
         for ( unsigned int count = 0; count < n; ++count, ++u_it, ++v_it) {
             sum += NT(*u_it) * NT(*v_it);
         }
-    
+
         return sum;
     }
-    
+
     // in-place update
     template < class ForIt >                                    // QP case
     void  update_inplace_QP( ForIt y_l_it, ForIt y_x_it,
@@ -966,46 +966,46 @@ class QP_basis_inverse {
         typename Matrix::      iterator  matrix_it;
         typename Row   ::      iterator     row_it;
         typename Row   ::const_iterator      y_it1, y_it2;
-    
+
         unsigned int  row, col, k = l+b;
-    
+
         // rows: 0..s-1  ( P )
         for (   row = 0,   y_it1 = y_l_it,   matrix_it = M.begin();
                 row < s;
               ++row,     ++y_it1,          ++matrix_it            ) {
-    
+
             // columns: 0..row  ( P )
             for (   row_it =  matrix_it->begin(),   y_it2 = y_l_it;
                     row_it != matrix_it->end();
                   ++row_it,                       ++y_it2         ) {
-    
+
                 update_entry( *row_it, d_new, *y_it1 * *y_it2, d_old);
             }
         }
-    
+
         // rows: l..k-1  ( Q R )
         for (   row = l,   y_it1 = y_x_it,   matrix_it += l-s;
                 row < k;
               ++row,     ++y_it1,          ++matrix_it       ) {
-    
+
             // columns: 0..s-1  ( Q )
             for (   col = 0,   row_it =  matrix_it->begin(),   y_it2 = y_l_it;
                     col < s;
                   ++col,     ++row_it,                       ++y_it2         ){
-    
+
                 update_entry( *row_it, d_new, *y_it1 * *y_it2, d_old);
             }
-    
+
             // columns: l..k-1  ( R )
             for (              row_it += l-s,                  y_it2 = y_x_it;
                                row_it != matrix_it->end();
                              ++row_it,                       ++y_it2         ){
-    
+
                 update_entry( *row_it, d_new, *y_it1 * *y_it2, d_old);
             }
         }
     }
-    
+
     template < class ForIt1, class ForIt2 >                     // LP case
     void  update_inplace_LP( ForIt1 x_x_it, ForIt2 y_x_it,
 			     const ET& d_new, const ET& d_old)
@@ -1013,7 +1013,7 @@ class QP_basis_inverse {
         typename Matrix::      iterator  matrix_it;
         typename Row   ::      iterator     row_it;
 	ForIt1                                x_it;
-    
+
         unsigned int  row, col;
 	ET            y;
 
@@ -1025,21 +1025,21 @@ class QP_basis_inverse {
         for (   row = 0;
                 row < s;
               ++row,     ++y_x_it, ++matrix_it) {
-    
+
             // columns: 0..b-1  ( Q )
 	    y = *y_x_it;
             for (   col = 0,   row_it =  matrix_it->begin(),   x_it = x_x_it;
 		    col < b;
 		  ++col,     ++row_it,                       ++x_it         ){
-    
+
                 update_entry( *row_it, d_new, y * *x_it, d_old);
             }
         }
     }
-    
-    
+
+
     template < class RandomAccessIterator >
-    typename std::iterator_traits<RandomAccessIterator>::value_type 
+    typename std::iterator_traits<RandomAccessIterator>::value_type
     inv_M_B_row_dot_col( int row, RandomAccessIterator u_l_it) const
     {
 	typename Row::const_iterator row_it;
@@ -1089,9 +1089,9 @@ set( Tag_false)
     M.reserve( l);
     // only allocate empty rows
     for ( unsigned int i = 0; i < l; ++i )
-       M.push_back(Row(0, et0)); 
+       M.push_back(Row(0, et0));
 }
-    
+
 // set-up (LP case)
 template < class ET_, class Is_LP_ >  inline
 void  QP_basis_inverse<ET_,Is_LP_>::
