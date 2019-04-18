@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -64,7 +64,7 @@ public:
       else
 	{
 	  Circ end(c);
-	  do { 
+	  do {
 	    ++circ;
 	  } while( !test(circ) && end != circ );
 	  is_null = (end == circ);
@@ -81,7 +81,7 @@ public:
     return !is_null;
   }
 
-  bool operator==(const Self& c) const 
+  bool operator==(const Self& c) const
     {
       return is_null==c.is_null && this->Circ::operator==(c);
     }

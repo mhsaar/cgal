@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -67,7 +67,7 @@ struct Find_opposite_halfedge
   typedef Find_next_halfedge<VDA>                     Next_halfedge;
 
   void operator()(const VDA* vda, const Delaunay_face_handle& f, int i,
-		  Delaunay_face_handle& fopp, int& iopp) const 
+		  Delaunay_face_handle& fopp, int& iopp) const
   {
     Delaunay_face_handle f1;
     int i1;

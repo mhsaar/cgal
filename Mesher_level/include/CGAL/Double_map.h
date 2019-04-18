@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -53,7 +53,7 @@
 
 namespace CGAL {
 
-template <class _Key, class _Data, class _Direct_compare = std::less<_Key>, 
+template <class _Key, class _Data, class _Direct_compare = std::less<_Key>,
           class _Reverse_compare = std::less<_Data> >
 class Double_map
 {
@@ -64,7 +64,7 @@ public:
   typedef _Reverse_compare Reverse_compare;
 
   typedef Double_map<Key, Data, Direct_compare, Reverse_compare> Self;
-  
+
 #ifdef CGAL_USE_BOOST_BIMAP
   typedef ::boost::bimap< ::boost::bimaps::set_of<Key, Direct_compare>,
 				 ::boost::bimaps::multiset_of<Data, Reverse_compare> > Boost_bimap;
@@ -87,7 +87,7 @@ public:
   typedef typename Self::Reverse_func::value_type right_value_type;
 #endif
   typedef typename Direct_func::value_type Direct_entry;
-               // std::pair<Key, reverse_iterator> 
+               // std::pair<Key, reverse_iterator>
   typedef typename Reverse_func::value_type Reverse_entry;
                // std::pair<Data, Key> ;
 
@@ -146,7 +146,7 @@ public :
   {
     return(direct_func().size()==reverse_func().size());
   }
-  
+
   void clear()
   {
 #ifdef CGAL_USE_BOOST_BIMAP
@@ -155,7 +155,7 @@ public :
     direct_func().clear();
     reverse_func().clear();
 #endif
-    
+
   }
 
   Self& operator=(const Self& dm)
@@ -178,7 +178,7 @@ public :
     }
 #else
     reverse_func() = dm.reverse_func();
-    
+
     for(reverse_iterator rit = reverse_func().begin();
         rit != reverse_func().end();
         ++rit)
@@ -210,9 +210,9 @@ public :
       if(direct_hint != direct_func().end() &&
 	 direct_hint->first == k)
         return false;
-      
+
       reverse_iterator reverse_it = reverse_func().insert(Reverse_entry(d, k));
-      
+
       direct_func().insert(direct_hint, Direct_entry(k, reverse_it));
 
       CGAL_assertion(is_valid());
@@ -239,7 +239,7 @@ public :
       direct_iterator pos = direct_func().find(rit->second);
       CGAL_assertion(pos != direct_func().end());
       CGAL_assertion(pos->second == rit);
-      
+
       direct_func().erase(pos);
       reverse_func().erase(rit);
       CGAL_assertion(is_valid());
@@ -250,7 +250,7 @@ public :
   {
     return direct_func().begin();
   }
-    
+
   const_iterator end() const
   {
     return direct_func().end();
@@ -294,13 +294,13 @@ public :
     }
   }
 
-  void dump_reverse_func(std::ostream& out) 
+  void dump_reverse_func(std::ostream& out)
   {
     dump_reverse_func(out, CGAL::Identity<Data>(), CGAL::Identity<Key>());
   }
 };
 
-template <class _Key, class _Data, class _Direct_compare, 
+template <class _Key, class _Data, class _Direct_compare,
   class _Reverse_compare>
 bool
 Double_map<_Key, _Data, _Direct_compare, _Reverse_compare>::

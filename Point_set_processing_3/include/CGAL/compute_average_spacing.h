@@ -123,14 +123,14 @@ compute_average_spacing(const typename Kernel::Point_3& query, ///< 3D point who
       , advancement (advancement)
       , interrupted (interrupted)
     { }
-    
+
     void operator()(const tbb::blocked_range<std::size_t>& r) const
     {
       for( std::size_t i = r.begin(); i != r.end(); ++i)
       {
         if (interrupted)
           break;
-        
+
 	output[i] = CGAL::internal::compute_average_spacing<Kernel,Tree>(input[i], tree, k);
         ++ advancement;
       }
@@ -207,7 +207,7 @@ compute_average_spacing(
   PointMap point_map = choose_param(get_param(np, internal_np::point_map), PointMap());
   const std::function<bool(double)>& callback = choose_param(get_param(np, internal_np::callback),
                                                                std::function<bool(double)>());
-  
+
   // types for K nearest neighbors search structure
   typedef typename Kernel::FT FT;
   typedef Search_traits_3<Kernel> Tree_traits;
@@ -224,7 +224,7 @@ compute_average_spacing(
 
   // Instanciate a KD-tree search.
   // Note: We have to convert each input iterator to Point_3.
-  std::vector<Point> kd_tree_points; 
+  std::vector<Point> kd_tree_points;
   for(typename PointRange::const_iterator it = points.begin(); it != points.end(); it++)
     kd_tree_points.push_back(get(point_map, *it));
   Tree tree(kd_tree_points.begin(), kd_tree_points.end());
@@ -242,7 +242,7 @@ compute_average_spacing(
    {
      Point_set_processing_3::internal::Parallel_callback
        parallel_callback (callback, kd_tree_points.size());
-     
+
      std::vector<FT> spacings (kd_tree_points.size (), -1);
      CGAL::internal::Compute_average_spacings<Kernel, Tree>
        f (tree, k, kd_tree_points, spacings,
@@ -274,7 +274,7 @@ compute_average_spacing(
          }
        }
      }
-   
+
   // return average spacing
    return sum_spacings / (FT)(nb);
 }
@@ -315,7 +315,7 @@ compute_average_spacing(
     CGAL::parameters::point_map (point_map).geom_traits (Kernel()));
 }
 
-  
+
 
 // deprecated API
 template <typename ConcurrencyTag,
@@ -349,7 +349,7 @@ compute_average_spacing(
     CGAL::make_range (first,beyond), k);
 }
 #endif // CGAL_NO_DEPRECATED_CODE
-  
+
 /// \endcond
 
 

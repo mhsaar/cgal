@@ -3,7 +3,7 @@
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,10 +19,10 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Stefan Schirra, Olivier Devillers, Mariette Yvinec
- 
+
 
 #ifndef CGAL_PREDICATES_ON_POINTSH2_H
 #define CGAL_PREDICATES_ON_POINTSH2_H
@@ -161,7 +161,7 @@ power_testH2( const RT &phx, const RT &phy, const RT &phw, const Quotient<RT> &p
 	ta = thx*thw;
     }
     else
-    {   
+    {
 	pa = phy*phw;
 	qa = qhy*qhw;
 	ta = thy*thw;

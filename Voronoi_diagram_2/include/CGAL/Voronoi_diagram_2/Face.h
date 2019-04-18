@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -111,7 +111,7 @@ class Face
 #endif
 
     return
-      Halfedge_handle( 
+      Halfedge_handle(
 		      Halfedge(vda_, ec->first->neighbor(ec->second), i_mirror)
 		      );
   }

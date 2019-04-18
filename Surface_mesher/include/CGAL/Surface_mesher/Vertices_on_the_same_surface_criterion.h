@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -32,7 +32,7 @@ namespace CGAL {
   namespace Surface_mesher {
 
 template <typename Tr>
-class Vertices_on_the_same_surface_criterion : 
+class Vertices_on_the_same_surface_criterion :
     public Refine_criterion <Tr> {
   public:
     typedef Refine_criterion <Tr> Criterion;
@@ -64,7 +64,7 @@ class Vertices_on_the_same_surface_criterion :
         q = Quality(1);
         return false;
       }
-    } 
+    }
 }; // end Vertices_on_the_same_surface_criterion
 
 

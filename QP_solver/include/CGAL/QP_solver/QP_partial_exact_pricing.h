@@ -15,11 +15,11 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
-//                 Franz Wessendorp 
+//                 Franz Wessendorp
 //                 Kaspar Fischer
 
 #ifndef CGAL_QP_PARTIAL_EXACT_PRICING_H
@@ -63,7 +63,7 @@ class QP_partial_exact_pricing : public QP__partial_base<Q,ET,Tags> {
 
     // operations
     int  pricing(int& direction );
-    
+
     // creation
     ~QP_partial_exact_pricing(){ };
 
@@ -85,7 +85,7 @@ QP_partial_exact_pricing( bool  randomize, Random&  random)
     : Base( "partial exact"),
       Partial_base( randomize, random)
 { }
-    
+
 // operations
 template < typename Q, typename ET, typename Tags >
 int  QP_partial_exact_pricing<Q,ET,Tags>::
@@ -136,7 +136,7 @@ pricing_helper(int& /*direction*/, Tag_true /*is_in_standard_form*/)
 
 	    // don't price artificial variables
 	    if (this->solver().is_artificial( *it)) continue;
-	    
+	
 	    // compute mu_j
 	    mu = this->mu_j( *it);
 
@@ -156,7 +156,7 @@ pricing_helper(int& /*direction*/, Tag_true /*is_in_standard_form*/)
 	    }
 	}
     }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
 
@@ -198,7 +198,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/)
 
     // no entering variable found so far?
     if ( ( min_j == -1) && ( this->inactive_set_begin() <
-                             this->inactive_set_end())) 
+                             this->inactive_set_end()))
       {
 
 	// loop over all inactive non-basic variables
@@ -206,13 +206,13 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/)
 	    this->vout() << "inactive variables:" << std::endl;
 	}
 	Index_const_iterator  active_it;
-	for ( it = this->inactive_set_begin(); 
+	for ( it = this->inactive_set_begin();
 	      it != this->inactive_set_end(); ++it) {
 
 	  // don't price basics/artificials
 	  CGAL_qpe_assertion (!this->solver().is_basic(*it));
 	  if (this->solver().is_artificial( *it)) continue;
-	    
+	
 	  // compute mu_j
 	  mu = this->mu_j( *it);
 
@@ -228,13 +228,13 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/)
 	    this->activating( active_it);
 
 	    // new minimum?
-	    if (this->price_dantzig (*active_it, mu, this->et0, 
+	    if (this->price_dantzig (*active_it, mu, this->et0,
 			       min_j, min_mu, direction))
 	      min_it = active_it;
 	  }
 	}
       }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
 

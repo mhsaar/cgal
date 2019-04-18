@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -356,7 +356,7 @@ private:
 		      const Tag_false&) const
   {
     return true;
-  } 
+  }
 
   bool check_if_exact(const Site_2& s, unsigned int i,
 		      const Tag_true&) const
@@ -410,7 +410,7 @@ private:
 
   void
   orient_lines(const Site_2& sp, const Site_2& sq,
-	       const Site_2& sr, FT a[], FT b[], FT c[]) const 
+	       const Site_2& sr, FT a[], FT b[], FT c[]) const
   {
     CGAL_precondition( sp.is_segment() && sq.is_segment() &&
 		       sr.is_segment() );
@@ -419,14 +419,14 @@ private:
     l[0] = compute_supporting_line(sp.supporting_site());
     l[1] = compute_supporting_line(sq.supporting_site());
     l[2] = compute_supporting_line(sr.supporting_site());
-    
+
     bool is_oriented[3] = {false, false, false};
 
     if ( is_on_positive_halfspace(sp, sq, l[0]) ||
     	 is_on_positive_halfspace(sp, sr, l[0]) ) {
       is_oriented[0] = true;
     } else {
-      
+
       l[0] = opposite_line(l[0]);
       if ( is_on_positive_halfspace(sp, sq, l[0]) ||
       	   is_on_positive_halfspace(sp, sr, l[0]) ) {
@@ -559,7 +559,7 @@ private:
 
     FT dist =
       a[(i_no+1)%3] * vx + b[(i_no+1)%3] * vy + c[(i_no+1)%3] * vw;
-    
+
 
     Sign sgn_dist = s_vw * CGAL::sign(dist);
 
@@ -658,7 +658,7 @@ private:
    return ( same_points(p, s.source_site()) ||
 	    same_points(p, s.target_site()) );
   }
-  
+
 
   //--------------------------------------------------------------------------
   //--------------------------------------------------------------------------
@@ -686,7 +686,7 @@ private:
       return ZERO;
     }
 
-    if (  ( p_.is_segment() && is_endpoint_of(t, p_) ) || 
+    if (  ( p_.is_segment() && is_endpoint_of(t, p_) ) ||
 	  ( q_.is_segment() && is_endpoint_of(t, q_) ) ||
 	  ( r_.is_segment() && is_endpoint_of(t, r_) )  ) {
       use_result = true;
@@ -722,7 +722,7 @@ private:
   Sign incircle_p(const Site_2& st, PPP_Type) const
   {
     CGAL_precondition( st.is_point() );
-    
+
     Point_2 t = st.point();
 
     Oriented_side os =
@@ -764,7 +764,7 @@ private:
 
   //--------------------------------------------------------------------------
 
-  Sign incircle_p(const Site_2& t) const 
+  Sign incircle_p(const Site_2& t) const
   {
     if ( is_degenerate_Voronoi_circle() ) {
       return POSITIVE;
@@ -789,7 +789,7 @@ private:
     return s;
   }
 
-  Sign incircle_p_no_easy(const Site_2& t) const 
+  Sign incircle_p_no_easy(const Site_2& t) const
   {
     Sign s(ZERO);
     switch ( v_type ) {
@@ -890,14 +890,14 @@ private:
         // are not in the same halfspace defined by the tangent line through p1
 	Site_2 p2 = other_site(*p1, t);
 	  Point_2 v(x(),y());
-        
+
 	  Compute_scalar_product_2 csp;
 	  return -CGAL::sign( csp((v - p1->point()), (p2.point()- p1->point())) );
       }
 
     } else if(v_type == PPS){
       Site_2 const *p1, *p2, *seg;
-      if(p_.is_point()){ 
+      if(p_.is_point()){
 	p1 = &p_;
 	if(q_.is_point()){
 	  p2 = &q_;
@@ -905,7 +905,7 @@ private:
 	} else {
 	  p2 = &r_;
 	  seg = &q_;
-	} 
+	}
       } else {
 	seg = &p_;
 	p1 = &q_;
@@ -969,7 +969,7 @@ private:
     return incircle_s_no_easy(t, 0);
   }
 
-  
+
   Sign incircle_s_no_easy(const Site_2& t, int) const
   {
     Sign d1, d2;
@@ -1019,7 +1019,7 @@ private:
 
   //--------------------------------------------------------------------------
 
-  Sign incircle_s(const Site_2& t) const 
+  Sign incircle_s(const Site_2& t) const
   {
     CGAL_precondition( t.is_segment() );
 
@@ -1197,7 +1197,7 @@ public:
     if ( is_degenerate_Voronoi_circle() ) {
       return degenerate_point();
     }
-    
+
     return Point_2(x(), y());
   }
 
@@ -1228,7 +1228,7 @@ public:
 
   //--------------------------------------------------------------------------
 
-  Sign incircle(const Site_2& t) const 
+  Sign incircle(const Site_2& t) const
   {
     if ( t.is_point() ) {
       return incircle_p(t);
@@ -1236,7 +1236,7 @@ public:
     return incircle_s(t);
   }
 
-  Sign incircle_no_easy(const Site_2& t) const 
+  Sign incircle_no_easy(const Site_2& t) const
   {
     Sign s;
 
@@ -1252,7 +1252,7 @@ public:
   //--------------------------------------------------------------------------
 
 
-  Orientation orientation(const Line_2& l) const 
+  Orientation orientation(const Line_2& l) const
   {
     return CGAL::sign(l.a() * x() + l.b() * y() + l.c());
   }

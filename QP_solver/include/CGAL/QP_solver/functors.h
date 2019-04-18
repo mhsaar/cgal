@@ -15,11 +15,11 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
 //
-// Author(s)     : Sven Schoenherr 
+//
+// Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
-//                 Franz Wessendorp 
+//                 Franz Wessendorp
 //                 Kaspar Fischer
 
 #ifndef CGAL_QP_SOLVER_FUNCTORS_H
@@ -69,9 +69,9 @@ class QP_vector_accessor : public CGAL::cpp98::unary_function<
     int, typename std::iterator_traits<VectorIt>::value_type > {
 
   public:
-    typedef typename 
+    typedef typename
         CGAL::cpp98::unary_function<
-           int, 
+           int,
            typename std::iterator_traits<VectorIt>::value_type >::result_type
     result_type;
     QP_vector_accessor( VectorIt it, int lower = 0, int upper = 0)
@@ -101,7 +101,7 @@ template < class MatrixIt, bool check_1st_lower, bool check_1st_upper,
                            bool check_2nd_lower, bool check_2nd_upper >
 class QP_matrix_accessor {
 
-  public:    
+  public:
     typedef int argument1_type;
     typedef int argument2_type;
     typedef typename std::iterator_traits<MatrixIt>::value_type VectorIt;
@@ -130,7 +130,7 @@ class QP_matrix_accessor {
     const result_type  z;
     MatrixIt           m;
     int   l1, u1, l2, u2;
-};		 		 
+};		 		
 
 // ----------------------------------------------------------------------------
 
@@ -140,32 +140,32 @@ class QP_matrix_accessor {
 template < class MatrixIt, typename ResultType >
 class QP_matrix_pairwise_accessor {
   typedef  typename std::iterator_traits<MatrixIt>::value_type  VectorIt;
-  
+
 public:
   typedef int        argument_type;
   typedef ResultType result_type;
-  
+
   // The following default constructor is needed to make it possible
   // to use QP_matrix_pairwise_accessor with CGAL's Join_input_iterator_1
   // (more precisely: once Join_input_iterator_1 should not use an internal
   // mutable variable 'val' anymore, you can remove the following default
   // constructor).
   //QP_matrix_pairwise_accessor() {}
-  
+
   QP_matrix_pairwise_accessor( MatrixIt it, int row)
-    : m (it), v (*(it + row)), r (row)                                  
+    : m (it), v (*(it + row)), r (row)
   {}
-  
+
   ResultType operator () ( int c) const
   {
     // make sure that only entries on or below the diagonal are
     // accessed
     if (c <= r)
-      return ResultType(v[ c]); 
+      return ResultType(v[ c]);
     else
       return ResultType((*(m + c))[ r]);
   }
-  
+
 private:
   MatrixIt           m;
   VectorIt           v;
@@ -252,7 +252,7 @@ public:
 private:
   const Map* map; // pointer to map
   mapped_type d;  // default value
-  
+
 public:
   // construction
   Map_with_default ()
@@ -271,7 +271,7 @@ public:
     d = other.d;
     return *this;
   }
-  
+
   // operator()
   const mapped_type& operator() (key_type n) const {
     CGAL_qpe_precondition (map != 0);

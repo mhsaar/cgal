@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -40,7 +40,7 @@ class Constant_sizing_field {
 public:
   double cell_radius_bound() const { return CGAL::sqrt(sq_radius_bound); }
 
-  Constant_sizing_field(double sq_radius_bound = 0.) 
+  Constant_sizing_field(double sq_radius_bound = 0.)
     : sq_radius_bound(sq_radius_bound) {}
 
   template <typename Point>
@@ -51,17 +51,17 @@ public:
 } // end namespace internal
 
 template <
-  class Tr, 
+  class Tr,
   typename Sizing_field = internal::Poisson::Constant_sizing_field<Tr>,
-  typename Second_sizing_field = internal::Poisson::Constant_sizing_field<Tr> 
+  typename Second_sizing_field = internal::Poisson::Constant_sizing_field<Tr>
   >
-class Poisson_mesh_cell_criteria_3 
+class Poisson_mesh_cell_criteria_3
 {
   Sizing_field sizing_field;
   Second_sizing_field second_sizing_field;
   double radius_edge_bound_;
 
-  typedef Poisson_mesh_cell_criteria_3<Tr, 
+  typedef Poisson_mesh_cell_criteria_3<Tr,
                                        Sizing_field,
                                        Second_sizing_field> Self;
 public:
@@ -92,9 +92,9 @@ public:
   };
 
   // inline
-  // double squared_radius_bound() const 
+  // double squared_radius_bound() const
   // {
-  //   return squared_radius_bound_; 
+  //   return squared_radius_bound_;
   // }
 
   typedef typename Tr::Cell_handle Cell_handle;
@@ -114,21 +114,21 @@ public:
       radius_edge_bound_(radius_edge_bound)
   {}
 
-  // inline 
-  // void set_squared_radius_bound(const double squared_radius_bound) 
-  // { 
+  // inline
+  // void set_squared_radius_bound(const double squared_radius_bound)
+  // {
   //   squared_radius_bound_ = squared_radius_bound;
   // }
 
   inline
-  double radius_edge_bound() const 
+  double radius_edge_bound() const
   {
-    return radius_edge_bound_; 
+    return radius_edge_bound_;
   }
 
-  inline 
-  void set_radius_edge_bound(const double radius_edge_bound) 
-  { 
+  inline
+  void set_radius_edge_bound(const double radius_edge_bound)
+  {
     radius_edge_bound_ = radius_edge_bound;
   }
 
@@ -138,10 +138,10 @@ public:
     const Self* cell_criteria;
   public:
     typedef typename Tr::Point Point_3;
-      
+
     Is_bad(const Self* cell_criteria)
       : cell_criteria(cell_criteria) {}
-      
+
     bool operator()(const Cell_handle& c,
                     Cell_quality& qual) const
     {
@@ -194,9 +194,9 @@ public:
 
       return (qual.first > cell_criteria->radius_edge_bound_);
     }
-    
+
   }; // end Is_bad
-    
+
 
   Is_bad is_bad_object() const
   { return Is_bad(this); }

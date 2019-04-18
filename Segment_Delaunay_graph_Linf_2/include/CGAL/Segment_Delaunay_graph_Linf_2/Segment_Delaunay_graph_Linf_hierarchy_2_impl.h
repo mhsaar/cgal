@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Panagiotis Cheilaris, Sandeep Kumar Dey, Evanthia Papadopoulou
 //philaris@gmail.com, sandeep.kr.dey@gmail.com, evanthia.papadopoulou@usi.ch
@@ -39,7 +39,7 @@ void
 Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 init_hierarchy(const Geom_traits& gt)
 {
-  hierarchy[0] = this; 
+  hierarchy[0] = this;
   for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
     hierarchy[i] = new Base(gt);
   }
@@ -49,7 +49,7 @@ template<class Gt, class ST, class STag, class D_S, class LTag>
 Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 Segment_Delaunay_graph_Linf_hierarchy_2(const Gt& gt)
   : Base(gt)
-{ 
+{
   init_hierarchy(gt);
 }
 
@@ -60,11 +60,11 @@ Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 Segment_Delaunay_graph_Linf_hierarchy_2
 (const Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag> &sdg)
     : Base(sdg.geom_traits())
-{ 
+{
   // create an empty triangulation to be able to delete it !
   init_hierarchy(sdg.geom_traits());
   copy(sdg);
-} 
+}
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
@@ -72,11 +72,11 @@ Segment_Delaunay_graph_Linf_hierarchy_2
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 template<class Gt, class ST, class STag, class D_S, class LTag>
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>:: 
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 ~Segment_Delaunay_graph_Linf_hierarchy_2()
 {
   clear();
-  for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i){ 
+  for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i){
     delete hierarchy[i];
   }
 }
@@ -322,7 +322,7 @@ insert_segment(const Point_2& p0, const Point_2& p1,
 	       const Storage_site_2& ss, int level)
 {
 
-  CGAL_SDG_DEBUG(std::cout << "debug hier insert_segment " 
+  CGAL_SDG_DEBUG(std::cout << "debug hier insert_segment "
                  << p0 << ' ' << p1 << std::endl;);
 
   // the tag is true so we DO insert segments in hierarchy
@@ -393,7 +393,7 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
   Intersections_tag          itag;
   Segments_in_hierarchy_tag  stag;
 
-  CGAL_SDG_DEBUG(std::cout << "debug insert_segment_interior t=" << t 
+  CGAL_SDG_DEBUG(std::cout << "debug insert_segment_interior t=" << t
                  << " at level " << level << std::endl;);
 
   // find the first conflict
@@ -458,7 +458,7 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
 
 
 
-  CGAL_SDG_DEBUG(std::cout << "debug insert_segment_interior t=" << t 
+  CGAL_SDG_DEBUG(std::cout << "debug insert_segment_interior t=" << t
                  << " start looking for vert cf " << std::endl;);
 
   // first look for conflict with vertex
@@ -488,9 +488,9 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
 
 #ifdef CGAL_SDG_VERBOSE
   // debug
-  std::cout << "debug hier insert_segment_interior t=" 
-    << t << " with " 
-    << (is_infinite(start_f)? "infinite" : "finite") 
+  std::cout << "debug hier insert_segment_interior t="
+    << t << " with "
+    << (is_infinite(start_f)? "infinite" : "finite")
     << " face [" ;
   if (is_infinite(start_f->vertex(0))) {
     std::cout << " infv";
@@ -507,11 +507,11 @@ insert_segment_interior(const Site_2& t, const Storage_site_2& ss,
   } else {
     std::cout << ' ' << start_f->vertex(2)->site();
   }
-  std::cout << "] has sign s=" << s << std::endl; 
+  std::cout << "] has sign s=" << s << std::endl;
 
 #endif
 
-  // we are in conflict with a Voronoi vertex; start from that and 
+  // we are in conflict with a Voronoi vertex; start from that and
   // find the entire conflict region and then repair the diagram
   List l;
   Face_map fm;
@@ -604,7 +604,7 @@ Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 insert_segment_on_point(const Storage_site_2& ss,
 			const Vertex_handle& v,
 			int level, int which)
-{  
+{
   // inserts the segment represented by ss in the case where this
   // segment goes through a point which has already been inserted and
   // corresponds to the vertex handle v
@@ -809,7 +809,7 @@ remove(const Vertex_handle& v)
   if ( is_point ) {
     h1 = ss.point();
   } else {
-    CGAL_assertion( ss.is_segment() );   
+    CGAL_assertion( ss.is_segment() );
     h1 = ss.source_of_supporting_site();
     h2 = ss.target_of_supporting_site();
   }
@@ -850,7 +850,7 @@ remove(const Vertex_handle& v)
 //---------------------------------------------------------------------------
 template<class Gt, class ST, class STag, class D_S, class LTag>
 typename
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::Vertex_handle 
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::Vertex_handle
 Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 nearest_neighbor(const Point_2& p, bool force_point) const
 {
@@ -876,7 +876,7 @@ nearest_neighbor(const Site_2& t,
   int level  = sdg_hierarchy_2__maxlevel;
 
   // find the highest level with enough vertices
-  while ( hierarchy[--level]->number_of_vertices() 
+  while ( hierarchy[--level]->number_of_vertices()
 	  < sdg_hierarchy_2__minsize ) {
     if ( !level ) break;  // do not go below 0
   }
@@ -886,7 +886,7 @@ nearest_neighbor(const Site_2& t,
 
   while ( level > 0 ) {
     vnear[level] = nearest =
-      hierarchy[level]->nearest_neighbor(t, nearest);  
+      hierarchy[level]->nearest_neighbor(t, nearest);
 
     CGAL_assertion( !hierarchy[level]->is_infinite(vnear[level]) );
     CGAL_assertion( vnear[level] != Vertex_handle() );
@@ -907,7 +907,7 @@ nearest_neighbor(const Site_2& t,
 //---------------------------------------------------------------------------
 template<class Gt, class ST, class STag, class D_S, class LTag>
 void
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::   
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 copy(const Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag> &sdg)
 {
 #ifndef CGAL_NO_ASSERTIONS
@@ -942,7 +942,7 @@ copy(const Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag> &sdg)
   // compute a map at lower level
   std::map< Vertex_handle, Vertex_handle > V;
   {
-    for(Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+    for(Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
 	it != hierarchy[0]->finite_vertices_end(); ++it) {
       if ( it->up() != Vertex_handle() ) {
 	V[ it->up()->down() ] = it;
@@ -951,7 +951,7 @@ copy(const Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag> &sdg)
   }
   {
     for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
-      for(Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+      for(Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	  it != hierarchy[i]->finite_vertices_end(); ++it) {
 	// down pointer goes in original instead in copied triangulation
 	it->set_down(V[it->down()]);
@@ -973,7 +973,7 @@ copy(const Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag> &sdg)
 
 template<class Gt, class ST, class STag, class D_S, class LTag>
 void
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>:: 
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 clear()
 {
   for(unsigned int i = 0; i < sdg_hierarchy_2__maxlevel; ++i) {
@@ -983,7 +983,7 @@ clear()
 
 template<class Gt, class ST, class STag, class D_S, class LTag>
 void
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>:: 
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 swap(Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>& other)
 {
   Base* temp;
@@ -1002,7 +1002,7 @@ swap(Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>& other)
 //---------------------------------------------------------------------------
 template<class Gt, class ST, class STag, class D_S, class LTag>
 bool
-Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>:: 
+Segment_Delaunay_graph_Linf_hierarchy_2<Gt,ST,STag,D_S,LTag>::
 is_valid(bool verbose, int level) const
 {
   // philaris: the level argument has to do with debugging level
@@ -1016,14 +1016,14 @@ is_valid(bool verbose, int level) const
 
 //#undef DEBUGVALIDHIER
 
-#ifdef DEBUGVALIDHIER  
-  std::cout << "debug hierarchy is_valid entering" 
+#ifdef DEBUGVALIDHIER
+  std::cout << "debug hierarchy is_valid entering"
     << " level=" << level << std::endl;
 #endif
 
   //verify correctness of triangulation at all levels
   for(unsigned int i = 0; i < sdg_hierarchy_2__maxlevel; ++i) {
-#ifdef DEBUGVALIDHIER  
+#ifdef DEBUGVALIDHIER
     std::cout << "debug hierarchy is_valid level " << i << std::endl;
 #endif
     if ( verbose ) {
@@ -1031,8 +1031,8 @@ is_valid(bool verbose, int level) const
     }
     bool is_valid_level = hierarchy[i]->is_valid(verbose, level);
 
-#ifdef DEBUGVALIDHIER  
-    std::cout << "debug level=" << i 
+#ifdef DEBUGVALIDHIER
+    std::cout << "debug level=" << i
       << " validity=" << is_valid_level << std::endl;
 #endif
 
@@ -1042,20 +1042,20 @@ is_valid(bool verbose, int level) const
     }
   }
   //verify that lower level has no down pointers
-  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin(); 
+  for( Finite_vertices_iterator it = hierarchy[0]->finite_vertices_begin();
        it != hierarchy[0]->finite_vertices_end(); ++it) {
     result = result && ( it->down() == Vertex_handle() );
   }
 
   //verify that other levels has down pointer and reciprocal link is fine
   for(unsigned int i = 1; i < sdg_hierarchy_2__maxlevel; ++i) {
-    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin(); 
+    for( Finite_vertices_iterator it = hierarchy[i]->finite_vertices_begin();
 	 it != hierarchy[i]->finite_vertices_end(); ++it) {
       Vertex_handle vit(it);
       result = result && ( it->down()->up() == vit );
     }
   }
-#ifdef DEBUGVALIDHIER  
+#ifdef DEBUGVALIDHIER
   std::cout << "debug hierarchy is_valid returns " << result << std::endl;
 #endif
   return result;

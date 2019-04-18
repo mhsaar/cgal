@@ -364,7 +364,7 @@ public: // some internal methods
   // GIVING NEW FACES
 
   template <class OutputItCells>
-  Vertex_handle insert_and_give_new_cells(const Point  &p, 
+  Vertex_handle insert_and_give_new_cells(const Point  &p,
                                           OutputItCells fit,
                                           Cell_handle start = Cell_handle() );
 		
@@ -373,22 +373,22 @@ public: // some internal methods
                                           OutputItCells /* fit */,
                                           Vertex_handle hint)
   {
-    return insert_and_give_new_cells(p, hint == Vertex_handle() ? 
+    return insert_and_give_new_cells(p, hint == Vertex_handle() ?
                                      this->infinite_cell() : hint->cell());			
   }
 
   template <class OutputItCells>
   Vertex_handle insert_and_give_new_cells(const Point& p,
                                           Locate_type lt,
-                                          Cell_handle c, int li, int lj, 
+                                          Cell_handle c, int li, int lj,
                                           OutputItCells fit);
 
   template <class OutputItCells>
-  void remove_and_give_new_cells(Vertex_handle v, 
+  void remove_and_give_new_cells(Vertex_handle v,
                                  OutputItCells fit);
 
   template <class OutputItCells>
-  Vertex_handle move_if_no_collision_and_give_new_cells(Vertex_handle v, 
+  Vertex_handle move_if_no_collision_and_give_new_cells(Vertex_handle v,
                                                         const Point &p, OutputItCells fit);
 	
 public:	
@@ -647,12 +647,12 @@ template <class Tr>
 template <class OutputItCells>
 typename Triangulation_hierarchy_3<Tr>::Vertex_handle
 Triangulation_hierarchy_3<Tr>::
-insert_and_give_new_cells(const Point &p, Locate_type lt, Cell_handle loc, 
+insert_and_give_new_cells(const Point &p, Locate_type lt, Cell_handle loc,
   int li, int lj, OutputItCells fit)
 {
   int vertex_level = random_level();
   // insert at level 0
-  Vertex_handle vertex = 
+  Vertex_handle vertex =
     hierarchy[0]->insert_and_give_new_cells(p,lt,loc,li,lj,fit);
   Vertex_handle previous = vertex;
   Vertex_handle first = vertex;
@@ -763,7 +763,7 @@ move_if_no_collision_and_give_new_cells(
   for (int l = 0; l < maxlevel; ++l) {
     Vertex_handle u = v->up();
     if(l) hierarchy[l]->move_if_no_collision(v, p);
-    else ans = 
+    else ans =
            hierarchy[l]->move_if_no_collision_and_give_new_cells(v, p, fit);
     if(ans != v) return ans;
     if (u == Vertex_handle())

@@ -3,7 +3,7 @@
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,10 +19,10 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Herve Bronnimann, Sylvain Pion, Olivier Devillers
-//                
+//
 
 #ifndef CGAL_PREDICATES_KERNEL_FTC2_H
 #define CGAL_PREDICATES_KERNEL_FTC2_H
@@ -272,7 +272,7 @@ template < class FT >
 CGAL_KERNEL_MEDIUM_INLINE
 typename Equal_to<FT>::result_type
 equal_directionC2(const FT &dx1, const FT &dy1,
-                  const FT &dx2, const FT &dy2) 
+                  const FT &dx2, const FT &dy2)
 {
   return CGAL_NTS sign(dx1) == CGAL_NTS sign(dx2)
       && CGAL_NTS sign(dy1) == CGAL_NTS sign(dy2)
@@ -283,7 +283,7 @@ template < class FT >
 CGAL_KERNEL_MEDIUM_INLINE
 typename Compare<FT>::result_type
 compare_angle_with_x_axisC2(const FT &dx1, const FT &dy1,
-                            const FT &dx2, const FT &dy2) 
+                            const FT &dx2, const FT &dy2)
 {
   // angles are in [-pi,pi], and the angle between Ox and d1 is compared
   // with the angle between Ox and d2
@@ -303,7 +303,7 @@ compare_angle_with_x_axisC2(const FT &dx1, const FT &dy1,
 template < class FT >
 CGAL_KERNEL_MEDIUM_INLINE
 typename Compare<FT>::result_type
-compare_slopesC2(const FT &l1a, const FT &l1b, const FT &l2a, const FT &l2b) 
+compare_slopesC2(const FT &l1a, const FT &l1b, const FT &l2a, const FT &l2b)
 {
    typedef typename Compare<FT>::result_type result_type;
 
@@ -332,9 +332,9 @@ compare_slopesC2(const FT &l1a, const FT &l1b, const FT &l2a, const FT &l2b)
 template < class FT >
 CGAL_KERNEL_MEDIUM_INLINE
 typename Compare<FT>::result_type
-compare_slopesC2(const FT &s1_src_x, const FT &s1_src_y, const FT &s1_tgt_x, 
-                 const FT &s1_tgt_y, const FT &s2_src_x, const FT &s2_src_y, 
-                 const FT &s2_tgt_x, const FT &s2_tgt_y) 
+compare_slopesC2(const FT &s1_src_x, const FT &s1_src_y, const FT &s1_tgt_x,
+                 const FT &s1_tgt_y, const FT &s2_src_x, const FT &s2_src_y,
+                 const FT &s2_tgt_x, const FT &s2_tgt_y)
 {
    typedef typename Compare<FT>::result_type  Cmp;
    typedef typename Sgn<FT>::result_type      Sg;

@@ -3,7 +3,7 @@
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Herve Bronnimann, Mariette Yvinec
 
@@ -226,9 +226,9 @@ squared_radiusC3(const FT &px, const FT &py, const FT &pz,
         + CGAL_NTS square(num_z)) / CGAL_NTS square(2 * den);
 }
 
-template <class FT> 
+template <class FT>
 CGAL_KERNEL_MEDIUM_INLINE
-void            
+void
 plane_from_pointsC3(const FT &px, const FT &py, const FT &pz,
                     const FT &qx, const FT &qy, const FT &qz,
                     const FT &rx, const FT &ry, const FT &rz,
@@ -265,11 +265,11 @@ point_on_planeC3(const FT &pa, const FT &pb, const FT &pc, const FT &pd,
                  FT &x, FT &y, FT &z)
 {
   x = y = z = 0;
-  
+
   FT abs_pa = CGAL::abs(pa);
   FT abs_pb = CGAL::abs(pb);
   FT abs_pc = CGAL::abs(pc);
-  
+
   // to avoid badly defined point with an overly large coordinate when
   //  the plane is almost orthogonal to one axis, we use the largest
   //  scalar coordinate instead of always using the first non-null

@@ -22,7 +22,7 @@
 #ifndef CGAL_INTERNAL_SCALE_COORDINATES_ADAPTOR_TRAITS_3_H
 #define CGAL_INTERNAL_SCALE_COORDINATES_ADAPTOR_TRAITS_3_H
 
-namespace CGAL { 
+namespace CGAL {
 
 namespace internal {
 	
@@ -207,16 +207,16 @@ template <class R, int opt>
 class Compute_x_2
 {
 public:
-  typedef typename R::Point_3     Point; 
+  typedef typename R::Point_3     Point;
   typename R::FT x(const Point &p) const { return Coordinate_value_adaptor<R,opt>::x(p); }
   typename R::FT operator()(const Point& p) const { return x(p); }
 };
 
 template <class R, int opt>
-class Compute_y_2 
+class Compute_y_2
 {
 public:
-  typedef typename R::Point_3     Point; 
+  typedef typename R::Point_3     Point;
   typename R::FT y(const Point &p) const { return Coordinate_value_adaptor<R,opt>::y(p); }
   typename R::FT operator()(const Point& p) const { return y(p); }
 };
@@ -225,7 +225,7 @@ template <class R, int opt>
 class Less_x_2
 {
 public:
-  typedef typename R::Point_3     Point; 
+  typedef typename R::Point_3     Point;
   typename R::FT x(const Point &p) const { return Coordinate_value_adaptor<R,opt>::x(p); }
   bool operator()(const Point& p, const Point& q) const { return x(p) < x(q); }
 };
@@ -234,7 +234,7 @@ template <class R, int opt>
 class Less_y_2
 {
 public:
-  typedef typename R::Point_3     Point; 
+  typedef typename R::Point_3     Point;
   typename R::FT y(const Point &p) const { return Coordinate_value_adaptor<R,opt>::y(p); }
   bool operator()(const Point& p, const Point& q) const { return y(p) < y(q); }
 };
@@ -261,7 +261,7 @@ struct Transform_coordinates_traits_3 {
 		Compute_x compute_x_2_object() const { return Compute_x(); }
 		Compute_y compute_y_2_object() const { return Compute_y(); }
 };
-  
+
 
 } } //namespace CGAL::internal
 

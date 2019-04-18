@@ -58,7 +58,7 @@ void make_surface_mesh(C2T3& c2t3,
   typedef typename Surface_mesh_traits_generator_3<Surface>::type Traits;
 
   make_surface_mesh(c2t3, surface, Traits(), criteria, tag,
-                    initial_number_of_points);  
+                    initial_number_of_points);
 }
 
 template <typename C2T3,
@@ -121,10 +121,10 @@ void make_piecewise_smooth_surface_mesh(C2T3& c2t3,
 {
   typedef typename Surface_mesh_traits_generator_3<Surface>::type Traits;
 
-  make_piecewise_smooth_surface_mesh(c2t3, surface, Traits(), 
+  make_piecewise_smooth_surface_mesh(c2t3, surface, Traits(),
 				     facets_criteria, edges_criteria,
 				     tag,
-				     initial_number_of_points);  
+				     initial_number_of_points);
 }
 
 /** For surfaces with curve edges. Explicit SurfaceMeshTraits_3. */
@@ -133,7 +133,7 @@ template <typename C2T3,
 	  typename FacetsCriteria,
 	  typename EdgesCriteria,
           typename Tag>
-void 
+void
 make_piecewise_smooth_surface_mesh(C2T3& c2t3,
 				   const typename SurfaceMeshTraits_3::Surface_3& surface,
 				   const SurfaceMeshTraits_3& surface_mesh_traits,
@@ -183,9 +183,9 @@ make_piecewise_smooth_surface_mesh(C2T3& c2t3,
   typename SurfaceMeshTraits_3::Construct_initial_points get_initial_points =
     surface_mesh_traits.construct_initial_points_object();
 
-  typedef Surface_mesher::Visitor<typename C2T3::Triangulation, 
+  typedef Surface_mesher::Visitor<typename C2T3::Triangulation,
     Facets_level, Null_mesh_visitor> Edges_level_visitor;
-  typedef Surface_mesher::Edges_level_visitor<typename C2T3::Triangulation, 
+  typedef Surface_mesher::Edges_level_visitor<typename C2T3::Triangulation,
     Edges_level, Edges_level_visitor> Facets_and_edges_visitor;
 
   get_initial_points(surface,

@@ -54,9 +54,9 @@ namespace CGAL {
 	       typename PointMap,
 	       typename K >
     typename K::Point_3
-    hsps_centroid(InputIterator begin, 
+    hsps_centroid(InputIterator begin,
 		 InputIterator end,
-		 PointMap& point_map,	     
+		 PointMap& point_map,	
 		 const K&)
     {
       typedef typename K::Point_3 Point;
@@ -66,7 +66,7 @@ namespace CGAL {
 
       FT x = (FT)0., y = (FT)0., z = (FT)0.;
       unsigned int nb_pts = 0;
-      while(begin != end) 
+      while(begin != end)
 	{
 	  typename boost::property_traits<PointMap>::reference point =
             get(point_map, *begin);
@@ -106,8 +106,8 @@ namespace CGAL {
 
       points_to_keep.splice (points_to_keep.end (), cluster, point_min);
       points_to_remove.splice (points_to_remove.end (), cluster, cluster.begin (), cluster.end ());
-    }			       
-			    
+    }			
+			
 
 
 
@@ -116,18 +116,18 @@ namespace CGAL {
 
   /**
      \ingroup PkgPointSetProcessing3Algorithms
-  
+
      Recursively split the point set in smaller clusters until the
      clusters have less than `size` elements or until their variation
-     factor is below `var_max`. 
-  
+     factor is below `var_max`.
+
      This method modifies the order of input points so as to pack all remaining points first,
      and returns an iterator over the first point to remove (see erase-remove idiom).
      For this reason it should not be called on sorted containers.
-  
+
      \pre `0 < maximum_variation < 1/3`
      \pre `size > 0`
-  
+
      \tparam PointRange is a model of `Range`. The value type of
      its iterator is the key type of the named parameter `point_map`.
 
@@ -162,7 +162,7 @@ namespace CGAL {
                                 const NamedParameters& np)
   {
     using boost::choose_param;
-  
+
     // basic geometric types
     typedef typename Point_set_processing_3::GetPointMap<PointRange, NamedParameters>::type PointMap;
     typedef typename Point_set_processing_3::GetK<PointRange, NamedParameters>::Kernel Kernel;
@@ -194,7 +194,7 @@ namespace CGAL {
     // The first cluster is the whole input point set
     clusters_stack.push_front (cluster (std::list<Input_type>(), Point (0., 0., 0.)));
     std::copy (points.begin(), points.end(), std::back_inserter (clusters_stack.front ().first));
-    
+
     clusters_stack.front ().second = internal::hsps_centroid (clusters_stack.front ().first.begin (),
                                                               clusters_stack.front ().first.end (),
                                                               point_map, Kernel());
@@ -203,7 +203,7 @@ namespace CGAL {
     std::list<Input_type> points_to_remove;
 
     std::size_t nb_done = 0;
-    
+
     while (!(clusters_stack.empty ()))
       {
 	cluster_iterator current_cluster = clusters_stack.begin ();
@@ -253,7 +253,7 @@ namespace CGAL {
 	    clusters_stack.push_front (cluster (std::list<Input_type>(), Point (0., 0., 0.)));
 	    cluster_iterator negative_side = clusters_stack.begin ();
 	    // positive_side is built directly from current_cluster
-	    
+	
 	    // The plane which splits the point set into 2 point sets:
 	    //  * Normal to the eigenvector with highest eigenvalue
 	    //  * Passes through the centroid of the set
@@ -293,7 +293,7 @@ namespace CGAL {
 						 point_map,
 						 nonempty->second,
 						 Kernel ());
-                
+
 		clusters_stack.pop_front ();
 		clusters_stack.pop_front ();
 	      }
@@ -342,7 +342,7 @@ namespace CGAL {
 
     if (callback)
       callback (1.);
-    
+
     typename PointRange::iterator first_point_to_remove =
       std::copy (points_to_keep.begin(), points_to_keep.end(), points.begin());
     std::copy (points_to_remove.begin(), points_to_remove.end(), first_point_to_remove);
@@ -425,7 +425,7 @@ namespace CGAL {
        size (size).
        maximum_variation (var_max));
   }
-  
+
   // deprecated API
   template <typename ForwardIterator >
   CGAL_DEPRECATED_MSG("you are using the deprecated V1 API of CGAL::hierarchy_simplify_point_set(), please update your code")
@@ -441,7 +441,7 @@ namespace CGAL {
        maximum_variation (var_max));
   }
 #endif // CGAL_NO_DEPRECATED_CODE
-  /// \endcond  
+  /// \endcond
 
 } // namespace CGAL
 

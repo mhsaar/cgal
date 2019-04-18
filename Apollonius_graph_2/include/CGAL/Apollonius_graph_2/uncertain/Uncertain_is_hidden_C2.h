@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -73,7 +73,7 @@ private:
   {
     RT d = CGAL::sqrt(CGAL::square(p.x() - q.x())
 		      + CGAL::square(p.y() - q.y()));
-    
+
     Uncertain<Sign> s = CGAL::sign(d - p.weight() + q.weight());
     if ( is_indeterminate(s) ) {
       return Uncertain<bool>::indeterminate();

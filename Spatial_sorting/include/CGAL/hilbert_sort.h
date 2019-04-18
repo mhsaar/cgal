@@ -41,9 +41,9 @@ namespace CGAL {
 namespace internal {
 
   template <class RandomAccessIterator, class Kernel, class Policy>
-    void hilbert_sort (RandomAccessIterator begin, 
+    void hilbert_sort (RandomAccessIterator begin,
 		       RandomAccessIterator end,
-                       const Kernel &k, 
+                       const Kernel &k,
 		       Policy /*policy*/,
 		       typename Kernel::Point_2 *)
     {
@@ -54,11 +54,11 @@ namespace internal {
         CGAL::cpp98::random_shuffle(begin,end, rng);
 	(Hilbert_sort_2<Kernel, Policy> (k))(begin, end);
     }
-    
+
     template <class RandomAccessIterator, class Kernel, class Policy>
-      void hilbert_sort (RandomAccessIterator begin, 
+      void hilbert_sort (RandomAccessIterator begin,
 			 RandomAccessIterator end,
-                         const Kernel &k, 
+                         const Kernel &k,
 			 Policy /*policy*/,
 			 typename Kernel::Point_3 *)
     {
@@ -73,7 +73,7 @@ namespace internal {
     template <class RandomAccessIterator, class Kernel, class Policy>
       void hilbert_sort (RandomAccessIterator begin,
 			 RandomAccessIterator end,
-                         const Kernel &k, 
+                         const Kernel &k,
 			 Policy /*policy*/,
 			 typename Kernel::Point_d *)
     {
@@ -106,7 +106,7 @@ void hilbert_sort (RandomAccessIterator begin, RandomAccessIterator end,
 {
     typedef std::iterator_traits<RandomAccessIterator> ITraits;
     typedef typename ITraits::value_type               value_type;
-  
+
     internal::hilbert_sort(begin, end, k, Hilbert_sort_median_policy(),
 				  static_cast<value_type *> (0));
 }
@@ -148,7 +148,7 @@ void hilbert_sort (RandomAccessIterator begin, RandomAccessIterator end,
     typedef std::iterator_traits<RandomAccessIterator> ITraits;
     typedef typename ITraits::value_type               value_type;
 
-    internal::hilbert_sort(begin, end, 
+    internal::hilbert_sort(begin, end,
 			   k, policy, static_cast<value_type *> (0));
 }
 

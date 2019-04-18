@@ -45,7 +45,7 @@
 #include <CGAL/Point_set_processing_3/internal/Parallel_callback.h>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
-#include <tbb/scalable_allocator.h>  
+#include <tbb/scalable_allocator.h>
 #endif // CGAL_LINKED_WITH_TBB
 
 namespace CGAL {
@@ -131,7 +131,7 @@ pca_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
       , advancement (advancement)
       , interrupted (interrupted)
     { }
-    
+
     void operator()(const tbb::blocked_range<std::size_t>& r) const
     {
       for( std::size_t i = r.begin(); i != r.end(); ++i)
@@ -145,7 +145,7 @@ pca_estimate_normal(const typename Kernel::Point_3& query, ///< point to compute
 
   };
 #endif // CGAL_LINKED_WITH_TBB
-  
+
 
 } /* namespace internal */
 /// \endcond
@@ -241,7 +241,7 @@ pca_estimate_normals(
 
   // Instanciate a KD-tree search.
   // Note: We have to convert each input iterator to Point_3.
-  std::vector<Point> kd_tree_points; 
+  std::vector<Point> kd_tree_points;
   for(it = points.begin(); it != points.end(); it++)
     kd_tree_points.push_back(get(point_map, *it));
   Tree tree(kd_tree_points.begin(), kd_tree_points.end());
@@ -259,7 +259,7 @@ pca_estimate_normals(
     {
       Point_set_processing_3::internal::Parallel_callback
         parallel_callback (callback, kd_tree_points.size());
-     
+
       std::vector<Vector> normals (kd_tree_points.size (),
                                    CGAL::NULL_VECTOR);
       CGAL::internal::PCA_estimate_normals<Kernel, Tree>
@@ -280,7 +280,7 @@ pca_estimate_normals(
       std::size_t nb = 0;
       for(it = points.begin(); it != points.end(); it++, ++ nb)
 	{
-	  Vector normal = internal::pca_estimate_normal<Kernel,Tree>(      
+	  Vector normal = internal::pca_estimate_normal<Kernel,Tree>(
 								     get(point_map,*it),
 								     tree,
 								     k);
@@ -290,7 +290,7 @@ pca_estimate_normals(
             break;
 	}
     }
-   
+
   memory = CGAL::Memory_sizer().virtual_size(); CGAL_TRACE("  %ld Mb allocated\n", memory>>20);
   CGAL_TRACE("End of pca_estimate_normals()\n");
 }
@@ -335,7 +335,7 @@ pca_estimate_normals(
      normal_map (normal_map).
      geom_traits(Kernel()));
 }
-  
+
 // deprecated API
 template <typename ConcurrencyTag,
 	  typename ForwardIterator,

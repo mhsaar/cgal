@@ -42,7 +42,7 @@ namespace CGAL { namespace Surface_mesher {
   typename Tr::size_type number_of_facets_on_surface(const Tr& T);
 
   template <class Triangulation>
-  class Write_to_OFF_file 
+  class Write_to_OFF_file
   {
     CGAL::File_writer_OFF off;
     std::ostream& os;
@@ -98,7 +98,7 @@ namespace CGAL { namespace Surface_mesher {
   }; // end class Write_to_OFF_file
 
   template <class Triangulation, class HDS>
-  class Write_to_HDS 
+  class Write_to_HDS
   {
     CGAL::Polyhedron_incremental_builder_3<HDS> builder;
 
@@ -157,7 +157,7 @@ namespace CGAL { namespace Surface_mesher {
 template <class C2t3>
 bool output_surface_facets_to_off (std::ostream& os,
 				   const C2t3& c2t3,
-				   int options = 
+				   int options =
 				   Surface_mesher::IO_ORIENT_SURFACE)
 {
   using CGAL::Surface_mesher::number_of_facets_on_surface;
@@ -174,14 +174,14 @@ bool output_surface_facets_to_off (std::ostream& os,
 
   bool success = true;
 
-  Surface_mesher::Write_to_OFF_file<Tr> 
+  Surface_mesher::Write_to_OFF_file<Tr>
     off(os, (options & Surface_mesher::IO_VERBOSE) != 0);
 
   success &= off.write_header(tr.number_of_vertices(),
 			      c2t3.number_of_facets());
-  
+
   CGAL_assertion(c2t3.number_of_facets() == number_of_facets_on_surface(tr));
-  
+
   // Finite vertices coordinates.
   std::map<Vertex_handle, int> V;
   int inum = 0;
@@ -195,7 +195,7 @@ bool output_surface_facets_to_off (std::ostream& os,
 
   success &= off.begin_facets();
 
-  if((options & Surface_mesher::IO_ORIENT_SURFACE) == 0) 
+  if((options & Surface_mesher::IO_ORIENT_SURFACE) == 0)
   {
     for( Finite_facets_iterator fit = tr.finite_facets_begin();
 	 fit != tr.finite_facets_end(); ++fit)
@@ -222,13 +222,13 @@ bool output_surface_facets_to_off (std::ostream& os,
 
     CGAL_assertion_code(typename Tr::size_type nb_facets = 0; )
 
-      while (oriented_set.size() != number_of_facets) 
+      while (oriented_set.size() != number_of_facets)
       {
 	while ( fit->first->is_facet_on_surface(fit->second) == false ||
 		oriented_set.find(*fit) != oriented_set.end() ||
 		
 		oriented_set.find(c2t3.opposite_facet(*fit)) !=
-		oriented_set.end() ) 
+		oriented_set.end() )
 	{
 	  ++fit;
 	}
@@ -263,8 +263,8 @@ bool output_surface_facets_to_off (std::ostream& os,
 	  } // end "for each neighbor of f"
 	} // end "stack non empty"
       } // end "oriented_set not full"
-    
-    for(typename std::set<Facet>::const_iterator fit = 
+
+    for(typename std::set<Facet>::const_iterator fit =
 	  oriented_set.begin();
 	fit != oriented_set.end();
 	++fit)
@@ -297,7 +297,7 @@ bool output_surface_facets_to_off (std::ostream& os,
 //     void operator()( HalfedgeDS& hds) {
 //       CGAL::Polyhedron_incremental_builder_3<HalfedgeDS> builder(hds, true);
 //       const typename Tr::size_type number_of_facets = c2t3.number_of_facets();
-//       builder.begin_surface(tr.number_of_vertices(), 
+//       builder.begin_surface(tr.number_of_vertices(),
 // 			    number_of_facets);
 //       {
 // 	// Finite vertices coordinates.
@@ -346,7 +346,7 @@ bool output_surface_facets_to_off (std::ostream& os,
 // 	  } // end "stack non empty"
 // 	} // end "oriented_set not full"
 
-// 	for(typename std::set<Facet>::const_iterator fit = 
+// 	for(typename std::set<Facet>::const_iterator fit =
 // 	      oriented_set.begin();
 // 	    fit != oriented_set.end();
 // 	    ++fit)
@@ -354,7 +354,7 @@ bool output_surface_facets_to_off (std::ostream& os,
 // 	  int indices[3];
 // 	  int index = 0;
 // 	  for (int i=0; i<3; i++)
-// 	    indices[index++] = 
+// 	    indices[index++] =
 // 	      V[fit->first->vertex(tr.vertex_triple_index(fit->second, i))];
 // 	  builder.add_facet(indices+0, indices+3);
 // 	  CGAL_assertion_code(++nb_facets);

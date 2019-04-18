@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 // Author(s)     : Naama mayer         <naamamay@post.tau.ac.il>
 
 #ifndef CGAL_ARR_ON_SPHERE_TRANSFORMATION_H

@@ -1,4 +1,4 @@
-// Copyright (c) 2003-2010  
+// Copyright (c) 2003-2010
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
@@ -19,10 +19,10 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Sylvain Pion
- 
+
 #ifndef CGAL_KERNEL_GLOBAL_FUNCTIONS_INTERNAL_2_H
 #define CGAL_KERNEL_GLOBAL_FUNCTIONS_INTERNAL_2_H
 
@@ -283,7 +283,7 @@ compare_angle_with_x_axis(const typename K::Direction_2& d1,
 template <class K, class T1, class T2, class T3>
 inline
 typename boost::enable_if<
-  boost::mpl::equal_to<boost::mpl::integral_c<int, 
+  boost::mpl::equal_to<boost::mpl::integral_c<int,
                                               Ambient_dimension<T1>::type::value>,
                        boost::mpl::integral_c<int, 2> >,
   typename K::Comparison_result>
@@ -298,7 +298,7 @@ compare_distance(const T1 &o1,
 template <class K, class T1, class T2, class T3, class T4>
 inline
 typename boost::enable_if<
-  boost::mpl::equal_to<boost::mpl::integral_c<int, 
+  boost::mpl::equal_to<boost::mpl::integral_c<int,
                                               Ambient_dimension<T1>::type::value>,
                        boost::mpl::integral_c<int, 2> >,
   typename K::Comparison_result>

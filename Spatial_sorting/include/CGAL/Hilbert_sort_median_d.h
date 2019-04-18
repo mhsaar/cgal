@@ -41,7 +41,7 @@ namespace internal {
         K k;
 	int axe;
 	bool orient;
-        Hilbert_cmp_d (int a, bool o, const K &_k = K()) 
+        Hilbert_cmp_d (int a, bool o, const K &_k = K())
 	  : k(_k), axe(a),  orient(o) {}
         bool operator() (const Point &p, const Point &q) const
         {
@@ -67,7 +67,7 @@ private:
     mutable int two_to_dim;
 
     struct Cmp : public internal::Hilbert_cmp_d<Kernel>
-    { Cmp (int a, bool dir, const Kernel &k) 
+    { Cmp (int a, bool dir, const Kernel &k)
 	  : internal::Hilbert_cmp_d<Kernel> (a,dir,k) {} };
 
 public:
@@ -108,8 +108,8 @@ public:
        int right=current_level_step;
        bool orient = start[current_dir];
        do{
-	 dir[middle]    = current_dir; 
-	 places[middle] = internal::hilbert_split 
+	 dir[middle]    = current_dir;
+	 places[middle] = internal::hilbert_split
 	   (places[left], places[right], Cmp (current_dir,orient,_k));
 	 left =right;
 	 right+=current_level_step;

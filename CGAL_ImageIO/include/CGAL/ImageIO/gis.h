@@ -36,7 +36,7 @@
 exemple :
          512 512 100 2
 	 -type U16
-	 -dx 1. 
+	 -dx 1.
 	 -dy 2.
 	 -dz .5
 	 -z2 5
@@ -51,7 +51,7 @@ exemple :
 			
    -type typespecifier
 
-   U8 entier non signé codé sur 8 bit (unsigned char) 
+   U8 entier non signé codé sur 8 bit (unsigned char)
    S8  entier signé codé sur 8 bit (signed char)
    U16  entier non signé codé sur 16 bit (unsigned short)
    S16  entier signé codé sur 16 bit (signed short)	
@@ -70,11 +70,11 @@ exemple :
    (spécification d'un sous-volume)
    -x1 entier  	
    -x2 entier  	
-   -y1 entier  
-   -y2 entier  
-   -z1 entier  
-   -z2 entier  
-   -ref nom x y z t   
+   -y1 entier
+   -y2 entier
+   -z1 entier
+   -z2 entier
+   -ref nom x y z t
         (origine d'un sous-volume : fichier correspondant a une
          sous-image de "nom")
 
@@ -114,13 +114,13 @@ int testGisHeader(char *magic,const char *name);
 /** creates an return the file format structure associated with the Gis file format */
 PTRIMAGE_FORMAT createGisFormat();
 
-/* 
+/*
    return:
    -1: error
     1: success
  */
 int writeGis( char *basename, _image* im ) ;
-/* 
+/*
    return:
    false: error
    true: success
@@ -128,7 +128,7 @@ int writeGis( char *basename, _image* im ) ;
 bool writeGisHeader( const _image* im ) ;
 
 
-/* 
+/*
    return:
    -1: error
     1: success

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -104,7 +104,7 @@ z_plane_circumcircle_2(const FT &x1, const FT &y1, const FT &w1,
   // this the only part that is computed at vain when only the center
   // is needed.
 #if 0
-  FT cwt2 = (CGAL::square(a) + CGAL::square(b)) / 
+  FT cwt2 = (CGAL::square(a) + CGAL::square(b)) /
     (FT(4) * CGAL::square(c));
 #endif
   //  cwt = CGAL::sqrt(cwt2) - FT(w1);

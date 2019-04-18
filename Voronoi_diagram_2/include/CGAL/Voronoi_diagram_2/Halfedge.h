@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -150,7 +150,7 @@ public:
 
     Delaunay_face_handle f, fprev = f_;
     int iprev = i_, i;
-    
+
     // if I want to return also infinite edges replace the test in
     // the while loop by the following test (i.e., should omit the
     // testing for infinity):
@@ -318,7 +318,7 @@ public:
       return ( vda_ == other.vda_ && f_ == other.f_ && i_ == other.i_ );
     }
   }
-  
+
   bool operator!=(const Self& other) const {
     return !((*this) == other);
   }

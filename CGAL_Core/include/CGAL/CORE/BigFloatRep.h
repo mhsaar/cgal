@@ -17,10 +17,10 @@
  *
  *
  * File: BigFloatRep.h
- * Synopsis: 
+ * Synopsis:
  * 		Internal Representation BigFloat.
- * 
- * Written by 
+ *
+ * Written by
  *       Chee Yap <yap@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
@@ -41,7 +41,7 @@
 #include <CGAL/CORE/CoreDefs.h>
 #include <CGAL/CORE/extLong.h>
 
-namespace CORE { 
+namespace CORE {
 
 //  forward reference
 class BigFloat;
@@ -334,8 +334,8 @@ inline extLong BigFloatRep::lMSB() const {
 }
 
 /// uMSB() returns an upper bound on log_2(abs(*this)).
-/** Returns -1 if (*this)=0.  
- * Not well-defined if zero is in the interval. 
+/** Returns -1 if (*this)=0.
+ * Not well-defined if zero is in the interval.
  */
 inline extLong BigFloatRep::uMSB() const {
   return extLong(floorLg(abs(m) + err)) + bits(exp);

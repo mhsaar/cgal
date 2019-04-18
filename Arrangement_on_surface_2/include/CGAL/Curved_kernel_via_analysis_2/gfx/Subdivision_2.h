@@ -21,7 +21,7 @@
 // ============================================================================
 
 /*!\file CGAL/Curved_kernel_via_analysis_2/gfx//Subdivision_2.h
- * \brief definition of Subdivision_2<> 
+ * \brief definition of Subdivision_2<>
  * 2D space subdivision for rasterization of planar curves
  */
 
@@ -46,22 +46,22 @@ struct Range_templ
 	Range_templ() { }
 	Range_templ(const NT& l_, const NT& u_) : lower(l_), upper(u_) { }
 	NT lower, upper;
-}; 
+};
 
 } // namespace internal
 
-/*!\brief 
+/*!\brief
  * The class template \c Subdivision_2 and its associate functions.
- * 
+ *
  * The class implements a space method to plot algebraic curves, we use Affine
  * Arithmetic with recursive derivative information
  */
 template <class NT_, class Algebraic_curve_2_>
 class Subdivision_2
 {
-public: 
-	//! \name public typedefs 
-    //!@{ 
+public:
+	//! \name public typedefs
+    //!@{
 	//! this instance's first template argument
 	typedef NT_ NT;
 	//! this instance's second template argument
@@ -83,15 +83,15 @@ public:
 	//! container used to store coefficient sequence
 	typedef typename Poly_1::Vector Vector_1;
 	//! container's const iterator (random access)
-	typedef typename Poly_1::const_iterator const_iterator_1; 
+	typedef typename Poly_1::const_iterator const_iterator_1;
 	//! container used to store univariate polynomials sequence
 	typedef typename Poly_2::Vector Vector_2;
 	//! container's const iterator (random access)
-	typedef typename Poly_2::const_iterator const_iterator_2; 
+	typedef typename Poly_2::const_iterator const_iterator_2;
 	//@}
 private:	
-	//! \name private typedefs 
-    //@{ 
+	//! \name private typedefs
+    //@{
 		
 	//! conversion from the basic number type to integers
 	typename SoX::Curve_renderer_traits<NT>::To_integer to_integer;
@@ -107,25 +107,25 @@ private:
 	//! affine form instance
 	typedef SoX::Affine_form<NT> Affine_form;
 	//@}
-public: 
+public:
 	//! \name Constructors
-    //@{ 
+    //@{
 	//! default constructor
 	Subdivision_2() : initialized(false), polynomial_set(false) {}
 	//@}
 public:
 	//! \name public methods
-    //@{ 
+    //@{
 	//! specifies drawing window and pixel resolution
 	void setup(const double& x_min_,const double& y_min_,
 				const double& x_max_,const double& y_max_,
-				int res_w_, int res_h_) 
-	{ 
-		x_min = static_cast<NT>(x_min_); 
-		x_max = static_cast<NT>(x_max_); 
-		y_min = static_cast<NT>(y_min_); 
+				int res_w_, int res_h_)
+	{
+		x_min = static_cast<NT>(x_min_);
+		x_max = static_cast<NT>(x_max_);
+		y_min = static_cast<NT>(y_min_);
 		y_max = static_cast<NT>(y_max_);
-		res_w = res_w_; 
+		res_w = res_w_;
 		res_h = res_h_;
 		if(x_min >= x_max||y_min >= y_max||res_w < 5||res_h < 5||res_w > 1024||
 			res_h > 1024) {
@@ -138,7 +138,7 @@ public:
 		make_exact(pixel_w);
 		make_exact(pixel_h);
 		initialized = true;	
-	}    
+	}
 	//! sets up the underlying polynomial
 	void set_polynomial(const Poly_input_2& poly)
 	{
@@ -151,40 +151,40 @@ public:
 		return input_poly;
 	}
 	//! \brief returns drawing window boundaries
-	void get_window(double& x_min_, double& y_min_, double& x_max_, 
+	void get_window(double& x_min_, double& y_min_, double& x_max_,
 		double& y_max_) const
 	{
-		x_min_ = to_double(x_min); 
-		x_max_ = to_double(x_max); 
-		y_min_ = to_double(y_min); 
+		x_min_ = to_double(x_min);
+		x_max_ = to_double(x_max);
+		y_min_ = to_double(y_min);
 		y_max_ = to_double(y_max);
 	}
 	//! \brief returns pixel resolution
 	void get_resolution(int& res_w_, int& res_h_) const
 	{
-		res_w_ = res_w; 
+		res_w_ = res_w;
 		res_h_ = res_h;
 	}
 	//! \brief the main rendering procedure
-	void draw(QPainter *painter_); 
+	void draw(QPainter *painter_);
 	//@}	
 private:
 	//! \name Private methods
-    //@{ 
+    //@{
 	//! precomputes polynomials and derivative coefficients
 	void precompute();
 	//! \brief switches to another cache instance depending on the
 	//! supporting curve of a segment
 		//! \brief evalutates the ith derivative at certain x
 	//!
-	//! \c cache_it - an intetator pointing to the end of an array of 
-	//! polynomial coefficients, \c der_it - an iterator for derivative 
+	//! \c cache_it - an intetator pointing to the end of an array of
+	//! polynomial coefficients, \c der_it - an iterator for derivative
 	//! coefficients
 	NT evaluate_der(const_iterator_1 der_it, const_iterator_1 begin,
 			const_iterator_1 cache_it, const NT& x)
 	{
 		NT val((*cache_it--) * (*der_it));
-		while((der_it--)!=begin) 
+		while((der_it--)!=begin)
 			val = val * x + (*cache_it--) * (*der_it);
 		return val;
 	}
@@ -193,16 +193,16 @@ private:
 	{
 		const_iterator_1 it = poly.end() - 1, begin = poly.begin();
 		NT val(*it);
-		while((it--)!=begin) 
+		while((it--)!=begin)
 			val = val * x + (*it);
 		return val;
 	}
 	//! \brief computes the ranges of univariate polynomial values over an interval
-	void get_range_1(int var, const NT& lower, const NT& upper, 
+	void get_range_1(int var, const NT& lower, const NT& upper,
 		const Poly_1& poly, NT& l, NT& h);
-	//! Affine Arithmetic with Recursive Derivative information 
+	//! Affine Arithmetic with Recursive Derivative information
 	//! for univariate case
-	void get_range_AARD_1(int var, const NT& lower, const NT& upper, 
+	void get_range_AARD_1(int var, const NT& lower, const NT& upper,
 		const Poly_1& poly, NT& l, NT& h);
 	//! \brief Recursive Taylor, bivariate case
 	//!
@@ -211,10 +211,10 @@ private:
 		const NT& y_high, int depth, int index, Affine_form& res);
 	//! checks a rectangular area with 2D range analysis: either discrads it,
 	//! subdivides further or draws a pixel
-	void quad_tree(const NT& x_low, const NT& x_high, const NT& y_low, 
+	void quad_tree(const NT& x_low, const NT& x_high, const NT& y_low,
 		const NT& y_high);
 	//! \brief recursive quad tree subdivision
-	void subdivide(const NT& x_low, const NT& x_high, const NT& y_low, 
+	void subdivide(const NT& x_low, const NT& x_high, const NT& y_low,
 		const NT& y_high);
 public:
 	//! destructor
@@ -225,7 +225,7 @@ public:
 	//@}
 private:
 	//! \name Private properties
-    //@{ 
+    //@{
 	NT x_min, x_max, y_min, y_max; //! drawing window boundaries
 	int res_w, res_h;			   //! pixel resolution
 	NT pixel_w, pixel_h; 		   //! pixel dimensions w.r.t. resolution
@@ -236,7 +236,7 @@ private:
 	int max_deg; //! the maximal degree w.r.t. x and y
 	bool initialized, polynomial_set;	
 	QPainter *painter;
-	//@} 
+	//@}
 }; // class Subdivision_2<>
 
 //! \brief main rasterization procedure
@@ -246,8 +246,8 @@ void Subdivision_2<NT, Algebraic_curve_2_>::draw(QPainter *painter_)
 	if(!initialized||!polynomial_set||painter_==NULL)
 		return;
 	painter = painter_;
-	//std::cout << " P(x(y)): " << coeffs_x << std::endl; 
-	//std::cout << " P(y(x)): " << coeffs_y << std::endl; 
+	//std::cout << " P(x(y)): " << coeffs_x << std::endl;
+	//std::cout << " P(y(x)): " << coeffs_y << std::endl;
 	std::cout << "resolution: " << res_w << " x " << res_h << std::endl;
 	//std::cout << "box: [" << x_min << "; " << y_min << "]x[" << x_max << "; "
 		// <<	y_max << "]" << std::endl;
@@ -260,7 +260,7 @@ void Subdivision_2<NT, Algebraic_curve_2_>::draw(QPainter *painter_)
 //! \brief checks a rectangular area with 2D range analysis: either discrads it,
 //! subdivides further or draws a pixel
 template <class NT_, class Algebraic_curve_2_>
-void Subdivision_2<NT_, Algebraic_curve_2_>::quad_tree(const NT& x_low, 
+void Subdivision_2<NT_, Algebraic_curve_2_>::quad_tree(const NT& x_low,
 	  const NT& x_high, const NT& y_low, const NT& y_high)
 {
 	Affine_form res;
@@ -276,13 +276,13 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::quad_tree(const NT& x_low,
 		painter->drawPoint(pix_x, res_h - pix_y);
 		//painter->drawEllipse(pix_x-2,res_h-pix_y-2,4,4);
 	}
-	else 
+	else
 		subdivide(x_low, x_high, y_low, y_high);
 }
 
 //! \brief recursive quad tree subdivision
 template <class NT_, class Algebraic_curve_2_>
-void Subdivision_2<NT_, Algebraic_curve_2_>::subdivide(const NT& x_low, 
+void Subdivision_2<NT_, Algebraic_curve_2_>::subdivide(const NT& x_low,
 	  const NT& x_high, const NT& y_low, const NT& y_high)
 {
 	NT x_mid = (x_low + x_high)/2, y_mid = (y_low + y_high)/2;
@@ -298,7 +298,7 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_RT_2(
 	const NT& x_low, const NT& x_high, const NT& y_low, const NT& y_high,
 		int depth, int index, Affine_form& res)
 {
-	//std::cout << "range for [" << x_low << "; " << y_low << "]x[" << 
+	//std::cout << "range for [" << x_low << "; " << y_low << "]x[" <<
 	//x_high <<
 		//"; " << y_high << "]: (" << low << "; " << high << ")" << std::endl;
 	typename std::vector<Poly_2>::const_iterator der_it =
@@ -310,9 +310,9 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_RT_2(
 	} else if((*der_it).degree()==1) {
 		Poly_1 p_x_low = NiX::substitute_x((*der_it), x_low),
 			   p_x_high = NiX::substitute_x((*der_it), x_high);
-		NT eval_1 = p_x_low.evaluate(y_low), 
+		NT eval_1 = p_x_low.evaluate(y_low),
 		   eval_2 = p_x_low.evaluate(y_high),
-		   eval_3 = p_x_high.evaluate(y_low), 
+		   eval_3 = p_x_high.evaluate(y_low),
 		   eval_4 = p_x_high.evaluate(y_high);
 		NT min1 = eval_1, max1 = eval_2;
 		if(min1 > eval_2) {
@@ -336,18 +336,18 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_RT_2(
 	{
 	NT l, h;
 	std::vector<Affine_form> x_forms;
-	const_iterator_2 it_2 = (*der_it).begin(); 
+	const_iterator_2 it_2 = (*der_it).begin();
 	while(it_2 != (*der_it).end())
 	{
 		// it_2 - a poly in x_range
 		if((*it_2).is_zero())
 			l = h = 0;
 		else
-			get_range_1(X_RANGE, x_low, x_high, *it_2, l, h); 
+			get_range_1(X_RANGE, x_low, x_high, *it_2, l, h);
 		x_forms.push_back(Affine_form(l, h));
 		it_2++;
 	}
-	typename std::vector<Affine_form>::const_iterator it = 
+	typename std::vector<Affine_form>::const_iterator it =
 		x_forms.end()-1;
 	Affine_form y_form(y_low, y_high);
 	res = Affine_form(*it);
@@ -365,7 +365,7 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_RT_2(
 	   eval_fx = NiX::substitute_xy(*(der_it+depth+1), x0, y0)*x1,
 	   eval_fy = NiX::substitute_xy(*(der_it+depth+2), x0, y0)*y1;
 	res = eval_f + eval_fx*one1 + eval_fy*one2;
-	   
+	
 	int idx = index+2*depth+3;
 	if(idx < (int)mixed_derivatives.size()) {
 		get_range_RT_2(x_low, x_high, y_low, y_high, depth+2, idx,   fxx);
@@ -373,28 +373,28 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_RT_2(
 		get_range_RT_2(x_low, x_high, y_low, y_high, depth+2, idx+2, fyy);
 		res = res + ((x1*x1/2*zero1)*fxx) + ((y1*y1/2*zero2)*fyy) +
 			((x1*y1*one3)*fxy);
-	} 
+	}
 		
 	//res.convert(lower, upper);
-	//std::cout << "range for depth = " << depth << " index = " << index << 
+	//std::cout << "range for depth = " << depth << " index = " << index <<
 		//" [" << lower << "; " << upper << "]" << std::endl;
 }
 
 //! \brief computes the range of polynomial values \c f([lower,upper]) using
 //! Affine Arithmetic with Recursive Derivative information
 //!
-//! \c var = \c X_RANGE: \c y is fixed - polynomial is given in \c x 
-//! coordinates, otherwise: \c x is fixed - polynomial is given in \c y 
-//! coordinates 
+//! \c var = \c X_RANGE: \c y is fixed - polynomial is given in \c x
+//! coordinates, otherwise: \c x is fixed - polynomial is given in \c y
+//! coordinates
 template <class NT_, class Algebraic_curve_2_>
-void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var, 
+void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var,
 	const NT& l_, const NT& r_, const Poly_1& poly,  NT& l1, NT& h1)
 {
 	Vector_2 *der = &der_y;
-	if(var == X_RANGE) 
-		der = &der_x; 
+	if(var == X_RANGE)
+		der = &der_x;
 	NT low, up, l(l_), r(r_);
-	const_iterator_2 der_it_2 = der->end()-1; 
+	const_iterator_2 der_it_2 = der->end()-1;
 	const_iterator_1 der_it, cache_it, begin;
 	if(poly.degree()==0) {
 		l1 = h1 = poly.lcoeff();
@@ -408,10 +408,10 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var,
 	Affine_form f(l,r);
 	/*while((der_it_2--)!=der->begin()) {
 		// iterate through derivative coefficients
-		der_it = (*der_it_2).end()-1; 
+		der_it = (*der_it_2).end()-1;
 		begin = (*der_it_2).begin();
 		cache_it = poly.end()-1; // iterate through precomputed y-values
-		// if a derivative does not straddle zero we can 
+		// if a derivative does not straddle zero we can
 		// calculate the exact boundaries for f(x)		
 		if(low * up > 0) {
 			v1 = v2 = (*cache_it--) * (*der_it);
@@ -420,17 +420,17 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var,
 				v1 = v1 * l + (*cache_it) * (*der_it);
 				v2 = v2 * r + (*cache_it--) * (*der_it);
 			}
-			if(low < 0 && up < 0) { 
-				v = v1; 
-				v1 = v2; 
-				v2 = v; 
+			if(low < 0 && up < 0) {
+				v = v1;
+				v1 = v2;
+				v2 = v;
 			}
-			low = v1; 
+			low = v1;
 			up = v2;
 		} else { // use affine arithmetic to compute bounds
 			Affine_form<NT>	range(((*cache_it--) * (*der_it)));
 			// calculate the ith derivative using affine arithmetic	
-			while((der_it--)!=begin) 
+			while((der_it--)!=begin)
 				range = (*cache_it--) * (*der_it) + (range * f);
 			range.convert(low,up);
 		}
@@ -438,20 +438,20 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var,
 	if(low * up >= 0) {
 		Gfx_OUT << "+ " << std::endl;
 		v1 = evaluate(poly, l);
-		v2 = evaluate(poly, r); 
+		v2 = evaluate(poly, r);
 		//Gfx_OUT << "v1 = " << v1 << " v2 = " << v2 << std::endl;
-		if(low < 0 && up < 0) { 
-			v = v1; 
-			v1 = v2; 
-			v2 = v; 
+		if(low < 0 && up < 0) {
+			v = v1;
+			v1 = v2;
+			v2 = v;
 		}
-		low = v1; 
+		low = v1;
 		up = v2;
 	} else */{ // use affine arithmetic to compute bounds
 		cache_it = poly.end()-1;
 		begin = poly.begin();
 		Affine_form res(*cache_it);
-		while((cache_it--)!=begin) 
+		while((cache_it--)!=begin)
 			res = (*cache_it) + (res * f);
 		res.convert(low,up);
 	}
@@ -463,11 +463,11 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_AARD_1(int var,
 //! \brief returns whether a polynomial has zero at a given interval,
 //! since we are not interested in concrete values
 //!
-//! flag \t der_check forces to calculate boundaries for the first 
+//! flag \t der_check forces to calculate boundaries for the first
 //! derivative instead of function itself. Caching is used if
 //! appropriate
 template <class NT_, class Algebraic_curve_2_>
-void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_1(int var, 
+void Subdivision_2<NT_, Algebraic_curve_2_>::get_range_1(int var,
 	const NT& lower, const NT& upper, const Poly_1& poly, NT& l, NT& h)
 {
 	//std::cout << "range for: [" << lower << "; " << upper << "] poly: " <<
@@ -481,44 +481,44 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::precompute()
 {
 	Intern::Max_coeff<Coeff> max_coeff;
 	Coeff mx1 = max_coeff(input_poly);
-	Intern::Transform<Poly_2, Coeff, Rational, 
+	Intern::Transform<Poly_2, Coeff, Rational,
 		typename SoX::Curve_renderer_traits<NT>::From_rational,
 		typename SoX::Curve_renderer_traits<NT>::Make_exact> tr;
 	tr.max = Rational(mx1);
 	coeffs_y = tr(input_poly);
 	// x - outer variable, y - inner
-	coeffs_x = transpose_bivariate_polynomial(coeffs_y); 
+	coeffs_x = transpose_bivariate_polynomial(coeffs_y);
 	int degree_x = coeffs_x.degree(),
 		degree_y = coeffs_y.degree();
 	der_x.clear();
 	der_y.clear();
-	int i, j; 
+	int i, j;
 	max_deg = degree_x;
-	if(degree_y > max_deg) 
+	if(degree_y > max_deg)
 		max_deg = degree_y;
 	NT *X = new NT[max_deg];
 	NT det(1.0);
 	std::cout << "start" << std::endl;
 	for(i = 0; i < degree_x; i++) {
-		if(i != 0) 
+		if(i != 0)
 			det = X[0];
 		for(j = 1; j <= degree_x - i; j++)
-			if(i == 0) 
+			if(i == 0)
 				X[j-1] = j;
-			else { 
+			else {
 				X[j-1] = X[j] * j / det; // divide by the lowest coefficient ?
 				make_exact(X[j-1]);
 			}	
 		der_x.push_back(Poly_1(X,(X + degree_x - i)));
 	}
 	for(i = 0; i < degree_y; i++) {
-		if(i != 0) 
+		if(i != 0)
 			det = X[0];
 		for(j = 1; j <= degree_y - i; j++)
-			if(i == 0) 
+			if(i == 0)
 				X[j-1] = j; // divide by the lowest coefficient ?
-			else { 
-				X[j-1] = X[j] * j / det; 
+			else {
+				X[j-1] = X[j] * j / det;
 				make_exact(X[j-1]);
 			}
 		der_y.push_back(Poly_1(X,(X + degree_y - i)));
@@ -531,7 +531,7 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::precompute()
 	for(i = 1; i <= max_deg; i++)
 	{
 		mixed_derivatives.push_back(NiX::diff_x(mixed_derivatives[idx]));
-		for(j = 0; j < i; j++) 
+		for(j = 0; j < i; j++)
 // compute fx^(i-j)y^(j), i.e. (i-j) times derivate by x; and j times
 // derivate by y
 		{
@@ -543,7 +543,7 @@ void Subdivision_2<NT_, Algebraic_curve_2_>::precompute()
 	}
 	std::cout << "finished" << std::endl;
 	polynomial_set = true;
-	/*typename std::vector<Poly_2>::const_iterator der_it = 
+	/*typename std::vector<Poly_2>::const_iterator der_it =
 		mixed_derivatives.end()-1;
 	for(i = max_deg; i >= 0; i--)
 	{

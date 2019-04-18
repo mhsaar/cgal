@@ -33,7 +33,7 @@ namespace CGAL {
   namespace internal {
 
     // Intern function needed for Ducos algorithm
-    
+
     template<typename Polynomial_traits_d> void lazard_optimization
         (typename Polynomial_traits_d::Coefficient_type y,
          double n,
@@ -59,14 +59,14 @@ namespace CGAL {
       C=c*B/y;
     }
 
-    template<typename Polynomial_traits_d> 
+    template<typename Polynomial_traits_d>
       void lickteig_roy_optimization
         (typename Polynomial_traits_d::Polynomial_d A,
          typename Polynomial_traits_d::Polynomial_d B,
          typename Polynomial_traits_d::Polynomial_d C,
          typename Polynomial_traits_d::Coefficient_type s,
          typename Polynomial_traits_d::Polynomial_d& D) {
-      
+
       typedef typename Polynomial_traits_d::Polynomial_d Poly;
       typedef typename Polynomial_traits_d::Coefficient_type NT;
       typename Polynomial_traits_d::Degree degree;
@@ -110,12 +110,12 @@ namespace CGAL {
       return;
     }
 
-    template<typename Polynomial_traits_d> 
-    typename Polynomial_traits_d::Coefficient_type 
+    template<typename Polynomial_traits_d>
+    typename Polynomial_traits_d::Coefficient_type
     resultant_for_constant_polynomial
-    (typename Polynomial_traits_d::Polynomial_d P, 
+    (typename Polynomial_traits_d::Polynomial_d P,
      typename Polynomial_traits_d::Polynomial_d Q) {
-      
+
       typedef typename Polynomial_traits_d::Polynomial_d Polynomial;
       typedef typename Polynomial_traits_d::Coefficient_type NT;
       typename Polynomial_traits_d::Leading_coefficient lcoeff;
@@ -137,15 +137,15 @@ namespace CGAL {
      * \brief Compute the sequence of subresultants with pseudo-division
      *
      * This is an implementation of Ducos' algorithm. It improves on the
-     * classical methods for subresultant computation by reducing the 
+     * classical methods for subresultant computation by reducing the
      * swell-up of intermediate results. For all details, see
      * L.Ducos: Optimazations of the Subresultant algorithm. <i>Journal of Pure
      * and Applied Algebra</i> <b>145</b> (2000) 149--163
      */
   template <typename Polynomial_traits_d,typename OutputIterator> inline
     OutputIterator prs_polynomial_subresultants
-      (typename Polynomial_traits_d::Polynomial_d P, 
-       typename Polynomial_traits_d::Polynomial_d Q, 
+      (typename Polynomial_traits_d::Polynomial_d P,
+       typename Polynomial_traits_d::Polynomial_d Q,
        OutputIterator out) {
 
     typedef typename Polynomial_traits_d::Polynomial_d Polynomial;
@@ -160,9 +160,9 @@ namespace CGAL {
           <Polynomial_traits_d> (P,Q));
       return out;
     }
-      
+
     bool poly_swapped = (degree(P) < degree(Q));
-    
+
     if(poly_swapped) {
       std::swap(P,Q);
     }
@@ -177,18 +177,18 @@ namespace CGAL {
     } else {
       sres.push_back(CGAL::ipower(lcoeff(Q),deg_diff-1)*Q);
     }
-    
+
     Polynomial A,B,C,D,dummy_pol;
     NT s,dummy_nt;
     int delta,d,e;
-      
+
     A=Q;
 
     s=CGAL::ipower(lcoeff(Q),deg_diff);
-     
+
     typename Polynomial_traits_d::Pseudo_division()
         (P, -Q, dummy_pol, B, dummy_nt);
-      
+
     while(true) {
       d=degree(A);
       e=degree(B);
@@ -217,7 +217,7 @@ namespace CGAL {
       }
       CGAL::internal::lickteig_roy_optimization<Polynomial_traits_d>(A,B,C,s,D);
       B=D;
-      //typename Polynomial_traits_d::Pseudo_division() 
+      //typename Polynomial_traits_d::Pseudo_division()
       //    (A, -B, dummy_pol, D, dummy_nt);
       //B= D / (CGAL::ipower(s,delta)*lcoeff(A));
       A=C;
@@ -226,7 +226,7 @@ namespace CGAL {
 
     CGAL_assertion(static_cast<int>(sres.size())
                == degree(Q)+1);
-    
+
     // If P and Q were swapped, correct the signs
     if(poly_swapped) {
       int p = degree(P);
@@ -244,12 +244,12 @@ namespace CGAL {
 
 
   /*!
-   * \brief Computes the polynomial subresultants 
+   * \brief Computes the polynomial subresultants
    * as minors of the Bezout matrix
    */
   template <typename Polynomial_traits_d,typename OutputIterator> inline
     OutputIterator bezout_polynomial_subresultants
-      (typename Polynomial_traits_d::Polynomial_d P, 
+      (typename Polynomial_traits_d::Polynomial_d P,
        typename Polynomial_traits_d::Polynomial_d Q,
        OutputIterator out) {
 
@@ -258,13 +258,13 @@ namespace CGAL {
     typename Polynomial_traits_d::Leading_coefficient lcoeff;
     typename Polynomial_traits_d::Degree degree;
     typename Polynomial_traits_d::Construct_polynomial construct;
-   
+
     if(degree(P) < 1 || degree(Q) < 1) {
       *out++ = Polynomial(CGAL::internal::resultant_for_constant_polynomial
           <Polynomial_traits_d> (P,Q));
       return out;
     }
-    
+
     typedef CGAL::internal::Simple_matrix<NT> Matrix;
     Matrix M = CGAL::internal::polynomial_subresultant_matrix
         <Polynomial_traits_d> (P,Q);
@@ -289,11 +289,11 @@ namespace CGAL {
     }
 
     return out;
-    
+
   }
-      
+
   /*!
-     * \brief Compute the sequence of principal subresultants 
+     * \brief Compute the sequence of principal subresultants
      * with pseudo-division
      *
      * Uses Ducos algorithm for the polynomial subresultant, and
@@ -301,7 +301,7 @@ namespace CGAL {
      */
   template <typename Polynomial_traits_d,typename OutputIterator> inline
     OutputIterator prs_principal_subresultants
-      (typename Polynomial_traits_d::Polynomial_d P, 
+      (typename Polynomial_traits_d::Polynomial_d P,
        typename Polynomial_traits_d::Polynomial_d Q,
        OutputIterator out) {
 
@@ -312,7 +312,7 @@ namespace CGAL {
 
     std::vector<Polynomial> sres;
     int q = (std::min)(degree(Q),degree(P));
-    
+
     CGAL::internal::prs_polynomial_subresultants<Polynomial_traits_d>
         (P,Q,std::back_inserter(sres));
     CGAL_assertion(static_cast<int>(sres.size()) == q+1);
@@ -326,10 +326,10 @@ namespace CGAL {
       }
     }
     return out;
-  } 
+  }
 
   /*!
-     * \brief Compute the sequence of principal subresultants 
+     * \brief Compute the sequence of principal subresultants
      * with minors of the Bezout matrix
      *
      */
@@ -338,11 +338,11 @@ namespace CGAL {
     (typename Polynomial_traits_d::Polynomial_d P,
      typename Polynomial_traits_d::Polynomial_d Q,
      OutputIterator out) {
-    
+
     typedef typename Polynomial_traits_d::Coefficient_type NT;
     typename Polynomial_traits_d::Leading_coefficient lcoeff;
     typename Polynomial_traits_d::Degree degree;
-         
+
     if(degree(P) < 1 || degree(Q) < 1) {
         *out++ = CGAL::internal::resultant_for_constant_polynomial
                      <Polynomial_traits_d> (P,Q);
@@ -367,17 +367,17 @@ namespace CGAL {
       *out++=CGAL::ipower(lcoeff(P),-deg_diff);
     }
     return out;
-    
+
   }
-  
+
   /*!
    * \brief Computes the subresultants together with the according cofactors
-   * 
-   * For details, see S.Basu, R.Pollack, M.-F.Roy: Algorithms in Real 
+   *
+   * For details, see S.Basu, R.Pollack, M.-F.Roy: Algorithms in Real
    * Algebraic Geometry, Second edition, Alg.8.22
    */
   template<typename Polynomial_traits_d,
-    typename OutputIterator1, 
+    typename OutputIterator1,
     typename OutputIterator2,
     typename OutputIterator3>
     OutputIterator1 prs_subresultants_with_cofactors
@@ -386,7 +386,7 @@ namespace CGAL {
        OutputIterator1 sres_out,
        OutputIterator2 coP_out,
        OutputIterator3 coQ_out) {
-      
+
       typedef typename Polynomial_traits_d::Polynomial_d Polynomial;
       typedef typename Polynomial_traits_d::Coefficient_type NT;
       typename Polynomial_traits_d::Leading_coefficient lcoeff;
@@ -400,9 +400,9 @@ namespace CGAL {
         *coQ_out++ = Polynomial(lcoeff(P));
         return sres_out;
       }
-      
+
       bool poly_swapped = (degree(P) < degree(Q));
-    
+
       if(poly_swapped) {
         std::swap(P,Q);
       }
@@ -437,20 +437,20 @@ namespace CGAL {
 
       coP.push_back(coPA);
       coQ.push_back(coQA);
-      
+
       A=Q;
 
       s=CGAL::ipower(lcoeff(Q),deg_diff);
       //s=CGAL::ipower(lcoeff(Q),1);
-     
+
       typename Polynomial_traits_d::Pseudo_division() (P, -Q, Quo, B, m);
 
       coPB = construct(m);
       coQB = Quo;
-      
+
       //CGAL_assertion(m*P+Quo*Q==B);
       //CGAL_assertion(CGAL::degree(B)<CGAL::degree(-Q));
-      
+
       while(true) {
         d=degree(A);
         e=degree(B);
@@ -473,9 +473,9 @@ namespace CGAL {
         if(delta>1) {
           C=CGAL::ipower(lcoeff(B),delta-1)*B / CGAL::ipower(s,delta-1);
 
-          coPC = CGAL::ipower(lcoeff(B),delta-1)*coPB / 
+          coPC = CGAL::ipower(lcoeff(B),delta-1)*coPB /
               CGAL::ipower(s,delta-1);
-          coQC = CGAL::ipower(lcoeff(B),delta-1)*coQB / 
+          coQC = CGAL::ipower(lcoeff(B),delta-1)*coQB /
               CGAL::ipower(s,delta-1);
           for(int i=0;i<delta-2;i++) {
             sres.push_back(zero_pol);
@@ -485,7 +485,7 @@ namespace CGAL {
           sres.push_back(C);
           coP.push_back(coPC);
           coQ.push_back(coQC);
-          
+
         }
         else {
           C=B;
@@ -517,7 +517,7 @@ namespace CGAL {
       if(same_degree) {
 	p++;
       }
-      
+
       std::vector<Polynomial> sResP,sResU,sResV,C;
       std::vector<NT> s,t;
 
@@ -594,7 +594,7 @@ namespace CGAL {
 	  NT prefac=s[k]*t[j-1];
 	  CGAL::pseudo_division(prefac*sResP[i-1],sResP[j-1],Quo,Rem,D);
 	  C[k-1]=CGAL::integral_division(Quo,D);
-	  
+	
 	  NT denom = s[j]*t[i-1];
 	  sResP[k-1]=CGAL::integral_division
 	    (-prefac*sResP[i-1]+C[k-1]*sResP[j-1],denom);
@@ -615,7 +615,7 @@ namespace CGAL {
       }
 
       // Correct factors for same degree (hack)
-      
+
       if(same_degree) {
 	for(int i = q-1;i>=0;i--) {
 	  NT d = lcoeff(Q);
@@ -627,15 +627,15 @@ namespace CGAL {
 	  sResV[i]=CGAL::integral_division(sResV[i],d);
 	}
       }
-      
-      
+
+
       // Correct the signs (the algorithm computes the signed subresultants)
-      
+
       if(degree(P)==degree(Q)) {
 	p--;
 	CGAL_assertion(p==q);
       }
-      
+
       for(int i = q;i>=0;i--) {
 	if((p-i)%4==0 || (p-i)%4==1) {
 	  sres.push_back(sResP[i]);
@@ -674,32 +674,32 @@ namespace CGAL {
       std::copy(coP.rbegin(),coP.rend(),coP_out);
       std::copy(coQ.rbegin(),coQ.rend(),coQ_out);
       return std::copy(sres.rbegin(),sres.rend(),sres_out);
-    
+
     }
 
     // the general function for CGAL::Integral_domain_without_division_tag
-    template <typename Polynomial_traits_d,typename OutputIterator> inline 
-      OutputIterator 
-      polynomial_subresultants_(typename Polynomial_traits_d::Polynomial_d A, 
+    template <typename Polynomial_traits_d,typename OutputIterator> inline
+      OutputIterator
+      polynomial_subresultants_(typename Polynomial_traits_d::Polynomial_d A,
                                 typename Polynomial_traits_d::Polynomial_d B,
                                 OutputIterator out,
                                 CGAL::Integral_domain_without_division_tag){
 
         return bezout_polynomial_subresultants<Polynomial_traits_d>(A,B,out);
-  
+
     }
 
-  
+
     // the specialization for CGAL::Integral_domain_tag
     template <typename Polynomial_traits_d,typename OutputIterator> inline
       OutputIterator
-      polynomial_subresultants_(typename Polynomial_traits_d::Polynomial_d A, 
+      polynomial_subresultants_(typename Polynomial_traits_d::Polynomial_d A,
                                 typename Polynomial_traits_d::Polynomial_d B,
                                 OutputIterator out,
                                 CGAL::Integral_domain_tag){
-    
+
       return prs_polynomial_subresultants<Polynomial_traits_d>(A,B,out);
-    
+
     }
 
     template <typename Polynomial_traits_d,typename OutputIterator> inline
@@ -710,54 +710,54 @@ namespace CGAL {
 
       typedef typename Polynomial_traits_d::Coefficient_type NT;
 
-      typedef typename 
-          CGAL::Algebraic_structure_traits<NT>::Algebraic_category 
+      typedef typename
+          CGAL::Algebraic_structure_traits<NT>::Algebraic_category
           Algebraic_category;
       return polynomial_subresultants_<Polynomial_traits_d>
-          (A,B,out,Algebraic_category());     
+          (A,B,out,Algebraic_category());
     }
 
     // the general function for CGAL::Integral_domain_without_division_tag
-    template <typename Polynomial_traits_d,typename OutputIterator> inline 
-      OutputIterator 
-      principal_subresultants_(typename Polynomial_traits_d::Polynomial_d A, 
+    template <typename Polynomial_traits_d,typename OutputIterator> inline
+      OutputIterator
+      principal_subresultants_(typename Polynomial_traits_d::Polynomial_d A,
                                typename Polynomial_traits_d::Polynomial_d B,
                                OutputIterator out,
                                CGAL::Integral_domain_without_division_tag){
-      
+
       return bezout_principal_subresultants<Polynomial_traits_d>(A,B,out);
-  
+
     }
-    
+
     // the specialization for CGAL::Integral_domain_tag
     template <typename Polynomial_traits_d,typename OutputIterator> inline
       OutputIterator
-      principal_subresultants_(typename Polynomial_traits_d::Polynomial_d A, 
+      principal_subresultants_(typename Polynomial_traits_d::Polynomial_d A,
                                typename Polynomial_traits_d::Polynomial_d B,
                                OutputIterator out,
                                CGAL::Integral_domain_tag){
-    
+
       return prs_principal_subresultants<Polynomial_traits_d>(A,B,out);
-    
+
     }
 
     template <typename Polynomial_traits_d,typename OutputIterator> inline
       OutputIterator principal_subresultants_
-        (typename Polynomial_traits_d::Polynomial_d A, 
+        (typename Polynomial_traits_d::Polynomial_d A,
          typename Polynomial_traits_d::Polynomial_d B,
          OutputIterator out) {
 
         typedef typename Polynomial_traits_d::Coefficient_type NT;
 
-        typedef typename 
-            CGAL::Algebraic_structure_traits<NT>::Algebraic_category 
+        typedef typename
+            CGAL::Algebraic_structure_traits<NT>::Algebraic_category
             Algebraic_category;
         return principal_subresultants_<Polynomial_traits_d>
-            (A,B,out,Algebraic_category());     
+            (A,B,out,Algebraic_category());
     }
 
     template<typename Polynomial_traits_d,
-      typename OutputIterator1, 
+      typename OutputIterator1,
       typename OutputIterator2,
       typename OutputIterator3>
       OutputIterator1 polynomial_subresultants_with_cofactors_
@@ -772,7 +772,7 @@ namespace CGAL {
     }
 
     template<typename Polynomial_traits_d,
-      typename OutputIterator1, 
+      typename OutputIterator1,
       typename OutputIterator2,
       typename OutputIterator3>
       OutputIterator1 polynomial_subresultants_with_cofactors_
@@ -782,14 +782,14 @@ namespace CGAL {
        OutputIterator2 /* coP_out */,
        OutputIterator3 /* coQ_out */,
        CGAL::Integral_domain_without_division_tag) {
-        // polynomial_subresultants_with_cofactors requires 
+        // polynomial_subresultants_with_cofactors requires
         // a model of IntegralDomain as coefficient type;
         CGAL_static_assertion(sizeof(Polynomial_traits_d)==0);
         return sres_out;
     }
 
   template<typename Polynomial_traits_d,
-    typename OutputIterator1, 
+    typename OutputIterator1,
     typename OutputIterator2,
     typename OutputIterator3>
     OutputIterator1 polynomial_subresultants_with_cofactors_
@@ -798,65 +798,65 @@ namespace CGAL {
        OutputIterator1 sres_out,
        OutputIterator2 coP_out,
        OutputIterator3 coQ_out) {
-      
+
       typedef typename Polynomial_traits_d::Coefficient_type NT;
-      
-      typedef typename 
-          CGAL::Algebraic_structure_traits<NT>::Algebraic_category 
+
+      typedef typename
+          CGAL::Algebraic_structure_traits<NT>::Algebraic_category
           Algebraic_category;
       return polynomial_subresultants_with_cofactors_<Polynomial_traits_d>
           (P,Q,sres_out,coP_out,coQ_out,Algebraic_category());
   }
 
   /*! \relates CGAL::Polynomial
-   *  \brief compute the polynomial subresultants of the polynomials 
+   *  \brief compute the polynomial subresultants of the polynomials
    *  \c A and \c B
    *
-   *  If \c n and \c m are the degrees of p and q, 
+   *  If \c n and \c m are the degrees of p and q,
    *  the routine returns a sequence
-   *  of length min(n,m)+1, the (polynomial) subresultants of \c p and \c q. 
+   *  of length min(n,m)+1, the (polynomial) subresultants of \c p and \c q.
    *  It starts with the resultant of \c p and \c q.
    *  The <tt>i</tt>th polynomial has degree at most i.
    *
-   *  The way the subresultants are computed depends on the Algebra_type. 
+   *  The way the subresultants are computed depends on the Algebra_type.
    *  In general the subresultant will be computed by the function
    *  CGAL::bezout_polynomial_subresultants, but if possible the function
    *  CGAL::prs_polynomial_subresultants is used.
    */
   template <typename Polynomial_traits_d,typename OutputIterator> inline
     OutputIterator polynomial_subresultants
-    (typename Polynomial_traits_d::Polynomial_d p, 
+    (typename Polynomial_traits_d::Polynomial_d p,
      typename Polynomial_traits_d::Polynomial_d q,
      OutputIterator out) {
       return CGAL::internal::polynomial_subresultants_<Polynomial_traits_d>
           (p, q, out);
-  }   
+  }
 
   /*! \relates CGAL::Polynomial
-   *  \brief compute the principal subresultants of the polynomials 
+   *  \brief compute the principal subresultants of the polynomials
    *  \c p and \c q
    *
-   *  If \c n and \c m are the degrees of A and B, 
+   *  If \c n and \c m are the degrees of A and B,
    *  the routine returns a sequence
-   *  of length min(n,m)+1, the (principal) subresultants of \c p and \c q, 
-   *  which starts with the resultant of \c p and \c q. 
+   *  of length min(n,m)+1, the (principal) subresultants of \c p and \c q,
+   *  which starts with the resultant of \c p and \c q.
    *
-   *  The way the subresultants are computed depends on the Algebra_type. 
+   *  The way the subresultants are computed depends on the Algebra_type.
    *  In general the subresultant will be computed by the function
    *  CGAL::bezout_principal_subresultants, but if possible the function
    *  CGAL::prs_principal_subresultants is used.
    */
   template <typename Polynomial_traits_d,typename OutputIterator> inline
     OutputIterator principal_subresultants
-    (typename Polynomial_traits_d::Polynomial_d p, 
+    (typename Polynomial_traits_d::Polynomial_d p,
      typename Polynomial_traits_d::Polynomial_d q,
      OutputIterator out) {
       return CGAL::internal::principal_subresultants_<Polynomial_traits_d>
           (p, q, out);
-  }   
- 
+  }
+
   template<typename Polynomial_traits_d,
-    typename OutputIterator1, 
+    typename OutputIterator1,
     typename OutputIterator2,
     typename OutputIterator3>
     OutputIterator1 polynomial_subresultants_with_cofactors

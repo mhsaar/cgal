@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -112,7 +112,7 @@ struct Segment_Delaunay_graph_traits_2<Filtered_kernel<R>,Field_with_sqrt_tag>
 
 // this traits class does NOT support intersecting segments
 template<class R,
-	 class MTag = 
+	 class MTag =
 	 typename Algebraic_structure_traits<typename R::FT>::Algebraic_category
 	 /*Integral_domain_without_division_tag*/>
 struct Segment_Delaunay_graph_traits_without_intersections_2

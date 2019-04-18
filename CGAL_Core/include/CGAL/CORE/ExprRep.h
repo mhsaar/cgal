@@ -18,15 +18,15 @@
  *
  * File: ExprRep.h
  * Synopsis: Internal Representation of Expr.
- * 
- * Written by 
+ *
+ * Written by
  *       Koji Ouchi <ouchi@simulation.nyu.edu>
  *       Chee Yap <yap@cs.nyu.edu>
  *       Igor Pechtchanski <pechtcha@cs.nyu.edu>
  *       Vijay Karamcheti <vijayk@cs.nyu.edu>
  *       Chen Li <chenli@cs.nyu.edu>
  *       Zilin Du <zilin@cs.nyu.edu>
- *       Sylvain Pion <pion@cs.nyu.edu> 
+ *       Sylvain Pion <pion@cs.nyu.edu>
  *       Vikram Sharma<sharma@cs.nyu.edu>
  *
  * WWW URL: http://cs.nyu.edu/exact/
@@ -51,7 +51,7 @@
 #  pragma warning(disable:4251)
 #endif
 
-namespace CORE { 
+namespace CORE {
 
 #if defined(CGAL_CORE_DEBUG_BOUND) && !defined(CGAL_HEADER_ONLY)
 // These counters are incremented each time each bound is recognized as equal
@@ -604,11 +604,11 @@ public:
   /// destructor
   ~ConstPolyRep() {}
   //@}
-  
+
   void *operator new( size_t size){
     return MemoryPool<ConstPolyRep>::global_allocator().allocate(size);
   }
- 
+
   void operator delete( void *p, size_t ){
     MemoryPool<ConstPolyRep>::global_allocator().free(p);
   }
@@ -647,7 +647,7 @@ private:
     long ee = x.exp()*CHUNK_BIT;
     unsigned long err = ee > 0 ? (x.err() << ee) : (x.err() >> (-ee));
     double max = core_abs(val) + err;
-    int ind = longValue((BigInt(x.err()) << 53) / (x.m() + x.err())); 
+    int ind = longValue((BigInt(x.err()) << 53) / (x.m() + x.err()));
     */
     return filteredFp(val, max, ind); // Aug 8, 2004, Comment from Chee:
        // I think we should get rid of filters here!  Given the interval I,
@@ -1159,10 +1159,10 @@ void AddSubRep<Operator>::computeExactFlags() {
                              second->getAppValue(CORE_INFTY, i));
 
 #ifdef CGAL_CORE_TRACE
-	  if (newValue.getRep().ID() == REAL_BIGFLOAT) 
+	  if (newValue.getRep().ID() == REAL_BIGFLOAT)
 	  std::cout << "BigFloat! newValue->rep->ID() = "
 		  << newValue.getRep().ID() << std::endl;
-	  else 
+	  else
 	  std::cout << "ERROR, Not BigFloat! newValue->rep->ID() ="
 		  << newValue.getRep().ID() << std::endl;
 	  std::cout << "newValue = Op(first,second) = "
@@ -1291,7 +1291,7 @@ public:
   /// destructor
   ~MultRep() {}
   //@}
-  
+
   CORE_NEW(MultRep)
   CORE_DELETE(MultRep)
   protected:

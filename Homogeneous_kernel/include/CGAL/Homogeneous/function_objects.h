@@ -1,9 +1,9 @@
-// Copyright (c) 1999-2004  
+// Copyright (c) 1999-2004
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -74,7 +74,7 @@ namespace HomogeneousKernelFunctors {
     { return operator()(c(q,p), c(q,r)); }
 
     result_type
-    operator()(const Point_2& p, const Point_2& q, 
+    operator()(const Point_2& p, const Point_2& q,
                const Point_2& r, const Point_2& s) const
     { return operator()(c(q,p), c(s,r)); }
 
@@ -757,9 +757,9 @@ namespace HomogeneousKernelFunctors {
     typedef typename K::Weighted_point_2         Weighted_point_2;
     typedef typename K::Point_2                  Point_2;
     typedef typename K::Comparison_result        Comparison_result;
-    
+
     typedef Comparison_result   result_type;
-    
+
     Comparison_result operator()(const Point_2& r,
                                  const Weighted_point_2& p,
                                  const Weighted_point_2& q) const
@@ -1412,7 +1412,7 @@ namespace HomogeneousKernelFunctors {
     FT
     operator()( const Point_3& /*p*/) const
     { return FT(0); }
-      
+
     FT
     operator()( const Point_3& p, const Point_3& q) const
     {
@@ -3107,11 +3107,11 @@ namespace HomogeneousKernelFunctors {
     }
 
 
-    const Point_2& 
+    const Point_2&
     operator()(const Point_2 & p) const
     { return p; }
 
-    const Point_2& 
+    const Point_2&
     operator()(const Weighted_point_2 & p) const
     { return p.rep().point(); }
 
@@ -3172,11 +3172,11 @@ namespace HomogeneousKernelFunctors {
     operator()(Return_base_tag, const RT& x, const RT& y, const RT& z, const RT& w) const
     { return Rep(x, y, z, w); }
 
-    const Point_3& 
+    const Point_3&
     operator()(const Point_3 & p) const
     { return p; }
 
-    const Point_3& 
+    const Point_3&
     operator()(const Weighted_point_3 & p) const
     { return p.rep().point(); }
 
@@ -3352,13 +3352,13 @@ namespace HomogeneousKernelFunctors {
     Point_3
     operator()( const Segment_3& s, const Point_3& p ) const
     { return CommonKernelFunctors::Construct_projected_point_3<K>()(p,s,K()); }
-    
+
     Point_3
     operator()( const Ray_3& r, const Point_3& p ) const
     { return CommonKernelFunctors::Construct_projected_point_3<K>()(p,r,K()); }
   };
 
-  template <class K> 
+  template <class K>
   class Construct_radical_line_2
   {
     typedef typename K::Line_2            Line_2;
@@ -3370,14 +3370,14 @@ namespace HomogeneousKernelFunctors {
 
     typedef Line_2 result_type;
 
-    result_type 
+    result_type
     operator() (const Circle_2 & c1, const Circle_2 & c2) const
 	  {
       // Concentric Circles don't have radical line
       CGAL_kernel_precondition (c1.center() != c2.center());
       const FT a = 2*(c2.center().x() - c1.center().x());
       const FT b = 2*(c2.center().y() - c1.center().y());
-      const FT c = CGAL::square(c1.center().x()) + 
+      const FT c = CGAL::square(c1.center().x()) +
         CGAL::square(c1.center().y()) - c1.squared_radius() -
         CGAL::square(c2.center().x()) -
         CGAL::square(c2.center().y()) + c2.squared_radius();
@@ -4891,10 +4891,10 @@ namespace HomogeneousKernelFunctors {
     typedef typename K::RT RT;
 
     typedef Line_2                                      result_type;
-    
+
     Line_2
     operator()(const Weighted_point_2 & p, const Weighted_point_2 & q) const
-    { 
+    {
       typedef typename K::RT RT;
       RT a,b,c;
       radical_axisH2(p.hx(), p.hy(), p.hw(), p.weight(),

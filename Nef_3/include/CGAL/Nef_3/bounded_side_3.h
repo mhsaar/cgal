@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel    <seel@mpi-sb.mpg.de>
 //                 Miguel Granados <granados@mpi-sb.mpg.de>
@@ -38,17 +38,17 @@
 
 namespace CGAL {
 
-template <class Point_2, class Point_3> 
+template <class Point_2, class Point_3>
 Point_2 point_3_get_x_y_point_2(Point_3 p) {
   return( Point_2(p.hx(), p.hy(), p.hw()) );
 }
 
-template <class Point_2, class Point_3> 
+template <class Point_2, class Point_3>
 Point_2 point_3_get_y_z_point_2(Point_3 p) {
   return( Point_2(p.hy(), p.hz(), p.hw()) );
 }
 
-template <class Point_2, class Point_3> 
+template <class Point_2, class Point_3>
 Point_2 point_3_get_z_x_point_2(Point_3 p) {
   return( Point_2(p.hz(), p.hx(), p.hw()) );
 }
@@ -62,7 +62,7 @@ Bounded_side bounded_side_3(IteratorForward first,
   typedef typename R::Point_3 Point_3;
   typedef typename R::Vector_3 Vector_3;
   typedef typename R::Plane_3 Plane_3;
-  
+
   if(plane == Plane_3(0,0,0,0)) {
     // TO TEST: code never tested
     IteratorForward p(first);
@@ -105,7 +105,7 @@ Bounded_side bounded_side_3(IteratorForward first,
   }
   Bounded_side side = bounded_side_2( points.begin(), points.end(), t(point));
   points.clear();
-  return side;  
+  return side;
 }
 
 } //namespace CGAL
@@ -113,38 +113,38 @@ Bounded_side bounded_side_3(IteratorForward first,
 #ifdef WRONG_IMPLEMENTATION
 /* The following code is wrong since Proyector_.. structures must not return
    references to temporal objects */
-template < class Point_2, class Point_3> 
+template < class Point_2, class Point_3>
 struct Project_XY {
   typedef Point_3                  argument_type;
   typedef Point_2                  result_type;
-  Point_2 operator()( Point_3& p) const { 
+  Point_2 operator()( Point_3& p) const {
     return Point_2(p.hx(), p.hy(), p.hw());
   }
-  const Point_2 operator()( const Point_3& p) const { 
+  const Point_2 operator()( const Point_3& p) const {
     return Point_2(p.hx(), p.hy(), p.hw());
   }
 };
 
-template < class Point_2, class Point_3> 
+template < class Point_2, class Point_3>
 struct Project_YZ {
   typedef Point_3                  argument_type;
   typedef Point_2                  result_type;
-  Point_2 operator()( Point_3& p) const { 
+  Point_2 operator()( Point_3& p) const {
     return Point_2(p.hy(), p.hz(), p.hw());
   }
-  const Point_2 operator()( const Point_3& p) const { 
+  const Point_2 operator()( const Point_3& p) const {
     return Point_2(p.hy(), p.hz(), p.hw());
   }
 };
 
-template < class Point_2, class Point_3> 
+template < class Point_2, class Point_3>
 struct Project_XZ {
   typedef Point_3                  argument_type;
   typedef Point_2                  result_type;
-  Point_2 operator()( Point_3& p) const { 
+  Point_2 operator()( Point_3& p) const {
     return Point_2(p.hx(), p.hz(), p.hw());
   }
-  const Point_2 operator()( const Point_3& p) const { 
+  const Point_2 operator()( const Point_3& p) const {
     return Point_2(p.hx(), p.hz(), p.hw());
   }
 };

@@ -75,7 +75,7 @@ namespace CGAL {
       }
 
       // Action to perform on a facet on the boundary of the conflict zone
-      void 
+      void
       before_insertion_handle_facet_on_boundary_of_conflict_zone(const Facet& f)
       {
 	const Cell_handle& c = f.first;
@@ -87,7 +87,7 @@ namespace CGAL {
             bad_vertices.erase(c->vertex(j));
       }
 
-      Facet 
+      Facet
       biggest_incident_facet_in_complex(const Vertex_handle sommet) const
       {
 
@@ -186,7 +186,7 @@ namespace CGAL {
           for (typename Zone::Facets_iterator fit =
                  zone.boundary_facets.begin(); fit !=
                  zone.boundary_facets.end(); ++fit)
-	    before_insertion_handle_facet_on_boundary_of_conflict_zone (*fit); 
+	    before_insertion_handle_facet_on_boundary_of_conflict_zone (*fit);
         }
 	SMMBB::before_insertion_impl(f, s, zone);
       }
@@ -202,7 +202,7 @@ namespace CGAL {
 	// is_regular_or_boundary_for_vertices
 	// is used here also incident edges are not known to be
 	// REGULAR which may cause some singular vertices to be forgotten
-	// This causes no problem because 
+	// This causes no problem because
 	// those SINGULAR incident SINGULAR edges are going to be handled
 	for (Vertices_iterator vit = vertices.begin();
 	     vit != vertices.end();
@@ -218,12 +218,12 @@ namespace CGAL {
 	}
       }
     }
-      
+
     std::string debug_info() const
     {
       std::stringstream s;
       s << SMMBB::debug_info() << ",";
-      if(bad_vertices_initialized) 
+      if(bad_vertices_initialized)
 	s << bad_vertices.size();
       else
 	s << "non manifold vertices not initialized";

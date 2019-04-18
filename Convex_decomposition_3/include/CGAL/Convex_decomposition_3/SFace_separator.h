@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     :  Peter Hachenberger <hachenberger@mpi-sb.mpg.de>
 #ifndef CGAL_CD3_SFACE_SEPARATOR_H
@@ -31,18 +31,18 @@ namespace CGAL {
 
 template<typename Nef_>
 class SFace_separator : public Modifier_base<typename Nef_::SNC_structure> {
-  
+
   typedef Nef_                                   Nef_polyhedron;
   typedef typename Nef_polyhedron::SNC_structure SNC_structure;
   typedef typename SNC_structure::Items          Items;
   typedef CGAL::SNC_decorator<SNC_structure>     Base;
   typedef CGAL::SNC_point_locator<Base>          SNC_point_locator;
-  typedef CGAL::SNC_constructor<Items, SNC_structure>   
+  typedef CGAL::SNC_constructor<Items, SNC_structure>
     SNC_constructor;
 
   typedef typename SNC_structure::Sphere_map     Sphere_map;
-  typedef CGAL::SM_decorator<Sphere_map>         SM_decorator;  
-  typedef CGAL::SM_point_locator<SM_decorator>   SM_point_locator; 
+  typedef CGAL::SM_decorator<Sphere_map>         SM_decorator;
+  typedef CGAL::SM_point_locator<SM_decorator>   SM_point_locator;
   typedef CGAL::SM_walls<Sphere_map>             SM_walls;
 
   typedef typename Base::SHalfedge_handle        SHalfedge_handle;
@@ -60,7 +60,7 @@ class SFace_separator : public Modifier_base<typename Nef_::SNC_structure> {
     SFace_iterator sf;
     CGAL_forall_sfaces(sf, snc) {
       if(!sf->mark() ||
-	 sf->sface_cycles_begin() == 
+	 sf->sface_cycles_begin() ==
 	 sf->sface_cycles_end()) continue;
 
       SM_decorator SD(&*sf->center_vertex());

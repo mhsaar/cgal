@@ -39,12 +39,12 @@ namespace CGAL {
 namespace internal {
 
 // fits a plane to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Plane_3& plane,   // best fit plane
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -56,25 +56,25 @@ linear_least_squares_fitting_3(InputIterator first,
 
   // precondition: at least one element in the container.
   CGAL_precondition(first != beyond);
-  
+
   // compute centroid
   c = centroid(first,beyond,K(),tag);
 
   // assemble covariance matrix
   typename DiagonalizeTraits::Covariance_matrix covariance = {{ 0., 0., 0., 0., 0., 0. }};
   assemble_covariance_matrix_3(first,beyond,covariance,c,k,(Tetrahedron*) NULL,tag, diagonalize_traits);
-  
+
   // compute fitting plane
   return fitting_plane_3(covariance,c,plane,k,diagonalize_traits);
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a plane to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Plane_3& plane,   // best fit plane
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -96,7 +96,7 @@ linear_least_squares_fitting_3(InputIterator first,
     const Tetrahedron& t = *it;
     triangles.push_back(Triangle(t[0],t[1],t[2]));
     triangles.push_back(Triangle(t[0],t[2],t[3]));
-    triangles.push_back(Triangle(t[0],t[3],t[1])); 
+    triangles.push_back(Triangle(t[0],t[3],t[1]));
     triangles.push_back(Triangle(t[3],t[1],t[2]));
  }
 
@@ -107,12 +107,12 @@ linear_least_squares_fitting_3(InputIterator first,
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a plane to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Plane_3& plane,   // best fit plane
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -136,7 +136,7 @@ linear_least_squares_fitting_3(InputIterator first,
     segments.push_back(Segment(t[0],t[1]));
     segments.push_back(Segment(t[1],t[2]));
     segments.push_back(Segment(t[1],t[3]));
-    segments.push_back(Segment(t[2],t[3])); 
+    segments.push_back(Segment(t[2],t[3]));
     segments.push_back(Segment(t[0],t[2]));
     segments.push_back(Segment(t[0],t[3]));
  }
@@ -148,12 +148,12 @@ linear_least_squares_fitting_3(InputIterator first,
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a plane to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Plane_3& plane,   // best fit plane
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -175,7 +175,7 @@ linear_least_squares_fitting_3(InputIterator first,
     const Tetrahedron& t = *it;
     points.push_back(t[0]);
     points.push_back(t[1]);
-    points.push_back(t[2]); 
+    points.push_back(t[2]);
     points.push_back(t[3]);
  }
 
@@ -186,12 +186,12 @@ linear_least_squares_fitting_3(InputIterator first,
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a line to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Line_3& line,     // best fit line
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -203,26 +203,26 @@ linear_least_squares_fitting_3(InputIterator first,
 
   // precondition: at least one element in the container.
   CGAL_precondition(first != beyond);
-  
+
   // compute centroid
   c = centroid(first,beyond,K(),tag);
 
   // assemble covariance matrix
   typename DiagonalizeTraits::Covariance_matrix covariance = {{ 0., 0., 0., 0., 0., 0. }};
   assemble_covariance_matrix_3(first,beyond,covariance,c,k,(Tetrahedron*) NULL,tag, diagonalize_traits);
-    
+
   // compute fitting line
   return fitting_line_3(covariance,c,line,k,diagonalize_traits);
-  
+
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a line to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Line_3& line,   // best fit line
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -244,7 +244,7 @@ linear_least_squares_fitting_3(InputIterator first,
     const Tetrahedron& t = *it;
     triangles.push_back(Triangle(t[0],t[1],t[2]));
     triangles.push_back(Triangle(t[0],t[2],t[3]));
-    triangles.push_back(Triangle(t[0],t[3],t[1])); 
+    triangles.push_back(Triangle(t[0],t[3],t[1]));
     triangles.push_back(Triangle(t[3],t[1],t[2]));
  }
 
@@ -255,12 +255,12 @@ linear_least_squares_fitting_3(InputIterator first,
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a line to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Line_3& line,   // best fit line
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -283,7 +283,7 @@ linear_least_squares_fitting_3(InputIterator first,
     segments.push_back(Segment(t[0],t[1]));
     segments.push_back(Segment(t[1],t[2]));
     segments.push_back(Segment(t[1],t[3]));
-    segments.push_back(Segment(t[2],t[3])); 
+    segments.push_back(Segment(t[2],t[3]));
     segments.push_back(Segment(t[0],t[2]));
     segments.push_back(Segment(t[0],t[3]));
  }
@@ -295,12 +295,12 @@ linear_least_squares_fitting_3(InputIterator first,
 } // end linear_least_squares_fitting_tetrahedrons_3
 
 // fits a line to a 3D tetrahedron set
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits >
 typename K::FT
 linear_least_squares_fitting_3(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Line_3& line,   // best fit line
                                typename K::Point_3& c,       // centroid
                                const typename K::Tetrahedron_3*,  // used for indirection
@@ -322,7 +322,7 @@ linear_least_squares_fitting_3(InputIterator first,
     const Tetrahedron& t = *it;
     points.push_back(t[0]);
     points.push_back(t[1]);
-    points.push_back(t[2]); 
+    points.push_back(t[2]);
     points.push_back(t[3]);
  }
 

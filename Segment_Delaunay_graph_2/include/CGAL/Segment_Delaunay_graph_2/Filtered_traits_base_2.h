@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -86,7 +86,7 @@ private:
   Cartesian_converter<EK, CK, To_double<typename EK::RT> >  E2C_t;
   typedef
   CGAL_SEGMENT_DELAUNAY_GRAPH_2_NS::Cartesian_converter<EK,CK,E2C_t>   E2C;
-  
+
   // Types for the construction kernel
   typedef typename CK::Point_2                CK_Point_2;
   typedef typename CK::Line_2                 CK_Line_2;
@@ -372,20 +372,20 @@ public:
   }
 
   Construct_object_2
-  construct_object_2_object() const { 
+  construct_object_2_object() const {
     return Construct_object_2();
   }
 
   // CONSTRUCTIONS
   //--------------
   Construct_svd_vertex_2
-  construct_svd_vertex_2_object() const { 
+  construct_svd_vertex_2_object() const {
     return Construct_svd_vertex_2();
   }
 
   /*
   Construct_site_2
-  construct_site_2_object() const { 
+  construct_site_2_object() const {
     return Construct_site_2();
   }
   */

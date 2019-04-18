@@ -99,12 +99,12 @@ public:
 
 
   // only for visualization:
-  
+
   static RT& R()
   {
     CGAL_STATIC_THREAD_LOCAL_VARIABLE(RT,R_,0);
   }
-  
+
   static void set_R(const RT& r) { R() = r; }
   RT eval_at(const RT& r) const { return _m*r+_n; }
   RT eval_at_R() const { return _m*R()+_n; }

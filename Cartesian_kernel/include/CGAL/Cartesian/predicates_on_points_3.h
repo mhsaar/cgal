@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Andreas Fabri, Herve Bronnimann
 
@@ -66,18 +66,18 @@ compare_lexicographically_xy(const PointC3<K> &p, const PointC3<K> &q)
 template < class K >
 inline
 bool
-lexicographically_xy_smaller_or_equal(const PointC3<K> &p, 
+lexicographically_xy_smaller_or_equal(const PointC3<K> &p,
 				      const PointC3<K> &q)
-{ 
+{
   return compare_lexicographically_xy(p, q) != LARGER;
 }
 
 template < class K >
 inline
 bool
-lexicographically_xy_smaller(const PointC3<K> &p, 
+lexicographically_xy_smaller(const PointC3<K> &p,
 			     const PointC3<K> &q)
-{ 
+{
   return K().less_xy_3_object()(p, q);
 }
 

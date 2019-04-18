@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -76,7 +76,7 @@ public:
       Vertex_handle v2 = e.first->vertex(CW_CCW_2::cw(e.second) );
 
       Oriented_side os = side_of_bisector(v1->site(), v2->site(), p);
-      
+
       if ( os == ON_ORIENTED_BOUNDARY ) {
 	return e;
       } else {

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Lutz Kettner  <kettner@mpi-sb.mpg.de>
 //                 Andreas Meyer <ameyer@mpi-sb.mpg.de>
@@ -65,7 +65,7 @@ struct ID_FROM_BOX_ADDRESS {};
 struct ID_FROM_HANDLE {};
 
 // Generic template signature of boxes, specialized for policies
-template<class NT_, int N, class IdPolicy = ID_EXPLICIT> 
+template<class NT_, int N, class IdPolicy = ID_EXPLICIT>
 class Box_d;
 
 // ID_NONE is used as base class and cannot be used directly in the algorithms
@@ -201,7 +201,7 @@ public:
 	    (std::max)( bbx.zmax(), p[2].second));
     }
     static int dimension() { return 3; }
-    NT min_coord(int dim) const { 
+    NT min_coord(int dim) const {
         return (dim==0) ? bbx.xmin() : ((dim==1) ? bbx.ymin() : bbx.zmin());
     }
     NT max_coord(int dim) const {

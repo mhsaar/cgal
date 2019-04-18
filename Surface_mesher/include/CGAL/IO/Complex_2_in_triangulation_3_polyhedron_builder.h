@@ -125,11 +125,11 @@ public:
 	  fit != oriented_set.end();
 	  ++fit)
       {
-	double top_z = 
+	double top_z =
 	  (top_facet->first->vertex(tr.vertex_triple_index(top_facet->second, 0))->point().z()
 	 + top_facet->first->vertex(tr.vertex_triple_index(top_facet->second, 1))->point().z()
 	 + top_facet->first->vertex(tr.vertex_triple_index(top_facet->second, 2))->point().z())/3.;
-	double z = 
+	double z =
 	  (fit->first->vertex(tr.vertex_triple_index(fit->second, 0))->point().z()
 	 + fit->first->vertex(tr.vertex_triple_index(fit->second, 1))->point().z()
 	 + fit->first->vertex(tr.vertex_triple_index(fit->second, 2))->point().z())/3.;
@@ -147,7 +147,7 @@ public:
       //used to set indices of vertices
       std::map<Vertex_handle, int> V;
       int inum = 0;
-      
+
       for(typename std::set<Facet>::const_iterator fit =
 	    oriented_set.begin();
 	  fit != oriented_set.end();

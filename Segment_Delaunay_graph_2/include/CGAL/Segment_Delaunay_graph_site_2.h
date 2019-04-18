@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -41,7 +41,7 @@ namespace CGAL {
    */
 
 template <class Gt>
-class Segment_Delaunay_graph_site_2 
+class Segment_Delaunay_graph_site_2
 {
 public:
   typedef Gt Geom_traits;
@@ -96,7 +96,7 @@ public:
 			       const Point_2& q1, const Point_2& q2,
 			       bool is_first_exact) {
     Self t;
-    t.initialize_site(p1, p2, q1, q2, is_first_exact); 
+    t.initialize_site(p1, p2, q1, q2, is_first_exact);
     return t;
  }
 
@@ -141,7 +141,7 @@ public:
     return (i == 0) ? p_[3] : p_[5];
   }
 
-  Point_2 point() const { 
+  Point_2 point() const {
     CGAL_precondition ( is_point() );
     if ( !is_input() ) {
       return compute_intersection_point(p_[2], p_[3], p_[4], p_[5]);
@@ -151,17 +151,17 @@ public:
   }
 
   Segment_2 segment() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return Segment_2( source(), target() );
   }
 
   Point_2 source() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return compute_source();
   }
 
   Point_2 target() const {
-    CGAL_precondition ( is_segment() ); 
+    CGAL_precondition ( is_segment() );
     return compute_target();
   }
 
@@ -306,7 +306,7 @@ protected:
 
 template <class R>
 std::ostream&
-operator<<(std::ostream& os, 
+operator<<(std::ostream& os,
 	   const Segment_Delaunay_graph_site_2<R>& s)
 {
   if (!s.is_defined())

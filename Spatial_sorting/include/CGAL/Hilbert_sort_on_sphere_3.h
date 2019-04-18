@@ -62,7 +62,7 @@ class Hilbert_sort_on_sphere_3 {
 	double _sq_r;
 	
 public:
-	Hilbert_sort_on_sphere_3 (const K &k=K(),  
+	Hilbert_sort_on_sphere_3 (const K &k=K(),
 	                          double sq_r = 1.0,
 							  const Point_3 &p = Point_3(0,0,0),
 							  std::ptrdiff_t limit=1)
@@ -93,7 +93,7 @@ public:
 			const typename K::FT x = _k.compute_x_3_object()(p);
 			const typename K::FT y = _k.compute_y_3_object()(p);
 			const typename K::FT z = _k.compute_z_3_object()(p); // for unit sphere
-			if(x > lxs) vec[0].push_back(p);             // Face 1, x > sqrt(1/3) 
+			if(x > lxs) vec[0].push_back(p);             // Face 1, x > sqrt(1/3)
 			else if(y > lys) vec[1].push_back(p);        // Face 2, y > sqrt(1/3)
 			else if(x < lxi) vec[2].push_back(p);        // Face 3, x < -sqrt(1/3)
 			else if(z > lzs) vec[3].push_back(p);        // Face 4, z > sqrt(1/3)
@@ -107,10 +107,10 @@ public:
 		if(vec[4].size()) _hs_5_object(vec[4].begin(), vec[4].end());
 		if(vec[5].size()) _hs_6_object(vec[5].begin(), vec[5].end());
 		
-		// this is the order that set of points in a face should appear 
+		// this is the order that set of points in a face should appear
 		// after sorting points wrt each face
 		for(int i=0; i<6; i++)
-			for(std::size_t j=0; j<vec[i].size(); j++) 
+			for(std::size_t j=0; j<vec[i].size(); j++)
 				*begin++ = vec[i][j];
 	}
 };

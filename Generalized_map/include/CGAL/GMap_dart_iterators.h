@@ -449,7 +449,7 @@ namespace CGAL {
   };
   //****************************************************************************
   /// TODO The template specialization with 3 alpha
-  
+
   //
   /* Class CMap_dart_iterator_basic_of_three_alpha<Ai,delta1,delta2>: to iterate
    * on the darts of the orbit <Ai,Ai+delta1,Ai+delta2>:

@@ -1,9 +1,9 @@
-// Copyright (c) 2000, 2016  
+// Copyright (c) 2000, 2016
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Herve Bronnimann, Sylvain Pion, Oliver Devillers, Mariette Yvinec
 
@@ -93,7 +93,7 @@ typename Equal_to<FT>::result_type
 dominanceC3(const FT &px, const FT &py, const FT &pz,
 	    const FT &qx, const FT &qy, const FT &qz)
 {
-  return CGAL_AND_3( CGAL_NTS compare(px, qx) != SMALLER , 
+  return CGAL_AND_3( CGAL_NTS compare(px, qx) != SMALLER ,
 	             CGAL_NTS compare(py, qy) != SMALLER ,
 	             CGAL_NTS compare(pz, qz) != SMALLER );
 }

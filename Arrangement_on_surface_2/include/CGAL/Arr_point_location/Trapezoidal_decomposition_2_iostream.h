@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)	 : Oren Nechushtan <theoren@math.tau.ac.il>
 #ifndef CGAL_TRAPEZOIDAL_DECOMPOSITION_2_IOSTREAM_H
@@ -134,9 +134,9 @@ std::ostream& write(std::ostream &out,const Td_X_trapezoid<Traits>& t,
 	      out << ",U=";
 	      if (t.is_on_left_boundary())   out << ")";
 	      if (t.is_on_bottom_boundary()) {
-		if (t.is_on_top_boundary())    
+		if (t.is_on_top_boundary())
 		  out << "/\\/";
-		else 
+		else
 		  out << "/\\";
 	      }
 	      else if (t.is_on_top_boundary())    out << "\\/";
@@ -153,7 +153,7 @@ std::ostream& write(std::ostream &out,const Td_X_trapezoid<Traits>& t,
   else
     out << ",D";
 	
-  /*	Calling t.is_valid requires the traits to be initialized with the proper 
+  /*	Calling t.is_valid requires the traits to be initialized with the proper
     bounding box */
   if (validate)
     {
@@ -264,7 +264,7 @@ std::ostream& operator<<(std::ostream &out,const Td_X_trapezoid<Traits>& t)
   else
     out << ",D";
 	
-  /*	Calling t.is_valid requires the traits to be initialized with the proper 
+  /*	Calling t.is_valid requires the traits to be initialized with the proper
     bounding box
     if (traits)
     {

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -76,7 +76,7 @@ protected:
   {
     std::vector< Point_2 > p = compute_points(t);
     if ( right(p[0]) )  return p[0];
-    return p[1]; 
+    return p[1];
   }
 
   inline
@@ -200,7 +200,7 @@ public:
   {
     STEP = FT(2);
     this->r = ff1.weight() - ff2.weight();
-    
+
     this->f1 = ff1.point();
     this->f2 = ff2.point();
 
@@ -261,7 +261,7 @@ public:
       for (unsigned int i = 0; i < pleft.size() - 1; i++) {
 	W << Segment_2(pleft[i], pleft[i+1]);
       }
-      
+
       for (unsigned int i = 0; i < pright.size() - 1; i++) {
 	W << Segment_2(pright[i], pright[i+1]);
       }
@@ -300,7 +300,7 @@ public:
     for (unsigned int i = 0; i < pleft.size() - 1; i++) {
       W << Segment_2(pleft[i], pleft[i+1]);
     }
-      
+
     for (unsigned int i = 0; i < pright.size() - 1; i++) {
       W << Segment_2(pright[i], pright[i+1]);
     }

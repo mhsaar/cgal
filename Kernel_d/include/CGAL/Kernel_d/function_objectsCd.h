@@ -1,9 +1,9 @@
-// Copyright (c) 2000,2001  
+// Copyright (c) 2000,2001
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel, Kurt Mehlhorn
 
@@ -37,7 +37,7 @@
 #define CGAL_KD_TRACE(t)  std::cerr << t
 #define CGAL_KD_TRACEN(t) std::cerr << t << std::endl
 #define CGAL_KD_TRACEV(t) std::cerr << #t << " = " << (t) << std::endl
- 
+
 namespace CGAL {
 
 template <typename K>
@@ -46,7 +46,7 @@ class Compute_coordinateCd {
   typedef typename K::Point_d        Point_d;
   public:
   typedef FT                         result_type;
-  result_type 
+  result_type
     operator()(const Point_d& p, int i) const
   {
     return p.cartesian(i);
@@ -59,7 +59,7 @@ class Point_dimensionCd {
   typedef typename K::Point_d        Point_d;
   public:
   typedef int                       result_type;
-  result_type 
+  result_type
     operator()(const Point_d& p) const
   {
     return p.dimension();
@@ -72,7 +72,7 @@ class Less_coordinateCd {
   typedef typename K::Point_d        Point_d;
   public:
   typedef bool                       result_type;
-  result_type 
+  result_type
   operator()(const Point_d& p, const Point_d& q, int i) const
   {
     return p.cartesian(i)<q.cartesian(i);
@@ -89,7 +89,7 @@ public:
     typedef Point result_type;
 
     result_type operator()(const Point & p) const
-    { 
+    {
         int d = p.dimension();
         typename LA::Vector h(d+1);
         FT sum = 0;
@@ -150,7 +150,7 @@ public:
         Matrix M(d);
         Vector b(d);
         Point_d pd = *start++;
-        for (int i = 0; i < d; ++i) { 
+        for (int i = 0; i < d; ++i) {
             // we set up the equation for p_i
             Point_d pi = *start++;
             b[i] = 0;
@@ -192,28 +192,28 @@ class Position_on_lineCd
 public:
     typedef typename R::Boolean result_type;
 
-    result_type operator()(const Point & p, const Point & s, const Point & t, 
+    result_type operator()(const Point & p, const Point & s, const Point & t,
         FT & l) const
     {
-        int d = p.dimension(); 
-        CGAL_assertion_msg((d==s.dimension())&&(d==t.dimension()&& d>0), 
+        int d = p.dimension();
+        CGAL_assertion_msg((d==s.dimension())&&(d==t.dimension()&& d>0),
                 "position_along_line: argument dimensions disagree.");
-        CGAL_assertion_msg((s!=t), 
+        CGAL_assertion_msg((s!=t),
                 "Position_on_line_d: line defining points are equal.");
-        FT lnum = (p.cartesian(0) - s.cartesian(0)); 
-        FT lden = (t.cartesian(0) - s.cartesian(0)); 
+        FT lnum = (p.cartesian(0) - s.cartesian(0));
+        FT lden = (t.cartesian(0) - s.cartesian(0));
         FT num(lnum), den(lden), lnum_i, lden_i;
-        for (int i = 1; i < d; i++) {  
-            lnum_i = (p.cartesian(i) - s.cartesian(i)); 
-            lden_i = (t.cartesian(i) - s.cartesian(i)); 
+        for (int i = 1; i < d; i++) {
+            lnum_i = (p.cartesian(i) - s.cartesian(i));
+            lden_i = (t.cartesian(i) - s.cartesian(i));
             if (lnum*lden_i != lnum_i*lden)
-                return false; 
+                return false;
             if (lden_i != FT(0)) {
                 den = lden_i;
                 num = lnum_i;
             }
         }
-        l = num / den; return true; 
+        l = num / den; return true;
     }
 };
 
@@ -226,7 +226,7 @@ class Barycentric_coordinatesCd
 public:
 
     template <class ForwardIterator, class OutputIterator>
-    OutputIterator operator()(ForwardIterator first, ForwardIterator last, 
+    OutputIterator operator()(ForwardIterator first, ForwardIterator last,
         const Point & p, OutputIterator result)
     {
         TUPLE_DIM_CHECK(first,last,Barycentric_coordinates_d);
@@ -239,11 +239,11 @@ public:
         typename LA::Vector b(d+1), x;
         int i;
         for (i=0; i<d; ++i) {
-            for (int j=0; j<V.size(); ++j) 
+            for (int j=0; j<V.size(); ++j)
                 M(i,j)=V[j].cartesian(i);
             b[i] = p.cartesian(i);
         }
-        for (int j=0; j<V.size(); ++j) 
+        for (int j=0; j<V.size(); ++j)
             M(d,j) = 1;
         b[d] = 1;
         FT D;
@@ -295,7 +295,7 @@ public:
  */
 template <class R>
 class Coaffine_orientationCd
-{ 
+{
     typedef typename R::Point_d     Point_d;
     typedef typename R::LA          LA;
     typedef typename R::Orientation Orientation;
@@ -380,29 +380,29 @@ class Side_of_oriented_sphereCd
 public:
     typedef Oriented_side result_type;
 
-    template <class ForwardIterator> 
-    result_type operator()(ForwardIterator first, ForwardIterator last, 
+    template <class ForwardIterator>
+    result_type operator()(ForwardIterator first, ForwardIterator last,
          const Point_d& x) const
-    { 
+    {
         TUPLE_DIM_CHECK(first,last,Side_of_oriented_sphere_d);
         int d = static_cast<int>(std::distance(first,last)); // |A| contains |d| points
-        CGAL_assertion_msg((d-1 == first->dimension()), 
+        CGAL_assertion_msg((d-1 == first->dimension()),
                 "Side_of_oriented_sphere_d: needs first->dimension()+1 many input points.");
-        typename LA::Matrix M(d + 1); 
-        for (int i = 0; i < d; ++first, ++i) { 
+        typename LA::Matrix M(d + 1);
+        for (int i = 0; i < d; ++first, ++i) {
             FT Sum = 0;
             M(i,0) = 1;
-            for (int j = 0; j < d-1; j++) { 
+            for (int j = 0; j < d-1; j++) {
                 FT cj = first->cartesian(j);
-                M(i,j + 1) = cj; Sum += cj*cj; 
+                M(i,j + 1) = cj; Sum += cj*cj;
             }
-            M(i,d) = Sum; 
+            M(i,d) = Sum;
         }
-        FT Sum = 0; 
-        M(d,0) = 1; 
-        for (int j = 0; j < d-1; j++) { 
+        FT Sum = 0;
+        M(d,0) = 1;
+        for (int j = 0; j < d-1; j++) {
             FT hj = x.cartesian(j);
-            M(d,j + 1) = hj; Sum += hj*hj; 
+            M(d,j + 1) = hj; Sum += hj*hj;
         }
         M(d,d) = Sum;
         return result_type( - LA::sign_of_determinant(M));
@@ -434,7 +434,7 @@ class Side_of_oriented_subsphereCd
 	// DATA MEMBERS
 	mutable Coaffine_orientation ori_;
 	mutable unsigned int adjust_sign_;
-    // a square matrix of size (D+1)x(D+1) where D is the ambient dimension 
+    // a square matrix of size (D+1)x(D+1) where D is the ambient dimension
 	mutable typename LA::Matrix M;
 public:
 	typedef Oriented_side   result_type;
@@ -550,8 +550,8 @@ class Side_of_bounded_sphereCd
 public:
     typedef Bounded_side    result_type;
 
-    template <class ForwardIterator> 
-    result_type operator()(ForwardIterator first, ForwardIterator last, 
+    template <class ForwardIterator>
+    result_type operator()(ForwardIterator first, ForwardIterator last,
             const Point_d& p) const
     {
         TUPLE_DIM_CHECK(first,last,region_of_sphere);
@@ -566,13 +566,13 @@ public:
                 case ON_POSITIVE_SIDE    :   return ON_BOUNDED_SIDE;
                 case ON_ORIENTED_BOUNDARY:   return ON_BOUNDARY;
                 case ON_NEGATIVE_SIDE    :   return ON_UNBOUNDED_SIDE;
-            }       
+            }
         } else {
             switch (oside) {
                 case ON_POSITIVE_SIDE    :   return ON_UNBOUNDED_SIDE;
                 case ON_ORIENTED_BOUNDARY:   return ON_BOUNDARY;
                 case ON_NEGATIVE_SIDE    :   return ON_BOUNDED_SIDE;
-            }     
+            }
         }
         return ON_BOUNDARY; // never reached
     }
@@ -590,38 +590,38 @@ class Contained_in_simplexCd
 public:
     typedef typename R::Boolean result_type;
 
-    template <class ForwardIterator> 
+    template <class ForwardIterator>
     result_type operator()(ForwardIterator first, ForwardIterator last,
             const Point_d& p) const
     {
         TUPLE_DIM_CHECK(first,last,Contained_in_simplex_d);
         int k = static_cast<int>(std::distance(first,last)); // |A| contains |k| points
-        int d = first->dimension(); 
+        int d = first->dimension();
         CGAL_assertion_code( typename R::Affinely_independent_d check_independence; )
         CGAL_assertion_msg(check_independence(first,last),
                 "Contained_in_simplex_d: A not affinely independent.");
         CGAL_assertion(d==p.dimension());
 
-        Matrix M(d + 1,k); 
+        Matrix M(d + 1,k);
         Vector b(d +1);
         for (int j = 0; j < k; ++first, ++j) {
-            for (int i = 0; i < d; ++i) 
+            for (int i = 0; i < d; ++i)
                 M(i,j) = first->cartesian(i);
             M(d,j) = 1;
         }
-        for (int i = 0; i < d; ++i) 
+        for (int i = 0; i < d; ++i)
             b[i] = p.cartesian(i);
         b[d] = 1;
 
-        FT D; 
-        Vector lambda; 
+        FT D;
+        Vector lambda;
         if ( LA::linear_solver(M,b,lambda,D) ) {
-            for (int j = 0; j < k; j++) { 
+            for (int j = 0; j < k; j++) {
                 if (lambda[j] < FT(0)) return false;
             }
             return true;
         }
-        return false; 
+        return false;
     }
 };
 
@@ -634,17 +634,17 @@ class Contained_in_affine_hullCd
 public:
     typedef Boolean result_type;
 
-    template <class ForwardIterator> 
+    template <class ForwardIterator>
     result_type operator()(ForwardIterator first, ForwardIterator last,
                 const Point_d& p) const
     {
          TUPLE_DIM_CHECK(first,last,Contained_in_affine_hullCd);
          int k = static_cast<int>(std::distance(first,last)); // |A| contains |k| points
-         int d = first->dimension(); 
-         typename LA::Matrix M(d + 1,k); 
-         typename LA::Vector b(d + 1); 
+         int d = first->dimension();
+         typename LA::Matrix M(d + 1,k);
+         typename LA::Vector b(d + 1);
          for (int j = 0; j < k; ++first, ++j) {
-             for (int i = 0; i < d; ++i) 
+             for (int i = 0; i < d; ++i)
                  M(i,j) = first->cartesian(i);
              M(d,j) = 1;
          }
@@ -664,20 +664,20 @@ class Affine_rankCd
     typedef typename R::LA LA;
 public:
     typedef int result_type;
-    template <class ForwardIterator> 
+    template <class ForwardIterator>
     result_type operator()(ForwardIterator first, ForwardIterator last) const
     {
         TUPLE_DIM_CHECK(first,last,Affine_rank_d);
         int k = static_cast<int>(std::distance(first,last)); // |A| contains |k| points
         if (k == 0) return -1;
-        if (k == 1) return 0; 
+        if (k == 1) return 0;
         int d = first->dimension();
         typename LA::Matrix M(d,--k);
         Point_d p0 = *first; ++first; // first points to second
         for (int j = 0; j < k; ++first, ++j) {
             Vector_d v = *first - p0;
-            for (int i = 0; i < d; i++) 
-                M(i,j) = v.cartesian(i); 
+            for (int i = 0; i < d; i++)
+                M(i,j) = v.cartesian(i);
         }
         return LA::rank(M);
     }
@@ -692,7 +692,7 @@ class Affinely_independentCd
 public:
     typedef typename R::Boolean result_type;
 
-    template <class ForwardIterator> 
+    template <class ForwardIterator>
     result_type operator()(ForwardIterator first, ForwardIterator last) const
     {
         Affine_rank_d rank;
@@ -735,13 +735,13 @@ public:
         // |A| contains |k| vectors
         int d = first->dimension();
         typename LA::Matrix M(d,k);
-        typename LA::Vector b(d); 
-        for (int i = 0; i < d; i++) { 
-            b[i] = x.cartesian(i); 
-            for (int j = 0; j < k; j++) 
-                M(i,j) = (first+j)->cartesian(i); 
+        typename LA::Vector b(d);
+        for (int i = 0; i < d; i++) {
+            b[i] = x.cartesian(i);
+            for (int j = 0; j < k; j++)
+                M(i,j) = (first+j)->cartesian(i);
         }
-        return LA::is_solvable(M,b); 
+        return LA::is_solvable(M,b);
     }
 };
 
@@ -757,10 +757,10 @@ public:
     {
         TUPLE_DIM_CHECK(first,last,linear_rank);
         int k = static_cast<int>(std::distance(first,last)); // k vectors
-        int d = first->dimension(); 
+        int d = first->dimension();
         typename LA::Matrix M(d,k);
         for (int i = 0; i < d  ; i++)
-            for (int j = 0; j < k; j++)  
+            for (int j = 0; j < k; j++)
                 M(i,j) = (first + j)->cartesian(i);
         return LA::rank(M);
     }
@@ -795,7 +795,7 @@ public:
         TUPLE_DIM_CHECK(first,last,linear_base);
         int k = static_cast<int>(std::distance(first,last)); // k vectors
         int d = first->dimension();
-        typename LA::Matrix M(d,k); 
+        typename LA::Matrix M(d,k);
         for (int j = 0; j < k; ++first, ++j)
             for (int i = 0; i < d; i++)
                 M(i,j) = first->cartesian(i);

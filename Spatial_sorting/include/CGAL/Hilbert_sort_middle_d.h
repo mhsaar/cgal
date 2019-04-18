@@ -41,11 +41,11 @@ namespace internal {
 	int axe;
 	bool orient;
 	double value;
-        Fixed_hilbert_cmp_d (int a, bool o, double v, const K &_k = K()) 
+        Fixed_hilbert_cmp_d (int a, bool o, double v, const K &_k = K())
 	  :  k(_k), axe(a), orient(o), value(v) {}
         bool operator() (const Point &p) const
         {
-	  return (orient  
+	  return (orient
 		  ? ( to_double( k.compute_coordinate_d_object() (p,axe) ) >  value)
 		  : ( to_double( k.compute_coordinate_d_object() (p,axe) ) <= value));
         }
@@ -69,7 +69,7 @@ private:
     mutable int two_to_dim;
 
     struct Cmp : public internal::Fixed_hilbert_cmp_d<Kernel>
-    { Cmp (int a, bool dir, double v, const Kernel &k) 
+    { Cmp (int a, bool dir, double v, const Kernel &k)
 	: internal::Fixed_hilbert_cmp_d<Kernel> (a,dir,v,k) {} };
 
 public:
@@ -79,7 +79,7 @@ public:
 
     template <class RandomAccessIterator>
     void sort (RandomAccessIterator begin, RandomAccessIterator end,
-	       Starting_position start, int direction, 
+	       Starting_position start, int direction,
 	       Corner mini, Corner maxi) const
    {
      if (end - begin <= _limit) return;
@@ -103,9 +103,9 @@ public:
        int right=current_level_step;
        bool orient = start[current_dir];
        do{
-	 dir[middle]    = current_dir; 
-	 places[middle] = internal::fixed_hilbert_split 
-                             (places[left], places[right], 
+	 dir[middle]    = current_dir;
+	 places[middle] = internal::fixed_hilbert_split
+                             (places[left], places[right],
 			      Cmp (current_dir,orient,med[current_dir],_k));
 	 left =right;
 	 right+=current_level_step;
@@ -123,7 +123,7 @@ public:
        sort( places[0], places[1], start, last_dir,cmin,cmax);
      cmin[last_dir] = med[last_dir];
      cmax[last_dir] = maxi[last_dir];
-     
+
 
      for(int i=1; i<two_to_dim-1; i +=2){
        //std::cout<<i<<";"<<start[0]<<start[1]<<start[2]<<start[3]<<"/"<<dir[i+1]<<std::endl;
@@ -157,7 +157,7 @@ public:
       Starting_position start(_dimension);
       Corner mini(_dimension),maxi(_dimension);
 
-      for (int i=0; i<_dimension; ++i) 
+      for (int i=0; i<_dimension; ++i)
 	mini[i]=maxi[i]=to_double( _k.compute_coordinate_d_object() (*begin,i) );
       for(RandomAccessIterator it=begin+1; it<end; ++it){
 	for (int i=0; i<_dimension; ++i){

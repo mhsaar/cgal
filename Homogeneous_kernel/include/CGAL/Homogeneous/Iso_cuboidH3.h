@@ -1,9 +1,9 @@
-// Copyright (c) 1999  
+// Copyright (c) 1999
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Stefan Schirra
 
@@ -66,7 +66,7 @@ public:
                const Point_3& far_,   const Point_3& close);
 
   Iso_cuboidH3(const RT& min_hx, const RT& min_hy, const RT& min_hz,
-               const RT& max_hx, const RT& max_hy, const RT& max_hz, 
+               const RT& max_hx, const RT& max_hy, const RT& max_hz,
                const RT& hw);
 
   Iso_cuboidH3(const RT& min_hx, const RT& min_hy, const RT& min_hz,
@@ -190,7 +190,7 @@ template < class R >
 CGAL_KERNEL_LARGE_INLINE
 Iso_cuboidH3<R>::
 Iso_cuboidH3(const RT& min_hx, const RT& min_hy, const RT& min_hz,
-             const RT& max_hx, const RT& max_hy, const RT& max_hz, 
+             const RT& max_hx, const RT& max_hy, const RT& max_hz,
              const RT& hw)
   : base(CGAL::make_array(Point_3(min_hx, min_hy, min_hz, hw),
                            Point_3(max_hx, max_hy, max_hz, hw)))
@@ -262,7 +262,7 @@ template < class R >
 inline
 typename Iso_cuboidH3<R>::FT
 Iso_cuboidH3<R>::min_coord(int i) const
-{ 
+{
    CGAL_kernel_precondition(i == 0 || i == 1 || i == 2);
    if ( i == 0 )
        return xmin();
@@ -275,7 +275,7 @@ template < class R >
 inline
 typename Iso_cuboidH3<R>::FT
 Iso_cuboidH3<R>::max_coord(int i) const
-{ 
+{
    CGAL_kernel_precondition(i == 0 || i == 1 || i == 2);
    if ( i == 0 )
       return xmax();

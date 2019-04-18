@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 // Author(s)     : Naama mayer         <naamamay@post.tau.ac.il>
 
 
@@ -43,7 +43,7 @@ void Arr_transform_on_sphere(Arrangement & arr,
 {
   typedef typename Arrangement::Geometry_traits_2         Geometry_traits_2;
   typedef typename Arrangement::Topology_traits           Topology_traits;
-    
+
   typedef typename Geometry_traits_2::Curve_2             Curve_2;
   typedef typename Geometry_traits_2::X_monotone_curve_2  X_monotone_curve_2;
 		
@@ -59,7 +59,7 @@ void Arr_transform_on_sphere(Arrangement & arr,
 
   Arr_accessor<Arrangement> m_arr_access(arr);
 	
-  // Preprocessing loop - merge all the edges that were splited 
+  // Preprocessing loop - merge all the edges that were splited
   // (meaning have a common endpoint that lies on the boundary and their degree
   // is 2) on the identification curve.
   for (Vertex_handle vi1 = arr.vertices_begin() ; vi1 != arr.vertices_end() ;)
@@ -76,7 +76,7 @@ void Arr_transform_on_sphere(Arrangement & arr,
     if ((bx != ARR_INTERIOR || by != ARR_INTERIOR) && (v_temp->degree() == 2))
     {
       Curve_2 merged_cv;
-      Halfedge_around_vertex_circulator havc = v_temp->incident_halfedges(); 
+      Halfedge_around_vertex_circulator havc = v_temp->incident_halfedges();
       Halfedge_around_vertex_circulator havc_next = havc;
       ++havc_next;
 
@@ -94,7 +94,7 @@ void Arr_transform_on_sphere(Arrangement & arr,
         if (havc->source()->point() == havc->curve().source())
         {
           merged_cv = Curve_2(havc->source()->point(),
-                              havc_next->twin()->target()->point(), 
+                              havc_next->twin()->target()->point(),
                               havc->curve().normal());
         }
         else if (havc->source()->point() == havc->curve().target())
@@ -103,7 +103,7 @@ void Arr_transform_on_sphere(Arrangement & arr,
                               havc->source()->point(),
                               havc->curve().normal());
         }
-        else 
+        else
           CGAL_error_msg
             ("One of the edge points should be equal to the surce points");
 					
@@ -149,18 +149,18 @@ void Arr_transform_on_sphere(Arrangement & arr,
     }
 		
     CGAL_assertion_msg
-      (eq1, 
+      (eq1,
        "The new curve endpoints should be equal to the transform of the original");
 		
     // Create a new curve instead of the old one.
-    new_cv = Curve_2(hei1->source()->point(), hei1->target()->point(), 
+    new_cv = Curve_2(hei1->source()->point(), hei1->target()->point(),
                      aff.transform(hei1->curve().normal()));
 
     // Modify the edge with the new curve.
     m_arr_access.modify_edge_ex(hei1, new_cv);
 
     std::list<CGAL::Object> objects;
-    // Try to split the curve into x_monotone pieces. 
+    // Try to split the curve into x_monotone pieces.
     geom_traits->make_x_monotone_2_object()(new_cv , std::back_inserter(objects));
 		
     // If the curve is not x-monotone - split it into 2 x_monotone parts.
@@ -207,9 +207,9 @@ void Arr_transform_on_sphere(Arrangement & arr,
       Halfedge_around_vertex_circulator havc = vi->incident_halfedges();
 			
       Arr_curve_end ind;
-	  if (geom_traits->construct_min_vertex_2_object()(havc->curve()) == vi->point()) 
+	  if (geom_traits->construct_min_vertex_2_object()(havc->curve()) == vi->point())
 		ind = ARR_MIN_END;
-	  else 
+	  else
 		ind = ARR_MAX_END;
 
       // Check if it was already added.

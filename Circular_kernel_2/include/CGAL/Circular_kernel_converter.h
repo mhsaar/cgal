@@ -19,13 +19,13 @@
 // Author(s)     : Monique Teillaud, Sylvain Pion, Pedro Machado
 
 // Partially supported by the IST Programme of the EU as a Shared-cost
-// RTD (FET Open) Project under Contract No  IST-2000-26473 
-// (ECG - Effective Computational Geometry for Curves and Surfaces) 
-// and a STREP (FET Open) Project under Contract No  IST-006413 
+// RTD (FET Open) Project under Contract No  IST-2000-26473
+// (ECG - Effective Computational Geometry for Curves and Surfaces)
+// and a STREP (FET Open) Project under Contract No  IST-006413
 // (ACS -- Algorithms for Complex Shapes)
 
 #ifndef CGAL_CCIRCULAR_KERNEL_CONVERTER_H
-#define CGAL_CCIRCULAR_KERNEL_CONVERTER_H 
+#define CGAL_CCIRCULAR_KERNEL_CONVERTER_H
 
 #include <CGAL/license/Circular_kernel_2.h>
 
@@ -165,7 +165,7 @@ public:
 	{
 		return typename C2::Circular_arc_2(operator()(a.supporting_circle()),
 		                     	           operator()(a.source()),
-		                     	           operator()(a.target()));	     
+		                     	           operator()(a.target()));	
 	}
 
 
@@ -184,13 +184,13 @@ public:
 
       if (const typename C1::Circular_arc_2 * ptr = object_cast<typename C1::Circular_arc_2>(&obj)) {
         return make_object(operator()(*ptr));
-      } else if (const typename C1::Circular_arc_point_2 * ptr = 
+      } else if (const typename C1::Circular_arc_point_2 * ptr =
                  object_cast<typename C1::Circular_arc_point_2>(&obj)) {
         return make_object(operator()(*ptr));
-      } else if (const std::pair<typename C1::Circular_arc_point_2,unsigned int> * ptr = 
+      } else if (const std::pair<typename C1::Circular_arc_point_2,unsigned int> * ptr =
                  object_cast<std::pair<typename C1::Circular_arc_point_2,unsigned int> >(&obj)) {
         return make_object(std::make_pair(operator()(ptr->first),ptr->second));
-      } else if (const typename C1::Line_arc_2 * ptr = 
+      } else if (const typename C1::Line_arc_2 * ptr =
                  object_cast<typename C1::Line_arc_2>(&obj)) {
         return make_object(operator()(*ptr));
       }
@@ -213,7 +213,7 @@ public:
   }
 	
 
-        
+
   std::pair<typename C2::Line_arc_2,typename C2::Line_arc_2>
   operator()(const std::pair<typename C1::Line_arc_2,typename C1::Line_arc_2> &a) const
   {
@@ -229,7 +229,7 @@ public:
   }
 
 
-}; 
+};
 
 } //namespace CGAL
 

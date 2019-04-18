@@ -25,7 +25,7 @@
 #include <functional>
 #include <cstddef>
 #include <CGAL/Hilbert_sort_middle_base.h>
-#include <CGAL/Polygon_2_algorithms.h> 
+#include <CGAL/Polygon_2_algorithms.h>
 
 namespace CGAL {
 
@@ -42,11 +42,11 @@ namespace internal {
 	double value;
         Fixed_hilbert_cmp_2 (double v, const K &_k = K()) : k(_k),value(v) {}
         bool operator() (const Point &p) const
-        { 
+        {
 	  return ! Fixed_hilbert_cmp_2<K,x,false> (value, k) (p);
         }
     };
-    
+
     template <class K>
     struct Fixed_hilbert_cmp_2<K,0,false>
         : public CGAL::cpp98::binary_function<typename K::Point_2,
@@ -57,11 +57,11 @@ namespace internal {
 	double value;
         Fixed_hilbert_cmp_2 (double v, const K &_k = K()) : k(_k),value(v) {}
         bool operator() (const Point &p) const
-        { 
+        {
 	  return to_double(k.compute_x_2_object()(p)) < value;
         }
     };
-    
+
     template <class K>
     struct Fixed_hilbert_cmp_2<K,1,false>
         : public CGAL::cpp98::binary_function<typename K::Point_2,
@@ -72,7 +72,7 @@ namespace internal {
 	double value;
         Fixed_hilbert_cmp_2 (double v, const K &_k = K()) : k(_k),value(v) {}
         bool operator() (const Point &p) const
-        { 
+        {
 	  return to_double(k.compute_y_2_object()(p)) < value;
         }
     };
@@ -85,7 +85,7 @@ class Hilbert_sort_middle_2
 public:
     typedef K Kernel;
     typedef typename Kernel::Point_2 Point;
-    
+
 private:
     Kernel _k;
     std::ptrdiff_t _limit;
@@ -110,11 +110,11 @@ public:
 
         RandomAccessIterator m0 = begin, m4 = end;
 
-        RandomAccessIterator m2 = 
+        RandomAccessIterator m2 =
 	  internal::fixed_hilbert_split (m0, m4, Cmp< x,  upx> (xmed,_k));
-        RandomAccessIterator m1 = 
+        RandomAccessIterator m1 =
 	  internal::fixed_hilbert_split (m0, m2, Cmp< y,  upy> (ymed,_k));
-        RandomAccessIterator m3 = 
+        RandomAccessIterator m3 =
 	  internal::fixed_hilbert_split (m2, m4, Cmp< y, !upy> (ymed,_k));
 
         if (m1!=m4)
@@ -139,13 +139,13 @@ public:
 		     ymax=ymin;
 		
 	    for(RandomAccessIterator it=begin+1; it<end; ++it){
-			if ( to_double(k.compute_x_2_object()(*it)) < xmin) 
+			if ( to_double(k.compute_x_2_object()(*it)) < xmin)
 		  		xmin = to_double(k.compute_x_2_object()(*it));
-			if ( to_double(k.compute_y_2_object()(*it)) < ymin) 
+			if ( to_double(k.compute_y_2_object()(*it)) < ymin)
 		  		ymin = to_double(k.compute_y_2_object()(*it));
-			if ( to_double(k.compute_x_2_object()(*it)) > xmax) 
+			if ( to_double(k.compute_x_2_object()(*it)) > xmax)
 		  		xmax = to_double(k.compute_x_2_object()(*it));
-			if ( to_double(k.compute_y_2_object()(*it)) > ymax) 
+			if ( to_double(k.compute_y_2_object()(*it)) > ymax)
 		  		ymax = to_double(k.compute_y_2_object()(*it));
 	    }
 

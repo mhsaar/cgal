@@ -56,23 +56,23 @@ CGAL_INLINE_FUNCTION
 int readBitmapFileHeader(FILE *fp, Bitmapfileheader *bfh)
 {
     int rc;
-  
+
     rc = readUINT16little(fp, &(bfh->type));
     if (rc != 0)
 	return rc;
-    
+
     rc = readUINT32little(fp, &(bfh->size));
     if (rc != 0)
 	return rc;
-    
+
     rc = readINT16little(fp, &(bfh->xHotspot));
     if (rc != 0)
 	return rc;
-    
+
     rc = readINT16little(fp, &(bfh->yHotspot));
     if (rc != 0)
 	return rc;
-    
+
     rc = readUINT32little(fp, &(bfh->offsetToBits));
     return rc;
 }
@@ -84,7 +84,7 @@ CGAL_INLINE_FUNCTION
 int readBitmapArrayHeader(FILE *fp, BITMAPARRAYHEADER *bah)
 {
     int rc;
-    
+
     rc = readUINT16little(fp, &(bah->type));
     if (rc != 0)
 	return rc;
@@ -116,14 +116,14 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     int    rc, oldFormat;
 	unsigned int bytesRead;
     CGAL_UINT16 tempVal;
-    
+
     /*
      * Clear the structure.  Default values for all fields are zeros.  This
      * will prevent garbage from being returned if the structure is truncated
      * on disk.
      */
     memset(bh, 0, sizeof(BITMAPHEADER));
-    
+
     /*
      * Read the size of the structure.  From here on in, we'll have to be sure
      * we don't read more bytes than this value.
@@ -132,7 +132,7 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     if (rc != 0)
 	return rc;
     bytesRead = 4;
-    
+
     /*
      * If the size is 12 bytes or less, than this is an "old format"
      * structure.  So the width and height fields will have to be read
@@ -142,7 +142,7 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
 	oldFormat = 1;
     else
 	oldFormat = 0;
-    
+
     /*
      * Width and height are read differently for old and new format files.  In
      * the old format, they're 16-bit values.  In the new format, they're
@@ -165,7 +165,7 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     }
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     if (oldFormat)
     {
 	rc = readUINT16little(fp, &tempVal);
@@ -183,7 +183,7 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     }
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     /*
      * From this point on, old and new formats are identical to each other,
      * and we can proceed as if there was no difference.  For each field, we
@@ -197,17 +197,17 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT16little(fp, &(bh->numBitsPerPlane));
     if (rc != 0)
 	return rc;
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-  
+
     /*
      * Old format stop here.  But we don't have to check, because in that
-     * format, 12 bytes have been read and the function will have exited 
+     * format, 12 bytes have been read and the function will have exited
      * without any extra checking.
      */
     rc = readUINT32little(fp, &(bh->compressionScheme));
@@ -216,98 +216,98 @@ int readBitmapHeader(FILE *fp, BITMAPHEADER *bh)
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->sizeOfImageData));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->xResolution));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->yResolution));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->numColorsUsed));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->numImportantColors));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT16little(fp, &(bh->resolutionUnits));
     if (rc != 0)
 	return rc;
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT16little(fp, &(bh->padding));
     if (rc != 0)
 	return rc;
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT16little(fp, &(bh->origin));
     if (rc != 0)
 	return rc;
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT16little(fp, &(bh->halftoning));
     if (rc != 0)
 	return rc;
     bytesRead += 2;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->halftoningParam1));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->halftoningParam2));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-  
+
     rc = readUINT32little(fp, &(bh->colorEncoding));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     rc = readUINT32little(fp, &(bh->identifier));
     if (rc != 0)
 	return rc;
     bytesRead += 4;
     if (bytesRead >= bh->size)
 	return 0;
-    
+
     /*
      * If there are more bytes in the file than this, then the file is using a
      * future format that doesn't exist yet.  Skip over the bytes.  Assuming
@@ -332,28 +332,28 @@ CGAL_INLINE_FUNCTION
 int readRgb(FILE *fp, RGB *rgb, int numBytes)
 {
     int rc;
-    
+
     if (numBytes == 0)
 	return 0;
     rc = readUINT8little(fp, &(rgb->blue));
     if (rc != 0)
 	return rc;
-    
+
     if (numBytes == 1)
 	return 0;
     rc = readUINT8little(fp, &(rgb->green));
     if (rc != 0)
 	return rc;
-    
+
     if (numBytes == 2)
 	return 0;
     rc = readUINT8little(fp, &(rgb->red));
     if (rc != 0)
 	return rc;
-    
+
     if (numBytes == 3)
 	return 0;
-    
+
     /* Skip over extra bytes if more than three were requested */
     return fseek(fp, (numBytes - 3), SEEK_CUR);
 }
@@ -366,7 +366,7 @@ CGAL_INLINE_FUNCTION
 int readColorTable(FILE *fp, RGB *rgb, int numEntries, int numBytesPerEntry)
 {
     int i, rc;
-    
+
     for (i=0; i<numEntries; i++)
     {
 	rc = readRgb(fp, &(rgb[i]), numBytesPerEntry);
@@ -394,7 +394,7 @@ int readBitsUncompressed(FILE *fp, RGB *image, int width, int height,
     CGAL_UINT8 temp;
     int   rc, padBytes, i;
     long  row, column, pixel, value;
-    
+
     switch (depth) {
     case 1:
 	/*
@@ -590,10 +590,10 @@ int readBitsUncompressed(FILE *fp, RGB *image, int width, int height,
 		if (rc != 0)
 		    return rc;
 	    }
-	}          
+	}
 	break;
     }
-    
+
     return 0;
 }
 
@@ -611,7 +611,7 @@ int readMaskBitsUncompressed(FILE *fp, char *image, int width, int height)
     int   rc, padBytes, i;
     long  row, column, pixel;
     char value;
-    
+
     /*
      * see the one-bit-depth part of readBitsUncompressed for comments
      */
@@ -661,7 +661,7 @@ void reflectYRGB(RGB *image, int width, int height)
 {
     int row, col;
     RGB temp;
-    
+
     for (row = 0; row < (height / 2); row++)
     {
 	for (col = 0; col < width; col++)
@@ -685,7 +685,7 @@ void reflectYchar(char *image, int width, int height)
 {
     int row, col;
     char temp;
-    
+
     for (row = 0; row < (height / 2); row++)
     {
 	for (col = 0; col < width; col++)
@@ -746,7 +746,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
     int               rc, depth, inverted;
     int               numColors;
     long              numPixels, endPos;
-    
+
     /*
      * First, get the file header and sanity check it.  The type field must be
      * TYPE_BMP or we're aborting.
@@ -758,7 +758,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	(bfh.type != TYPE_ICO_COLOR) &&
 	(bfh.type != TYPE_PTR_COLOR))
 	return 1000;
-    
+
     /*
      * Immediately following a file header is always the bitmap header.  Read
      * it.  Sanity check any values we might need.  Specifically, less than
@@ -777,7 +777,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	(bh.width < 1) ||
 	(bh.height == 0))
 	return 1001;
-    
+
     /*
      * If the height is negative, then this is a Windows bitmap whose origin
      * is the upper-left corner and not the lower-left.  The inverted flag
@@ -791,7 +791,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
     }
     else
 	inverted = 1;
-    
+
     /*
      * Now, sanity check a few fields that are valid, but I don't have code to
      * deal with them yet.  This includes: more than one bit plane, any
@@ -805,13 +805,13 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	 (bh.numBitsPerPlane != 24)) ||
 	(bh.compressionScheme != COMPRESSION_NONE))
 	return 1002;
-    
+
     /*
      * Allocate and read the color table.  The file pointer has been
      * positioned in the right place by the readBitmapHeader function.  Note
      * that images with 24-bits or more color depth have no color table.  They
      * are  already RGB.  When reading the color table, be sure to check for
-     * old/new format bitmaps. 
+     * old/new format bitmaps.
      */
     if (depth < 24)
     {
@@ -829,11 +829,11 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	    return rc;
 	}
     }
-    
+
     /*
      * We're at the end of the color table.  Preserve this position.  We'll
      * need to leave the file pointer there before returning from this
-     * function. 
+     * function.
      */
     endPos = ftell(fp);
 
@@ -847,7 +847,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	free (colorTable);
 	return 1004;
     }
-    
+
     /*
      * Seek to the bits
      */
@@ -858,7 +858,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 	free (image);
 	return rc;
     }
-    
+
     /*
      * Read the bits.  If code for decompressing bits should be written,
      * insert the call here.
@@ -869,13 +869,13 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
 				  colorTable);
 	break;
     }
-    
+
     if (rc != 0)
     {
 	free(image);
 	return rc;
     }
-    
+
     /*
      * If the origin is lower-left, flip the image upside down
      */
@@ -909,7 +909,7 @@ int readSingleImageBMP(FILE *fp, RGB **argb, CGAL_UINT32 *width, CGAL_UINT32 *he
  */
 CGAL_INLINE_FUNCTION
 int readSingleImageICOPTR(FILE *fp, char **xorMask, char **andMask,
-		          CGAL_UINT32 *width, CGAL_UINT32 *height) 
+		          CGAL_UINT32 *width, CGAL_UINT32 *height)
 {
     Bitmapfileheader  bfh;
     BITMAPHEADER      bh;
@@ -1037,7 +1037,7 @@ int readSingleImageICOPTR(FILE *fp, char **xorMask, char **andMask,
     *width = bh.width;
     *height = bh.height / 2;
     fseek(fp, endPos, SEEK_SET);
-    
+
     return 0;
 }
 
@@ -1100,7 +1100,7 @@ int readSingleImageColorICOPTR(FILE *fp, RGB **argb, char **xorMask,
  * Note that on errors other than 1000 and 1005, the arrays will contain good
  * data - the images that have been read properly will be in the arrays.
  * Images that have not yet been read will consist of NULL pointers in the
- * arrays. 
+ * arrays.
  */
 CGAL_INLINE_FUNCTION
 int readMultipleImage(FILE *fp, RGB ***argbs, char ***xorMasks,
@@ -1112,7 +1112,7 @@ int readMultipleImage(FILE *fp, RGB ***argbs, char ***xorMasks,
     BITMAPARRAYHEADER bah;
     CGAL_UINT16 imageType;
     int count;
-    
+
     /*
      * First count the images.  Preserve the file position for later.  If some
      * structure in the list isn't an array header, return 1000.
@@ -1130,7 +1130,7 @@ int readMultipleImage(FILE *fp, RGB ***argbs, char ***xorMasks,
 	count++;
     } while (bah.next != 0);
     fseek(fp, filePos, SEEK_SET);
-    
+
     /*
      * Allocate the arrays.  Return 1005 on any failures
      */
@@ -1189,7 +1189,7 @@ int readMultipleImage(FILE *fp, RGB ***argbs, char ***xorMasks,
 	rc = fseek(fp, filePos, SEEK_SET);
 
 	/*
-	 * Now that we know what kind of image we're about to read, read it. 
+	 * Now that we know what kind of image we're about to read, read it.
 	 */
 	switch(imageType) {
 	case TYPE_BMP:

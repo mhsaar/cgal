@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michal Meyerovitch     <gorgymic@post.tau.ac.il>
 //                 Baruch Zukerman        <baruchzu@post.tau.ac.il>
@@ -33,13 +33,13 @@
 
 namespace CGAL {
 
-template <class MinimizationDiagram_2, 
+template <class MinimizationDiagram_2,
           class OverlayFunctor = Envelope_overlay_functor<MinimizationDiagram_2> >
 class Envelope_overlay_2
 {
 public:
   typedef MinimizationDiagram_2                                  Minimization_diagram_2;
-  
+
   typedef typename Minimization_diagram_2::Face_handle           Face_handle;
   typedef typename Minimization_diagram_2::Face_iterator         Face_iterator;
 
@@ -55,7 +55,7 @@ protected:
   typedef typename Traits::Xy_monotone_surface_3                 Xy_monotone_surface_3;
 
 public:
-  
+
   void operator()(Minimization_diagram_2& md1,
                   Minimization_diagram_2& md2,
                   Minimization_diagram_2& result)
@@ -65,18 +65,18 @@ public:
 
     Overlay_functor overlay_func(md1, md2, result);
     overlay(md1, md2, result, overlay_func);
-        
+
     CGAL_assertion_code(post_test_assertions(result));
   }
 
 
 public:
-  
+
   /*
   void print_face(Face_handle fh)
   {
     std::cout << (fh->is_unbounded() ? "unbounded" : "bounded");
-    
+
     if (fh->get_is_set())
     {
       std::cout << " #data= " << fh->number_of_data_objects();
@@ -140,7 +140,7 @@ public:
       }
       std::cout << std::endl;
     }
-    std::cout << std::endl;  
+    std::cout << std::endl;
   }
 
   void print_edges(Minimization_diagram_2& md)

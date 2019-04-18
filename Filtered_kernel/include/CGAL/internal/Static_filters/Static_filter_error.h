@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Sylvain Pion
 
@@ -25,7 +25,7 @@
 // This file contains the description of the class Static_filter_error.
 // The goal of this class is to be run by some overloaded predicates,
 // to compute error bound done in these functions.
-// 
+//
 // The original idea is from Olivier Devillers.
 
 // It is still EXPERIMENTAL.

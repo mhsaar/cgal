@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
 
@@ -52,7 +52,7 @@ public:
   typedef typename K::Orientation         Orientation;
   typedef typename K::Sign                Sign;
 
-public:  
+public:
   template< class Method_tag >
   Bounded_side operator()(const Bitangent_line& l1,
 			  const Bitangent_line& l2,
@@ -277,7 +277,7 @@ public:
 		  const Site_2& p4, const Site_2& q, bool b) const
   {
     Method_tag tag = Method_tag();
-    
+
     Bitangent_line bl_32(p3, p2);
     Bitangent_line bl_24(p2, p4);
     Bitangent_line bl_2q(p2, q);

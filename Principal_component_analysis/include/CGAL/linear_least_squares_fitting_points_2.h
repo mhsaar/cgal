@@ -38,12 +38,12 @@ namespace internal {
 //  1 is best  (zero variance orthogonally to the fitting line);
 //  0 is worst (isotropic case, returns a line with horizontal
 //              direction by default).
-template < typename InputIterator, 
+template < typename InputIterator,
            typename K,
 	   typename DiagonalizeTraits>
 typename K::FT
 linear_least_squares_fitting_2(InputIterator first,
-                               InputIterator beyond, 
+                               InputIterator beyond,
                                typename K::Line_2& line,   // best fit line
                                typename K::Point_2& c,     // centroid
                                const typename K::Point_2*,// used for indirection
@@ -65,7 +65,7 @@ linear_least_squares_fitting_2(InputIterator first,
   // compute centroid
   c = centroid(first,beyond,K(),tag);
 
-  // assemble covariance matrix as a semi-definite matrix. 
+  // assemble covariance matrix as a semi-definite matrix.
   // Matrix numbering:
   // 0 1
   //   2
@@ -84,7 +84,7 @@ linear_least_squares_fitting_2(InputIterator first,
   }
 
   // solve for eigenvalues and eigenvectors.
-  // eigen values are sorted in ascending order, 
+  // eigen values are sorted in ascending order,
   // eigen vectors are sorted in accordance.
   typename DiagonalizeTraits::Vector eigen_values = {{ 0. , 0. }};
   typename DiagonalizeTraits::Matrix eigen_vectors = {{ 0., 0., 0. }};
@@ -97,15 +97,15 @@ linear_least_squares_fitting_2(InputIterator first,
     // regular case
     line = Line(c, Vector (eigen_vectors[2], eigen_vectors[3]));
     return (FT)1.0 - eigen_values[0] / eigen_values[1];
-  } 
+  }
   else
   {
     // isotropic case (infinite number of directions)
-    // by default: assemble a line that goes through 
+    // by default: assemble a line that goes through
     // the centroid and with a default horizontal vector.
     line = Line(c, Vector(FT(1), FT(0)));
     return (FT)0.0;
-  } 
+  }
 } // end linear_least_squares_fitting_2 for point set
 
 } // end namespace internal

@@ -1,9 +1,9 @@
-// Copyright (c) 2000  
+// Copyright (c) 2000
 // Utrecht University (The Netherlands),
 // ETH Zurich (Switzerland),
 // INRIA Sophia-Antipolis (France),
 // Max-Planck-Institute Saarbruecken (Germany),
-// and Tel-Aviv University (Israel).  All rights reserved. 
+// and Tel-Aviv University (Israel).  All rights reserved.
 //
 // This file is part of CGAL (www.cgal.org); you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License as
@@ -19,7 +19,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 // Author(s)     : Monique Teillaud, Pedro Machado, Sebastien Loriot
 
 #ifndef CGAL_CARTESIAN_CIRCLEC3_H
@@ -47,7 +47,7 @@ class CircleC3 {
   };
 
   typedef typename R_::template Handle<Rep>::type  Base;
-  Base base;  
+  Base base;
 
 public:
   typedef R_                                     R;
@@ -63,7 +63,7 @@ public:
                 plane_from_point_direction(center, d));
   }
 
-  CircleC3(const Point_3& center, const FT& squared_r, const Vector_3& normal) 
+  CircleC3(const Point_3& center, const FT& squared_r, const Vector_3& normal)
   {
     CGAL_kernel_assertion(squared_r >= FT(0));
     // non-degenerated Vector

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Andreas Fabri <Andreas.Fabri@geometryfactory.com>
 //                 Laurent Rineau <Laurent.Rineau@geometryfactory.com>
@@ -44,7 +44,7 @@ public:
     constraints_pen = this->edgesPen();
     constraints_pen.setColor(::Qt::red);
   }
-  
+
   void operator()(typename T::Face_handle fh);
 
   const QPen& constraintsPen() const
@@ -84,7 +84,7 @@ private:
 };
 
 template <typename T>
-void 
+void
 ConstrainedTriangulationGraphicsItem<T>::drawAll(QPainter *painter)
 {
   this->painterostream = PainterOstream<Geom_traits>(painter);
@@ -99,12 +99,12 @@ ConstrainedTriangulationGraphicsItem<T>::drawAll(QPainter *painter)
       this->painterostream << this->t->segment(*eit);
     }
   }
-  
+
   this->paintVertices(painter);
 }
 
 template <typename T>
-void 
+void
 ConstrainedTriangulationGraphicsItem<T>::operator()(typename T::Face_handle fh)
 {
   for (int i=0; i<3; i++) {

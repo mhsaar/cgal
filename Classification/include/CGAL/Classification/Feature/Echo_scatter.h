@@ -36,7 +36,7 @@ namespace CGAL {
 namespace Classification {
 
 namespace Feature {
-  
+
   /*!
     \ingroup PkgClassificationFeatures
 
@@ -62,13 +62,13 @@ class Echo_scatter : public Feature_base
 {
 public:
   typedef Classification::Planimetric_grid<GeomTraits, PointRange, PointMap> Grid;
-private:  
+private:
   typedef Classification::Image<compressed_float> Image_cfloat;
 
   const Grid& grid;
   Image_cfloat Scatter;
   std::vector<compressed_float> echo_scatter;
-  
+
 public:
   /*!
     \brief Constructs the feature.
@@ -98,7 +98,7 @@ public:
           if (grid.has_points(i,j))
             Scatter(i,j) = compressed_float(0);
     }
-    
+
     std::size_t square = (std::size_t)(0.5 * radius_neighbors / grid.resolution()) + 1;
 
     for (std::size_t j = 0; j < grid.height(); j++)
@@ -165,7 +165,7 @@ public:
 } // namespace Feature
 
 } // namespace Classification
-  
+
 } // namespace CGAL
 
 #endif // CGAL_CLASSIFICATION_FEATURE_ECHO_SCATTER_H

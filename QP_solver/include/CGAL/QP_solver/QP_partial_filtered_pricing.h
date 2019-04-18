@@ -15,12 +15,12 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
 //                 Franz Wessendorp
-//                 Kaspar Fischer 
+//                 Kaspar Fischer
 
 #ifndef CGAL_QP_PARTIAL_FILTERED_PRICING_H
 #define CGAL_QP_PARTIAL_FILTERED_PRICING_H
@@ -90,8 +90,8 @@ class QP_partial_filtered_pricing
 
     void  init( );
     void  transition( );
-    
-    
+
+
     // cleanup
     ~QP_partial_filtered_pricing() {};
 
@@ -114,7 +114,7 @@ QP_partial_filtered_pricing( bool randomize, Random& random, ET2NT et2nt)
       Partial_base( randomize, random),
       Filtered_base( et2nt)
 { }
-    
+
 // operations
 template < typename Q, typename ET, typename Tags, class NT_, class ET2NT_ >  inline
 void  QP_partial_filtered_pricing<Q,ET,Tags,NT_,ET2NT_>::
@@ -135,7 +135,7 @@ transition( )
 
 template < typename Q, typename ET, typename Tags, class NT_, class ET2NT_ >
 int  QP_partial_filtered_pricing<Q,ET,Tags,NT_,ET2NT_>::
-pricing(int& direction ) 
+pricing(int& direction )
 {
   return (pricing_helper(direction, Is_nonnegative()));
 }
@@ -265,7 +265,7 @@ pricing_helper(int& /*direction*/, Tag_true /*is_in_standard_form*/ )
 	    }
 	}
     }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
 
@@ -291,7 +291,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 	this->vout() << "active variables:" << std::endl;
     }
 
-    Index_const_iterator  it, min_it;    
+    Index_const_iterator  it, min_it;
     int min_j = -1;
     NT  mu, min_mu = this->nt0;
     for ( it = this->active_set_begin(); it != this->active_set_end(); ++it) {
@@ -337,7 +337,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 	    this->vout() << "inactive variables:" << std::endl;
 	}
 	Index_const_iterator  active_it;
-	for ( it = this->inactive_set_begin(); 
+	for ( it = this->inactive_set_begin();
 	      it != this->inactive_set_end(); ++it) {
 
 	    // don't price artificial variables
@@ -358,7 +358,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 		this->activating( active_it);
 		
 		// new minimum
-		if (price_dantzig (*active_it, mu, this->nt0, 
+		if (price_dantzig (*active_it, mu, this->nt0,
 			            min_j, min_mu, direction))
 		  min_it = active_it;
 	    }
@@ -370,7 +370,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 
 		// exact check failed!
 		CGAL_qpe_debug {
-		    this->vout() << 
+		    this->vout() <<
 		      "--> exact check of entering variable failed!"
 		      << std::endl;
 		}
@@ -381,8 +381,8 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 	    }
 	} else {
 	    CGAL_qpe_debug {
-		this->vout() << 
-		  "--> still no entering variable found" 
+		this->vout() <<
+		  "--> still no entering variable found"
 		  << std::endl;
 	    }
 	}
@@ -395,7 +395,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 	this->update_maxima();
 
 	// loop over all non-basic variables again
-	for ( it = this->active_set_begin(); 
+	for ( it = this->active_set_begin();
 	      it != this->inactive_set_end(); ++it) {
 
 	    // don't price artificial variables
@@ -410,7 +410,7 @@ pricing_helper(int& direction, Tag_false /*is_in_standard_form*/ )
 	    }
 	}
     }
-    CGAL_qpe_debug { 
+    CGAL_qpe_debug {
       this->vout() << std::endl;
     }
 

@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Hans Tangelder (<hanst@cs.uu.nl>)
 
@@ -36,7 +36,7 @@ namespace CGAL {
   template <class SearchTraits>
   class Euclidean_distance;
 
-    
+
   namespace internal{
     template <class SearchTraits>
     struct Spatial_searching_default_distance{
@@ -46,9 +46,9 @@ namespace CGAL {
 
   template <class SearchTraits>
   class Euclidean_distance {
-    
+
     SearchTraits traits;
-    
+
     public:
 
     typedef typename SearchTraits::FT    FT;
@@ -61,7 +61,7 @@ namespace CGAL {
     // default constructor
     Euclidean_distance(const SearchTraits& traits_=SearchTraits()):traits(traits_) {}
 
-    
+
     inline FT transformed_distance(const Query_item& q, const Point_d& p) const {
         return transformed_distance(q,p, D());
     }
@@ -113,7 +113,7 @@ namespace CGAL {
         return distance;
     }
 
- 
+
 
 
 	inline FT min_distance_to_rectangle(const Query_item& q,
@@ -124,10 +124,10 @@ namespace CGAL {
 		  qe = construct_it(q,1);
 		for(unsigned int i = 0;qit != qe; i++, qit++){
 		  if((*qit) < r.min_coord(i))
-				distance += 
+				distance +=
 				(r.min_coord(i)-(*qit))*(r.min_coord(i)-(*qit));
 		  else if ((*qit) > r.max_coord(i))
-				distance +=  
+				distance +=
 				((*qit)-r.max_coord(i))*((*qit)-r.max_coord(i));
 			
 		}

@@ -182,9 +182,9 @@ namespace CommonKernelFunctors {
     typedef typename K::Comparison_result  result_type;
 
     result_type
-    operator()(const Point_3& a1, const Point_3& b1, 
-               const Point_3& c1, const Point_3& d1, 
-               const Point_3& a2, const Point_3& b2, 
+    operator()(const Point_3& a1, const Point_3& b1,
+               const Point_3& c1, const Point_3& d1,
+               const Point_3& a2, const Point_3& b2,
                const Point_3& c2, const Point_3& d2) const
     {
       const Vector_3 ab1 = b1 - a1;
@@ -198,8 +198,8 @@ namespace CommonKernelFunctors {
     }
 
     result_type
-    operator()(const Point_3& a1, const Point_3& b1, 
-               const Point_3& c1, const Point_3& d1, 
+    operator()(const Point_3& a1, const Point_3& b1,
+               const Point_3& c1, const Point_3& d1,
                const FT& cosine) const
     {
       const Vector_3 ab1 = b1 - a1;
@@ -309,9 +309,9 @@ namespace CommonKernelFunctors {
     typedef typename K::Weighted_point_3                  Weighted_point_3;
     typedef typename K::Point_3                           Point_3;
     typedef typename K::Comparison_result                 Comparison_result;
-    
+
     typedef Comparison_result                             result_type;
-    
+
     Comparison_result operator()(const Point_3 & p,
                                  const Weighted_point_3 & q,
                                  const Weighted_point_3 & r) const
@@ -764,10 +764,10 @@ namespace CommonKernelFunctors {
     typedef typename K::Comparison_result  result_type;
 
     result_type operator()(const Point_3& p, const Point_3& q, const Point_3& r, const Point_3& s) const
-    { 
+    {
       Comparison_result sign_pq = CGAL::compare(q.z(),p.z());
       Comparison_result sign_rs = CGAL::compare(s.z(),r.z());
-      
+
       if(sign_pq != sign_rs){
         return CGAL::compare(static_cast<int>(sign_pq), static_cast<int>(sign_rs));
       }
@@ -777,12 +777,12 @@ namespace CommonKernelFunctors {
       }
 
       CGAL_assertion( (sign_pq == sign_rs) && (sign_pq != EQUAL)  );
-      
+
       Comparison_result res = CGAL::compare(square(p.z() - q.z()) * (square(r.x()-s.x())+square(r.y()-s.y())),
                                             square(r.z() - s.z()) *  (square(p.x()-q.x())+square(p.y()-q.y())));
       return (sign_pq == SMALLER) ? opposite(res) : res;
-    } 
-  
+    }
+
   };
 
   template <typename K>
@@ -832,7 +832,7 @@ namespace CommonKernelFunctors {
  template <typename K>
  class Compute_approximate_dihedral_angle_3
  {
-    typedef typename K::Point_3 Point_3;  
+    typedef typename K::Point_3 Point_3;
  public:
    typedef typename K::FT       result_type;
 
@@ -847,19 +847,19 @@ namespace CommonKernelFunctors {
        k.compute_squared_distance_3_object();
      typename K::Compute_scalar_product_3 scalar_product =
        k.compute_scalar_product_3_object();
-     
+
      typedef typename K::Vector_3 Vector_3;
      typedef typename K::FT FT;
-     
+
      const Vector_3 ab = vector(a,b);
      const Vector_3 ac = vector(a,c);
      const Vector_3 ad = vector(a,d);
-     
+
      const Vector_3 abad = cross_product(ab,ad);
      const double x = CGAL::to_double(scalar_product(cross_product(ab,ac), abad));
      const double l_ab = CGAL::sqrt(CGAL::to_double(sq_distance(a,b)));
      const double y = l_ab * CGAL::to_double(scalar_product(ac,abad));
-     
+
      return FT(std::atan2(y, x) * 180 / CGAL_PI );
    }
  };
@@ -1412,7 +1412,7 @@ namespace CommonKernelFunctors {
                 const Point_2& p, const Point_2& q,
 	        const FT& bulge) const
     {
-     
+
       typename K::Compute_squared_distance_2 squared_distance;
       const FT sqr_bulge = CGAL::square(bulge);
       const FT common = (FT(1) - sqr_bulge) / (FT(4)*bulge);
@@ -1420,11 +1420,11 @@ namespace CommonKernelFunctors {
 	                 + common*(p.y() - q.y());
       const FT y_coord = (p.y() + q.y())/FT(2)
                           + common*(q.x() - p.x());
-      
-      const FT sqr_rad = squared_distance(p, q) 
-	                 * (FT(1)/sqr_bulge + FT(2) + sqr_bulge) / FT(16); 
 
-      return Rep(Point_2(x_coord, y_coord), sqr_rad); 
+      const FT sqr_rad = squared_distance(p, q)
+	                 * (FT(1)/sqr_bulge + FT(2) + sqr_bulge) / FT(16);
+
+      return Rep(Point_2(x_coord, y_coord), sqr_rad);
     }
 
 
@@ -1736,8 +1736,8 @@ namespace CommonKernelFunctors {
 
     Vector_3
     operator()(const Point_3& p,const Point_3& q, const Point_3& r) const
-    { 
-      CGAL_kernel_precondition(! K().collinear_3_object()(p,q,r) ); 
+    {
+      CGAL_kernel_precondition(! K().collinear_3_object()(p,q,r) );
       Vector_3 res = CGAL::cross_product(q-p, r-p);
       return res; }
   };
@@ -2501,11 +2501,11 @@ namespace CommonKernelFunctors {
 
     Vector_3
     operator()(const Point_3& p,const Point_3& q, const Point_3& r) const
-    { 
-      CGAL_kernel_precondition(! K().collinear_3_object()(p,q,r) ); 
+    {
+      CGAL_kernel_precondition(! K().collinear_3_object()(p,q,r) );
       Vector_3 res = CGAL::cross_product(q-p, r-p);
       res = res / CGAL::sqrt(res.squared_length());
-      return res; 
+      return res;
 	}
   };
 
@@ -2898,7 +2898,7 @@ namespace CommonKernelFunctors {
         return k.construct_projected_point_3_object()(ray.supporting_line(), query);
       }
     }
-    
+
     // code for operator for plane and point is defined in
     // CGAL/Cartesian/function_objects.h and CGAL/Homogeneous/function_objects.h
   };
@@ -3256,7 +3256,7 @@ namespace CommonKernelFunctors {
       CGAL_kernel_precondition(
         K().has_on_3_object()(c.supporting_plane(),p)
       );
-      return c.rep().has_on_bounded_side(p); 
+      return c.rep().has_on_bounded_side(p);
     }
 
     bool operator()(const Sphere_3& s1, const Sphere_3& s2,
@@ -3448,7 +3448,7 @@ namespace CommonKernelFunctors {
       CGAL_kernel_precondition(
         K().has_on_3_object()(c.supporting_plane(),p)
       );
-      return c.rep().has_on_unbounded_side(p); 
+      return c.rep().has_on_unbounded_side(p);
     }
   };
 
@@ -3509,9 +3509,9 @@ namespace CommonKernelFunctors {
 
     template<typename F>
     struct result<F(Plane_3, Plane_3, Plane_3)> {
-      typedef boost::optional< 
-        boost::variant< typename K::Point_3, 
-                        typename K::Line_3, 
+      typedef boost::optional<
+        boost::variant< typename K::Point_3,
+                        typename K::Line_3,
                         typename K::Plane_3 > > type;
     };
 
@@ -3756,7 +3756,7 @@ public:
                           const Weighted_point_2 & q,
 		          const Weighted_point_2 & r) const
   {
-    CGAL_kernel_precondition( ! collinear(p.point(), q.point(), r.point()) ); 
+    CGAL_kernel_precondition( ! collinear(p.point(), q.point(), r.point()) );
     FT x,y;
     weighted_circumcenterC2(p.x(),p.y(),p.weight(),
                             q.x(),q.y(),q.weight(),
@@ -3764,7 +3764,7 @@ public:
     return Point_2(x,y);
   }
 };
- 
+
 
 
 } // namespace CommonKernelFunctors

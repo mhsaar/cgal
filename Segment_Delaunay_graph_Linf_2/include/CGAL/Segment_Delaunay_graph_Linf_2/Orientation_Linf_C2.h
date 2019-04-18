@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Panagiotis Cheilaris, Sandeep Kumar Dey, Evanthia Papadopoulou
 //philaris@gmail.com, sandeep.kr.dey@gmail.com, evanthia.papadopoulou@usi.ch
@@ -59,9 +59,9 @@ private:
   typedef typename Base::Oriented_side        Oriented_side;
   typedef typename Base::Sign                 Sign;
 
-  // the orientation Linf predicate for three points 
+  // the orientation Linf predicate for three points
   typedef Orientation_Linf_2<K>               Orientation_Linf_points_2;
-  
+
   typedef SegmentDelaunayGraph_2::Are_same_points_C2<K>   Are_same_points_2;
   typedef SegmentDelaunayGraph_2::Are_same_segments_C2<K> Are_same_segments_2;
 

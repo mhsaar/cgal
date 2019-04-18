@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Laurent RINEAU
 
@@ -28,7 +28,7 @@
 namespace CGAL {
 
 template <typename Tr>
-struct Triangulation_mesher_level_traits_2 : 
+struct Triangulation_mesher_level_traits_2 :
     public Triangulation_ref_impl<Tr>
 {
   typedef Tr Triangulation;
@@ -64,7 +64,7 @@ struct Triangulation_mesher_level_traits_2 :
   Vertex_handle insert_impl(const Point& p, Zone& zone)
   {
 #ifdef CGAL_MESH_2_DEBUG_INSERTIONS
-    std::cerr << "insert(" << p << "): " 
+    std::cerr << "insert(" << p << "): "
               << zone.boundary_edges.size() << " edges." << std::endl;
 #endif
     if( zone.locate_type == Tr::VERTEX )

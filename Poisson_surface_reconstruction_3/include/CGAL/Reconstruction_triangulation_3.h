@@ -351,7 +351,7 @@ public:
     Vertex_handle v = Base::insert(p, lt, ch, li, lj);
     v->type() = static_cast<unsigned char>(type);
     return v;
-    
+
   }
 
   /// Insert the [first, beyond) range of points in the triangulation using a spatial sort.
@@ -401,14 +401,14 @@ public:
 
     fractions.clear();
     fractions.push_back(1.0);
-    
+
     double m = static_cast<double>(n);
-    
+
     while(m > 500){
       m /= 2;
       fractions.push_front(m/n);
     }
-    
+
     insert_fraction(visitor);
     return 0;
   }
@@ -500,7 +500,7 @@ public:
   {
     constrained_vertex = v;
   }
-  
+
 
 }; // end of Reconstruction_triangulation_3
 

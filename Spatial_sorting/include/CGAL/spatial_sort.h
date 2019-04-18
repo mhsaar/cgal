@@ -41,7 +41,7 @@ namespace internal {
     template <class RandomAccessIterator, class Policy, class Kernel>
     void spatial_sort (
                        RandomAccessIterator begin, RandomAccessIterator end,
-                       const Kernel &k, 
+                       const Kernel &k,
 		       Policy /*policy*/,
 		       typename Kernel::Point_2 *,
 		       std::ptrdiff_t threshold_hilbert,
@@ -59,14 +59,14 @@ namespace internal {
 	if (threshold_multiscale==0) threshold_multiscale=16;
 	if (ratio==0.0) ratio=0.25;
 
-        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert), 
+        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert),
 				threshold_multiscale, ratio)) (begin, end);
     }
 
     template <class RandomAccessIterator, class Policy, class Kernel>
     void spatial_sort (
                        RandomAccessIterator begin, RandomAccessIterator end,
-                       const Kernel &k, 
+                       const Kernel &k,
 		       Policy /*policy*/,
 		       typename Kernel::Point_3 *,
 		       std::ptrdiff_t threshold_hilbert,
@@ -84,14 +84,14 @@ namespace internal {
 	if (threshold_multiscale==0) threshold_multiscale=64;
 	if (ratio==0.0) ratio=0.125;
 
-        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert), 
+        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert),
 				threshold_multiscale, ratio)) (begin, end);
     }
 
     template <class RandomAccessIterator, class Policy, class Kernel>
     void spatial_sort (
 		       RandomAccessIterator begin, RandomAccessIterator end,
-                       const Kernel &k, 
+                       const Kernel &k,
 		       Policy /*policy*/,
 		       typename Kernel::Point_d *,
 		       std::ptrdiff_t threshold_hilbert,
@@ -109,7 +109,7 @@ namespace internal {
 	if (threshold_multiscale==0) threshold_multiscale=500;
 	if (ratio==0.0) ratio=0.05;
 
-        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert), 
+        (Multiscale_sort<Sort> (Sort (k, threshold_hilbert),
 				threshold_multiscale, ratio)) (begin, end);
     }
 

@@ -54,7 +54,7 @@ typedef struct {
 class Set_numeric_locale {
   const char * old_locale;
 public:
-  Set_numeric_locale(const char* locale) 
+  Set_numeric_locale(const char* locale)
     : old_locale(std::setlocale(LC_NUMERIC, locale))
   {
   }
@@ -104,11 +104,11 @@ int _writeInrimageHeader(const _image *im, ENDIANNESS end) {
       }
       sprintf(scale, "SCALE=2**0\n");
       break;
-      
+
     default:
       return -1;
     }
-    
+
     switch(end) {
     case END_LITTLE:
       sprintf(endianness, "decm");
@@ -138,31 +138,31 @@ int _writeInrimageHeader(const _image *im, ENDIANNESS end) {
     oss << "VY=" << im->vy << "\n";
     oss << "VZ=" << im->vz << "\n";
 
-    if ( im->cx != 0 ) 
+    if ( im->cx != 0 )
       oss << "XO="<< im->cx << "\n";
-    if ( im->cy != 0 ) 
+    if ( im->cy != 0 )
       oss << "YO="<< im->cy << "\n";
-    if ( im->cz != 0 ) 
+    if ( im->cz != 0 )
       oss << "ZO="<< im->cz << "\n";
-    if ( im->tx != 0.0 ) 
+    if ( im->tx != 0.0 )
       oss << "TX="<< im->tx << "\n";
-    if ( im->ty != 0.0 ) 
+    if ( im->ty != 0.0 )
       oss << "TY="<< im->ty << "\n";
-    if ( im->tz != 0.0 ) 
+    if ( im->tz != 0.0 )
       oss << "TZ="<< im->tz << "\n";
-    if ( im->rx != 0.0 ) 
+    if ( im->rx != 0.0 )
       oss << "RX="<< im->rx <<"\n";
-    if ( im->ry != 0.0 ) 
+    if ( im->ry != 0.0 )
       oss << "RY="<< im->ry << "\n";
-    if ( im->rz != 0.0 ) 
+    if ( im->rz != 0.0 )
       oss << "RZ=" << im->rz <<"\n";
 
     pos = oss.str().length();
-    
+
     if(ImageIO_write(im, oss.str().data(), oss.str().length()) == 0)
       return -1;
-    
-    
+
+
     /* write user strings */
     if ( im->user != NULL ) {
       for(i = 0; i < im->nuser; i++) {
@@ -183,7 +183,7 @@ int _writeInrimageHeader(const _image *im, ENDIANNESS end) {
     buf[0] = '\0';
     for(i = pos; i < 252; i++) strcat(buf, "\n");
     strcat(buf, "##}\n");
-    
+
     if(ImageIO_write(im, buf, strlen(buf)) == 0) return -1;
     else return 1;
   }
@@ -198,7 +198,7 @@ CGAL_INLINE_FUNCTION
 bool _writeInrimageData(const _image *im) {
   std::size_t size, nbv, nwrt, i, v;
   unsigned char **vp;
-  
+
   if(im->openMode != OM_CLOSE) {
 
     /* scalar or interlaced vectors */
@@ -298,8 +298,8 @@ int readInrimageHeader(const char *,_image *im) {
 	}
       }
       /* before "sscanf(str+8, "%i %n", &im->wdim, &n) != 1"
-	 was used. 
-	 However the man said 
+	 was used.
+	 However the man said
          ...
 	 n      Nothing is expected; instead, the number of charac­
               ters consumed thus far from  the  input  is  stored
@@ -313,7 +313,7 @@ int readInrimageHeader(const char *,_image *im) {
               any assumptions on the effect of %n conversions  on
               the return value.
 	 ...
-	 Thus I change it. It was yielding a RETURN_FAILURE with 
+	 Thus I change it. It was yielding a RETURN_FAILURE with
 	 insight (GM).
       */
       else if(!strncmp(str, "PIXSIZE=", 8)) {
@@ -394,14 +394,14 @@ int readInrimageHeader(const char *,_image *im) {
 	concatStringElement(&strl, str);
       }
       nusr++;
-      if(!fgetns(str, 257, im)) return -1;      
+      if(!fgetns(str, 257, im)) return -1;
     }
-    
+
     /* go to end of header */
     while(strncmp(str, "##}", 3)) {
       if(!fgetns(str, 257, im)) return -1;
     }
-    
+
 
     /* check header validity */
     if(im->xdim > 0 && im->ydim > 0 && im->zdim > 0 && im->vdim > 0 &&
@@ -462,7 +462,7 @@ CGAL_INLINE_FUNCTION
 int testInrimageHeader(char *magic,const char *) {
   if (!strcmp(magic, INR_MAGIC))
     return 0;
-  else 
+  else
     return -1;
 }
 CGAL_INLINE_FUNCTION
@@ -485,7 +485,7 @@ int writeInrimage(char *name,_image *im) {
     im->openMode = OM_CLOSE;
     return( res );
   }
-  
+
   if (!_writeInrimageData(im)) {
     fprintf(stderr, "writeInrimage: error: unable to write data of \'%s\'\n",
 	    name);
@@ -499,7 +499,7 @@ int writeInrimage(char *name,_image *im) {
   im->fd = NULL;
   im->openMode = OM_CLOSE;
 
-  return ( res );  
+  return ( res );
 }
 
 CGAL_INLINE_FUNCTION

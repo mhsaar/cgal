@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Michael Seel    <seel@mpi-sb.mpg.de>
 //                 Miguel Granados <granados@mpi-sb.mpg.de>
@@ -49,7 +49,7 @@ namespace CGAL {
 template<typename S> class SM_const_decorator;
 
 template <typename SNC_structure_>
-class SNC_const_decorator { 
+class SNC_const_decorator {
   typedef SNC_structure_                            Base;
  public:
   typedef SNC_structure_                            SNC_structure;
@@ -84,7 +84,7 @@ public:
 
   typedef typename SNC_structure::Vertex_const_iterator Vertex_const_iterator;
   typedef typename SNC_structure::Halfedge_const_iterator Halfedge_const_iterator;
-  typedef typename SNC_structure::Halffacet_const_iterator Halffacet_const_iterator; 
+  typedef typename SNC_structure::Halffacet_const_iterator Halffacet_const_iterator;
   typedef typename SNC_structure::Volume_const_iterator Volume_const_iterator;
   typedef typename SNC_structure::SVertex_const_iterator SVertex_const_iterator;
   typedef typename SNC_structure::SHalfedge_const_iterator SHalfedge_const_iterator;
@@ -118,9 +118,9 @@ public:
   typedef typename SNC_structure::Mark Mark;
   typedef typename SNC_structure::Infi_box Infi_box;
 
-  typedef typename SM_const_decorator::SHalfedge_around_svertex_const_circulator 
+  typedef typename SM_const_decorator::SHalfedge_around_svertex_const_circulator
                                        SHalfedge_around_svertex_const_circulator;
-  typedef typename SM_const_decorator::SHalfedge_around_sface_const_circulator 
+  typedef typename SM_const_decorator::SHalfedge_around_sface_const_circulator
                                        SHalfedge_around_sface_const_circulator;
 
  public:
@@ -136,26 +136,26 @@ public:
     sncp_ = S.sncp_;
   }
 
- protected:  
+ protected:
   void set_snc(const SNC_structure& W) {
     sncp_ = &W;
   }
 
  public:
   const SNC_structure* sncp() const { return sncp_; }
-  
+
   SFace_const_handle adjacent_sface(Halffacet_const_handle f) const {
     Halffacet_cycle_const_iterator fc(f->facet_cycles_begin());
     CGAL_assertion( fc != f->facet_cycles_end());
 
-    if ( fc.is_shalfedge() ) { 
+    if ( fc.is_shalfedge() ) {
       SHalfedge_const_handle se(fc);
       CGAL_assertion( facet(se) == f);
       CGAL_assertion( sface(se) != SFace_const_handle());
       CGAL_assertion( volume(sface(se->twin())) == f->incident_volume());
       return sface(se->twin());
-    } 
-    else 
+    }
+    else
       CGAL_error_msg( "Facet outer cycle entry point"
 			     "is not an SHalfedge? ");
     return SFace_const_handle(); // never reached
@@ -174,21 +174,21 @@ public:
   template <typename Visitor>
   void visit_shell_objects(SFace_const_handle f, Visitor& V) const;
 
-  Vertex_const_iterator   vertices_begin() const { 
+  Vertex_const_iterator   vertices_begin() const {
     return this->sncp()->vertices_begin(); }
-  Vertex_const_iterator   vertices_end()   const { 
+  Vertex_const_iterator   vertices_end()   const {
     return this->sncp()->vertices_end(); }
   Halfedge_const_iterator halfedges_begin()const {
     return this->sncp()->halfedges_begin(); }
-  Halfedge_const_iterator halfedges_end()  const { 
+  Halfedge_const_iterator halfedges_end()  const {
     return this->sncp()->halfedges_end(); }
-  Halffacet_const_iterator halffacets_begin() const { 
+  Halffacet_const_iterator halffacets_begin() const {
     return this->sncp()->halffacets_begin(); }
-  Halffacet_const_iterator halffacets_end() const { 
+  Halffacet_const_iterator halffacets_end() const {
     return this->sncp()->halffacets_end(); }
-  Volume_const_iterator   volumes_begin() const   { 
+  Volume_const_iterator   volumes_begin() const   {
     return this->sncp()->volumes_begin(); }
-  Volume_const_iterator   volumes_end()   const   { 
+  Volume_const_iterator   volumes_end()   const   {
     return this->sncp()->volumes_end(); }
   SHalfedge_const_iterator shalfedges_begin() const {
     return this->sncp()->shalfedges_begin(); }
@@ -210,17 +210,17 @@ public:
     return c->shells_end();
   }
 
-  Size_type number_of_vertices() const  
+  Size_type number_of_vertices() const
   { return this->sncp()->number_of_vertices(); }
-  Size_type number_of_halfedges() const 
+  Size_type number_of_halfedges() const
   { return this->sncp()->number_of_halfedges(); }
-  Size_type number_of_edges() const     
+  Size_type number_of_edges() const
   { return this->sncp()->number_of_edges(); }
-  Size_type number_of_halffacets() const    
+  Size_type number_of_halffacets() const
   { return this->sncp()->number_of_halffacets();}
-  Size_type number_of_facets() const    
+  Size_type number_of_facets() const
   { return this->sncp()->number_of_facets();}
-  Size_type number_of_volumes() const   
+  Size_type number_of_volumes() const
   { return this->sncp()->number_of_volumes();}
   Size_type number_of_shalfedges() const
   { return this->sncp()->number_of_shalfedges();}
@@ -262,19 +262,19 @@ public:
   }
   static bool is_standard_kernel() { return Infi_box::standard_kernel(); }
   static bool is_extended_kernel() { return Infi_box::extended_kernel(); }
-  static void set_size_of_infimaximal_box(const typename Infi_box::NT& size) { 
-    Infi_box::set_size_of_infimaximal_box(size); 
+  static void set_size_of_infimaximal_box(const typename Infi_box::NT& size) {
+    Infi_box::set_size_of_infimaximal_box(size);
   }
 
   typedef CGAL::SM_point_locator<SM_const_decorator>         SM_point_locator;
 
-  Halffacet_const_handle get_visible_facet( const Vertex_const_handle v, 
+  Halffacet_const_handle get_visible_facet( const Vertex_const_handle v,
 				      const Ray_3& ray) const
     /*{\Mop when one shoot a ray |ray| in order to find the facet below to
       an object, and vertex |v| is hit, we need to choose one of the facets
       in the adjacency list of |v| such that it could be 'seen' from the
       piercing point of the |ray| on the sphere map on |v|.  We make it just
-      locating the sphere facet |sf| pierced by |ray| and taking the adjacent 
+      locating the sphere facet |sf| pierced by |ray| and taking the adjacent
       facet to one of the sphere segments on the boundary of |sf|.
       \precondition |ray| target is on |v| and the intersection between
       |ray| and the 2-skeleton incident to v is empty. }*/ {
@@ -284,9 +284,9 @@ public:
     CGAL_assertion( ray.has_on(v->point()));
     Sphere_point sp(ray.source() - v->point());
     CGAL_NEF_TRACEN( "Locating "<<sp <<" in "<<v->point());
-    CGAL_assertion(Infi_box::degree(sp.hx()) < 2 && 
-		   Infi_box::degree(sp.hy()) < 2 && 
-		   Infi_box::degree(sp.hz()) < 2 && 
+    CGAL_assertion(Infi_box::degree(sp.hx()) < 2 &&
+		   Infi_box::degree(sp.hy()) < 2 &&
+		   Infi_box::degree(sp.hz()) < 2 &&
 		   Infi_box::degree(sp.hw()) == 0);
     sp = Infi_box::simplify(sp);
     CGAL_NEF_TRACEN( "Locating "<<sp <<" in "<<v->point());
@@ -297,11 +297,11 @@ public:
     if(!CGAL::assign(sf,o)) {
       SHalfedge_const_handle se;
       if(CGAL::assign(se,o))
-	std::cerr << "on sedge " << PH(se) 
+	std::cerr << "on sedge " << PH(se)
 		  << " on facet " << se->facet()->plane() << std::endl;
       SVertex_const_handle sv;
       if(CGAL::assign(sv,o))
-	std::cerr << "on svertex " << sv->point() << std::endl; 
+	std::cerr << "on svertex " << sv->point() << std::endl;
       CGAL_error_msg( "it is not possible to decide which one is a visible facet (if any)");
       return Halffacet_const_handle();
     }
@@ -318,7 +318,7 @@ public:
 	CGAL_NEF_TRACEN( "adjacent facet found (SEdges cycle).");
 	CGAL_NEF_TRACEN("se"<<PH(se));
 	CGAL_NEF_TRACEN(se->facet()->plane() <<"/"<<
-	       se->snext()->facet()->plane()  <<"/"<< 
+	       se->snext()->facet()->plane()  <<"/"<<
 	       se->snext()->snext()->facet()->plane());
 	f_visible = se->twin()->facet();
 	CGAL_NEF_TRACEN("f_visible"<< f_visible->plane());
@@ -326,7 +326,7 @@ public:
       else if (fc.is_shalfloop()) {
 	SHalfloop_const_handle sl(fc);
 	SM_const_decorator SD;
-	CGAL_NEF_TRACEN( "adjacent facet found (SHalfloop cycle)."<< sl->circle() 
+	CGAL_NEF_TRACEN( "adjacent facet found (SHalfloop cycle)."<< sl->circle()
 			 << " with facet "<< sl->facet()->plane());
 	f_visible = sl->twin()->facet();
 	CGAL_NEF_TRACEN("f_visible"<< f_visible->plane());
@@ -349,27 +349,27 @@ public:
   Halffacet_const_handle get_visible_facet( const Halfedge_const_handle e,
                                       const Ray_3& ray) const {
    //{\Mop when one shoot a ray |ray| in order to find the facet below to
-   //  an object, and an edge |e| is hit, we need to choose one of the two 
+   //  an object, and an edge |e| is hit, we need to choose one of the two
    //  facets in the adjacency list of |e| that could be 'seen'  from the
    //  piercing point of the |ray| on the local (virtual) view  of |e|
-   //  \precondition |ray| target belongs to |e|. } 
+   //  \precondition |ray| target belongs to |e|. }
 
     SM_const_decorator SD(&*e->source());
     if( SD.is_isolated(e))
       return Halffacet_const_handle();
-    
+
     // We search for the plane in the adjacency list of e, which is closest
     // to the ray. The cross product of the direction of e and the orthogonal
-    // vector of a plane gives us a vector vec0/vec1 on the plane of the facet 
+    // vector of a plane gives us a vector vec0/vec1 on the plane of the facet
     // and orthogonal to e, pointing inside of the facet.
 
     Vector_3 ev(segment(e).to_vector()), rv(ray.to_vector());
     SHalfedge_around_svertex_const_circulator sh(SD.first_out_edge(e));
-    Halffacet_const_handle res = sh->facet(); 
+    Halffacet_const_handle res = sh->facet();
     Vector_3 vec0(cross_product(ev,res->plane().orthogonal_vector()));
     /* // probably incorrect assertion
     CGAL_assertion_code
-      (Sphere_segment _ess( SD.source(sh)->point(), 
+      (Sphere_segment _ess( SD.source(sh)->point(),
 			    SD.source(next(sh))->point(),
 			    SD.circle(sh)));
     CGAL_assertion( _ess.has_on(vec0));
@@ -377,8 +377,8 @@ public:
     SHalfedge_around_svertex_const_circulator send(sh);
     CGAL_NEF_TRACEN("initial face candidate "<< res->plane()<<" with vector  "<<vec0);
 
-    // We compare the vectors vec0/vec1 of the facets. The one that is nearest 
-    // to pointing in the opposite direction of the ray, is chosen. The 
+    // We compare the vectors vec0/vec1 of the facets. The one that is nearest
+    // to pointing in the opposite direction of the ray, is chosen. The
     // respective facet is the nearest to the ray.
 
     sh++;
@@ -389,14 +389,14 @@ public:
       if(sk0<=FT(0) && sk1>=FT(0))
         continue;
       if(sk0>=FT(0) && sk1<=FT(0)) {
-        res = sh->facet(); 
+        res = sh->facet();
 	vec0 = vec1;
 	continue;
       }
 
-      // We have to comapare the two skalar products sk0 and sk1. Therefore 
+      // We have to comapare the two skalar products sk0 and sk1. Therefore
       // we have to normalize the input vectors vec0 and vec1, which means
-      // that we have to divide them by their lengths len0 and len1. 
+      // that we have to divide them by their lengths len0 and len1.
       // To cicumvent irrational numbers, we sqaure the whole inequality.
 
       FT len0 = vec0.x()*vec0.x()+vec0.y()*vec0.y()+vec0.z()*vec0.z();
@@ -413,9 +413,9 @@ public:
 	vec0 = vec1;
       }
     }
- 
+
     // We have to check which of the two halffacet is visible from
-    // the ray. 
+    // the ray.
 
     if(rv*res->plane().orthogonal_vector() > FT(0))
       res = res->twin();
@@ -423,9 +423,9 @@ public:
     CGAL_NEF_TRACEN("return "<<res->plane());
     return res; // never reached
   }
-  
+
   Halffacet_const_handle get_visible_facet(Halffacet_const_handle f,
-				      const Ray_3& ray) const 
+				      const Ray_3& ray) const
     /*{\Mop when one shoot a ray |ray| in order to find the facet below to
       an object, and a facet |f| is hit, we need to choose the right facet
       from the halffacet pair |f| that  could be 'seen'  from the
@@ -440,13 +440,13 @@ public:
     return f_visible;
   }
 
-  Halffacet_const_handle get_visible_facet( const Vertex_const_handle v, 
-				      const Segment_3& ray) const 
+  Halffacet_const_handle get_visible_facet( const Vertex_const_handle v,
+				      const Segment_3& ray) const
     /*{\Mop when one shoots a ray |ray| in order to find the facet below to
       an object, and vertex |v| is hit, we need to choose one of the facets
       in the adjacency list of |v| such that it could be 'seen' from the
       piercing point of the |ray| on the sphere map on |v|.  We make it just
-      locating the sphere facet |sf| pierced by |ray| and taking the adjacent 
+      locating the sphere facet |sf| pierced by |ray| and taking the adjacent
       facet to one of the sphere segments on the boundary of |sf|.
       \precondition |ray| target is on |v| and the intersection between
       |ray| and the 2-skeleton incident to v is empty. }*/ {
@@ -456,9 +456,9 @@ public:
     CGAL_assertion( ray.has_on(v->point()));
     Sphere_point sp(ray.source() - v->point());
     CGAL_NEF_TRACEN( "Locating "<<sp <<" in "<<v->point());
-    CGAL_assertion(Infi_box::degree(sp.hx()) < 2 && 
-		   Infi_box::degree(sp.hy()) < 2 && 
-		   Infi_box::degree(sp.hz()) < 2 && 
+    CGAL_assertion(Infi_box::degree(sp.hx()) < 2 &&
+		   Infi_box::degree(sp.hy()) < 2 &&
+		   Infi_box::degree(sp.hz()) < 2 &&
 		   Infi_box::degree(sp.hw()) == 0);
     sp = Infi_box::simplify(sp);
     CGAL_NEF_TRACEN( "Locating "<<sp <<" in "<<v->point());
@@ -477,7 +477,7 @@ public:
     }
     else {
       if (fc.is_shalfedge()) {
-      SHalfedge_const_handle se(fc); 
+      SHalfedge_const_handle se(fc);
       CGAL_NEF_TRACEN( "adjacent facet found (SEdges cycle).");
 	CGAL_NEF_TRACEN("se"<<PH(se));
 	f_visible = se->twin()->facet();
@@ -502,10 +502,10 @@ public:
   Halffacet_const_handle get_visible_facet( const Halfedge_const_handle e,
                                       const Segment_3& ray) const {
     //{\Mop when one shoot a ray |ray| in order to find the facet below to
-    //  an object, and an edge |e| is hit, we need to choose one of the two 
+    //  an object, and an edge |e| is hit, we need to choose one of the two
    //   facets in the adjacency list of |e| that could be 'seen'  from the
    //   piercing point of the |ray| on the local (virtual) view  of |e|
-   //   \precondition |ray| target belongs to |e|. } 
+   //   \precondition |ray| target belongs to |e|. }
 
     CGAL_error();
 
@@ -513,14 +513,14 @@ public:
     if( SD.is_isolated(e))
       return Halffacet_const_handle();
 
-    Halffacet_const_handle res = facet(sh);    
+    Halffacet_const_handle res = facet(sh);
 
     Vector_3 ed(segment(e).to_vector());
     Vector_3 ev(segment(e).to_vector()), rv(ray.to_vector());
     SHalfedge_around_svertex_const_circulator sh(SD.first_out_edge(e)), send(sh);
     Vector_3 vec0(cross_product(ev,res->plane().orthogonal_vector()));
     CGAL_NEF_TRACEN("initial face candidate "<< res->plane());
-   
+
     sh++;
     CGAL_For_all(sh,send) {
     Vector_3 vec1(cross_product(ev,sh->plane().orthogonal_vector()));
@@ -535,7 +535,7 @@ public:
       RT len0 = vec0.x()*vec0.x()+vec0.y()*vec0.y()+vec0.z()*vec0.z();
       RT len1 = vec1.x()*vec1.x()+vec1.y()*vec1.y()+vec1.z()*vec1.z();
       RT sq0 = sk0 * sk0;
-      RT sq1 = sk1 * sk1;     
+      RT sq1 = sk1 * sk1;
       RT diff = len0*sq1 - len1*sq0;
 
       if((sk0 > 0 && diff<0) || (sk0 < 0 && diff>0))
@@ -547,13 +547,13 @@ public:
   */
 
   Halffacet_const_handle get_visible_facet( const Halffacet_const_handle f,
-				      const Segment_3& ray) const 
+				      const Segment_3& ray) const
     //{\Mop when one shoot a ray |ray| in order to find the facet below to
     //  an object, and a facet |f| is hit, we need to choose the right facet
     //  from the halffacet pair |f| that  could be 'seen'  from the
     //  piercing point of the |ray| on the local (virtual) view  of |f|.
     //  \precondition |ray| target belongs to |f| and the intersection between
-    //  |ray| and is not coplanar with |f|. } 
+    //  |ray| and is not coplanar with |f|. }
     {
       Halffacet_const_handle f_visible = f;
       CGAL_assertion( !f_visible->plane().has_on(ray.source()));
@@ -568,7 +568,7 @@ template <typename EW>
 template <typename Visitor>
 void SNC_const_decorator<EW>::
 visit_shell_objects(SFace_const_handle f, Visitor& V) const
-{ 
+{
   std::list<SFace_const_handle> SFaceCandidates;
   std::list<Halffacet_const_handle> FacetCandidates;
   CGAL::Unique_hash_map<SFace_const_handle,bool> DoneSF(false);
@@ -593,7 +593,7 @@ visit_shell_objects(SFace_const_handle f, Visitor& V) const
             SFaceCandidates.push_back(she->incident_sface());
             DoneSF[she->incident_sface()] = true;
           }
-        } else if (fc.is_shalfloop() ) { 
+        } else if (fc.is_shalfloop() ) {
 	  SHalfloop_const_handle l(fc);
 	  SHalfloop_const_handle ll = l->twin();
           if ( DoneSF[ll->incident_sface()] ) continue;
@@ -611,7 +611,7 @@ visit_shell_objects(SFace_const_handle f, Visitor& V) const
       DoneV[sf->center_vertex()] = true;
       //      SVertex_const_handle sv;
       SM_const_decorator SD(&*sf->center_vertex());
-      /*      
+      /*
       CGAL_forall_svertices(sv,SD){
 	if(SD.is_isolated(sv) && !DoneSV[sv])
 	  V.visit(sv);
@@ -622,7 +622,7 @@ visit_shell_objects(SFace_const_handle f, Visitor& V) const
         if (fc.is_shalfedge() ) {
 	  SHalfedge_const_handle e(fc);
 	  SHalfedge_around_sface_const_circulator ec(e),ee(e);
-          CGAL_For_all(ec,ee) { 
+          CGAL_For_all(ec,ee) {
 	    V.visit(SHalfedge_const_handle(ec));
             SVertex_const_handle vv = ec->twin()->source();
             if ( !SD.is_isolated(vv) && !DoneSV[vv] ) {
@@ -635,7 +635,7 @@ visit_shell_objects(SFace_const_handle f, Visitor& V) const
           }
         } else if (fc.is_svertex() ) {
 	  SVertex_const_handle v(fc);
-          if ( DoneSV[v] ) continue; 
+          if ( DoneSV[v] ) continue;
           V.visit(v); // report edge
 	  V.visit(v->twin());
           DoneSV[v] = DoneSV[v->twin()] = true;
@@ -647,7 +647,7 @@ visit_shell_objects(SFace_const_handle f, Visitor& V) const
 	  //	  SFace_const_handle fo;
 	  //	  fo = v->twin()->incident_sface();
 	  /*
-	  if(SD.is_isolated(v)) 
+	  if(SD.is_isolated(v))
 	    fo = v->source()->sfaces_begin();
 	  else
 	    fo = v->twin()->incident_sface();

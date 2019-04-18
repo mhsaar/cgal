@@ -15,7 +15,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
-// 
+//
 //
 // Author(s)     : Sven Schoenherr
 //                 Bernd Gaertner <gaertner@inf.ethz.ch>
@@ -52,9 +52,9 @@ ET QP_solver<Q, ET, Tags>::variable_numerator_value(int i) const
   // Returns the current value of an *original* variable.
   CGAL_qpe_assertion( 0 <= i && i < qp_n );
   if (check_tag(Is_nonnegative())) {
-    if (in_B[i] < 0) 
+    if (in_B[i] < 0)
       return et0;
-    else 
+    else
       return x_B_O[in_B[i]];
   }
 
@@ -129,10 +129,10 @@ void  QP_solver<Q, ET, Tags>::
 multiply__A_CxN_O(Value_iterator out) const
 {
   CGAL_qpe_assertion(!check_tag(Is_nonnegative()));
-  
+
   // initialize with zero vector:
   std::fill_n(out, C.size(), et0);
-  
+
   for (int i = 0; i < qp_n; ++i)
     if (!is_basic(i)) {
       const ET x_i = nonbasic_original_variable_value(i);
@@ -163,7 +163,7 @@ multiply__2D_OxN_O(Value_iterator out) const
 
   // initialize with zero vector:
   std::fill_n(out, B_O.size(), et0);
-  
+
   for (int row_it = 0; row_it < qp_n; ++row_it, ++out) {
     D_pairwise_accessor d_row(qp_D, row_it);
     for (int i = 0; i < qp_n; ++i)
@@ -184,7 +184,7 @@ multiply__A_S_BxN_O(Value_iterator out) const
 {
   // initialize with zero vector:
   std::fill_n(out, S_B.size(), et0);
-  
+
   for (int i = 0; i < qp_n; ++i)
     if (!is_basic(i)) {
       const ET x_i = nonbasic_original_variable_value(i);
