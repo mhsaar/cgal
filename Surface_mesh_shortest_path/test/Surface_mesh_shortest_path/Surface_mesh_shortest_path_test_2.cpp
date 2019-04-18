@@ -11,11 +11,8 @@
 
 #include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
-#include <CGAL/IO/Polyhedron_iostream.h>
 
 #include <CGAL/boost/graph/iterator.h>
-#include <CGAL/boost/graph/properties_Polyhedron_3.h>
-#include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
 
 #include <CGAL/Surface_mesh_shortest_path/Surface_mesh_shortest_path_traits.h>
 #include <CGAL/Surface_mesh_shortest_path/Surface_mesh_shortest_path.h>
@@ -106,8 +103,8 @@ int main(int argc, char* argv[])
 
   for (size_t i = 0; i < numTests; ++i)
   {
-    size_t startVertexIndex = rand.get_int(0, vertices.size());
-    size_t endVertexIndex = rand.get_int(0, vertices.size());
+    size_t startVertexIndex = rand.get_int(0, static_cast<int>(vertices.size()));
+    size_t endVertexIndex = rand.get_int(0, static_cast<int>(vertices.size()));
 
     vertex_descriptor startVertex = vertices[startVertexIndex];
     vertex_descriptor endVertex = vertices[endVertexIndex];
@@ -192,8 +189,8 @@ int main(int argc, char* argv[])
 
   for (size_t i = 0; i < numTests; ++i)
   {
-    size_t startFaceIndex = rand.get_int(0, faces.size());
-    size_t endFaceIndex = rand.get_int(0, faces.size());
+    size_t startFaceIndex = rand.get_int(0, static_cast<int>(faces.size()));
+    size_t endFaceIndex = rand.get_int(0, static_cast<int>(faces.size()));
 
     face_descriptor startFace = faces[startFaceIndex];
     face_descriptor endFace = faces[endFaceIndex];

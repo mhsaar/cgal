@@ -14,11 +14,15 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)	 : Oren Nechushtan <theoren@math.tau.ac.il>
 #ifndef CGAL_TD_TRAITS_H
 #define CGAL_TD_TRAITS_H
+
+#include <CGAL/license/Arrangement_on_surface_2.h>
+
 
 #include <CGAL/Arr_point_location/Td_active_trapezoid.h>
 #include <CGAL/Arr_point_location/Td_inactive_trapezoid.h>

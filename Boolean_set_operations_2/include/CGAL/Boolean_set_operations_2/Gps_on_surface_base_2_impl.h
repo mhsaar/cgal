@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 //
 // Author(s)     : Baruch Zukerman <baruchzu@post.tau.ac.il>
@@ -23,6 +24,9 @@
 
 #ifndef CGAL_GPS_ON_SURFACE_BASE_2_IMPL_H
 #define CGAL_GPS_ON_SURFACE_BASE_2_IMPL_H
+
+#include <CGAL/license/Boolean_set_operations_2.h>
+
 
 #include <CGAL/iterator.h>
 #include <CGAL/function_objects.h>
@@ -444,9 +448,9 @@ template <class Traits_, class TopTraits_, class ValidationPolicy>
 {
   typename std::iterator_traits<PolygonIter>::value_type pgn;
   //check validity of all polygons
-  for( ; p_begin != p_end; ++p_begin)
+  for(PolygonIter pitr = p_begin; pitr != p_end; ++pitr)
   {
-    ValidationPolicy::is_valid(*p_begin, *m_traits);
+    ValidationPolicy::is_valid(*pitr, *m_traits);
   }
 
   _insert(p_begin, p_end, pgn);

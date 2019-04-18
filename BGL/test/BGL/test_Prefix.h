@@ -10,18 +10,18 @@
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 
+#include <CGAL/Polyhedron_3.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
-#include <CGAL/IO/Polyhedron_iostream.h>
-
-#include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
+#include <CGAL/Linear_cell_complex_for_bgl_combinatorial_map_helper.h>
+#include <CGAL/boost/graph/graph_traits_Linear_cell_complex_for_combinatorial_map.h>
+#include <CGAL/boost/graph/properties_Linear_cell_complex_for_combinatorial_map.h>
 
 #ifdef CGAL_USE_SURFACE_MESH
 #include <CGAL/Surface_mesh.h>
 #include <CGAL/Surface_mesh/IO.h>
-
-#include <CGAL/boost/graph/graph_traits_Surface_mesh.h>
-#include <CGAL/boost/graph/properties_Surface_mesh.h>
 #endif
+
+#include <CGAL/boost/graph/io.h>
 
 // ATTN: If you change this kernel remember to also hack
 // properties_PolyMesh_ArrayKernelT.h accordingly
@@ -32,6 +32,11 @@ typedef Kernel::Point_3  Point_3;
 typedef Kernel::Vector_3 Vector_3;
 typedef Kernel::Triangle_3 Triangle_3;
 typedef Kernel::Iso_cuboid_3 Iso_cuboid_3;
+
+typedef CGAL::Linear_cell_complex_traits<3, Kernel> MyTraits;
+typedef CGAL::Linear_cell_complex_for_bgl_combinatorial_map_helper
+          <2, 3, MyTraits>::type LCC;
+
 
 #ifdef CGAL_USE_SURFACE_MESH
 typedef CGAL::Surface_mesh<Point_3> SM;
@@ -97,18 +102,17 @@ static const char* data[] =
   "data/rombus.off", "data/tetrahedron.off", "data/triangle.off",
   "data/triangular_hole.off", "data/cube.off" };
 
+/*
 #if defined(CGAL_USE_OPENMESH)
 bool read_a_mesh(OMesh& s, const std::string& str) {
   return OpenMesh::IO::read_mesh(s, str);
 }
 #endif
+*/
 
-#if defined(CGAL_USE_SURFACE_MESH)
-// quick hack to generically read a file
-bool read_a_mesh(SM& s, const std::string& str) {
-  return CGAL::read_off(s, str);
-}
-#endif
+template<typename T>
+bool read_a_mesh(T& m, const std::string& str)
+{ return CGAL::read_off(str, m); }
 
 bool read_a_mesh(Polyhedron& p, const std::string& str) {
   std::ifstream in(str.c_str());
@@ -146,11 +150,14 @@ std::vector<OMesh> omesh_data()
 { return t_data<OMesh>(); }
 #endif
 
+std::vector<LCC> lcc_data()
+{ return t_data<LCC>(); }
+
 template <typename Graph>
 struct Surface_fixture_1 {
   Surface_fixture_1() {
     assert(read_a_mesh(m, "data/fixture1.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
     typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));
 
@@ -199,7 +206,7 @@ template <typename Graph>
 struct Surface_fixture_2 {
   Surface_fixture_2() {
     assert(read_a_mesh(m, "data/fixture2.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
     typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));
@@ -260,7 +267,7 @@ template <typename Graph>
 struct Surface_fixture_3 {
   Surface_fixture_3() {
     assert(read_a_mesh(m, "data/fixture3.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
     typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));
@@ -288,7 +295,7 @@ struct Surface_fixture_3 {
     assert(z != boost::graph_traits<Graph>::null_vertex());
 
     f1 = CGAL::is_border(halfedge(u, m),m) ? face(opposite(halfedge(u, m), m), m) : face(halfedge(u, m), m);
-    f2 = CGAL::is_border(halfedge(u, m),m) ? face(opposite(halfedge(z, m), m), m) : face(halfedge(z, m), m);
+    f2 = CGAL::is_border(halfedge(z, m),m) ? face(opposite(halfedge(z, m), m), m) : face(halfedge(z, m), m);
 
     assert(f1 != boost::graph_traits<Graph>::null_face());
     assert(f2 != boost::graph_traits<Graph>::null_face());
@@ -306,7 +313,7 @@ template <typename Graph>
 struct Surface_fixture_4 {
   Surface_fixture_4() {
     assert(read_a_mesh(m, "data/fixture4.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
    typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));
@@ -341,7 +348,7 @@ template <typename Graph>
 struct Surface_fixture_5 {
   Surface_fixture_5() {
     assert(read_a_mesh(m, "data/add_face_to_border.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
    typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));
@@ -371,7 +378,7 @@ template <typename Graph>
 struct Surface_fixture_6 {
   Surface_fixture_6() {
     assert(read_a_mesh(m, "data/quad.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
     typename boost::graph_traits<Graph>::halfedge_descriptor h;
     
@@ -390,7 +397,7 @@ template <typename Graph>
 struct Surface_fixture_7 {
   Surface_fixture_7() {
     assert(read_a_mesh(m, "data/cube.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
     h = *(halfedges(m).first);    
   }
@@ -403,7 +410,7 @@ template <typename Graph>
 struct Surface_fixture_8 {
   Surface_fixture_8() {
     assert(read_a_mesh(m, "data/fixture5.off"));
-    assert(CGAL::is_valid(m));
+    assert(CGAL::is_valid_polygon_mesh(m));
 
    typename boost::property_map<Graph, CGAL::vertex_point_t>::const_type
       pm = get(CGAL::vertex_point, const_cast<const Graph&>(m));

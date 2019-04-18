@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Marc Glisse
 
@@ -24,7 +25,7 @@
 #if defined(BOOST_MSVC)
 #  pragma warning(push)
 #  pragma warning(disable:4003) // not enough actual parameters for macro 'BOOST_PP_EXPAND_I'
-                                // http://lists.boost.org/boost-users/2014/11/83291.php
+                                // https://lists.boost.org/boost-users/2014/11/83291.php
 #endif 
 
 #ifndef CGAL_EIGEN3_ENABLED

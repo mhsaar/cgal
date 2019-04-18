@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Panagiotis Cheilaris, Sandeep Kumar Dey, Evanthia Papadopoulou
@@ -21,6 +22,10 @@
 
 #ifndef CGAL_SEGMENT_DELAUNAY_GRAPH_LINF_2_H
 #define CGAL_SEGMENT_DELAUNAY_GRAPH_LINF_2_H
+
+#include <CGAL/license/Segment_Delaunay_graph_Linf_2.h>
+
+#include <CGAL/disable_warnings.h>
 
 #include <iostream>
 #include <vector>
@@ -38,9 +43,9 @@
 #include <CGAL/Segment_Delaunay_graph_vertex_base_2.h>
 #include <CGAL/Segment_Delaunay_graph_face_base_2.h>
 #include <CGAL/Triangulation_data_structure_2.h>
+#include <CGAL/internal/TDS_2/edge_list.h>
 
 #include <CGAL/Segment_Delaunay_graph_2/in_place_edge_list.h>
-#include <CGAL/Segment_Delaunay_graph_2/edge_list.h>
 #include <CGAL/Segment_Delaunay_graph_2/Traits_wrapper_2.h>
 #include <CGAL/Segment_Delaunay_graph_2/Constructions_C2.h>
 #include <CGAL/Segment_Delaunay_graph_Linf_2/Constructions_C2.h>
@@ -51,7 +56,7 @@
 #include <CGAL/spatial_sort.h>
 #include <CGAL/Spatial_sort_traits_adapter_2.h>
 
-#include <boost/iterator/counting_iterator.hpp>
+#include <CGAL/boost/iterator/counting_iterator.hpp>
 
 /*
   Conventions:
@@ -479,5 +484,6 @@ public:
 
 #include <CGAL/Segment_Delaunay_graph_Linf_2/Segment_Delaunay_graph_Linf_2_impl.h>
 
+#include <CGAL/enable_warnings.h>
 
 #endif // CGAL_SEGMENT_DELAUNAY_GRAPH_LINF_2_H

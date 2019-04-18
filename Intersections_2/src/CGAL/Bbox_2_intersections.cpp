@@ -18,16 +18,17 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 // 
 //
 // Author(s)     : Geert-Jan Giezeman
 
 #ifndef CGAL_HEADER_ONLY
 
-#include <CGAL/Bbox_2_Line_2_intersection.h>
-#include <CGAL/Bbox_2_Line_2_intersection_impl.h>
+#include <CGAL/Intersections_2/Bbox_2_Line_2.h>
+#include <CGAL/Intersections_2/internal/Bbox_2_Line_2_intersection_impl.h>
 
-#include <CGAL/Ray_2_Bbox_2_intersection.h>
-#include <CGAL/Ray_2_Bbox_2_intersection_impl.h>
+#include <CGAL/Intersections_2/Bbox_2_Ray_2.h>
+#include <CGAL/Intersections_2/internal/Ray_2_Bbox_2_intersection_impl.h>
 
 #endif // CGAL_HEADER_ONLY

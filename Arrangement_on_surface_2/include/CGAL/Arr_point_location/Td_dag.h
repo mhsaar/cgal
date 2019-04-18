@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Iddo Hanniel <hanniel@math.tau.ac.il>
@@ -23,6 +24,9 @@
 
 #ifndef CGAL_TD_DAG_H
 #define CGAL_TD_DAG_H
+
+#include <CGAL/license/Arrangement_on_surface_2.h>
+
 
 #include <CGAL/basic.h>
 #include <CGAL/number_utils.h>

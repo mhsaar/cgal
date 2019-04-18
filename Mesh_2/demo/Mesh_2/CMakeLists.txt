@@ -3,19 +3,19 @@
 
 project( Mesh_2_Demo )
 
-cmake_minimum_required(VERSION 2.8.11)
-if(POLICY CMP0043)
-  cmake_policy(SET CMP0043 OLD)
+cmake_minimum_required(VERSION 3.1)
+if(NOT POLICY CMP0070 AND POLICY CMP0053)
+  # Only set CMP0053 to OLD with CMake<3.10, otherwise there is a warning.
+  cmake_policy(SET CMP0053 OLD)
 endif()
- 
-find_package(CGAL QUIET)
-include( ${CGAL_USE_FILE} )
 
-include_directories(BEFORE ../../include)
+find_package(CGAL QUIET)
+
 include_directories(BEFORE ../../../Triangulation_2/include)
 
 
 if ( CGAL_FOUND )
+  include(${CGAL_USE_FILE})
 
   # conform target
   add_executable  (conform conform.cpp)
@@ -26,6 +26,10 @@ if ( CGAL_FOUND )
   add_executable  (mesh mesh.cpp)
   target_link_libraries(mesh ${CGAL_LIBRARIES} ${CGAL_3RD_PARTY_LIBRARIES} )
   add_to_cached_list( CGAL_EXECUTABLE_TARGETS mesh )
+
+  include(${CGAL_MODULES_DIR}/CGAL_add_test.cmake)
+  cgal_add_compilation_test(conform)
+  cgal_add_compilation_test(mesh)
 
 else()
 

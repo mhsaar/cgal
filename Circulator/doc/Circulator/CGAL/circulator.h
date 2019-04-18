@@ -295,7 +295,7 @@ template <class C> C::size_type circulator_size(C c);
 namespace CGAL {
 
 /*!
-\ingroup PkgHandlesAndCirculators
+\ingroup PkgHandlesAndCirculatorsRef
 
 The circulator traits class distinguishes between circulators and
 iterators. It defines a local type `category` that is identical to the
@@ -340,8 +340,7 @@ void bar( IC i, IC j) { // calls the correct function
 
 */
 template< typename C >
-class Circulator_traits {
-public:
+struct Circulator_traits {
 
 /// \name Types
 /// @{

@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
@@ -49,7 +50,7 @@ namespace CGAL {
       typedef CGAL::Dart<d, LCC> Dart;
       
       typedef CGAL::Cell_attribute_with_point<LCC> Vertex_attrib;
-      typedef CGAL::cpp11::tuple<Vertex_attrib>    Attributes;
+      typedef std::tuple<Vertex_attrib>    Attributes;
     };
   };
 #else
@@ -60,7 +61,7 @@ namespace CGAL {
     struct Dart_wrapper
     {
       typedef CGAL::Cell_attribute_with_point<LCC> Vertex_attrib;
-      typedef CGAL::cpp11::tuple<Vertex_attrib>    Attributes;
+      typedef std::tuple<Vertex_attrib>    Attributes;
     };
   };
 #endif

@@ -2,16 +2,14 @@
 
 #include "test_Prefix.h"
 #include <boost/numeric/conversion/cast.hpp>
-#include <boost/foreach.hpp>
 #include <boost/unordered_set.hpp>
 #include <CGAL/use.h>
 
 typedef boost::unordered_set<std::size_t> id_map;
 
 template <typename Graph>
-void test_isolated_vertex(const Graph& g)
+void test_isolated_vertex()
 {
-  std::cerr << typeid(g).name() << std::endl;
   Graph G;
   typedef boost::graph_traits< Graph > Traits;
   typedef typename Traits::vertex_descriptor vertex_descriptor;
@@ -255,7 +253,7 @@ void test_faces(const G& g)
 template<typename G>
 void test_read(const G& g)
 {
-  assert(CGAL::is_valid(g));
+  assert(CGAL::is_valid_polygon_mesh(g));
 }
 
 
@@ -263,7 +261,7 @@ template <typename Graph>
 void
 test(const std::vector<Graph>& graphs)
 {
-  BOOST_FOREACH(Graph p, graphs){
+  for(const Graph& p : graphs){
     test_edge_iterators(p);
     test_read(p);
     test_vertex_iterators(p);
@@ -274,14 +272,16 @@ test(const std::vector<Graph>& graphs)
     test_faces(p);
     test_halfedge_around_vertex_iterator(p);
     test_halfedge_around_face_iterator(p);
-    test_isolated_vertex(p);
   }
+  test_isolated_vertex<Graph>();
 }
 
 int
 main()
 {
   test(poly_data());
+
+  test(lcc_data());
 
 #if defined(CGAL_USE_SURFACE_MESH)
   test(sm_data());

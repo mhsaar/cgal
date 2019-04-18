@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 //
 // Author(s)     : Laurent Rineau and Sebastien Loriot
@@ -22,10 +23,14 @@
 #ifndef CGAL_POLYGON_MESH_PROCESSING_ORIENT_POLYGON_SOUP
 #define CGAL_POLYGON_MESH_PROCESSING_ORIENT_POLYGON_SOUP
 
+#include <CGAL/license/Polygon_mesh_processing/orientation.h>
+
+#include <CGAL/disable_warnings.h>
+
 #include <CGAL/tuple.h>
 #include <CGAL/array.h>
 #include <CGAL/assertions.h>
-#include <boost/foreach.hpp>
+#include <boost/container/flat_set.hpp>
 
 #include <set>
 #include <map>
@@ -54,7 +59,7 @@ struct Polygon_soup_orienter
 /// Container types
   typedef PointRange                                                     Points;
   typedef PolygonRange                                                 Polygons;
-  typedef std::map<V_ID_pair, std::set<P_ID> >                         Edge_map;
+  typedef std::map<V_ID_pair, boost::container::flat_set<P_ID> >       Edge_map;
   typedef typename Edge_map::iterator                         Edge_map_iterator;
   typedef std::set<V_ID_pair>                                      Marked_edges;
 
@@ -85,7 +90,7 @@ struct Polygon_soup_orienter
     marked_edges.insert(canonical_edge(i,j));
   }
 
-  static cpp11::array<V_ID,3>
+  static std::array<V_ID,3>
   get_neighbor_vertices(V_ID v_id, P_ID polygon_index, const Polygons& polygons)
   {
     std::size_t nbv = polygons[polygon_index].size(), pvid=0;
@@ -130,7 +135,7 @@ struct Polygon_soup_orienter
     V_ID old_index,
     V_ID new_index)
   {
-    BOOST_FOREACH(V_ID& i, polygons[polygon_id])
+    for(V_ID& i : polygons[polygon_id])
       if( i==old_index )
         i=new_index;
   }
@@ -143,7 +148,7 @@ struct Polygon_soup_orienter
     P_ID nb_polygons=polygons.size();
     for(P_ID ip=0; ip<nb_polygons; ++ip)
     {
-      BOOST_FOREACH(V_ID iv, polygons[ip])
+      for(V_ID iv : polygons[ip])
         incident_polygons_per_vertex[iv].push_back(ip);
     }
   }
@@ -325,7 +330,7 @@ struct Polygon_soup_orienter
       std::set<P_ID> visited_polygons;
 
       bool first_pass = true;
-      BOOST_FOREACH(P_ID p_id, incident_polygons)
+      for(P_ID p_id : incident_polygons)
       {
         if ( !visited_polygons.insert(p_id).second ) continue; // already visited
 
@@ -335,7 +340,7 @@ struct Polygon_soup_orienter
           vertices_to_duplicate.back().first=v_id;
         }
 
-        const cpp11::array<V_ID,3>& neighbors = get_neighbor_vertices(v_id,p_id,polygons);
+        const std::array<V_ID,3>& neighbors = get_neighbor_vertices(v_id,p_id,polygons);
 
         V_ID next = neighbors[2];
 
@@ -344,7 +349,7 @@ struct Polygon_soup_orienter
 
         do{
           P_ID other_p_id;
-          cpp11::tie(next, other_p_id) = next_cw_vertex_around_source(v_id, next, polygons, edges, marked_edges);
+          std::tie(next, other_p_id) = next_cw_vertex_around_source(v_id, next, polygons, edges, marked_edges);
           if (next==v_id) break;
           visited_polygons.insert(other_p_id);
           if( !first_pass)
@@ -357,7 +362,7 @@ struct Polygon_soup_orienter
           next = neighbors[0];
           do{
             P_ID other_p_id;
-            cpp11::tie(next, other_p_id) = next_ccw_vertex_around_target(next, v_id, polygons, edges, marked_edges);
+            std::tie(next, other_p_id) = next_ccw_vertex_around_target(next, v_id, polygons, edges, marked_edges);
             if (next==v_id) break;
             visited_polygons.insert(other_p_id);
             if( !first_pass)
@@ -371,11 +376,11 @@ struct Polygon_soup_orienter
 
     /// now duplicate the vertices
     typedef std::pair<V_ID, std::vector<P_ID> > V_ID_and_Polygon_ids;
-    BOOST_FOREACH(const V_ID_and_Polygon_ids& vid_and_pids, vertices_to_duplicate)
+    for(const V_ID_and_Polygon_ids& vid_and_pids : vertices_to_duplicate)
     {
       V_ID new_index = static_cast<V_ID>(points.size());
       points.push_back( points[vid_and_pids.first] );
-      BOOST_FOREACH(P_ID polygon_id, vid_and_pids.second)
+      for(P_ID polygon_id : vid_and_pids.second)
         replace_vertex_index_in_polygon(polygon_id, vid_and_pids.first, new_index);
     }
   }
@@ -399,20 +404,20 @@ struct Polygon_soup_orienter
       std::set<P_ID> visited_polygons;
 
       bool first_pass = true;
-      BOOST_FOREACH(P_ID p_id, incident_polygons)
+      for(P_ID p_id : incident_polygons)
       {
         if ( !visited_polygons.insert(p_id).second ) continue; // already visited
 
         if (!first_pass)
           return false; //there will be duplicate vertices
 
-        const cpp11::array<V_ID,3>& neighbors = get_neighbor_vertices(v_id,p_id,polygons);
+        const std::array<V_ID,3>& neighbors = get_neighbor_vertices(v_id,p_id,polygons);
 
         V_ID next = neighbors[2];
 
         do{
           P_ID other_p_id;
-          cpp11::tie(next, other_p_id) = next_cw_vertex_around_source(v_id, next, polygons, edges, marked_edges);
+          std::tie(next, other_p_id) = next_cw_vertex_around_source(v_id, next, polygons, edges, marked_edges);
           if (next==v_id) break;
           visited_polygons.insert(other_p_id);
         }
@@ -423,7 +428,7 @@ struct Polygon_soup_orienter
           next = neighbors[0];
           do{
             P_ID other_p_id;
-            cpp11::tie(next, other_p_id) = next_ccw_vertex_around_target(next, v_id, polygons, edges, marked_edges);
+            std::tie(next, other_p_id) = next_ccw_vertex_around_target(next, v_id, polygons, edges, marked_edges);
             if (next==v_id) break;
             visited_polygons.insert(other_p_id);
           }
@@ -438,12 +443,12 @@ struct Polygon_soup_orienter
 } // namespace internal
 
 /**
- * \ingroup PMP_repairing_grp
+ * \ingroup PMP_orientation_grp
  * tries to consistently orient a soup of polygons in 3D space.
  * When it is not possible to produce a combinatorial manifold surface,
  * some points are duplicated.
  * Because a polygon soup does not have any connectivity (each point
- * has as many occurences as the number of polygons it belongs to),
+ * has as many occurrences as the number of polygons it belongs to),
  * duplicating one point (or a pair of points)
  * amounts to duplicate the polygon to which it belongs.
  *
@@ -457,13 +462,13 @@ struct Polygon_soup_orienter
  * The algorithm is described in \cgalCite{gueziec2001cutting}.
  *
  * @tparam PointRange a model of the concepts `RandomAccessContainer`
- * and `BackInsertionSequence` whose value type is the point type
+ * and `BackInsertionSequence` whose value type is the point type.
  * @tparam PolygonRange a model of the concept `RandomAccessContainer`
  * whose value_type is a model of the concept `RandomAccessContainer`
  * whose value_type is `std::size_t`.
  *
- * @param points points of the soup of polygons. Some points might be pushed back to resolve
- *               non-manifold or non-orientability issues.
+ * @param points points of the soup of polygons. Some additional points might be pushed back to resolve
+ *               non-manifoldness or non-orientability issues.
  * @param polygons each element in the vector describes a polygon using the index of the points in `points`.
  *                 If needed the order of the indices of a polygon might be reversed.
  * @return `true`  if the orientation operation succeded.
@@ -484,5 +489,7 @@ bool orient_polygon_soup(PointRange& points,
 }
 
 } }//end namespace CGAL::Polygon_mesh_processing
+
+#include <CGAL/enable_warnings.h>
 
 #endif // CGAL_POLYGON_MESH_PROCESSING_ORIENT_POLYGON_SOUP

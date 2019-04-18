@@ -18,6 +18,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 //
 // Author(s)     : Andreas Fabri, Herve Bronnimann, Sylvain Pion
@@ -48,7 +49,7 @@ CGAL_INLINE_FUNCTION
 Geomview_stream::Geomview_stream(const Bbox_3 &bbox,
 				 const char *machine,
 				 const char *login)
-    : bb(bbox), vertex_color(BLACK), edge_color(BLACK), face_color(BLACK),
+  : bb(bbox), vertex_color(black()), edge_color(black()), face_color(black()),
       wired_flag(false), echo_flag(true), raw_flag(false),
       trace_flag(false), binary_flag(false),
       line_width(1)

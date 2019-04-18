@@ -18,6 +18,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 // 
 //
 // Author(s)     : Wieger Wesselink <wieger@cs.ruu.nl>
@@ -98,8 +99,9 @@ operator>>(std::istream &is, Polygon_2<Traits_P,Container_P>& p)
   if (is) {
       p.erase(p.vertices_begin(),p.vertices_end());
       for (int i=0; i<n; i++) {
-        is >> point;
-        p.push_back(point);
+        if(is >> point){
+          p.push_back(point);
+        }
       }
   }
  

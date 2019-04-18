@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Laurent RINEAU, Stephane Tayeb
@@ -21,6 +22,9 @@
 
 #ifndef CGAL_MESH_CELL_CRITERIA_3_H
 #define CGAL_MESH_CELL_CRITERIA_3_H
+
+#include <CGAL/license/Mesh_3.h>
+
 
 #include <CGAL/Mesh_3/mesh_standard_cell_criteria.h>
 
@@ -33,11 +37,11 @@ class Mesh_cell_criteria_3
 public:
   typedef Visitor_ Visitor;
   typedef typename Visitor::Cell_quality Cell_quality;
-  typedef typename Visitor::Cell_badness Cell_badness;
+  typedef typename Visitor::Is_cell_bad  Is_cell_bad;
 
+  typedef Mesh_3::Abstract_criterion<Tr,Visitor> Abstract_criterion;
 private:
   typedef Mesh_3::Criteria<Tr,Visitor> Criteria;
-  typedef Mesh_3::Abstract_criterion<Tr,Visitor> Abstract_criterion;
   
   typedef typename Tr::Cell_handle Cell_handle;
   typedef typename Tr::Geom_traits::FT FT;
@@ -78,13 +82,13 @@ public:
   ~Mesh_cell_criteria_3() { }
   
   /**
-   * @brief returns the badness of cell \c cell
+   * @brief returns whether the cell \c cell is bad or not.
+   * @param tr the triangulation within which \c cell lives
    * @param cell the cell
-   * @return the badness of \c cell
    */
-  Cell_badness operator()(const Cell_handle& cell) const
+  Is_cell_bad operator()(const Tr& tr, const Cell_handle& cell) const
   {
-    return criteria_(cell);
+    return criteria_(tr, cell);
   }
 
   void add(Abstract_criterion* criterion)

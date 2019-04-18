@@ -2,16 +2,12 @@
 
 project( Poisson_surface_reconstruction_3_Examples )
 
-cmake_minimum_required(VERSION 2.8.11)
-
+cmake_minimum_required(VERSION 3.1)
 
 # Find CGAL
 find_package(CGAL QUIET)
 
 if ( CGAL_FOUND )
-
-  include( ${CGAL_USE_FILE} )
-  include( CGAL_CreateSingleSourceCGALProgram )
 
   # VisualC++ optimization for applications dealing with large data
   if (MSVC)
@@ -35,6 +31,7 @@ if ( CGAL_FOUND )
     # Executables that require Eigen 3
     create_single_source_cgal_program( "poisson_reconstruction_example.cpp" )
     create_single_source_cgal_program( "poisson_reconstruction.cpp" )
+    create_single_source_cgal_program( "poisson_reconstruction_function.cpp" )
   else()
     message(STATUS "NOTICE: The examples need Eigen 3.1 (or greater) will not be compiled.")
   endif()

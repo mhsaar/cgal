@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
@@ -55,6 +56,10 @@
  * internal::Decrease_attribute_functor<CMap> to decrease by one the ref
  *    counting of a given i-attribute.
  *
+ * internal::Restricted_decrease_attribute_functor<CMap> to decrease by one the
+ *    ref counting of a given i-attribute, but without deleting attribute
+ *    having nomore dart associated with.
+ *
  * internal::Beta_functor<Dart, i...> to call several beta on the given dart.
  *   Indices are given as parameter of the run function.
  *
@@ -86,6 +91,9 @@
  *
  * internal::Cleanup_useless_attributes to erase all attributes having
  *   no more associated dart
+ *
+ * internal::Init_id initialize the id of an new element created in a compact
+ *   container, when the underlying type defines id (TODO Move in Compact container ?)
  */
 
 namespace CGAL
@@ -106,9 +114,9 @@ struct Swap_attributes_functor
   template<unsigned int i>
   static void run( CMap& cmap1,
                    CMap& cmap2)
-  { CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+  { std::get<CMap::Helper::template Dimension_index<i>::value>
         (cmap1.mattribute_containers).swap(
-          CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+          std::get<CMap::Helper::template Dimension_index<i>::value>
           (cmap2.mattribute_containers));
    }
 };
@@ -151,9 +159,9 @@ struct Call_split_functor
       run(amap.template get_attribute<i>(a1),
           amap.template get_attribute<i>(a2));
     // Dynamic version
-    if ( CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+    if ( std::get<CMap::Helper::template Dimension_index<i>::value>
          (amap.m_onsplit_functors) )
-      CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+      std::get<CMap::Helper::template Dimension_index<i>::value>
         (amap.m_onsplit_functors) (amap.template get_attribute<i>(a1),
                                     amap.template get_attribute<i>(a2));
   }
@@ -188,9 +196,9 @@ struct Call_merge_functor
       run(amap.template get_attribute<i>(a1),
           amap.template get_attribute<i>(a2));
     // Dynamic version
-    if ( CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+    if ( std::get<CMap::Helper::template Dimension_index<i>::value>
          (amap.m_onmerge_functors) )
-      CGAL::cpp11::get<CMap::Helper::template Dimension_index<i>::value>
+      std::get<CMap::Helper::template Dimension_index<i>::value>
         (amap.m_onmerge_functors) (amap.template get_attribute<i>(a1),
                                    amap.template get_attribute<i>(a2));
   }
@@ -321,7 +329,7 @@ struct Correct_invalid_attributes_functor
     unsigned int nb=0;
     bool found_dart = false;
 
-    for ( CGAL::CMap_dart_iterator_basic_of_cell<CMap,i>
+    for ( typename CMap::template Dart_of_cell_basic_range<i>::iterator
             it(amap, adart, amark); it.cont(); ++it, ++nb )
     {
       if ( a!=amap.template attribute<i>(it) )
@@ -458,6 +466,37 @@ struct Decrease_attribute_functor
   template <unsigned int i>
   static void run(CMap& amap, typename CMap::Dart_handle adart)
   { CGAL::internal::Decrease_attribute_functor_run<CMap,i>::run(amap, adart); }
+};
+// ****************************************************************************
+template<typename CMap, unsigned int i, typename T=
+         typename CMap::template Attribute_type<i>::type>
+struct Restricted_decrease_attribute_functor_run
+{
+  static void run(CMap& amap, typename CMap::Dart_handle adart)
+  {
+    if ( amap.template attribute<i>(adart)!=CMap::null_handle )
+    {
+      amap.template dec_attribute_ref_counting<i>(amap.template attribute<i>(adart));
+    }
+  }
+};
+/// Specialization for void attributes.
+template<typename CMap, unsigned int i>
+struct Restricted_decrease_attribute_functor_run<CMap, i, CGAL::Void>
+{
+  static void run(CMap&, typename CMap::Dart_handle)
+  {}
+};
+// ****************************************************************************
+/// Functor used to call restricted_decrease_attribute_ref_counting<i>
+/// on each i-cell attribute enabled
+template<typename CMap>
+struct Restricted_decrease_attribute_functor
+{
+  template <unsigned int i>
+  static void run(CMap& amap, typename CMap::Dart_handle adart)
+  { CGAL::internal::Restricted_decrease_attribute_functor_run<CMap,i>::
+        run(amap, adart); }
 };
 // ****************************************************************************
 /// Functor used to initialize all attributes to NULL.
@@ -945,7 +984,6 @@ struct Reverse_orientation_of_connected_component_functor<CMap, CGAL::Void>
 };
 // ****************************************************************************
 // Beta functor, used to combine several beta.
-#ifndef CGAL_CFG_NO_CPP0X_VARIADIC_TEMPLATES
 template<typename CMap, typename Dart_handle, typename ... Betas>
 struct Beta_functor;
 
@@ -997,7 +1035,22 @@ struct Beta_functor_static<CMap, Dart_handle, B, Betas...>
   { return Beta_functor_static<CMap, Dart_handle, Betas...>::
         run(AMap, AMap.template get_beta<B>(ADart)); }
 };
-#endif //CGAL_CFG_NO_CPP0X_VARIADIC_TEMPLATES
+// ****************************************************************************
+template<typename Container, class WitdId=
+         typename Container::value_type::Has_id>
+struct Init_id
+{
+  static void run(Container& c, typename Container::iterator e)
+  {
+    e->set_id(c.index(e));
+  }
+};
+template<typename Container>
+struct Init_id<Container, Tag_false>
+{
+  static void run(Container&, typename Container::iterator)
+  {}
+};
 // ****************************************************************************
 } // namespace internal
 } // namespace CGAL

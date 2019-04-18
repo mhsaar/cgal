@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s) : Monique Teillaud, Sylvain Pion, Pedro Machado
 
@@ -23,6 +24,9 @@
 
 #ifndef CGAL_SPHERICAL_KERNEL_PREDICATES_ON_SPHERE_3_H
 #define CGAL_SPHERICAL_KERNEL_PREDICATES_ON_SPHERE_3_H
+
+#include <CGAL/license/Circular_kernel_3.h>
+
 
 #include <CGAL/Circular_kernel_3/Intersection_traits.h>
 #include <utility>
@@ -288,43 +292,25 @@ namespace CGAL {
        CGAL_kernel_precondition(!s2.is_degenerate());
        CGAL_kernel_precondition(!s3.is_degenerate());
        if(non_oriented_equal<SK>(s1,s2) && non_oriented_equal<SK>(s2,s3)) {
-         #if CGAL_INTERSECTION_VERSION < 2
-         *res++ = make_object(s1);
-         #else
          *res++ = result_type(s1);
-         #endif
          return res;
        }
        if(non_oriented_equal<SK>(s1,s2)) {
          if(typename Intersection_traits<SK, Sphere_3, Sphere_3>::result_type v = 
             SK().intersect_3_object()(s1, s3)) {
-           #if CGAL_INTERSECTION_VERSION < 2
-           if( const Point_3* p = object_cast<Point_3>(&v) )
-             *res++ = make_object(std::make_pair(Circular_arc_point_3(*p), 2u));
-           else
-             *res++ = v;
-           #else
            internal::Point_conversion_visitor<SK, result_type, OutputIterator> visitor(res);
            return boost::apply_visitor(visitor,
              *v);
-           #endif
          }
          return res;
        }
        if(non_oriented_equal<SK>(s1,s3) || non_oriented_equal<SK>(s2,s3)) {
          if(typename Intersection_traits<SK, Sphere_3, Sphere_3>::result_type v = 
             SK().intersect_3_object()(s1, s2)) {
-           #if CGAL_INTERSECTION_VERSION < 2
-           if( const Point_3* p = object_cast<Point_3>(&v) )
-             *res++ = make_object(std::make_pair(Circular_arc_point_3(*p), 2u));
-           else
-             *res++ = v;
-           #else
            internal::Point_conversion_visitor<SK, result_type, OutputIterator> visitor(res);
            return boost::apply_visitor(
              visitor,
              *v);
-           #endif
          }
          return res;
        }
@@ -332,23 +318,15 @@ namespace CGAL {
          typename Intersection_traits<SK, Sphere_3, Sphere_3>::result_type v = 
            SK().intersect_3_object()(s1, s2);
          if(!v) return res;
-         if(const Point_3* p = CGAL::internal::intersect_get<Point_3>(v)) {
+         if(const Point_3* p = CGAL::Intersections::internal::intersect_get<Point_3>(v)) {
             if(SK().has_on_3_object()(s3, *p)) {
-              #if CGAL_INTERSECTION_VERSION < 2
-              *res++ = make_object(std::make_pair(Circular_arc_point_3(*p),2u));
-              #else
               *res++ = result_type(std::make_pair(Circular_arc_point_3(*p),2u));
-              #endif
             }
              return res;
          }
-         if(const Circle_3* c = CGAL::internal::intersect_get<Circle_3>(v)) {
+         if(const Circle_3* c = CGAL::Intersections::internal::intersect_get<Circle_3>(v)) {
             if(SK().has_on_3_object()(s3, *c)) {
-              #if CGAL_INTERSECTION_VERSION < 2
-              *res++ = make_object(*c);
-              #else
               *res++ = result_type(*c);
-              #endif
             }
            return res;
          }
@@ -380,26 +358,16 @@ namespace CGAL {
       typedef typename SK::Plane_3  Plane_3;
       typedef typename SK::Sphere_3 Sphere_3;
       typedef typename SK::Algebraic_kernel  Algebraic_kernel;
-      #if CGAL_INTERSECTION_VERSION < 2
-      typedef typename SK::Circular_arc_point_3  Circular_arc_point_3;
-      #endif
       CGAL_kernel_precondition(!p.is_degenerate());
       CGAL_kernel_precondition(!s1.is_degenerate());
       CGAL_kernel_precondition(!s2.is_degenerate());
       if(non_oriented_equal<SK>(s1,s2)) {
         if(typename Intersection_traits<SK, Plane_3, Sphere_3>::result_type v = 
             SK().intersect_3_object()(p, s1)) {
-           #if CGAL_INTERSECTION_VERSION < 2
-           if( const typename SK::Point_3* p = CGAL::object_cast<typename SK::Point_3>(&v) )
-             *res++ = make_object(std::make_pair(Circular_arc_point_3(*p), 2u));
-           else
-             *res++ = v;
-           #else
            internal::Point_conversion_visitor<SK, result_type, OutputIterator> visitor(res);
            return boost::apply_visitor(
              visitor,
              *v);
-           #endif
          }
          return res;
       }
@@ -407,17 +375,10 @@ namespace CGAL {
       if(non_oriented_equal<SK>(p,radical_p)) {
         if(typename Intersection_traits<SK, Plane_3, Sphere_3>::result_type v = 
             SK().intersect_3_object()(p, s1)) {
-           #if CGAL_INTERSECTION_VERSION < 2
-           if( const typename SK::Point_3* p = CGAL::object_cast<typename SK::Point_3>(&v) )
-             *res++ = make_object(std::make_pair(Circular_arc_point_3(*p), 2u));
-           else
-             *res++ = v;
-           #else
            internal::Point_conversion_visitor<SK, result_type, OutputIterator> visitor(res);
            return boost::apply_visitor(
              visitor,
              *v);
-           #endif
          }
          return res;
       }
@@ -452,18 +413,10 @@ namespace CGAL {
       if(non_oriented_equal<SK>(p1,p2)) {
         if(typename Intersection_traits<SK, Plane_3, Sphere_3>::result_type v = 
             SK().intersect_3_object()(p1, s)) {
-           #if CGAL_INTERSECTION_VERSION < 2
-           typedef typename SK::Circular_arc_point_3  Circular_arc_point_3;
-           if( const typename SK::Point_3* p = CGAL::object_cast<typename SK::Point_3>(&v) )
-             *res++ = make_object(std::make_pair(Circular_arc_point_3(*p), 2u));
-           else
-             *res++ = v;
-           #else
            internal::Point_conversion_visitor<SK, result_type, OutputIterator> visitor(res);
            return boost::apply_visitor(
              visitor,
              *v);
-           #endif
          }
          return res;
       }

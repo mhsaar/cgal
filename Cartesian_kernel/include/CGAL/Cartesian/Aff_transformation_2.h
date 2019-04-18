@@ -18,6 +18,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 // 
 //
 // Author(s)     : Andreas Fabri, Lutz Kettner
@@ -177,6 +178,21 @@ public:
 
   std::ostream &
   print(std::ostream &os) const;
+  
+  bool operator==(const Aff_transformationC2 &t)const
+  {
+    for(int i=0; i<3; ++i)
+      for(int j = 0; j< 3; ++j)
+        if(cartesian(i,j)!=t.cartesian(i,j))
+          return false;
+    return true;
+  }
+  
+  bool operator!=(const Aff_transformationC2 &t)const
+  {
+    return !(*this == t);
+  }
+  
 };
 
 template < class R >

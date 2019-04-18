@@ -15,6 +15,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 // 
 //
 // Author(s)     : Stefan Schirra
@@ -22,6 +23,9 @@
 
 #ifndef CGAL__TEST_FCT_POINT_2_H
 #define CGAL__TEST_FCT_POINT_2_H
+
+#include <cassert>
+#include <iostream>
 
 template <class R>
 bool

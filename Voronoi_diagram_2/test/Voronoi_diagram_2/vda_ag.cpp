@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
@@ -31,8 +32,8 @@
 #include <CGAL/Apollonius_graph_adaptation_traits_2.h>
 #include <CGAL/Apollonius_graph_adaptation_policies_2.h>
 
-struct Rep : public CGAL::Simple_cartesian<double> {};
-struct K : public CGAL::Apollonius_graph_filtered_traits_2<Rep> {};
+typedef CGAL::Simple_cartesian<double> Rep;
+typedef CGAL::Apollonius_graph_filtered_traits_2<Rep> K;
 
 #if 1 // definitions for hierarchy
 

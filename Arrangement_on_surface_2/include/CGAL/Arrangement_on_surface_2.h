@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 //
 // Author(s): Ron Wein          <wein@post.tau.ac.il>
@@ -27,6 +28,10 @@
 //                                      and Eugene Lipovetsky)
 #ifndef CGAL_ARRANGEMENT_ON_SURFACE_2_H
 #define CGAL_ARRANGEMENT_ON_SURFACE_2_H
+
+#include <CGAL/license/Arrangement_on_surface_2.h>
+
+#include <CGAL/disable_warnings.h>
 
 /*! \file
  * The header file for the Arrangement_on_surface_2<Traits,Dcel> class.
@@ -68,6 +73,7 @@ class Arrangement_on_surface_2 {
 public:
   typedef GeomTraits_                                     Geometry_traits_2;
   typedef TopTraits_                                      Topology_traits;
+  typedef CGAL_ALLOCATOR(int)                             Allocator;
 
   // first define adaptor ...
   typedef Arr_traits_basic_adaptor_2<Geometry_traits_2>   Traits_adaptor_2;
@@ -1021,6 +1027,15 @@ public:
                             _Is_concrete_vertex(&m_topol_traits)));
   }
 
+  /*!
+  returns a range over handles of the arrangement vertices .
+  */
+  Iterator_range<Prevent_deref<Vertex_iterator> >
+  vertex_handles()
+  {
+    return make_prevent_deref_range(vertices_begin(), vertices_end());
+  }
+
   /*! Get a const iterator for the first vertex in the arrangement. */
   Vertex_const_iterator vertices_begin() const
   {
@@ -1036,6 +1051,16 @@ public:
                                   _dcel().vertices_end(),
                                   _Is_concrete_vertex(&m_topol_traits)));
   }
+
+  /*!
+  returns a const range (model of `ConstRange`) over handles of the arrangement vertices .
+  */
+  Iterator_range<Prevent_deref<Vertex_iterator> >
+  vertex_handles() const
+  {
+    return make_prevent_deref_range(vertices_begin(), vertices_end());
+  }
+
   //@}
 
   /// \name Traversal functions for the arrangement halfedges.
@@ -1057,6 +1082,15 @@ public:
                               _Is_valid_halfedge(&m_topol_traits)));
   }
 
+  /*!
+  returns a range over handles of the arrangement halfedges .
+  */
+  Iterator_range<Prevent_deref<Halfedge_iterator> >
+  halfedge_handles()
+  {
+    return make_prevent_deref_range(halfedges_begin(), halfedges_end());
+  }
+
   /*! Get a const iterator for the first halfedge in the arrangement. */
   Halfedge_const_iterator halfedges_begin() const
   {
@@ -1071,6 +1105,14 @@ public:
     return (Halfedge_const_iterator(_dcel().halfedges_end(),
                                     _dcel().halfedges_end(),
                                     _Is_valid_halfedge(&m_topol_traits)));
+  }
+  /*!
+  returns a const range (model of `ConstRange`) over handles of the arrangement halfedges .
+  */
+  Iterator_range<Prevent_deref<Halfedge_iterator> >
+  halfedge_handles() const
+  {
+    return make_prevent_deref_range(halfedges_begin(), halfedges_end());
   }
   //@}
 
@@ -1091,6 +1133,15 @@ public:
                           _Is_valid_halfedge(&m_topol_traits)));
   }
 
+  /*!
+  returns a range over handles of the arrangement edges .
+  */
+  Iterator_range<Prevent_deref<Edge_iterator> >
+  edge_handles()
+  {
+    return make_prevent_deref_range(edges_begin(), edges_end());
+  }
+
   /*! Get a const iterator for the first edge in the arrangement. */
   Edge_const_iterator edges_begin() const
   {
@@ -1103,6 +1154,15 @@ public:
   {
     return (Edge_const_iterator(_dcel().edges_end(), _dcel().edges_end(),
                                 _Is_valid_halfedge(&m_topol_traits)));
+  }
+
+  /*!
+  returns a const range (model of `ConstRange`) over handles of the arrangement edges .
+  */
+  Iterator_range<Prevent_deref<Edge_iterator> >
+  edge_handles() const
+  {
+    return make_prevent_deref_range(edges_begin(), edges_end());
   }
   //@}
 
@@ -1123,6 +1183,14 @@ public:
                           _Is_valid_face(&m_topol_traits)));
   }
 
+  /*!
+  returns a range over handles of the arrangement faces .
+  */
+  Iterator_range<Prevent_deref<Face_iterator> >
+  face_handles()
+  {
+    return make_prevent_deref_range(faces_begin(), faces_end());
+  }
   /*! Get a const iterator for the first face in the arrangement. */
   Face_const_iterator faces_begin() const
   {
@@ -1137,6 +1205,14 @@ public:
                                 _Is_valid_face(&m_topol_traits)));
   }
 
+  /*!
+  returns a const range (model of `ConstRange`) over handles of the arrangement faces .
+  */
+  Iterator_range<Prevent_deref<Face_iterator> >
+  face_handles() const
+  {
+    return make_prevent_deref_range(faces_begin(), faces_end());
+  }
   //! reference_face (const version).
   /*! The function returns a reference face of the arrangement.
    * All reference faces of arrangements of the same type have a common
@@ -1480,8 +1556,11 @@ protected:
   Point_2*_new_point(const Point_2& pt)
   {
     Point_2* p_pt = m_points_alloc.allocate(1);
-
+#ifdef CGAL_CXX11
+    std::allocator_traits<Points_alloc>::construct(m_points_alloc, p_pt, pt);
+#else
     m_points_alloc.construct(p_pt, pt);
+#endif
     return (p_pt);
   }
 
@@ -1489,8 +1568,11 @@ protected:
   void _delete_point(Point_2& pt)
   {
     Point_2* p_pt = &pt;
-
+#ifdef CGAL_CXX11
+    std::allocator_traits<Points_alloc>::destroy(m_points_alloc, p_pt);
+#else
     m_points_alloc.destroy(p_pt);
+#endif
     m_points_alloc.deallocate(p_pt, 1);
   }
 
@@ -1498,7 +1580,11 @@ protected:
   X_monotone_curve_2* _new_curve(const X_monotone_curve_2& cv)
   {
     X_monotone_curve_2* p_cv = m_curves_alloc.allocate(1);
+#ifdef CGAL_CXX11
+    std::allocator_traits<Curves_alloc>::construct(m_curves_alloc, p_cv, cv);
+#else
     m_curves_alloc.construct(p_cv, cv);
+#endif
     return (p_cv);
   }
 
@@ -1506,8 +1592,11 @@ protected:
   void _delete_curve(X_monotone_curve_2& cv)
   {
     X_monotone_curve_2* p_cv = &cv;
-
+#ifdef CGAL_CXX11
+    std::allocator_traits<Curves_alloc>::destroy(m_curves_alloc, p_cv);
+#else      
     m_curves_alloc.destroy(p_cv);
+#endif
     m_curves_alloc.deallocate(p_cv, 1);
   }
   //@}
@@ -2935,4 +3024,5 @@ bool do_intersect(Arrangement_on_surface_2<GeomTraits, TopTraits>& arr,
 #include <CGAL/Arrangement_2/Arrangement_on_surface_2_impl.h>
 #include <CGAL/Arrangement_2/Arrangement_on_surface_2_global.h>
 
+#include <CGAL/enable_warnings.h>
 #endif

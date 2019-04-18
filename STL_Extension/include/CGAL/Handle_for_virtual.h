@@ -18,6 +18,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 // 
 //
 // Author(s)     : Stefan Schirra
@@ -103,14 +104,12 @@ class Handle_for_virtual
       return *this;
     }
 
-#ifndef CGAL_CFG_NO_CPP0X_RVALUE_REFERENCE
     Handle_for_virtual&
     operator=( Handle_for_virtual && h)
     {
       swap(h);
       return *this;
     }
-#endif
 
 // protected:
     typedef RefCounted element_type;

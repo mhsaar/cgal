@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s) : Dmitry Anisimov, David Bommes, Kai Hormann, and Pierre Alliez.
 
@@ -23,6 +24,10 @@
 
 #ifndef CGAL_MEAN_VALUE_2_H
 #define CGAL_MEAN_VALUE_2_H
+
+#include <CGAL/license/Barycentric_coordinates_2.h>
+
+#include <CGAL/disable_warnings.h>
 
 // STL headers. 
 #include <vector>
@@ -91,12 +96,12 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Examples: see the User Manual here - http://doc.cgal.org/latest/Manual/index.html.
+// Examples: see the User Manual here - https://doc.cgal.org/latest/Manual/index.html.
 // [1] Reference: "K. Hormann and M. Floater. Mean value coordinates for arbitrary planar polygons. ACM Transactions on Graphics, 25(4):1424-1441, 2006.".
 // [2] Reference: "M. S. Floater, Wachspress and mean value coordinates, to appear in the Proceedings of the 14th International Conference on Approximation Theory, G. Fasshauer and L. L. Schumaker (eds.)."
 
 /*!
- * \ingroup PkgBarycentric_coordinates_2
+ * \ingroup PkgBarycentricCoordinates2Ref
  * The class `Mean_value_2` implements 2D mean value coordinates ( \cite cgal:bc:hf-mvcapp-06, \cite cgal:bc:fhk-gcbcocp-06, \cite cgal:f-mvc-03 ).
  * This class is parameterized by a traits class `Traits`, and it is used as a coordinate class to complete the class `Generalized_barycentric_coordinates_2`.
  * For a polygon with three vertices (triangle) it is better to use the class `Triangle_coordinates_2`.
@@ -504,5 +509,7 @@ private:
 } // namespace Barycentric_coordinates
 
 } // namespace CGAL
+
+#include <CGAL/enable_warnings.h>
 
 #endif // CGAL_MEAN_VALUE_2_H

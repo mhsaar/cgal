@@ -14,11 +14,14 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
 #ifndef CGAL_COMBINATORIAL_MAP_CONSTRUCTORS_H
 #define CGAL_COMBINATORIAL_MAP_CONSTRUCTORS_H 1
+
+#include <CGAL/config.h>
 
 #ifndef CGAL_NO_DEPRECATED_CODE
 

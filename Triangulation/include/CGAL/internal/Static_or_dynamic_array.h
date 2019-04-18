@@ -14,11 +14,15 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)    : Samuel Hornus
 
 #ifndef CGAL_INTERNAL_STATIC_OR_DYNAMIC_ARRAY_H
 #define CGAL_INTERNAL_STATIC_OR_DYNAMIC_ARRAY_H
+
+#include <CGAL/license/Triangulation.h>
+
 
 #include <CGAL/Compact_container.h>
 #include <CGAL/Dimension.h>
@@ -56,9 +60,9 @@ template< typename Containee, typename D, bool WithCompactContainerHelper = fals
 // The case of static size:
 template< typename Containee, int D, bool WithCompactContainerHelper >
 struct S_or_D_array< Containee, Dimension_tag< D >, WithCompactContainerHelper >
-: public array<Containee, D>
+: public std::array<Containee, D>
 {
-    typedef array<Containee, D> Base;
+    typedef std::array<Containee, D> Base;
     S_or_D_array(const int)
     : Base()
     {}

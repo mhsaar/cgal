@@ -7,7 +7,6 @@
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
 
 #include <CGAL/Surface_mesh.h>
-#include <CGAL/boost/graph/graph_traits_Surface_mesh.h>
 #include <CGAL/Polygon_mesh_processing/self_intersections.h>
 
 #include <CGAL/Timer.h>
@@ -114,6 +113,22 @@ int main(int argc, char** argv)
   r += test_self_intersections<Epic>(filename, expected);
 
   std::cout << "Third test (Epec):" << std::endl;
+  r += test_self_intersections<Epec>(filename, expected);
+
+  // Fourth test ----------------------------------------------------------------
+  expected = true;
+  filename = (argc > 7) ? argv[7] : "data_degeneracies/degtri_single.off";
+  if(argc > 7) {
+    assert(argc > 8);
+    std::stringstream ss(argv[8]);
+    ss >> std::boolalpha >> expected;
+    assert(!ss.fail());
+  }
+
+  std::cout << "Fourth test (Epic):" << std::endl;
+  r += test_self_intersections<Epic>(filename, expected);
+
+  std::cout << "Fourth test (Epec):" << std::endl;
   r += test_self_intersections<Epec>(filename, expected);
 
   return r;

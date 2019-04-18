@@ -1,7 +1,6 @@
 
 #include "test_Prefix.h"
 #include <boost/unordered_set.hpp>
-#include <boost/foreach.hpp>
 
 template< typename G,
           typename ForwardRange,
@@ -43,6 +42,16 @@ void index_uniqueness_poly(const Polyhedron& g)
   index_uniqueness(g, faces(g),     get(boost::face_external_index, g));
   index_uniqueness(g, halfedges(g), get(boost::halfedge_external_index, g));
 }
+
+void index_uniqueness_lcc(const LCC& g)
+{
+  std::cerr << "testing Linear_cell_complex\n";
+  index_uniqueness(g, edges(g) ,    get(boost::edge_index, g));
+  index_uniqueness(g, vertices(g),  get(boost::vertex_index, g));
+  index_uniqueness(g, faces(g),     get(boost::face_index, g));
+  index_uniqueness(g, halfedges(g), get(boost::halfedge_index, g));
+}
+
 #if defined(CGAL_USE_SURFACE_MESH)
 void index_uniqueness_sm(const SM& g)
 {
@@ -65,29 +74,31 @@ void index_uniqueness_omesh(const OMesh& g)
 }
 #endif
 
-
 int
 main()
 {
   std::vector<Polyhedron> polys = poly_data();
 
-  BOOST_FOREACH(Polyhedron p, polys){
+  for(Polyhedron p : polys){
     index_uniqueness_poly(p);
   }
 
-
+  std::vector<LCC> lccs = lcc_data();
+  for(LCC p : lccs){
+    index_uniqueness_lcc(p);
+  }
 
 #if defined(CGAL_USE_SURFACE_MESH)
   std::vector<SM> sms = sm_data();
 
-  BOOST_FOREACH(SM p, sms){
+  for(SM p : sms){
     index_uniqueness_sm(p);
   }
 #endif 
 
 #if defined(CGAL_USE_OPENMESH)
   std::vector<OMesh> omeshs = omesh_data();
-  BOOST_FOREACH(OMesh p, omeshs){
+  for(OMesh p : omeshs){
     index_uniqueness_omesh(p);
   }
 #endif

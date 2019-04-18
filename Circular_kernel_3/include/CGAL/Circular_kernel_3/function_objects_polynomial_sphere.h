@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s) : Monique Teillaud, Sylvain Pion, Pedro Machado, 
 //             Sebastien Loriot
@@ -24,6 +25,9 @@
 
 #ifndef CGAL_SPHERICAL_KERNEL_FUNCTION_OBJECTS_POLYNOMIAL_SPHERE_H
 #define CGAL_SPHERICAL_KERNEL_FUNCTION_OBJECTS_POLYNOMIAL_SPHERE_H
+
+#include <CGAL/license/Circular_kernel_3.h>
+
 
 #include <CGAL/kernel_basic.h>
 #include <CGAL/is_iterator.h>
@@ -1194,14 +1198,10 @@ template < class SK > \
     //only ternary from the linear kernel
     template<typename F>
     struct result<F(Plane_3, Plane_3, Plane_3)> {
-      #if CGAL_INTERSECTION_VERSION < 2
-      typedef CGAL::Object type;
-      #else
       typedef boost::optional< 
         boost::variant< Point_3, 
                         Line_3, 
                         Plane_3 > > type;
-      #endif
     };
 
     //using SK::Linear_kernel::Intersect_3::operator();

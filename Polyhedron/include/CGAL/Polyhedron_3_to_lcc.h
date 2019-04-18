@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
@@ -24,6 +25,7 @@
 #include <CGAL/assertions.h>
 #include <iostream>
 #include <map>
+#include <CGAL/Polyhedron_3.h>
 
 namespace CGAL {
 

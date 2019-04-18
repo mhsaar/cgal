@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 //
 // Author(s)     : Sven Oesau, Yannick Verdie, Clément Jamin, Pierre Alliez
@@ -22,14 +23,25 @@
 #ifndef CGAL_SHAPE_DETECTION_3_EFFICIENT_RANSAC_TRAITS_H
 #define CGAL_SHAPE_DETECTION_3_EFFICIENT_RANSAC_TRAITS_H
 
+#include <CGAL/license/Point_set_shape_detection_3.h>
+
+#define CGAL_DEPRECATED_HEADER "<CGAL/Efficient_RANSAC_traits.h>"
+#define CGAL_REPLACEMENT_HEADER "<CGAL/Shape_detection_traits.h>"
+#define CGAL_DEPRECATED_MESSAGE_DETAILS \
+  "CGAL::Shape_detection_3::Efficient_RANSAC_traits<> has been replaced by the class "\
+  "CGAL::Shape_detection_3::Shape_detection_traits<>."
+#include <CGAL/internal/deprecation_warning.h>
+
 #include <CGAL/Search_traits_3.h>
+
+/// \cond SKIP_IN_MANUAL
 
 namespace CGAL {
   namespace Shape_detection_3 {
     /*!
-      \ingroup PkgPointSetShapeDetection3
+      \ingroup PkgPointSetShapeDetection3Ref
       \brief %Default traits class to use the shape detection class `Efficient_RANSAC`.
-      \cgalModels `EfficientRANSACTraits`
+      \cgalModels `Shape_detection_3::Traits`
 
       \tparam Gt a model of the concept `#Kernel` with `Gt::FT` being `float` or `double`.
 
@@ -54,6 +66,8 @@ namespace CGAL {
     typedef typename Gt::Vector_3 Vector_3;
     ///
     typedef typename Gt::Sphere_3 Sphere_3;
+    ///
+    typedef typename Gt::Segment_3 Segment_3;
     ///
     typedef typename Gt::Line_3 Line_3;
     ///
@@ -176,10 +190,18 @@ namespace CGAL {
     Collinear_2 collinear_2_object() const
     { return m_gt.collinear_2_object(); }
 
+    ///
+    typedef typename Gt::Intersect_3 Intersect_3;
+    ///
+    Intersect_3 intersection_3_object() const
+    { return m_gt.intersection_3_object(); }
+    
   private:
     Gt m_gt;
   };
 
 } } // end of namespace CGAL::Shape_detection_3
+
+/// \endcond
 
 #endif // CGAL_SHAPE_DETECTION_3_EFFICIENT_RANSAC_TRAITS_H

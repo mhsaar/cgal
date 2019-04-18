@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
@@ -22,6 +23,9 @@
 
 #ifndef CGAL_COMPARATOR_PROFILER_H
 #define CGAL_COMPARATOR_PROFILER_H
+
+#include <CGAL/license/Apollonius_graph_2.h>
+
 
 #include <CGAL/Apollonius_graph_2/basic.h>
 #include <CGAL/atomic.h>

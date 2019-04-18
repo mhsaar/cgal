@@ -14,23 +14,25 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
-#include <CGAL/Linear_cell_complex.h>
-#include <CGAL/Linear_cell_complex_constructors.h>
-#include <CGAL/Linear_cell_complex_operations.h>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
-#include <CGAL/Combinatorial_map_save_load.h>
 
 #include <CGAL/Triangulation_2_projection_traits_3.h>
 #include <CGAL/Triangulation_vertex_base_with_info_2.h>
 #include <CGAL/Triangulation_face_base_with_info_2.h>
 #include <CGAL/Constrained_Delaunay_triangulation_2.h>
 #include <CGAL/Constrained_triangulation_plus_2.h>
+
+#include <CGAL/Linear_cell_complex.h>
+#include <CGAL/Linear_cell_complex_constructors.h>
+#include <CGAL/Linear_cell_complex_operations.h>
+#include <CGAL/Combinatorial_map_save_load.h>
 
 #include <CGAL/IO/Color.h>
 #include <CGAL/Timer.h>
@@ -156,7 +158,7 @@ public:
     typedef CGAL::Cell_attribute_with_point< Refs > Vertex_attrib;
     typedef CGAL::Cell_attribute< Refs, Volume_info> Volume_attrib;
 
-    typedef CGAL::cpp11::tuple<Vertex_attrib,void,void,
+    typedef std::tuple<Vertex_attrib,void,void,
                                Volume_attrib> Attributes;
   };
 };

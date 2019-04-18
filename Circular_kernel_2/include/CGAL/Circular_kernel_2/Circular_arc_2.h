@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)     : Monique Teillaud, Sylvain Pion, Pedro Machado
 
@@ -25,6 +26,9 @@
 
 #ifdef CGAL_INTERSECTION_MAP_FOR_XMONOTONIC_ARC_WITH_SAME_SUPPORTING_CIRCLE
 #define CGAL_USEFUL_MAPS_FOR_THE_CIRCULAR_KERNEL
+
+#include <CGAL/license/Circular_kernel_2.h>
+
 #endif
 
 #ifdef CGAL_INTERSECTION_MAP_FOR_SUPPORTING_CIRCLES
@@ -187,7 +191,7 @@ namespace internal {
 	// the circles intersect
 	
 	const std::pair<typename CK::Circular_arc_point_2, unsigned>*
-          result = CGAL::internal::intersect_get< std::pair<typename CK::Circular_arc_point_2, unsigned> >(*it);
+          result = CGAL::Intersections::internal::intersect_get< std::pair<typename CK::Circular_arc_point_2, unsigned> >(*it);
 	if ( result->second == 2 ){ // double solution
 	  _begin = result->first;
 	  _end = result->first;
@@ -198,7 +202,7 @@ namespace internal {
 	    _end = result->first;
 	  if (!(b_1 && b_2)) {
 	    ++it;
-	    result = CGAL::internal::intersect_get< std::pair<typename CK::Circular_arc_point_2, unsigned> >(*it);
+	    result = CGAL::Intersections::internal::intersect_get< std::pair<typename CK::Circular_arc_point_2, unsigned> >(*it);
 	    if (!b_1)
 	      _begin = result->first;
 	    if (!b_2)

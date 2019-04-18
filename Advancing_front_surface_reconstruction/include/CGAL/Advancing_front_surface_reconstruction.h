@@ -14,16 +14,22 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)     : Frank Da, David Cohen-Steiner, Andreas Fabri
 
 #ifndef CGAL_ADVANCING_FRONT_SURFACE_RECONSTRUCTION_H
 #define CGAL_ADVANCING_FRONT_SURFACE_RECONSTRUCTION_H
 
+#include <CGAL/license/Advancing_front_surface_reconstruction.h>
+
+#include <CGAL/disable_warnings.h>
+
 // In order to activate lazy evaluation:
 // #define LAZY
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
 #include <CGAL/Triangulation_data_structure_3.h>
 #include <CGAL/Delaunay_triangulation_3.h>
 #include <CGAL/Cartesian_converter.h>
@@ -169,7 +175,7 @@ namespace CGAL {
 
 
   /*!
-  \ingroup PkgAdvancingFrontSurfaceReconstruction
+  \ingroup PkgAdvancingFrontSurfaceReconstructionRef
 
   The class `Advancing_front_surface_reconstruction` enables advanced users to provide the unstructured
   point cloud in a 3D Delaunay triangulation. The reconstruction algorithm then marks vertices and faces
@@ -383,10 +389,10 @@ namespace CGAL {
 
     Intern_successors_type* new_border()
     {
-      nbe_pool.push_back(Next_border_elt());
+      nbe_pool.resize(nbe_pool.size()+1);
 
       Next_border_elt* p1 = & nbe_pool.back();
-      nbe_pool.push_back(Next_border_elt());
+      nbe_pool.resize(nbe_pool.size()+1);
       Next_border_elt* p2 = & nbe_pool.back();
 
       Intern_successors_type ist(p1,p2);
@@ -1260,7 +1266,17 @@ namespace CGAL {
                   value = lazy_squared_radius(cc);
 #else
                   // qualified with CGAL, to avoid a compilation error with clang
-                  value = CGAL::squared_radius(pp0, pp1, pp2, pp3);
+                  if(volume(pp0, pp1, pp2, pp3) != 0){
+                    value = CGAL::squared_radius(pp0, pp1, pp2, pp3);
+                  } else {
+                    typedef Exact_predicates_exact_constructions_kernel EK;
+                    Cartesian_converter<Kernel, EK> to_exact;
+                    Cartesian_converter<EK, Kernel> back_from_exact;
+                    value = back_from_exact(CGAL::squared_radius(to_exact(pp0),
+                                                                 to_exact(pp1),
+                                                                 to_exact(pp2),
+                                                                 to_exact(pp3)));
+                  }
 #endif
                 }
               else
@@ -2297,7 +2313,7 @@ namespace CGAL {
     }
 
 
-    struct Remove : public std::unary_function<Vertex_handle, bool>
+    struct Remove : public CGAL::cpp98::unary_function<Vertex_handle, bool>
     {
 
       Extract& E;
@@ -2435,7 +2451,7 @@ namespace CGAL {
   namespace AFSR {
 
     template <typename T>
-    struct Auto_count : public std::unary_function<const T&,std::pair<T,std::size_t> >{
+    struct Auto_count : public CGAL::cpp98::unary_function<const T&,std::pair<T,std::size_t> >{
       mutable std::size_t i;
 
       Auto_count()
@@ -2448,7 +2464,7 @@ namespace CGAL {
     };
 
     template <typename T, typename CC>
-    struct Auto_count_cc : public std::unary_function<const T&,std::pair<T,std::size_t> >{
+    struct Auto_count_cc : public CGAL::cpp98::unary_function<const T&,std::pair<T,std::size_t> >{
       mutable std::size_t i;
       CC cc;
 
@@ -2464,7 +2480,7 @@ namespace CGAL {
   }
 
   /*!
-  \ingroup PkgAdvancingFrontSurfaceReconstruction
+  \ingroup PkgAdvancingFrontSurfaceReconstructionRef
 
   For a sequence of points computes a sequence of index triples
   describing the faces of the reconstructed surface.
@@ -2472,7 +2488,7 @@ namespace CGAL {
   \tparam PointInputIterator must be an input iterator with 3D points as value type.  This point type must
   be convertible to `Exact_predicates_inexact_constructions_kernel::Point_3` with the `Cartesian_converter`.
   \tparam IndicesOutputIterator must be an output iterator to which
-  `CGAL::cpp11::array<std::size_t, 3>` can be assigned.
+  `std::array<std::size_t, 3>` can be assigned.
 
   \param b iterator on the first point of the sequence
   \param e past the end iterator of the point sequence
@@ -2516,7 +2532,7 @@ namespace CGAL {
   }
 
   /*!
-  \ingroup PkgAdvancingFrontSurfaceReconstruction
+  \ingroup PkgAdvancingFrontSurfaceReconstructionRef
 
   For a sequence of points computes a sequence of index triples
   describing the faces of the reconstructed surface.
@@ -2524,7 +2540,7 @@ namespace CGAL {
   \tparam PointInputIterator must be an input iterator with 3D points as value type.  This point type must
   be convertible to `Exact_predicates_inexact_constructions_kernel::Point_3` with the `Cartesian_converter`.
   \tparam IndicesOutputIterator must be an output iterator to which
-  `CGAL::cpp11::array<std::size_t, 3>` can be assigned.
+  `std::array<std::size_t, 3>` can be assigned.
   \tparam Priority must be a functor with `double operator()(AdvancingFront,Cell_handle,int)` returning the
   priority of the facet `(Cell_handle,int)`.
 
@@ -2634,5 +2650,7 @@ namespace CGAL {
 
 
 } // namespace CGAL
+
+#include <CGAL/enable_warnings.h>
 
 #endif // CGAL_ADVANCING_FRONT_SURFACE_RECONSTRUCTION_H

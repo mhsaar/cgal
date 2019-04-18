@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
@@ -23,6 +24,9 @@
 
 #ifndef CGAL_SEGMENT_DELAUNAY_GRAPH_2_BASIC_PREDICATES_C2_H
 #define CGAL_SEGMENT_DELAUNAY_GRAPH_2_BASIC_PREDICATES_C2_H
+
+#include <CGAL/license/Segment_Delaunay_graph_2.h>
+
 
 
 #include <CGAL/Segment_Delaunay_graph_2/basic.h>
@@ -105,9 +109,6 @@ public:
 
     Homogeneous_point_2(const Point_2& p)
       : hx_(p.x()), hy_(p.y()), hw_(1) {}
-
-    Homogeneous_point_2(const Homogeneous_point_2& other)
-      : hx_(other.hx_), hy_(other.hy_), hw_(other.hw_) {}
 
     RT hx() const { return hx_; }
     RT hy() const { return hy_; }
