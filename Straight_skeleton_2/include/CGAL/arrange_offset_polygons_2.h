@@ -16,7 +16,7 @@
 // $Id$
 // SPDX-License-Identifier: GPL-3.0+
 //
-// Author(s)     : Fernando Cacciola <fernando_cacciola@ciudad.com.ar> 
+// Author(s)     : Fernando Cacciola <fernando_cacciola@ciudad.com.ar>
 //
 #ifndef CGAL_ARRANGE_OFFSET_POLYGONS_2_H
 #define CGAL_ARRANGE_OFFSET_POLYGONS_2_H
@@ -38,54 +38,65 @@ namespace CGAL {
 //  Outer polygons do not contain other outer polygons, only holes
 //  Every hole is contained in one and only one outer polygon
 //
+
+// NOTE(michalskim@google.com)
+// Added two new functions: arrange_offset_polygons_2_safe.
+// Previously there was no way to check if arrange_offset_polygons_2 succeeded
+// as in the case of an error exception was raised.
+// arrange_offset_polygons_2_safe instead of raising exception returns its
+// status (or sets succeed flag to true).
+
+// Returns true if succeeded. Set raiseException to false if you don't want
+// this function to raise exception.
 template<class K, class InputPolygonPtrIterator, class OutputPolygonWithHolesPtrIterator>
-void arrange_offset_polygons_2 ( InputPolygonPtrIterator           aBegin
-                               , InputPolygonPtrIterator           aEnd
-                               , OutputPolygonWithHolesPtrIterator rOut
-                               , K const&
-                               )
+bool arrange_offset_polygons_2_safe ( InputPolygonPtrIterator            aBegin
+                                     , InputPolygonPtrIterator           aEnd
+                                     , OutputPolygonWithHolesPtrIterator rOut
+                                     , K const&                          k
+                                     , bool                              raiseException
+                                     )
 {
   typedef typename std::iterator_traits<InputPolygonPtrIterator>::difference_type difference_type ;
-  
+
   typedef Polygon_2<K>            Polygon ;
   typedef Polygon_with_holes_2<K> PolygonWithHoles ;
-  
+
   typedef boost::shared_ptr<Polygon>          PolygonPtr ;
   typedef boost::shared_ptr<PolygonWithHoles> PolygonWithHolesPtr ;
-  
+
   typedef typename Polygon::Vertex_const_iterator Vertex_const_iterator ;
-  
+
   difference_type lSize = std::distance(aBegin,aEnd);
-  
+
   std::vector<PolygonWithHolesPtr> lTable(lSize);
-  
+
   for ( InputPolygonPtrIterator it = aBegin ; it != aEnd ; ++ it )
   {
     difference_type lIdx = std::distance(aBegin,it);
-    
+
     PolygonPtr lPoly = *it ;
     Orientation lOrient = lPoly->orientation();
-    
+
     // It's an outer boundary
     if ( lOrient == COUNTERCLOCKWISE )
     {
       PolygonWithHolesPtr lOuter( new PolygonWithHoles(*lPoly) );
-      *rOut ++ = lOuter ; 
+      *rOut ++ = lOuter ;
       lTable[lIdx] = lOuter ;
-    }  
-  }  
-  
+    }
+  }
+
   for ( InputPolygonPtrIterator it = aBegin ; it != aEnd ; ++ it )
   {
     PolygonPtr lPoly = *it ;
-    
+
     difference_type lIdx = std::distance(aBegin,it);
-    
+
     // Is a hole?
     if ( !lTable[lIdx] )
     {
       PolygonWithHolesPtr lParent ;
-      
+
       for ( difference_type j = 0 ; j < lSize && !lParent ; ++ j )
       {
         PolygonWithHolesPtr lOuter = lTable[j];
@@ -94,12 +105,52 @@ void arrange_offset_polygons_2 ( InputPolygonPtrIterator           aBegin
             if ( lOuter->outer_boundary().bounded_side(*v) == ON_BOUNDED_SIDE )
               lParent = lOuter ;
       }
-      
-      CGAL_assertion(lParent != NULL);
-      
+
+      if (!lParent) {
+        if (raiseException) {
+          CGAL_assertion(lParent != NULL);
+        }
+        return false;
+      }
       lParent->add_hole(*lPoly);
     }
-  }  
+  }
+  return true;
+}
+
+// Sets succeeded flag to the result of arrange_offset_polygons_2_safe.
+// If raiseException is false no exception is raised.
+template<class K, class C>
+std::vector< boost::shared_ptr< Polygon_with_holes_2<K,C> > >
+inline
+arrange_offset_polygons_2_safe ( std::vector< boost::shared_ptr< Polygon_2<K,C> > > const& aPolygons
+                                , bool raiseException
+                                , bool* succeeded) {
+  std::vector< boost::shared_ptr< Polygon_with_holes_2<K,C> > > rResult ;
+  if (!arrange_offset_polygons_2_safe(aPolygons.begin(),
+                                      aPolygons.end(),
+                                      std::back_inserter(rResult),
+                                      K(),
+                                      raiseException)) {
+    if (succeeded != NULL) {
+      *succeeded = false;
+    }
+  } else {
+    if (succeeded != NULL) {
+      *succeeded = true;
+    }
+  }
+  return rResult ;
+}
+
+template<class K, class InputPolygonPtrIterator, class OutputPolygonWithHolesPtrIterator>
+bool arrange_offset_polygons_2 (  InputPolygonPtrIterator           aBegin
+                                , InputPolygonPtrIterator           aEnd
+                                , OutputPolygonWithHolesPtrIterator rOut
+                                , K const&                          k
+                               )
+{
+  return arrange_offset_polygons_2_safe(aBegin, aEnd, rOut, k, true);
 }
 
 template<class K, class C>
@@ -107,15 +158,11 @@ std::vector< boost::shared_ptr< Polygon_with_holes_2<K,C> > >
 inline
 arrange_offset_polygons_2 ( std::vector< boost::shared_ptr< Polygon_2<K,C> > > const& aPolygons )
 {
-  std::vector< boost::shared_ptr< Polygon_with_holes_2<K,C> > > rResult ;
-  
-  arrange_offset_polygons_2(aPolygons.begin(), aPolygons.end(), std::back_inserter(rResult), K() ) ;
-  
-  return rResult ;
+  return arrange_offset_polygons_2_safe(aPolygons, true, NULL);
 }
 
 } // end namespace CGAL
 
 
-#endif 
+#endif
 // EOF //
