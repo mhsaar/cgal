@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Michael Seel <seel@mpi-sb.mpg.de>
@@ -28,8 +29,12 @@
 
 #ifndef CGAL_REGULAR_COMPLEX_D_H
 #define CGAL_REGULAR_COMPLEX_D_H
+
+#include <CGAL/license/Convex_hull_d.h>
+
 #define CGAL_DEPRECATED_HEADER "<CGAL/Regular_complex_d.h>"
-#define CGAL_REPLACEMENT_HEADER "the Triangulation package (see http://doc.cgal.org/latest/Triangulation)"
+#define CGAL_DEPRECATED_MESSAGE_DETAILS \
+  "The Triangulation package (see https://doc.cgal.org/latest/Triangulation) should be used instead."
 #include <CGAL/internal/deprecation_warning.h>
 
 #include <CGAL/basic.h>
@@ -81,7 +86,7 @@ public:
   RC_vertex_d(Simplex_handle s, int i, const Point_d& p) :
     s_(s), index_(i), point_(p) {}
   RC_vertex_d(const Point_d& p) : point_(p), pp(NULL) {}
-  RC_vertex_d() :  s_(), index_(-42), pp(NULL) {}
+  RC_vertex_d() :  s_(), pp(NULL) {}
   // beware that ass_point was initialized here by nil_point
   ~RC_vertex_d() {}
 
@@ -509,9 +514,7 @@ Vertex_handle  new_vertex()
         is the point |Regular_complex_d::nil_point| which is a static
         member of class |Regular_complex_d.|}*/
 { 
-  Vertex v(nil_point);
-  Vertex_handle h = vertices_.insert(v);
-  return h; 
+  return vertices_.emplace(nil_point); 
 }
 
 Vertex_handle  new_vertex(const Point_d& p) 
@@ -519,9 +522,7 @@ Vertex_handle  new_vertex(const Point_d& p)
         has |p| as the associated point, but is has no associated
         simplex nor index yet.}*/
 { 
-  Vertex v(p);
-  Vertex_handle h = vertices_.insert(v);
-  return h;
+  return vertices_.emplace(p);
 }
 
 void associate_vertex_with_simplex(Simplex_handle s, int i, Vertex_handle v)

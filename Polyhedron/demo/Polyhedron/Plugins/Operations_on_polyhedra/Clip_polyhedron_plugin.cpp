@@ -1,16 +1,15 @@
-#define CGAL_NO_DEPRECATION_WARNINGS 1
-#define CGAL_CMAP_DART_DEPRECATED 1
-
 #include "Messages_interface.h"
 #include <QApplication>
 #include <QMainWindow>
 #include <QAction>
 #include <QVector>
-#include "Scene_polyhedron_item.h"
+#include "Scene_surface_mesh_item.h"
 #include "Scene_plane_item.h"
 #include <CGAL/Three/Viewer_interface.h>
 #include <CGAL/Three/Polyhedron_demo_plugin_interface.h>
-#include <CGAL/internal/Polyhedron_plane_clipping_3.h>
+#include <CGAL/Three/Three.h>
+#include <CGAL/Polygon_mesh_processing/clip.h>
+
 #include "ui_Clip_polyhedron_plugin.h"
 #include "Viewer.h"
 
@@ -95,7 +94,6 @@ class Q_DECL_EXPORT Clip_polyhedron_plugin :
   Q_OBJECT
   Q_INTERFACES(CGAL::Three::Polyhedron_demo_plugin_interface)
   Q_PLUGIN_METADATA(IID "com.geometryfactory.PolyhedronDemo.PluginInterface/1.0")
-
 public :
   // Adds an action to the menu and configures the widget
   void init(QMainWindow* mw,
@@ -107,7 +105,7 @@ public :
     plane = NULL;
     //creates and link the actions
     actionClipPolyhedra = new QAction("Clip Polyhedra", mw);
-    actionClipPolyhedra->setProperty("subMenuName","Operations on Polyhedra");
+    actionClipPolyhedra->setProperty("subMenuName","Polygon Mesh Processing/Corefinement");
     dock_widget = new QDockWidget("Polyhedra Clipping", mw);
     dock_widget->setVisible(false); // do not show at the beginning
     ui_widget.setupUi(dock_widget);
@@ -124,7 +122,7 @@ public :
   {
     Q_FOREACH(int id, scene->selectionIndices())
     {
-      if(qobject_cast<Scene_polyhedron_item*>(scene->item(id)))
+      if(qobject_cast<Scene_surface_mesh_item*>(scene->item(id)))
         return true;
     }
     return false;
@@ -135,6 +133,45 @@ public :
   void closure() {
     dock_widget->hide();
   }
+  template<typename Mesh, typename Item>
+  void apply(Item *item)
+  {
+    Mesh* neg_side = new Mesh(*item->face_graph());
+
+    try {
+      CGAL::Polygon_mesh_processing::clip(*neg_side,
+                                          plane->plane(),
+                                          CGAL::Polygon_mesh_processing::parameters::clip_volume(
+                                            ui_widget.close_checkBox->isChecked()).
+                                          throw_on_self_intersection(true));
+      Item* new_item = new Item(neg_side);
+      new_item->setName(QString("%1 on %2").arg(item->name()).arg("negative side"));
+      new_item->setColor(item->color());
+      new_item->setRenderingMode(item->renderingMode());
+      new_item->setVisible(item->visible());
+      scene->addItem(new_item);
+      new_item->invalidateOpenGLBuffers();
+      // part on the positive side
+      Mesh* pos_side = new Mesh(*item->face_graph());
+      CGAL::Polygon_mesh_processing::clip(*pos_side,
+                                          plane->plane().opposite(),
+                                          CGAL::Polygon_mesh_processing::parameters::clip_volume(
+                                            ui_widget.close_checkBox->isChecked()).
+                                          throw_on_self_intersection(true));
+
+      new_item = new Item(pos_side);
+      new_item->setName(QString("%1 on %2").arg(item->name()).arg("positive side"));
+      new_item->setColor(item->color());
+      new_item->setRenderingMode(item->renderingMode());
+      new_item->setVisible(item->visible());
+      scene->addItem(new_item);
+      new_item->invalidateOpenGLBuffers();
+    }
+    catch(CGAL::Polygon_mesh_processing::Corefinement::Self_intersection_exception)
+    {
+      CGAL::Three::Three::warning(tr("The requested operation is not possible due to the presence of self-intersections in the region handled."));
+    }
+  }
 public Q_SLOTS:
   void on_plane_destroyed()
   {
@@ -144,7 +181,7 @@ public Q_SLOTS:
   void pop_widget()
   {
     if(dock_widget->isVisible()) { dock_widget->hide(); }
-    else                         { dock_widget->show(); }
+    else                         { dock_widget->show(); dock_widget->raise();}
 
     //creates a new  cutting_plane;
     if(!plane)
@@ -167,6 +204,7 @@ public Q_SLOTS:
       scene->addItem(plane);
     }
   }
+
   void clip_polyhedron()
   {
     if(!plane)
@@ -174,118 +212,52 @@ public Q_SLOTS:
     else
     {
       QApplication::setOverrideCursor(Qt::WaitCursor);
-      QGLViewer* viewer = *QGLViewer::QGLViewerPool().begin();
-      QList<Scene_polyhedron_item*> polyhedra;
+      CGAL::QGLViewer* viewer = *CGAL::QGLViewer::QGLViewerPool().begin();
+      QList<Scene_item*> polyhedra;
 
       //Fills the list of target polyhedra and the cutting plane
       Q_FOREACH(int id, scene->selectionIndices())
       {
-        Scene_polyhedron_item *target_item = qobject_cast<Scene_polyhedron_item*>(scene->item(id));
-        if(target_item)
+        Scene_surface_mesh_item *sm_item = qobject_cast<Scene_surface_mesh_item*>(scene->item(id));
+        if(sm_item && CGAL::is_triangle_mesh(*sm_item->polyhedron()))
         {
-          polyhedra << target_item;
+          polyhedra << sm_item;
         }
       }
-
       //apply the clipping function
-      Q_FOREACH(Scene_polyhedron_item* poly, polyhedra)
+      Q_FOREACH(Scene_item* item, polyhedra)
       {
+        Scene_surface_mesh_item *sm_item = qobject_cast<Scene_surface_mesh_item*>(item);
 
-        if(ui_widget.close_checkBox->isChecked() && poly->polyhedron()->is_closed())
+        if (ui_widget.clip_radioButton->isChecked())
         {
-          std::pair<Polyhedron*, Polyhedron*>polyhedron;
-          if(ui_widget.clip_radioButton->isChecked())
-          {
-            polyhedron.first = CGAL::corefinement::clip_polyhedron(*(poly->polyhedron()),plane->plane());
-            polyhedron.second = NULL;
+          try{
+            if(sm_item)
+            {
+              CGAL::Polygon_mesh_processing::clip(*(sm_item->face_graph()),
+                                                  plane->plane(),
+                                                  CGAL::Polygon_mesh_processing::parameters::clip_volume(
+                                                    ui_widget.close_checkBox->isChecked()).
+                                                  throw_on_self_intersection(true));
+            }
           }
-          else
+          catch(CGAL::Polygon_mesh_processing::Corefinement::Self_intersection_exception)
           {
-            polyhedron = CGAL::corefinement::split_polyhedron(*(poly->polyhedron()),plane->plane());
+            CGAL::Three::Three::warning(tr("The requested operation is not possible due to the presence of self-intersections in the region handled."));
           }
-          if(polyhedron.first != NULL)
-          {
-            Scene_polyhedron_item* new_item = new Scene_polyhedron_item(polyhedron.first);
-            if(polyhedron.second != NULL)
-              new_item->setName(QString("%1 %2").arg(poly->name()).arg("1"));
-            else
-              new_item->setName(poly->name());
-            new_item->setColor(poly->color());
-            new_item->setRenderingMode(poly->renderingMode());
-            new_item->setVisible(poly->visible());
-            new_item->invalidateOpenGLBuffers();
-            new_item->setProperty("source filename", poly->property("source filename"));
-            scene->replaceItem(scene->item_id(poly),new_item);
-            new_item->invalidateOpenGLBuffers();
-            viewer->updateGL();
-            if(ui_widget.clip_radioButton->isChecked())
-              messages->information(QString("%1 clipped").arg(new_item->name()));
-          }
-          else
-          {
-            messages->information(QString("Could not clip %1 : returned polyhedron is null.").arg(poly->name()));
-            delete polyhedron.first;
-          }
-          if(polyhedron.second!= NULL)
-          {
-            Scene_polyhedron_item* new_item = new Scene_polyhedron_item(polyhedron.second);
-            new_item->setName(QString("%1 %2").arg(poly->name()).arg("2"));
-            new_item->setColor(poly->color());
-            new_item->setRenderingMode(poly->renderingMode());
-            new_item->setVisible(poly->visible());
-            new_item->invalidateOpenGLBuffers();
-            new_item->setProperty("source filename", poly->property("source filename"));
-            scene->addItem(new_item);
-            new_item->invalidateOpenGLBuffers();
-            viewer->updateGL();
-            if(!ui_widget.clip_radioButton->isChecked())
-            messages->information(QString("%1 splitted").arg(poly->name()));
-          }
-          if(polyhedron.first != NULL)
-            delete poly;
+          item->invalidateOpenGLBuffers();
+          viewer->update();
         }
-
         else
         {
-          Scene_polyhedron_item* poly1 = new Scene_polyhedron_item(*(poly->polyhedron()));
-          poly1->setProperty("source filename", poly->property("source filename"));
-          Scene_polyhedron_item* poly2 = NULL;
-          if(!ui_widget.clip_radioButton->isChecked())
+          //part on the negative side
+          if(sm_item)
           {
-            poly2 = new Scene_polyhedron_item(*(poly->polyhedron()));
-            poly2->setProperty("source filename", poly->property("source filename"));
+            apply<SMesh>(sm_item);
           }
-
-
-            CGAL::corefinement::inplace_clip_open_polyhedron(*(poly1->polyhedron()),plane->plane());
-            if(poly2 != NULL)
-              poly1->setName(QString("%1 %2").arg(poly->name()).arg("1"));
-            else
-              poly1->setName(poly->name());
-            poly1->setColor(poly->color());
-            poly1->setRenderingMode(poly->renderingMode());
-            poly1->setVisible(poly->visible());
-            scene->replaceItem(scene->item_id(poly),poly1);
-            poly1->invalidateOpenGLBuffers();
-            viewer->updateGL();
-            if(ui_widget.clip_radioButton->isChecked())
-              messages->information(QString("%1 clipped").arg(poly->name()));
-
-          if(poly2 != NULL)
-          {
-            CGAL::corefinement::inplace_clip_open_polyhedron(*(poly2->polyhedron()),plane->plane().opposite());
-            poly2->setName(QString("%1 %2").arg(poly->name()).arg("2"));
-            poly2->setColor(poly->color());
-            poly2->setRenderingMode(poly->renderingMode());
-            poly2->setVisible(poly->visible());
-            scene->addItem(poly2);
-            poly2->invalidateOpenGLBuffers();
-            viewer->updateGL();
-            messages->information(QString("%1 splitted").arg(poly->name()));
-          }
-          delete poly;
         }
       }
+      viewer->update();
     }
     QApplication::restoreOverrideCursor();
   }

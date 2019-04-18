@@ -14,11 +14,16 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)     : Stephen Kiazyk
 
 #ifndef CGAL_SURFACE_MESH_SHORTEST_PATH_TRAITS_H
 #define CGAL_SURFACE_MESH_SHORTEST_PATH_TRAITS_H
+
+#include <CGAL/license/Surface_mesh_shortest_path.h>
+
+#include <CGAL/disable_warnings.h>
 
 #include <CGAL/Surface_mesh_shortest_path/barycentric.h>
 #include <CGAL/Surface_mesh_shortest_path/function_objects.h>
@@ -58,7 +63,7 @@ public:
   typedef typename Kernel::FT FT;
 
   /// Barycentric coordinates type
-  typedef typename CGAL::cpp11::array<FT,3> Barycentric_coordinates;
+  typedef typename std::array<FT,3> Barycentric_coordinates;
 
   // Predicates
   typedef typename Surface_mesh_shortest_paths_3::Compare_relative_intersection_along_segment_2<Kernel> Compare_relative_intersection_along_segment_2;
@@ -167,6 +172,8 @@ std::ostream& operator<<(std::ostream& os, typename Surface_mesh_shortest_path_t
   return os << b[0] << " " << b[1] << " " << b[2];
 }
 
+#ifdef CGAL_SMSP_USE_ROBUST_TRAITS_CODE
+#if defined(CGAL_USE_LEDA) || defined(CGAL_USE_CORE) 
 #ifndef DOXYGEN_RUNNING // needed due to a bug in doxygen
 /*!
 \ingroup PkgSurfaceMeshShortestPathTraitsClasses
@@ -214,8 +221,11 @@ public:
   Construct_triangle_3_along_segment_2_flattening construct_triangle_3_along_segment_2_flattening_object() const { return m_robust_flatten_triangle_3_along_segment_2; }
 };
 #endif
+#endif
+#endif
 
 } // namespace CGAL
 
+#include <CGAL/enable_warnings.h>
 
 #endif // CGAL_SURFACE_MESH_SHORTEST_PATH_TRAITS_H

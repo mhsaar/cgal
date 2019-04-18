@@ -14,12 +14,16 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Laurent RINEAU, Stephane Tayeb
 
 #ifndef CGAL_MESH_3_MIN_DIHEDRAL_ANGLE_H
 #define CGAL_MESH_3_MIN_DIHEDRAL_ANGLE_H
+
+#include <CGAL/license/Mesh_3.h>
+
 
 #include <cmath>
 #include <CGAL/Kernel_traits.h>
@@ -97,14 +101,11 @@ minimum_dihedral_angle(
     k.compute_determinant_3_object();
   typename K::Construct_cross_product_vector_3 cp =
     k.construct_cross_product_vector_3_object();
-
   typename K::Compute_scalar_product_3 sp =
     k.compute_scalar_product_3_object();
-
   typename K::Construct_vector_3 cv =
     k.construct_vector_3_object();
 
-  
   typename K::Vector_3 v01 = cv(p0,p1);
   typename K::Vector_3 v02 = cv(p0,p2);
   typename K::Vector_3 v03 = cv(p0,p3);

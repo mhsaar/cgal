@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Menelaos Karavelas <mkaravel@iacm.forth.gr>
@@ -22,6 +23,9 @@
 
 #ifndef CGAL_APOLLONIUS_GRAPH_2_UNCERTAIN_VERTEX_CONFLICT_2_H
 #define CGAL_APOLLONIUS_GRAPH_2_UNCERTAIN_VERTEX_CONFLICT_2_H
+
+#include <CGAL/license/Apollonius_graph_2.h>
+
 
 
 // FIXME: We include the old traits class file for now to get the functors.

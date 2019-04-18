@@ -14,11 +14,15 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)     : Frank Da, David Cohen-Steiner, Andreas Fabri
 
 #ifndef CGAL_ADVANCING_FRONT_SURFACE_RECONSTRUCTION_VERTEX_BASE_WITH_ID_3_H
 #define CGAL_ADVANCING_FRONT_SURFACE_RECONSTRUCTION_VERTEX_BASE_WITH_ID_3_H
+
+#include <CGAL/license/Advancing_front_surface_reconstruction.h>
+
 
 #include <CGAL/Triangulation_vertex_base_3.h>
 #include <CGAL/utility.h>
@@ -34,7 +38,7 @@ namespace CGAL {
   template <class B, class C> class Advancing_front_surface_reconstruction;
 
   /*!
-  \ingroup PkgAdvancingFrontSurfaceReconstruction
+  \ingroup PkgAdvancingFrontSurfaceReconstructionRef
 
   The class `Advancing_front_surface_reconstruction_vertex_base_3` is the default
   vertex type for the class  `Advancing_front_surface_reconstruction`.

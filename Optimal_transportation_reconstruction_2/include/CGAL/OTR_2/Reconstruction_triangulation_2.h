@@ -14,11 +14,15 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 // Author(s)     : Fernando de Goes, Pierre Alliez, Ivo Vigan, Clément Jamin
 
 #ifndef CGAL_RECONSTRUCTION_TRIANGULATION_2_H
 #define CGAL_RECONSTRUCTION_TRIANGULATION_2_H
+
+#include <CGAL/license/Optimal_transportation_reconstruction_2.h>
+
 
 // local
 #include <CGAL/OTR_2/Sample.h>
@@ -915,6 +919,22 @@ public:
         return false;
     }
     return true;
+  }
+
+  bool check_validity_test () const
+  {
+    for(Finite_faces_iterator it = Base::finite_faces_begin();
+        it != Base::finite_faces_end(); it++)
+    {
+      typename Traits_::Orientation s
+        = orientation(it->vertex(0)->point(),
+                      it->vertex(1)->point(),
+                      it->vertex(2)->point());
+      if (s != LEFT_TURN)
+        return false;
+    }
+
+    return true;  
   }
 
   // COLLAPSE //

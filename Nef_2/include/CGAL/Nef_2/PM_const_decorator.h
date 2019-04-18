@@ -14,12 +14,16 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Michael Seel <seel@mpi-sb.mpg.de>
 
 #ifndef CGAL_PM_CONST_DECORATOR_H
 #define CGAL_PM_CONST_DECORATOR_H
+
+#include <CGAL/license/Nef_2.h>
+
 
 #include <CGAL/basic.h>
 #include <CGAL/Unique_hash_map.h>
@@ -469,7 +473,7 @@ check_integrity_and_topological_planarity(bool faces) const
   int fc_num(0),iv_num(0);
   Face_const_iterator fit;
   for (fit = faces_begin(); fit != faces_end(); ++fit) {
-    if (!first) {
+    if (!first && halfedge(fit)!=Halfedge_const_handle()) {
       CGAL_assertion( face(halfedge(fit))==fit ); ++fc_num;
     }
     Hole_const_iterator fcit;

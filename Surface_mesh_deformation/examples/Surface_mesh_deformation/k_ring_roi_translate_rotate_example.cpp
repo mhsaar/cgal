@@ -1,10 +1,6 @@
 #include <CGAL/Simple_cartesian.h>
 #include <CGAL/Polyhedron_3.h>
-#include <CGAL/IO/Polyhedron_iostream.h>
 #include <CGAL/Polyhedron_items_with_id_3.h>
-// HalfedgeGraph adaptors for Polyhedron_3
-#include <CGAL/boost/graph/graph_traits_Polyhedron_3.h>
-#include <CGAL/boost/graph/properties_Polyhedron_3.h>
 
 #include <CGAL/Surface_mesh_deformation.h>
 
@@ -70,12 +66,12 @@ int main()
   // Select and insert the vertices of the region of interest
   vertex_iterator vb, ve;
   boost::tie(vb,ve) = vertices(mesh);
-  std::vector<vertex_descriptor> roi = extract_k_ring(mesh, *CGAL::cpp11::next(vb, 47), 9);
+  std::vector<vertex_descriptor> roi = extract_k_ring(mesh, *std::next(vb, 47), 9);
   deform_mesh.insert_roi_vertices(roi.begin(), roi.end());
 
   // Select and insert the control vertices
-  std::vector<vertex_descriptor> cvertices_1 = extract_k_ring(mesh, *CGAL::cpp11::next(vb, 39), 1);
-  std::vector<vertex_descriptor> cvertices_2 = extract_k_ring(mesh, *CGAL::cpp11::next(vb, 97), 1);
+  std::vector<vertex_descriptor> cvertices_1 = extract_k_ring(mesh, *std::next(vb, 39), 1);
+  std::vector<vertex_descriptor> cvertices_2 = extract_k_ring(mesh, *std::next(vb, 97), 1);
   deform_mesh.insert_control_vertices(cvertices_1.begin(), cvertices_1.end());
   deform_mesh.insert_control_vertices(cvertices_2.begin(), cvertices_2.end());
 

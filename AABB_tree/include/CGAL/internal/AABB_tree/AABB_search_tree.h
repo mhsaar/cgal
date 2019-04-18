@@ -14,12 +14,16 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 //
 //
 // Author(s) : Pierre Alliez, Camille Wormser
 
 #ifndef CGAL_AABB_SEARCH_TREE_H
 #define CGAL_AABB_SEARCH_TREE_H
+
+#include <CGAL/license/AABB_tree.h>
+
 
 #include <CGAL/Orthogonal_k_neighbor_search.h>
 #include <CGAL/Search_traits_3.h>
@@ -61,6 +65,7 @@ namespace CGAL
                           m_id = rhs.m_id;
                     }
 
+                  Decorated_point& operator=(const Decorated_point&)=default;
                 private:
                     Id m_id;
 

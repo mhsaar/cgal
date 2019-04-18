@@ -18,8 +18,9 @@
 # This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 # WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 #
-# $URL: svn+ssh://fcacciola@scm.gforge.inria.fr/svn/cgal/trunk/Scripts/scripts/cgal_create_makefile $
-# $Id: cgal_create_makefile 36976 2007-03-09 22:53:24Z reichel $
+# $URL$
+# $Id$
+# SPDX-License-Identifier: LGPL-3.0+
 #
 # Author(s)     : various
 
@@ -183,9 +184,6 @@ if ( NOT CGAL_FOUND )
 
 endif()
 
-# include helper file
-include( ${CGAL_USE_FILE} )
-
 EOF
   #---------------------------------------------------------------------------
 
@@ -239,9 +237,6 @@ EOF
   #---------------------------------------------------------------------------
 
   # includes for local package
-  if [ -d ../../include ] ; then
-    echo 'include_directories( BEFORE ../../include )'
-  fi
   if [ -d ../include ] ; then
     echo 'include_directories( BEFORE ../include )'
   fi
@@ -319,15 +314,6 @@ EOF
     #-------------------------------------------------------------------------
 
 
-    if [ "$qt4" = "y" ]; then
-
-      echo "include( CGAL_CreateSingleSourceCGALProgramQt4 )"
-
-    else
- 
-      echo "include( CGAL_CreateSingleSourceCGALProgram )"
-
-    fi
     # add a new line
     echo
 

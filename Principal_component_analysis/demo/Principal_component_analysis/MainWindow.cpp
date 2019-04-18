@@ -79,7 +79,7 @@ void MainWindow::updateViewerBBox()
 	const double xmax = bbox.xmax();
 	const double ymax = bbox.ymax();
 	const double zmax = bbox.zmax();
-	qglviewer::Vec 
+	CGAL::qglviewer::Vec 
 		vec_min(xmin, ymin, zmin),
 		vec_max(xmax, ymax, zmax);
 	m_pViewer->setSceneBoundingBox(vec_min,vec_max);
@@ -170,9 +170,7 @@ void MainWindow::setAddKeyFrameKeyboardModifiers(::Qt::KeyboardModifiers m)
 
 void MainWindow::on_actionSave_snapshot_triggered()
 {
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-  m_pViewer->saveSnapshot(QString("snapshot.png"));
-	QApplication::restoreOverrideCursor();
+        m_pViewer->saveSnapshot();
 }
 void MainWindow::on_actionCopy_snapshot_triggered()
 {
@@ -181,7 +179,7 @@ void MainWindow::on_actionCopy_snapshot_triggered()
   QClipboard *qb = QApplication::clipboard();
   m_pViewer->makeCurrent();
   m_pViewer->raise();
-  QImage snapshot = m_pViewer->grabFrameBuffer(true);
+  QImage snapshot = m_pViewer->grabFramebuffer();
   qb->setImage(snapshot);
 	QApplication::restoreOverrideCursor();
 }

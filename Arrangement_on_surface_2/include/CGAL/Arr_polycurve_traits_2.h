@@ -12,6 +12,10 @@
 // This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
+// $URL$
+// $Id$
+// SPDX-License-Identifier: GPL-3.0+
+//
 // Author(s)     : Efi Fogel <efif@post.tau.ac.il>
 //                 Ron Wein  <wein@post.tau.ac.il>
 //                 Dror Atariah <dror.atariah@fu-berlin.de>
@@ -19,6 +23,10 @@
 
 #ifndef CGAL_ARR_POLYCURVE_TRAITS_2_H
 #define CGAL_ARR_POLYCURVE_TRAITS_2_H
+
+#include <CGAL/license/Arrangement_on_surface_2.h>
+
+#include <CGAL/disable_warnings.h>
 
 /*! \file
  * The traits-class for the general piece-wise (polycurve) type of curves of the
@@ -89,6 +97,7 @@ public:
   typedef typename Base::Parameter_space_in_y_2       Parameter_space_in_y_2;
   typedef typename Base::Compare_x_on_boundary_2      Compare_x_on_boundary_2;
   typedef typename Base::Compare_x_at_limit_2         Compare_x_at_limit_2;
+  typedef typename Base::Compare_x_near_boundary_2    Compare_x_near_boundary_2;
   typedef typename Base::Compare_x_near_limit_2       Compare_x_near_limit_2;
   typedef typename Base::Compare_y_on_boundary_2      Compare_y_on_boundary_2;
   typedef typename Base::Compare_y_near_boundary_2    Compare_y_near_boundary_2;
@@ -155,6 +164,9 @@ public:
   /// \name Construction functors(based on the subcurve traits).
   //@{
 
+#ifndef DOXYGEN_RUNNING
+  class Push_back_2;
+#endif
   /*! \class
    * A functor that divides an arc into x-monotone arcs. That are, arcs that
    * do not cross the identification arc.
@@ -1180,5 +1192,7 @@ public:
 };
 
 } //namespace CGAL
+
+#include <CGAL/enable_warnings.h>
 
 #endif

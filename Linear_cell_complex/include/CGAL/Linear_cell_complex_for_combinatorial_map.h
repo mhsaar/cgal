@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: LGPL-3.0+
 //
 // Author(s)     : Guillaume Damiand <guillaume.damiand@liris.cnrs.fr>
 //
@@ -108,9 +109,11 @@ namespace CGAL {
        *  @param alcc the linear cell complex to copy.
        *  @post *this is valid.
        */
+#ifdef DOXYGEN_RUNNING
       Linear_cell_complex_for_combinatorial_map(const Self& alcc) : Base(alcc)
       {}
-
+#endif
+      
       template < class LCC2 >
       Linear_cell_complex_for_combinatorial_map(const LCC2& alcc) : Base(alcc)
       {}      

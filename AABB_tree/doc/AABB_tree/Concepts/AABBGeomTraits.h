@@ -1,6 +1,6 @@
 
 /*!
-\ingroup PkgAABB_treeConcepts
+\ingroup PkgAABBTreeConcepts
 \cgalConcept
 
 The concept `AABBGeomTraits` defines the requirements for the first template parameter of the class `CGAL::AABB_traits<AABBGeomTraits, AABBPrimitive>`. It provides predicates and constructors to detect and compute intersections between query objects and the primitives stored in the AABB tree. In addition, it contains predicates and constructors to compute distances between a point query and the primitives stored in the AABB tree. 
@@ -65,9 +65,9 @@ A functor object to construct the sphere centered at one point and passing throu
 typedef unspecified_type Construct_sphere_3; 
 
 /*!
-\todo This is not correct! that is not used!
 A functor object to compute the point on a geometric primitive which is closest from a query. Provides the operator: 
-`Point_3 operator()(const Type_2& type_2, const Point_3& p);` where `Type_2` is any type among `Segment_3` and `Triangle_3`. The operator returns the point on `type_2` which is closest to `p`. 
+`Point_3 operator()(const Type_2& type_2, const Point_3& p);` where `Type_2` can be any of the following types : `Segment_3`, `Ray_3`, or `Triangle_3`. 
+The operator returns the point on `type_2` which is closest to `p`. 
 */ 
 typedef unspecified_type Construct_projected_point_3;
 
@@ -76,7 +76,7 @@ A functor object to compare the distance of two points wrt a third one.
 Provides the operator:
 `CGAL::Comparision_result operator()(const Point_3& p1, const Point_3& p2, const Point_3& p3)`. The operator compare the distance between `p1 and `p2`, and between `p2` and `p3`.
 */
-typedef unspecified_type Compare_distance_3
+typedef unspecified_type Compare_distance_3;
 
 /*!
 A functor object to detect if a point lies inside a sphere or not. 

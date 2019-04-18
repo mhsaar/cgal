@@ -14,6 +14,7 @@
 //
 // $URL$
 // $Id$
+// SPDX-License-Identifier: GPL-3.0+
 // 
 //
 // Author(s)     : Jane Tournois
@@ -21,14 +22,18 @@
 #ifndef CGAL_POLYGON_MESH_PROCESSING_REFINE_POLYHEDRON_3_H
 #define CGAL_POLYGON_MESH_PROCESSING_REFINE_POLYHEDRON_3_H
 
+#include <CGAL/license/Polygon_mesh_processing/meshing_hole_filling.h>
+
+
 #include <cmath>
 #include <map>
 #include <set>
 #include <list>
 
 #include <CGAL/assertions.h>
-#include <CGAL/trace.h>
+#ifdef CGAL_PMP_FAIR_DEBUG
 #include <CGAL/Timer.h>
+#endif
 #include <CGAL/squared_distance_3.h>
 #include <CGAL/Kernel/global_functions_3.h>
 #include <CGAL/boost/graph/iterator.h>
@@ -105,7 +110,7 @@ private:
                  std::vector<face_descriptor>& new_faces,
                  double alpha)
   {
-    BOOST_FOREACH(face_descriptor fd, faces)
+    for(face_descriptor fd : faces)
     {
       CGAL_assertion(fd  != boost::graph_traits<PolygonMesh>::null_face());
 
@@ -165,16 +170,20 @@ private:
     collect_interior_edges(faces, border_edges, interior_edges, included_map);
     collect_interior_edges(new_faces, border_edges, interior_edges, included_map);
 
-    CGAL_TRACE_STREAM << "Test " << interior_edges.size() << " edges " << std::endl;
+    #ifdef CGAL_PMP_REFINE_DEBUG
+    std::cerr << "Test " << interior_edges.size() << " edges " << std::endl;
+    #endif
     //do not just use std::set (included_map) for iteration, the order effects the output (we like to make it deterministic)
-    BOOST_FOREACH(halfedge_descriptor h, interior_edges)
+    for(halfedge_descriptor h : interior_edges)
     {
       if (relax(h)) {
         ++flips;
       }
     }
 
-    CGAL_TRACE_STREAM << "|flips| = " << flips << std::endl;
+    #ifdef CGAL_PMP_REFINE_DEBUG
+    std::cerr  << "|flips| = " << flips << std::endl;
+    #endif
     return flips > 0;
   }
 
@@ -184,7 +193,7 @@ private:
         std::list<halfedge_descriptor>& interior_edges,
         std::set<halfedge_descriptor>& included_map)
   {
-    BOOST_FOREACH(face_descriptor fd, faces)
+    for(face_descriptor fd : faces)
     {
       Halfedge_around_face_circulator<PolygonMesh> circ(halfedge(fd, pmesh), pmesh), done(circ);
       do {
@@ -233,7 +242,7 @@ private:
                                  std::map<vertex_descriptor, double>& scale_attribute,
                                  bool accept_internal_facets) 
   {
-    BOOST_FOREACH(face_descriptor fd, faces)
+    for(face_descriptor fd : faces)
     {
       Halfedge_around_face_circulator<PolygonMesh> circ(halfedge(fd,pmesh),pmesh), done(circ);
       do {
@@ -250,7 +259,7 @@ private:
   bool contain_internal_facets(const FaceRange& faces,
                                const std::set<face_descriptor>& interior_map) const
   {
-    BOOST_FOREACH(face_descriptor fd, faces)
+    for(face_descriptor fd : faces)
     {
       Halfedge_around_face_circulator<PolygonMesh> circ(halfedge(fd,pmesh),pmesh), done(circ);
       do {
@@ -289,7 +298,7 @@ public:
 
     // store boundary edges - to be used in relax 
     std::set<halfedge_descriptor> border_edges;
-    BOOST_FOREACH(face_descriptor f, faces)
+    for(face_descriptor f : faces)
     {
       Halfedge_around_face_circulator<PolygonMesh> circ(halfedge(f,pmesh),pmesh), done(circ);
       do {
@@ -305,24 +314,34 @@ public:
     calculate_scale_attribute(faces, interior_map, scale_attribute, accept_internal_facets);
 
     std::vector<face_descriptor> all_faces(boost::begin(faces), boost::end(faces));
+    #ifdef CGAL_PMP_REFINE_DEBUG
     CGAL::Timer total_timer; total_timer.start();
+    #endif
     for(int i = 0; i < 10; ++i)
     {
       std::vector<face_descriptor> new_faces;
+      #ifdef CGAL_PMP_REFINE_DEBUG
       CGAL::Timer timer; timer.start();
+      #endif
       bool is_subdivided = subdivide(all_faces, border_edges, scale_attribute, vertex_out, facet_out, new_faces, alpha);
-      CGAL_TRACE_STREAM << "**Timer** subdivide() :" << timer.time() << std::endl; timer.reset();
+      #ifdef CGAL_PMP_REFINE_DEBUG
+      std::cerr  << "**Timer** subdivide() :" << timer.time() << std::endl; timer.reset();
+      #endif
       if(!is_subdivided)
         break;
 
       bool is_relaxed = relax(faces, new_faces, border_edges);
-      CGAL_TRACE_STREAM << "**Timer** relax() :" << timer.time() << std::endl;
+      #ifdef CGAL_PMP_REFINE_DEBUG
+      std::cerr << "**Timer** relax() :" << timer.time() << std::endl;
+      #endif
       if(!is_relaxed)
         break;
       all_faces.insert(all_faces.end(), new_faces.begin(), new_faces.end());
     }
 
-    CGAL_TRACE_STREAM << "**Timer** TOTAL: " << total_timer.time() << std::endl;
+    #ifdef CGAL_PMP_REFINE_DEBUG
+    std::cerr << "**Timer** TOTAL: " << total_timer.time() << std::endl;
+    #endif
   }
 
 }; //end class Refine_Polyhedron_3
