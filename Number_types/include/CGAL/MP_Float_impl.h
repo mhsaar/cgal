@@ -16,7 +16,7 @@
 // $URL$
 // $Id$
 // SPDX-License-Identifier: LGPL-3.0+
-// 
+//
 //
 // Author(s)     : Sylvain Pion
 
@@ -70,6 +70,9 @@ template < typename T >
 inline
 void MP_Float::construct_from_builtin_fp_type(T d)
 {
+    // Fix "...::exp is used uninitialized" errors with Crosstool v16.
+    exp = 0;
+
     if (d == 0)
       return;
 
