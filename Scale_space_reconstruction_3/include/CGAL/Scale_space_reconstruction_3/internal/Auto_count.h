@@ -14,6 +14,7 @@
 #define CGAL_INTERNAL_AUTO_COUNT_H
 
 #include <CGAL/license/Scale_space_reconstruction_3.h>
+#include <CGAL/config.h>
 
 
 #include <functional>
