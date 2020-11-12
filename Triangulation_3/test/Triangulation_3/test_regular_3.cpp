@@ -393,6 +393,7 @@ void test_RT()
   Vertex_handle v3 = T4.insert(wq3);
   Cell_handle c;
   int i,j,k,l;
+  i = j = k = l = 0;
   assert(T4.is_facet(v0,v1,v2,c,j,k,l));
   i = 6 - (j+k+l);
   Facet f = std::make_pair(c,i);
