@@ -872,6 +872,7 @@ _test_cls_delaunay_3(const Triangulation &)
   Vertex_handle v3 = T4.insert(q3, v2->cell()); // testing with the hint
   Cell_handle c;
   int j,k,l;
+  j = k = l = 0;
   assert(T4.is_facet(v0,v1,v2,c,j,k,l));
   i = 6 - (j+k+l);
   Facet f = std::make_pair(c,i);
